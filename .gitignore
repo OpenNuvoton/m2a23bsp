@@ -1,0 +1,28 @@
+#For IAR
+Release/
+settings/
+
+#For KEIL
+obj/
+lst/
+Objects/
+Listings/
+
+#For others
+out/
+build/
+.vs/
+
+#Files
+*.scc
+*.doc
+*.docx
+*.log
+*.dep
+*.bak
+*.old
+*.bin
+*.out
+*.scvd
+*.uvgui.*
+*.uvguix.*
