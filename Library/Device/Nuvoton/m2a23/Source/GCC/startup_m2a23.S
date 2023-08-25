@@ -1,5 +1,5 @@
 /****************************************************************************//**
- * @file     startup_M2A23.S
+ * @file     startup_m2a23.S
  * @version  V3.00
  * @brief    CMSIS Device Startup File
  *
@@ -61,59 +61,61 @@ __Vectors:
     .long   0                     /* Reserved */
     .long   PendSV_Handler        /* PendSV Handler */
     .long   SysTick_Handler       /* SysTick Handler */
-    
+
     /* External interrupts */
-    
-    .long   BOD_IRQHandler  
-    .long   WDT_IRQHandler  
-    .long   EINT024_IRQHandler
-    .long   EINT135_IRQHandler
-    .long   GPAB_IRQHandler 
-    .long   GPCDF_IRQHandler
-    .long   BPWM0_IRQHandler 
-    .long   BPWM1_IRQHandler 
-    .long   TMR0_IRQHandler 
-    .long   TMR1_IRQHandler 
-    .long   TMR2_IRQHandler 
-    .long   TMR3_IRQHandler 
+
+    .long   BOD_IRQHandler
+    .long   IRC_IRQHandler
+    .long   PWRWU_IRQHandler
+    .long   RAMPE_IRQHandler
+    .long   CKFAIL_IRQHandler
+    .long   ISP_IRQHandler
+    .long   WDT_IRQHandler
+    .long   WWDT_IRQHandler
+    .long   EINT0_IRQHandler
+    .long   EINT1_IRQHandler
+    .long   EINT2_IRQHandler
+    .long   EINT3_IRQHandler
+    .long   EINT4_IRQHandler
+    .long   EINT5_IRQHandler
+    .long   GPA_IRQHandler
+    .long   GPB_IRQHandler
+    .long   GPC_IRQHandler
+    .long   GPD_IRQHandler
+    .long   GPF_IRQHandler
+    .long   SPI0_IRQHandler
+    .long   BRAKE0_IRQHandler
+    .long   PWM0P0_IRQHandler
+    .long   PWM0P1_IRQHandler
+    .long   PWM0P2_IRQHandler
+    .long   Default_Handler
+    .long   Default_Handler
+    .long   Default_Handler
+    .long   Default_Handler
+    .long   TMR0_IRQHandler
+    .long   TMR1_IRQHandler
+    .long   TMR2_IRQHandler
+    .long   TMR3_IRQHandler
     .long   UART0_IRQHandler
     .long   UART1_IRQHandler
-    .long   SPI0_IRQHandler 
-    .long   SPI1_IRQHandler 
-    .long   BPWM2_IRQHandler
-    .long   BPWM3_IRQHandler
-    .long   I2C0_IRQHandler 
-    .long   I2C1_IRQHandler 
-    .long   I2C2_IRQHandler 
+    .long   I2C0_IRQHandler
     .long   Default_Handler
-    .long   Default_Handler 
-    .long   USBD_IRQHandler  
-    .long   Default_Handler  
-    .long   ACMP01_IRQHandler 
-    .long   PDMA_IRQHandler
-    .long   Default_Handler 
-    .long   PWRWU_IRQHandler
-    .long   ADC_IRQHandler
-    .long   CLKDIRC_IRQHandler  
-    .long   Default_Handler  
+    .long   PDMA0_IRQHandler
+    .long   Default_Handler
+    .long   ADC0_IRQHandler
+    .long   ACMP01_IRQHandler
+    .long   BPWM0_IRQHandler
     .long   LLSI0_IRQHandler
     .long   LLSI1_IRQHandler
-    .long   LLSI2_IRQHandler
-    .long   LLSI3_IRQHandler
-    .long   LLSI4_IRQHandler
-    .long   LLSI5_IRQHandler
-    .long   Default_Handler
-    .long   Default_Handler
-    .long   Default_Handler
-    .long   Default_Handler
-    .long   SPI2_IRQHandler
-    .long   UART2_IRQHandler
-    .long   I3CS0_IRQHandler
-    .long   I3CS1_IRQHandler
-    .long   DAC_IRQHandler
-    .long   ACMP23_IRQHandler
-    .long   TS_IRQHandler
-    .long   SPDH_IRQHandler
+    .long   CANFD00_IRQHandler
+    .long   CANFD01_IRQHandler
+    .long   CANFD10_IRQHandler
+    .long   CANFD10_IRQHandler
+    .long   CANFD20_IRQHandler
+    .long   CANFD21_IRQHandler
+    .long   USCI0_IRQHandler
+    .long   USCI1_IRQHandler
+    .long   CRC_IRQHandler
 
     .size   __Vectors, . - __Vectors
 
@@ -315,7 +317,7 @@ Default_Handler:
     .weak   \handler_name
     .set    \handler_name, Default_Handler
     .endm
-    
+
     def_irq_handler NMI_Handler
     //def_irq_handler HardFault_Handler
     def_irq_handler SVC_Handler
@@ -324,46 +326,49 @@ Default_Handler:
 
 
     def_irq_handler BOD_IRQHandler
+    def_irq_handler IRC_IRQHandler
+    def_irq_handler PWRWU_IRQHandler
+    def_irq_handler RAMPE_IRQHandler
+    def_irq_handler CKFAIL_IRQHandler
+    def_irq_handler ISP_IRQHandler
     def_irq_handler WDT_IRQHandler
-    def_irq_handler EINT024_IRQHandler
-    def_irq_handler EINT135_IRQHandler
-    def_irq_handler GPAB_IRQHandler
-    def_irq_handler GPCDF_IRQHandler
-    def_irq_handler BPWM0_IRQHandler
-    def_irq_handler BPWM1_IRQHandler
+    def_irq_handler WWDT_IRQHandler
+    def_irq_handler EINT0_IRQHandler
+    def_irq_handler EINT1_IRQHandler
+    def_irq_handler EINT2_IRQHandler
+    def_irq_handler EINT3_IRQHandler
+    def_irq_handler EINT4_IRQHandler
+    def_irq_handler EINT5_IRQHandler
+    def_irq_handler GPA_IRQHandler
+    def_irq_handler GPB_IRQHandler
+    def_irq_handler GPC_IRQHandler
+    def_irq_handler GPD_IRQHandler
+    def_irq_handler GPF_IRQHandler
+    def_irq_handler SPI0_IRQHandler
+    def_irq_handler BRAKE0_IRQHandler
+    def_irq_handler PWM0P0_IRQHandler
+    def_irq_handler PWM0P1_IRQHandler
+    def_irq_handler PWM0P2_IRQHandler
     def_irq_handler TMR0_IRQHandler
     def_irq_handler TMR1_IRQHandler
     def_irq_handler TMR2_IRQHandler
     def_irq_handler TMR3_IRQHandler
     def_irq_handler UART0_IRQHandler
     def_irq_handler UART1_IRQHandler
-    def_irq_handler SPI0_IRQHandler
-    def_irq_handler SPI1_IRQHandler
-    def_irq_handler BPWM2_IRQHandler
-    def_irq_handler BPWM3_IRQHandler
     def_irq_handler I2C0_IRQHandler
-    def_irq_handler I2C1_IRQHandler
-    def_irq_handler I2C2_IRQHandler
-    def_irq_handler USBD_IRQHandler
+    def_irq_handler PDMA0_IRQHandler
+    def_irq_handler ADC0_IRQHandler
     def_irq_handler ACMP01_IRQHandler
-    def_irq_handler PDMA_IRQHandler
-    def_irq_handler PWRWU_IRQHandler
-    def_irq_handler ADC_IRQHandler
-    def_irq_handler CLKDIRC_IRQHandler
+    def_irq_handler BPWM0_IRQHandler
     def_irq_handler LLSI0_IRQHandler
     def_irq_handler LLSI1_IRQHandler
-    def_irq_handler LLSI2_IRQHandler
-    def_irq_handler LLSI3_IRQHandler
-    def_irq_handler LLSI4_IRQHandler
-    def_irq_handler LLSI5_IRQHandler
-    def_irq_handler SPI2_IRQHandler
-    def_irq_handler UART2_IRQHandler
-    def_irq_handler I3CS0_IRQHandler
-    def_irq_handler I3CS1_IRQHandler
-    def_irq_handler DAC_IRQHandler
-    def_irq_handler ACMP23_IRQHandler
-    def_irq_handler TS_IRQHandler
-    def_irq_handler SPDH_IRQHandler
+    def_irq_handler CANFD00_IRQHandler
+    def_irq_handler CANFD01_IRQHandler
+    def_irq_handler CANFD10_IRQHandler
+    def_irq_handler CANFD11_IRQHandler
+    def_irq_handler CANFD20_IRQHandler
+    def_irq_handler CANFD21_IRQHandler
+    def_irq_handler CRC_IRQHandler
 
 
     /* ;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0) */
@@ -372,7 +377,7 @@ Default_Handler:
     .type SH_DoCommand, % function
 
 SH_DoCommand:
-    
+
     BKPT   0xAB                /* ; Wait ICE or HardFault */
     LDR    R3, = SH_Return
     MOV    R4, lr

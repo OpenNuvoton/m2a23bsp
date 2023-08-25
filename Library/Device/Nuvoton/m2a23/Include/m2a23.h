@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     M2A23.h
+ * @file     m2a23.h
  * @version  V3.0
  * @brief    M2A23 Series Peripheral Access Layer Header File
  *
@@ -41,7 +41,7 @@
  */
 typedef enum IRQn
 {
-    /******  Cortex-M0 Processor Exceptions Numbers ***************************************************/
+    /******  Cortex-M23 Processor Exceptions Numbers **************************************************/
     NonMaskableInt_IRQn       = -14,      /*!< 2 Non Maskable Interrupt                             */
     HardFault_IRQn            = -13,      /*!< 3 Cortex-M23 Hard Fault Interrupt                    */
     SVCall_IRQn               = -5,       /*!< 11 Cortex-M23 SV Call Interrupt                      */
@@ -49,48 +49,52 @@ typedef enum IRQn
     SysTick_IRQn              = -1,       /*!< 15 Cortex-M23 System Tick Interrupt                  */
 
     /******  ARMIKMCU Swift specific Interrupt Numbers ************************************************/
-    BOD_IRQn                  = 0,        /*!< Brown-Out Low Voltage Detected Interrupt             */
-    WDT_IRQn                  = 1,        /*!< Watch Dog Timer Interrupt                            */
-    EINT024_IRQn              = 2,        /*!< EINT0, EINT2 and EINT4 Interrupt                     */
-    EINT135_IRQn              = 3,        /*!< EINT1, EINT3 and EINT5 Interrupt                     */
-    GPAB_IRQn                 = 4,        /*!< GPIO_PA/PB Interrupt                                 */
-    GPCDF_IRQn                = 5,        /*!< GPIO_PC/PD/PF Interrupt                              */
-    BPWM0_IRQn                = 6,        /*!< BPWM0 Interrupt                                      */
-    BPWM1_IRQn                = 7,        /*!< BPWM1 Interrupt                                      */
-    TMR0_IRQn                 = 8,        /*!< TIMER0 Interrupt                                     */
-    TMR1_IRQn                 = 9,        /*!< TIMER1 Interrupt                                     */
-    TMR2_IRQn                 = 10,       /*!< TIMER2 Interrupt                                     */
-    TMR3_IRQn                 = 11,       /*!< TIMER3 Interrupt                                     */
-    UART0_IRQn                = 12,       /*!< UART0 Interrupt                                      */
-    UART1_IRQn                = 13,       /*!< UART1 Interrupt                                      */
-    SPI0_IRQn                 = 14,       /*!< SPI0 Interrupt                                       */
-    SPI1_IRQn                 = 15,       /*!< SPI1 Interrupt                                       */
-    BPWM2_IRQn                = 16,       /*!< BPWM2 Interrupt                                      */
-    BPWM3_IRQn                = 17,       /*!< BPWM3 Interrupt                                      */
-    I2C0_IRQn                 = 18,       /*!< I2C0 Interrupt                                       */
-    I2C1_IRQn                 = 19,       /*!< I2C1 Interrupt                                       */
-    I2C2_IRQn                 = 20,       /*!< I2C2 Interrupt                                       */
-    USBD_IRQn                 = 23,       /*!< USB Device Interrupt                                 */
-    ACMP01_IRQn               = 25,       /*!< ACMP01 Interrupt                                     */
-    PDMA_IRQn                 = 26,       /*!< PDMA Interrupt                                       */
-    PWRWU_IRQn                = 28,       /*!< Power Down Wake Up Interrupt                         */
-    ADC_IRQn                  = 29,       /*!< ADC Interrupt                                        */
-    CLKDIRC_IRQn              = 30,       /*!< Clock fail detect and IRC TRIM Interrupt             */
-    LLSI0_IRQn                = 32,       /*!< LLSI0 Interrupt                                      */
-    LLSI1_IRQn                = 33,       /*!< LLSI1 Interrupt                                      */
-    LLSI2_IRQn                = 34,       /*!< LLSI2 Interrupt                                      */
-    LLSI3_IRQn                = 35,       /*!< LLSI3 Interrupt                                      */
-    LLSI4_IRQn                = 36,       /*!< LLSI4 Interrupt                                      */
-    LLSI5_IRQn                = 37,       /*!< LLSI5 Interrupt                                      */
-    SPI2_IRQn                 = 42,       /*!< SPI2 Interrupt                                       */
-    UART2_IRQn                = 43,       /*!< UART2 Interrupt                                      */
-    I3CS0_IRQn                = 44,       /*!< I3CS0 Interrupt                                      */
-    I3CS1_IRQn                = 45,       /*!< I3CS1 Interrupt                                      */
-    DAC_IRQn                  = 46,       /*!< DAC Interrupt                                        */
-    ACMP23_IRQn               = 47,       /*!< ACMP23 Interrupt                                     */
-    TS_IRQn                   = 48,       /*!< Temperature Sensor Interrupt                         */
-    SPDH_IRQn                 = 49,       /*!< SPDH Interrupt                                       */
-
+    BOD_IRQn                      = 0,        /*!< Brown Out detection Interrupt                    */
+    IRC_IRQn                      = 1,        /*!< Internal RC Interrupt                            */
+    PWRWU_IRQn                    = 2,        /*!< Power Down Wake Up Interrupt                     */
+    RAMPE_IRQn                    = 3,        /*!< SRAM parity check failed Interrupt               */
+    CKFAIL_IRQn                   = 4,        /*!< Clock failed Interrupt                           */
+    ISP_IRQn                      = 5,        /*!< FMC ISP Interrupt                                */
+    WDT_IRQn                      = 8,        /*!< Watchdog timer Interrupt                         */
+    WWDT_IRQn                     = 9,        /*!< Window Watchdog timer Interrupt                  */
+    EINT0_IRQn                    = 10,       /*!< External Input 0 Interrupt                       */
+    EINT1_IRQn                    = 11,       /*!< External Input 1 Interrupt                       */
+    EINT2_IRQn                    = 12,       /*!< External Input 2 Interrupt                       */
+    EINT3_IRQn                    = 13,       /*!< External Input 3 Interrupt                       */
+    EINT4_IRQn                    = 14,       /*!< External Input 4 Interrupt                       */
+    EINT5_IRQn                    = 15,       /*!< External Input 5 Interrupt                       */
+    GPA_IRQn                      = 16,       /*!< GPIO Port A Interrupt                            */
+    GPB_IRQn                      = 17,       /*!< GPIO Port B Interrupt                            */
+    GPC_IRQn                      = 18,       /*!< GPIO Port C Interrupt                            */
+    GPD_IRQn                      = 19,       /*!< GPIO Port D Interrupt                            */
+    GPF_IRQn                      = 21,       /*!< GPIO Port F Interrupt                            */
+    SPI0_IRQn                     = 23,       /*!< SPI0 Interrupt                                   */
+    BRAKE0_IRQn                   = 24,       /*!< BRAKE0 Interrupt                                 */
+    PWM0P0_IRQn                   = 25,       /*!< PWM0P0 Interrupt                                 */
+    PWM0P1_IRQn                   = 26,       /*!< PWM0P1 Interrupt                                 */
+    PWM0P2_IRQn                   = 27,       /*!< PWM0P2 Interrupt                                 */
+    TMR0_IRQn                     = 32,       /*!< Timer 0 Interrupt                                */
+    TMR1_IRQn                     = 33,       /*!< Timer 1 Interrupt                                */
+    TMR2_IRQn                     = 34,       /*!< Timer 2 Interrupt                                */
+    TMR3_IRQn                     = 35,       /*!< Timer 3 Interrupt                                */
+    UART0_IRQn                    = 36,       /*!< UART 0 Interrupt                                 */
+    UART1_IRQn                    = 37,       /*!< UART 1 Interrupt                                 */
+    I2C0_IRQn                     = 38,       /*!< I2C 0 Interrupt                                  */
+    PDMA0_IRQn                    = 40,       /*!< Peripheral DMA 0 Interrupt                       */
+    ADC0_IRQn                     = 42,       /*!< ADC0 Interrupt                                   */
+    ACMP01_IRQn                   = 44,       /*!< Analog Comparator 0 and 1 Interrupt              */
+    BPWM0_IRQn                    = 45,       /*!< BPWM0 Interrupt                                  */
+    LLSI0_IRQn                    = 46,       /*!< LLSI0 Interrupt                                  */
+    LLSI1_IRQn                    = 47,       /*!< LLSI1 Interrupt                                  */
+    CANFD00_IRQn                  = 48,       /*!< CANFD00 Interrupt                                */
+    CANFD01_IRQn                  = 49,       /*!< CANFD01 Interrupt                                */
+    CANFD10_IRQn                  = 50,       /*!< CANFD10 Interrupt                                */
+    CANFD11_IRQn                  = 51,       /*!< CANFD11 Interrupt                                */
+    CANFD20_IRQn                  = 52,       /*!< CANFD20 Interrupt                                */
+    CANFD21_IRQn                  = 53,       /*!< CANFD21 Interrupt                                */
+    USCI0_IRQn                    = 56,       /*!< USCI0 Interrupt                                  */
+    USCI1_IRQn                    = 57,       /*!< USCI1 Interrupt                                  */
+    CRC_IRQn                      = 78,       /*!< CRC Interrupt                                    */
 } IRQn_Type;
 
 
@@ -152,6 +156,7 @@ extern void SystemInit(void);
 #include "crc_reg.h"
 #include "i3cs_reg.h"
 #include "spdh_reg.h"
+#include "uuart_reg.h"
 
 
 /******************************************************************************/
@@ -162,84 +167,54 @@ extern void SystemInit(void);
   @{
  */
 /* Peripheral and SRAM base address */
-#define FLASH_BASE          ((     uint32_t)0x00000000)
-#define SRAM_BASE           ((     uint32_t)0x20000000)
-#define AHB_BASE            ((     uint32_t)0x50000000)
+#define FLASH_BASE           ((uint32_t)0x00000000)      /*!< Flash base address      */
+#define SRAM_BASE            ((uint32_t)0x20000000)      /*!< SRAM Base Address       */
+#define PERIPH_BASE          ((uint32_t)0x40000000)      /*!< Peripheral Base Address */
+
+/*!< AHB peripherals */
+#define SYS_BASE               (PERIPH_BASE + 0x00000UL)
+#define CLK_BASE               (PERIPH_BASE + 0x00200UL)
+#define NMI_BASE               (PERIPH_BASE + 0x00300UL)
+#define PA_BASE                (PERIPH_BASE + 0x04000UL)
+#define PB_BASE                (PERIPH_BASE + 0x04040UL)
+#define PC_BASE                (PERIPH_BASE + 0x04080UL)
+#define PD_BASE                (PERIPH_BASE + 0x040C0UL)
+#define PF_BASE                (PERIPH_BASE + 0x04140UL)
+#define GPIO_INT_BASE          (PERIPH_BASE + 0x04450UL)
+#define GPIO_PIN_DATA_BASE     (PERIPH_BASE + 0x04800UL)
+#define PDMA0_BASE             (PERIPH_BASE + 0x08000UL)
+#define FMC_BASE               (PERIPH_BASE + 0x0C000UL)
+#define CANFD0_BASE            (PERIPH_BASE + 0x20000UL)
+#define CANFD1_BASE            (PERIPH_BASE + 0x24000UL)
+#define CANFD2_BASE            (PERIPH_BASE + 0x28000UL)
+#define CRC_BASE               (PERIPH_BASE + 0x31000UL)
+
+/*!< APB0 peripherals */
+#define WDT_BASE               (PERIPH_BASE + 0x40000UL)
+#define TIMER0_BASE            (PERIPH_BASE + 0x50000UL)
+#define TIMER1_BASE            (PERIPH_BASE + 0x50100UL)
+#define BPWM0_BASE             (PERIPH_BASE + 0x5A000UL)
+#define PWM0_BASE              (PERIPH_BASE + 0x5C000UL)
+#define UART0_BASE             (PERIPH_BASE + 0x70000UL)
+#define I2C0_BASE              (PERIPH_BASE + 0x80000UL)
+#define LLSI0_BASE             (PERIPH_BASE + 0x94000UL)
+#define WWDT_BASE              (PERIPH_BASE + 0x96000UL)
+#define USCI0_BASE             (PERIPH_BASE + 0xD0000UL)
+
+/*!< APB1 peripherals */
+#define ADC0_BASE              (PERIPH_BASE + 0x43000UL)
+#define ACMP01_BASE            (PERIPH_BASE + 0x45000UL)
+#define TIMER2_BASE            (PERIPH_BASE + 0x51000UL)
+#define TIMER3_BASE            (PERIPH_BASE + 0x51100UL)
+#define SPI0_BASE              (PERIPH_BASE + 0x61000UL)
+#define UART1_BASE             (PERIPH_BASE + 0x71000UL)
+#define LLSI1_BASE             (PERIPH_BASE + 0x95000UL)
+#define USCI1_BASE             (PERIPH_BASE + 0xD1000UL)
+
+
 #define APB1_BASE           ((     uint32_t)0x40000000)
-#define APB2_BASE           ((     uint32_t)0x40100000)
-
-/* Peripheral memory map */
-#define GPIO_BASE           (AHB_BASE       + 0x4000)                   /*!< GPIO Base Address                                   */
-#define PA_BASE             (GPIO_BASE              )                   /*!< GPIO PA Base Address                                */
-#define PB_BASE             (GPIO_BASE      + 0x0040)                   /*!< GPIO PB Base Address                                */
-#define PC_BASE             (GPIO_BASE      + 0x0080)                   /*!< GPIO PC Base Address                                */
-#define PD_BASE             (GPIO_BASE      + 0x00C0)                   /*!< GPIO PD Base Address                                */
-#define PF_BASE             (GPIO_BASE      + 0x0140)                   /*!< GPIO PF Base Address                                */
-#define GPIO_DBCTL_BASE     (GPIO_BASE      + 0x0180)                   /*!< GPIO De-bounce Cycle Control Base Address           */
-#define GPIO_PIN_DATA_BASE  (GPIO_BASE      + 0x0200)                   /*!< GPIO Pin Data Input/Output Control Base Address     */
-
-#define UART0_BASE          (APB1_BASE      + 0x50000)                  /*!< UART0 Base Address                               */
-#define UART1_BASE          (APB2_BASE      + 0x50000)                  /*!< UART1 Base Address                               */
-#define UART2_BASE          (APB1_BASE      + 0x80000)                  /*!< UART2 Base Address                               */
-
-#define TIMER0_BASE         (APB1_BASE      + 0x10000)                  /*!< Timer0 Base Address                              */
-#define TIMER1_BASE         (APB1_BASE      + 0x10020)                  /*!< Timer1 Base Address                              */
-#define TIMER2_BASE         (APB2_BASE      + 0x10000)                  /*!< Timer2 Base Address                              */
-#define TIMER3_BASE         (APB2_BASE      + 0x10020)                  /*!< Timer3 Base Address                              */
-
-#define WDT_BASE            (APB1_BASE      + 0x4000)                   /*!< Watch Dog Timer Base Address                     */
-
-#define WWDT_BASE           (APB1_BASE      + 0x4100)                   /*!< Window Watch Dog Timer Base Address              */
-
-#define SPI0_BASE           (APB1_BASE      + 0x30000)                  /*!< SPI0 Base Address                                */
-#define SPI1_BASE           (APB1_BASE      + 0x34000)                  /*!< SPI1 Base Address                                */
-#define SPI2_BASE           (APB2_BASE      + 0x30000)                  /*!< SPI2 Base Address                                */
-
-#define I2C0_BASE           (APB1_BASE      + 0x20000)                  /*!< I2C0 Base Address                                */
-#define I2C1_BASE           (APB2_BASE      + 0x20000)                  /*!< I2C1 Base Address                                */
-#define I2C2_BASE           (APB1_BASE      + 0x24000)                  /*!< I2C2 Base Address                                */
-
-#define ADC_BASE            (APB1_BASE      + 0xE0000)                  /*!< ADC Base Address                                 */
-
-#define CLK_BASE            (AHB_BASE       + 0x00200)                  /*!< System Clock Controller Base Address             */
-
-#define SYS_BASE            (AHB_BASE       + 0x00000)                  /*!< System Global Controller Base Address            */
-
-#define INT_BASE            (AHB_BASE       + 0x00300)                  /*!< Interrupt Source Controller Base Address         */
-
-#define FMC_BASE            (AHB_BASE       + 0x0C000)                  /*!< Flash Memory Controller Base Address             */
-
-#define BPWM0_BASE          (APB1_BASE      + 0x40000)                  /*!< BPWM0 Base Address                               */
-#define BPWM1_BASE          (APB2_BASE      + 0x40000)                  /*!< BPWM1 Base Address                               */
-#define BPWM2_BASE          (APB1_BASE      + 0x44000)                  /*!< BPWM2 Base Address                               */
-#define BPWM3_BASE          (APB2_BASE      + 0x44000)                  /*!< BPWM3 Base Address                               */
-
-#define CRC_BASE            (AHB_BASE       + 0x18000)                  /*!< CRC Base Address                                 */
-
-#define USBD_BASE           (APB1_BASE      + 0x60000)                  /*!< USB Device Base Address                          */
-
-#define PDMA_BASE           (AHB_BASE       + 0x08000)                  /*!< PDMA Base Address                                */
-
-#define LLSI0_BASE          (APB1_BASE      + 0x54000)                  /*!< LLSI0 Base Address                               */
-#define LLSI1_BASE          (APB2_BASE      + 0x54000)                  /*!< LLSI1 Base Address                               */
-#define LLSI2_BASE          (APB1_BASE      + 0x54200)                  /*!< LLSI2 Base Address                               */
-#define LLSI3_BASE          (APB2_BASE      + 0x54200)                  /*!< LLSI3 Base Address                               */
-#define LLSI4_BASE          (APB1_BASE      + 0x54400)                  /*!< LLSI4 Base Address                               */
-#define LLSI5_BASE          (APB2_BASE      + 0x54400)                  /*!< LLSI5 Base Address                               */
-
-#define ACMP01_BASE         (APB1_BASE      + 0xD0000)                  /*!< ACMP01 Base Address                              */
-#define ACMP23_BASE         (APB2_BASE      + 0xD0000)                  /*!< ACMP23 Base Address                              */
-
-
 #define DAC0_BASE            (APB1_BASE     + 0xF0000UL)                 /*!< DAC0 Base Address                                */
-#define DAC1_BASE            (APB1_BASE     + 0xF0040UL)                 /*!< DAC1 Base Address                                */
-#define DAC2_BASE            (APB1_BASE     + 0xF0080UL)                 /*!< DAC2 Base Address                                */
-#define DAC3_BASE            (APB1_BASE     + 0xF00C0UL)                 /*!< DAC3 Base Address                                */
 
-#define I3CS0_BASE       	(APB1_BASE      + 0x70000)                   /*!< I3CS0 Base Address                               */
-#define I3CS1_BASE       	(APB2_BASE      + 0x70000)                   /*!< I3CS1 Base Address                               */
-
-#define SPDH_BASE            (APB1_BASE      + 0x90000)                  /*!< SPDH Base Address                               */
 
 /**@}*/ /* PERIPHERAL_BASE */
 
@@ -260,7 +235,6 @@ extern void SystemInit(void);
 
 #define UART0               ((UART_T *) UART0_BASE)                     /*!< UART0 Configuration Struct                       */
 #define UART1               ((UART_T *) UART1_BASE)                     /*!< UART1 Configuration Struct                       */
-#define UART2               ((UART_T *) UART2_BASE)                     /*!< UART2 Configuration Struct                       */
 
 #define TIMER0              ((TIMER_T *) TIMER0_BASE)                   /*!< TIMER0 Configuration Struct                      */
 #define TIMER1              ((TIMER_T *) TIMER1_BASE)                   /*!< TIMER1 Configuration Struct                      */
@@ -319,6 +293,9 @@ extern void SystemInit(void);
 #define I3CS1             	((I3CS_T *) I3CS1_BASE)                  	/*!< I3CS1 Configuration Struct                        */
 
 #define SPDH                ((SPDH_T *) SPDH_BASE)                      /*!< SPDH Configuration Struct                         */
+
+#define UUART0              ((UUART_T *) USCI0_BASE)                    /*!< UUART0 Configuration Struct                       */
+#define UUART1              ((UUART_T *) USCI1_BASE)                    /*!< UUART0 Configuration Struct                       */
 
 /**@}*/ /* end of group PMODULE */
 
@@ -420,11 +397,11 @@ typedef volatile unsigned short vu16;
 #include "wwdt.h"
 #include "uart.h"
 #include "crc.h"
-#include "usbd.h"
 #include "pdma.h"
 #include "llsi.h"
 #include "dac.h"
 #include "acmp.h"
 #include "i3cs.h"
 #include "ts.h"
+#include "usci_uart.h"
 #endif

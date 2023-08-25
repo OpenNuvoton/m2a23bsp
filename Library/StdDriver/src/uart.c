@@ -187,11 +187,6 @@ void UART_Open(UART_T* uart, uint32_t u32baudrate)
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
-        case UART2_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART2SEL_Msk) >> CLK_CLKSEL1_UART2SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART2DIV_Msk) >> CLK_CLKDIV0_UART2DIV_Pos;
-            break;
-
         default:
             return;
     }
@@ -307,11 +302,6 @@ void UART_SetLine_Config(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_wi
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
-        case UART2_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART2SEL_Msk) >> CLK_CLKSEL1_UART2SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART2DIV_Msk) >> CLK_CLKDIV0_UART2DIV_Pos;
-            break;
-
         default:
             return;
     }
@@ -391,11 +381,6 @@ void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Directi
         case UART1_BASE:
             u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
-            break;
-
-        case UART2_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART2SEL_Msk) >> CLK_CLKSEL1_UART2SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART2DIV_Msk) >> CLK_CLKDIV0_UART2DIV_Pos;
             break;
 
         default:

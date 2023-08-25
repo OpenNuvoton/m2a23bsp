@@ -1,13 +1,13 @@
 ;/**************************************************************************//**
-; * @file     startup_M2A23.s
+; * @file     startup_m2a23.s
 ; * @version  V3.00
 ; * @brief    M2A23 Series Startup Source File
 ; *
 ; * @copyright SPDX-License-Identifier: Apache-2.0
 ; * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
 ; ******************************************************************************/
-		
-		
+
+
 ;/*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
 ;*/
@@ -67,57 +67,61 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
 
                 ; External Interrupts
 
-                DCD     BOD_IRQHandler  
-                DCD     WDT_IRQHandler  
-                DCD     EINT024_IRQHandler
-                DCD     EINT135_IRQHandler
-                DCD     GPAB_IRQHandler 
-                DCD     GPCDF_IRQHandler
-                DCD     BPWM0_IRQHandler 
-                DCD     BPWM1_IRQHandler 
-                DCD     TMR0_IRQHandler 
-                DCD     TMR1_IRQHandler 
-                DCD     TMR2_IRQHandler 
-                DCD     TMR3_IRQHandler 
+                DCD     BOD_IRQHandler
+                DCD     IRC_IRQHandler
+                DCD     PWRWU_IRQHandler
+                DCD     RAMPE_IRQHandler
+                DCD     CKFAIL_IRQHandler
+                DCD     ISP_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     WDT_IRQHandler
+                DCD     WWDT_IRQHandler
+                DCD     EINT0_IRQHandler
+                DCD     EINT1_IRQHandler
+                DCD     EINT2_IRQHandler
+                DCD     EINT3_IRQHandler
+                DCD     EINT4_IRQHandler
+                DCD     EINT5_IRQHandler
+                DCD     GPA_IRQHandler
+                DCD     GPB_IRQHandler
+                DCD     GPC_IRQHandler
+                DCD     GPD_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     GPF_IRQHandler
+                DCD     SPI0_IRQHandler
+                DCD     BRAKE0_IRQHandler
+                DCD     PWM0P0_IRQHandler
+                DCD     PWM0P1_IRQHandler
+                DCD     PWM0P2_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     DEFAULT_IRQHandler
+                DCD     TMR0_IRQHandler
+                DCD     TMR1_IRQHandler
+                DCD     TMR2_IRQHandler
+                DCD     TMR3_IRQHandler
                 DCD     UART0_IRQHandler
                 DCD     UART1_IRQHandler
-                DCD     SPI0_IRQHandler 
-                DCD     SPI1_IRQHandler 
-                DCD     BPWM2_IRQHandler 
-                DCD     BPWM3_IRQHandler 
-                DCD     I2C0_IRQHandler 
-                DCD     I2C1_IRQHandler 
-                DCD     I2C2_IRQHandler 
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler 
-                DCD     USBD_IRQHandler  
-                DCD     DEFAULT_IRQHandler  
-                DCD     ACMP01_IRQHandler 
-                DCD     PDMA_IRQHandler
-                DCD     DEFAULT_IRQHandler 
-                DCD     PWRWU_IRQHandler
-                DCD     ADC_IRQHandler
-                DCD     CLKDIRC_IRQHandler  
-                DCD     DEFAULT_IRQHandler  
+                DCD     I2C0_IRQHandler
+                DCD     PDMA0_IRQHandler
+                DCD     ADC0_IRQHandler
+                DCD     ACMP01_IRQHandler
+                DCD     BPWM0_IRQHandler
                 DCD     LLSI0_IRQHandler
                 DCD     LLSI1_IRQHandler
-                DCD     LLSI2_IRQHandler
-                DCD     LLSI3_IRQHandler
-                DCD     LLSI4_IRQHandler
-                DCD     LLSI5_IRQHandler
+                DCD     CANFD00_IRQHandler
+                DCD     CANFD01_IRQHandler
+                DCD     CANFD10_IRQHandler
+                DCD     CANFD11_IRQHandler
+                DCD     CANFD20_IRQHandler
+                DCD     CANFD21_IRQHandler
                 DCD     DEFAULT_IRQHandler
                 DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     SPI2_IRQHandler
-                DCD     UART2_IRQHandler
-                DCD     I3CS0_IRQHandler
-                DCD     I3CS1_IRQHandler
-                DCD     DAC_IRQHandler
-                DCD     ACMP23_IRQHandler
-                DCD     TS_IRQHandler
-                DCD     SPDH_IRQHandler
-
+                DCD     USCI0_IRQHandler
+                DCD     USCI1_IRQHandler
+                DCD     CRC_IRQHandler
 
 __Vectors_End
 
@@ -179,89 +183,99 @@ SysTick_Handler PROC
 Default_Handler PROC
 
                 EXPORT  BOD_IRQHandler            [WEAK]
+                EXPORT  IRC_IRQHandler            [WEAK]
+                EXPORT  PWRWU_IRQHandler          [WEAK]
+                EXPORT  RAMPE_IRQHandler          [WEAK]
+                EXPORT  CKFAIL_IRQHandler         [WEAK]
+                EXPORT  ISP_IRQHandler            [WEAK]
                 EXPORT  WDT_IRQHandler            [WEAK]
-                EXPORT  EINT024_IRQHandler        [WEAK]
-                EXPORT  EINT135_IRQHandler        [WEAK]
-                EXPORT  GPAB_IRQHandler           [WEAK]
-                EXPORT  GPCDF_IRQHandler          [WEAK]
-                EXPORT  BPWM0_IRQHandler          [WEAK]
-                EXPORT  BPWM1_IRQHandler          [WEAK]
+                EXPORT  WWDT_IRQHandler           [WEAK]
+                EXPORT  EINT0_IRQHandler          [WEAK]
+                EXPORT  EINT1_IRQHandler          [WEAK]
+                EXPORT  EINT2_IRQHandler          [WEAK]
+                EXPORT  EINT3_IRQHandler          [WEAK]
+                EXPORT  EINT4_IRQHandler          [WEAK]
+                EXPORT  EINT5_IRQHandler          [WEAK]
+                EXPORT  GPA_IRQHandler            [WEAK]
+                EXPORT  GPB_IRQHandler            [WEAK]
+                EXPORT  GPC_IRQHandler            [WEAK]
+                EXPORT  GPD_IRQHandler            [WEAK]
+                EXPORT  GPF_IRQHandler            [WEAK]
+                EXPORT  SPI0_IRQHandler           [WEAK]
+                EXPORT  BRAKE0_IRQHandler         [WEAK]
+                EXPORT  PWM0P0_IRQHandler         [WEAK]
+                EXPORT  PWM0P1_IRQHandler         [WEAK]
+                EXPORT  PWM0P2_IRQHandler         [WEAK]
                 EXPORT  TMR0_IRQHandler           [WEAK]
                 EXPORT  TMR1_IRQHandler           [WEAK]
                 EXPORT  TMR2_IRQHandler           [WEAK]
                 EXPORT  TMR3_IRQHandler           [WEAK]
                 EXPORT  UART0_IRQHandler          [WEAK]
                 EXPORT  UART1_IRQHandler          [WEAK]
-                EXPORT  SPI0_IRQHandler           [WEAK]
-                EXPORT  SPI1_IRQHandler           [WEAK]
-                EXPORT  BPWM2_IRQHandler          [WEAK]
-                EXPORT  BPWM3_IRQHandler          [WEAK]
                 EXPORT  I2C0_IRQHandler           [WEAK]
-                EXPORT  I2C1_IRQHandler           [WEAK]
-                EXPORT  I2C2_IRQHandler           [WEAK]
+                EXPORT  PDMA0_IRQHandler          [WEAK]
+                EXPORT  ADC0_IRQHandler           [WEAK]
                 EXPORT  ACMP01_IRQHandler         [WEAK]
-                EXPORT  USBD_IRQHandler           [WEAK]
-                EXPORT  PDMA_IRQHandler           [WEAK]
-                EXPORT  PWRWU_IRQHandler          [WEAK]
-                EXPORT  ADC_IRQHandler            [WEAK]
-                EXPORT  CLKDIRC_IRQHandler        [WEAK]
+                EXPORT  BPWM0_IRQHandler          [WEAK]
                 EXPORT  LLSI0_IRQHandler          [WEAK]
                 EXPORT  LLSI1_IRQHandler          [WEAK]
-                EXPORT  LLSI2_IRQHandler          [WEAK]
-                EXPORT  LLSI3_IRQHandler          [WEAK]
-                EXPORT  LLSI4_IRQHandler          [WEAK]
-                EXPORT  LLSI5_IRQHandler          [WEAK]
-                EXPORT  SPI2_IRQHandler           [WEAK]
-                EXPORT  UART2_IRQHandler          [WEAK]
-                EXPORT  I3CS0_IRQHandler          [WEAK]
-                EXPORT  I3CS1_IRQHandler          [WEAK]
-                EXPORT  DAC_IRQHandler            [WEAK]
-                EXPORT  ACMP23_IRQHandler         [WEAK]
-                EXPORT  TS_IRQHandler             [WEAK]
-                EXPORT  SPDH_IRQHandler           [WEAK]
+                EXPORT  CANFD00_IRQHandler        [WEAK]
+                EXPORT  CANFD01_IRQHandler        [WEAK]
+                EXPORT  CANFD10_IRQHandler        [WEAK]
+                EXPORT  CANFD11_IRQHandler        [WEAK]
+                EXPORT  CANFD20_IRQHandler        [WEAK]
+                EXPORT  CANFD21_IRQHandler        [WEAK]
+                EXPORT  USCI0_IRQHandler          [WEAK]
+                EXPORT  USCI1_IRQHandler          [WEAK]
+                EXPORT  CRC_IRQHandler            [WEAK]
                 EXPORT  DEFAULT_IRQHandler        [WEAK]
 
 BOD_IRQHandler
+IRC_IRQHandler
+PWRWU_IRQHandler
+RAMPE_IRQHandler
+CKFAIL_IRQHandler
+ISP_IRQHandler
 WDT_IRQHandler
-EINT024_IRQHandler
-EINT135_IRQHandler
-GPAB_IRQHandler
-GPCDF_IRQHandler
-BPWM0_IRQHandler
-BPWM1_IRQHandler
+WWDT_IRQHandler
+EINT0_IRQHandler
+EINT1_IRQHandler
+EINT2_IRQHandler
+EINT3_IRQHandler
+EINT4_IRQHandler
+EINT5_IRQHandler
+GPA_IRQHandler
+GPB_IRQHandler
+GPC_IRQHandler
+GPD_IRQHandler
+GPF_IRQHandler
+SPI0_IRQHandler
+BRAKE0_IRQHandler
+PWM0P0_IRQHandler
+PWM0P1_IRQHandler
+PWM0P2_IRQHandler
 TMR0_IRQHandler
 TMR1_IRQHandler
 TMR2_IRQHandler
 TMR3_IRQHandler
 UART0_IRQHandler
 UART1_IRQHandler
-SPI0_IRQHandler
-SPI1_IRQHandler
-BPWM2_IRQHandler
-BPWM3_IRQHandler
 I2C0_IRQHandler
-I2C1_IRQHandler
-I2C2_IRQHandler
-USBD_IRQHandler
+PDMA0_IRQHandler
+ADC0_IRQHandler
 ACMP01_IRQHandler
-PDMA_IRQHandler
-PWRWU_IRQHandler
-ADC_IRQHandler
-CLKDIRC_IRQHandler
+BPWM0_IRQHandler
 LLSI0_IRQHandler
 LLSI1_IRQHandler
-LLSI2_IRQHandler
-LLSI3_IRQHandler
-LLSI4_IRQHandler
-LLSI5_IRQHandler
-SPI2_IRQHandler
-UART2_IRQHandler
-I3CS0_IRQHandler
-I3CS1_IRQHandler
-DAC_IRQHandler
-ACMP23_IRQHandler
-TS_IRQHandler
-SPDH_IRQHandler
+CANFD00_IRQHandler
+CANFD01_IRQHandler
+CANFD10_IRQHandler
+CANFD11_IRQHandler
+CANFD20_IRQHandler
+CANFD21_IRQHandler
+USCI0_IRQHandler
+USCI1_IRQHandler
+CRC_IRQHandler
 DEFAULT_IRQHandler
                 B       .
                 ENDP
