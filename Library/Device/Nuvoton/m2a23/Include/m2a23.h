@@ -94,7 +94,7 @@ typedef enum IRQn
     CANFD21_IRQn                  = 53,       /*!< CANFD21 Interrupt                                */
     USCI0_IRQn                    = 56,       /*!< USCI0 Interrupt                                  */
     USCI1_IRQn                    = 57,       /*!< USCI1 Interrupt                                  */
-    CRC_IRQn                      = 78,       /*!< CRC Interrupt                                    */
+    CRC_IRQn                      = 58,       /*!< CRC Interrupt                                    */
 } IRQn_Type;
 
 
@@ -231,7 +231,7 @@ extern void SystemInit(void);
 #define PC                  ((GPIO_T *) PC_BASE)                        /*!< GPIO PORTC Configuration Struct                        */
 #define PD                  ((GPIO_T *) PD_BASE)                        /*!< GPIO PORTD Configuration Struct                        */
 #define PF                  ((GPIO_T *) PF_BASE)                        /*!< GPIO PORTF Configuration Struct                        */
-#define GPIO                ((GPIO_DBCTL_T *) GPIO_DBCTL_BASE)          /*!< Interrupt De-bounce Cycle Control Configuration Struct */
+#define GPIO                ((GPIO_INT_T *) GPIO_INT_BASE)              /*!< Interrupt Control Configuration Struct                 */
 
 #define UART0               ((UART_T *) UART0_BASE)                     /*!< UART0 Configuration Struct                       */
 #define UART1               ((UART_T *) UART1_BASE)                     /*!< UART1 Configuration Struct                       */

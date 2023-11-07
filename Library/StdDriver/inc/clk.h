@@ -29,12 +29,14 @@ extern "C"
   @{
 */
 
+#define FREQ_12MHZ         12000000
+#define FREQ_24MHZ         24000000
 #define FREQ_25MHZ         25000000
+#define FREQ_48MHZ         48000000
 #define FREQ_50MHZ         50000000
 #define FREQ_72MHZ         72000000
 #define FREQ_100MHZ        100000000
 #define FREQ_144MHZ        144000000
-
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -44,22 +46,29 @@ extern "C"
 #define CLK_CLKSEL0_HCLKSEL_LXT        (0x01UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as LXT */
 #define CLK_CLKSEL0_HCLKSEL_PLL_DIV2   (0x02UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as PLL/2 */
 #define CLK_CLKSEL0_HCLKSEL_LIRC       (0x03UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as LIRC */
-#define CLK_CLKSEL0_HCLKSEL_HIRC       (0x04UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as HIRC */
-#define CLK_CLKSEL0_HCLKSEL_HIRC_DIV2  (0x07UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as HIRC/2 */
+#define CLK_CLKSEL0_HCLKSEL_HIRC       (0x07UL<<CLK_CLKSEL0_HCLKSEL_Pos) /*!< Setting HCLK clock source as HIRC */
 
 #define CLK_CLKSEL0_STCLKSEL_HXT       (0x00UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as HXT */
 #define CLK_CLKSEL0_STCLKSEL_LXT       (0x01UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as LXT */
 #define CLK_CLKSEL0_STCLKSEL_HXT_DIV2  (0x02UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as HXT */
 #define CLK_CLKSEL0_STCLKSEL_HCLK_DIV2 (0x03UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as HCLK/2 */
-#define CLK_CLKSEL0_STCLKSEL_HIRC_DIV4 (0x07UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as HIRC/4 */
+#define CLK_CLKSEL0_STCLKSEL_HIRC_DIV2 (0x07UL<<CLK_CLKSEL0_STCLKSEL_Pos) /*!< Setting SysTick clock source as HIRC/2 */
 #define CLK_CLKSEL0_STCLKSEL_HCLK      (0x01UL<<SysTick_CTRL_CLKSOURCE_Pos) /*!< Setting SysTick clock source as HCLK */
 
-#define CLK_CLKSEL0_PCLK0SEL_HCLK      (0x00UL<<CLK_CLKSEL0_PCLK0SEL_Pos) /*!< Setting PCLK0 clock source as HCLK */
-#define CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2 (0x01UL<<CLK_CLKSEL0_PCLK0SEL_Pos) /*!< Setting PCLK0 clock source as HCLK/2 */
+#define CLK_CLKSEL0_CANFD0SEL_HXT        (0x0UL << CLK_CLKSEL0_CANFD0SEL_Pos)   /*!< Select CANFD0 clock source from HXT */
+#define CLK_CLKSEL0_CANFD0SEL_PLL_DIV2   (0x1UL << CLK_CLKSEL0_CANFD0SEL_Pos)   /*!< Select CANFD0 clock source from PLL/2 */
+#define CLK_CLKSEL0_CANFD0SEL_HCLK       (0x2UL << CLK_CLKSEL0_CANFD0SEL_Pos)   /*!< Select CANFD0 clock source from HCLK */
+#define CLK_CLKSEL0_CANFD0SEL_HIRC       (0x3UL << CLK_CLKSEL0_CANFD0SEL_Pos)   /*!< Select CANFD0 clock source from HIRC */
 
-#define CLK_CLKSEL0_PCLK1SEL_HCLK      (0x00UL<<CLK_CLKSEL0_PCLK1SEL_Pos) /*!< Setting PCLK1 clock source as HCLK */
-#define CLK_CLKSEL0_PCLK1SEL_HCLK_DIV2 (0x01UL<<CLK_CLKSEL0_PCLK1SEL_Pos) /*!< Setting PCLK1 clock source as HCLK/2 */
+#define CLK_CLKSEL0_CANFD1SEL_HXT        (0x0UL << CLK_CLKSEL0_CANFD1SEL_Pos)   /*!< Select CANFD1 clock source from HXT */
+#define CLK_CLKSEL0_CANFD1SEL_PLL_DIV2   (0x1UL << CLK_CLKSEL0_CANFD1SEL_Pos)   /*!< Select CANFD1 clock source from PLL/2 */
+#define CLK_CLKSEL0_CANFD1SEL_HCLK       (0x2UL << CLK_CLKSEL0_CANFD1SEL_Pos)   /*!< Select CANFD1 clock source from HCLK */
+#define CLK_CLKSEL0_CANFD1SEL_HIRC       (0x3UL << CLK_CLKSEL0_CANFD1SEL_Pos)   /*!< Select CANFD1 clock source from HIRC */
 
+#define CLK_CLKSEL0_CANFD2SEL_HXT        (0x0UL << CLK_CLKSEL0_CANFD2SEL_Pos)   /*!< Select CANFD2 clock source from HXT */
+#define CLK_CLKSEL0_CANFD2SEL_PLL_DIV2   (0x1UL << CLK_CLKSEL0_CANFD2SEL_Pos)   /*!< Select CANFD2 clock source from PLL/2 */
+#define CLK_CLKSEL0_CANFD2SEL_HCLK       (0x2UL << CLK_CLKSEL0_CANFD2SEL_Pos)   /*!< Select CANFD2 clock source from HCLK */
+#define CLK_CLKSEL0_CANFD2SEL_HIRC       (0x3UL << CLK_CLKSEL0_CANFD2SEL_Pos)   /*!< Select CANFD2 clock source from HIRC */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL1 constant definitions.                                                                          */
@@ -68,111 +77,97 @@ extern "C"
 #define CLK_CLKSEL1_WDTSEL_HCLK_DIV2048  (0x2UL<<CLK_CLKSEL1_WDTSEL_Pos)  /*!< Setting WDT clock source as HCLK/2048 */
 #define CLK_CLKSEL1_WDTSEL_LIRC          (0x3UL<<CLK_CLKSEL1_WDTSEL_Pos)  /*!< Setting WDT clock source as LIRC */
 
-#define CLK_CLKSEL1_ADCSEL_HXT           (0x0UL<<CLK_CLKSEL1_ADCSEL_Pos)  /*!< Setting ADC clock source as HXT */
-#define CLK_CLKSEL1_ADCSEL_PLL           (0x1UL<<CLK_CLKSEL1_ADCSEL_Pos)  /*!< Setting ADC clock source as PLL */
-#define CLK_CLKSEL1_ADCSEL_PCLK0         (0x2UL<<CLK_CLKSEL1_ADCSEL_Pos)  /*!< Setting ADC clock source as PCLK0 */
-#define CLK_CLKSEL1_ADCSEL_HIRC_DIV2     (0x3UL<<CLK_CLKSEL1_ADCSEL_Pos)  /*!< Setting ADC clock source as HIRC/2 */
+#define CLK_CLKSEL1_WWDTSEL_HCLK_DIV2048 (0x2UL << CLK_CLKSEL1_WWDTSEL_Pos) /*!< Select WWDT clock source from HCLK/2048 */
+#define CLK_CLKSEL1_WWDTSEL_LIRC         (0x3UL << CLK_CLKSEL1_WWDTSEL_Pos) /*!< Select WWDT clock source from LIRC */
 
-#define CLK_CLKSEL1_BPWM0SEL_PLL         (0x0UL<<CLK_CLKSEL1_BPWM0SEL_Pos)  /*!< Setting BPWM0 clock source as PLL */
-#define CLK_CLKSEL1_BPWM0SEL_PCLK0       (0x1UL<<CLK_CLKSEL1_BPWM0SEL_Pos)  /*!< Setting BPWM0 clock source as PCLK0 */
-
-#define CLK_CLKSEL1_BPWM1SEL_PLL         (0x0UL<<CLK_CLKSEL1_BPWM1SEL_Pos)  /*!< Setting BPWM1 clock source as PLL */
-#define CLK_CLKSEL1_BPWM1SEL_PCLK1       (0x1UL<<CLK_CLKSEL1_BPWM1SEL_Pos)  /*!< Setting BPWM1 clock source as PCLK1 */
-
-#define CLK_CLKSEL1_BPWM2SEL_PLL         (0x0UL<<CLK_CLKSEL1_BPWM2SEL_Pos)  /*!< Setting BPWM2 clock source as PLL */
-#define CLK_CLKSEL1_BPWM2SEL_PCLK0       (0x1UL<<CLK_CLKSEL1_BPWM2SEL_Pos)  /*!< Setting BPWM2 clock source as PCLK0 */
-
-#define CLK_CLKSEL1_BPWM3SEL_PLL         (0x0UL<<CLK_CLKSEL1_BPWM3SEL_Pos)  /*!< Setting BPWM3 clock source as PLL */
-#define CLK_CLKSEL1_BPWM3SEL_PCLK1       (0x1UL<<CLK_CLKSEL1_BPWM3SEL_Pos)  /*!< Setting BPWM3 clock source as PCLK1 */
+#define CLK_CLKSEL1_CLKOSEL_HXT          (0x0UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from HXT */
+#define CLK_CLKSEL1_CLKOSEL_LXT          (0x1UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from LXT */
+#define CLK_CLKSEL1_CLKOSEL_HCLK         (0x2UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from HCLK */
+#define CLK_CLKSEL1_CLKOSEL_LIRC         (0x3UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from LIRC */
+#define CLK_CLKSEL1_CLKOSEL_PLL_DIV2     (0x4UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from PLL/2 */
+#define CLK_CLKSEL1_CLKOSEL_HIRC         (0x5UL << CLK_CLKSEL1_CLKOSEL_Pos) /*!< Select CLKO clock source from HIRC */
 
 #define CLK_CLKSEL1_TMR0SEL_HXT          (0x0UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as HXT */
 #define CLK_CLKSEL1_TMR0SEL_LXT          (0x1UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as LXT */
 #define CLK_CLKSEL1_TMR0SEL_PCLK0        (0x2UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as PCLK0 */
 #define CLK_CLKSEL1_TMR0SEL_EXT_TRG      (0x3UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as external trigger */
 #define CLK_CLKSEL1_TMR0SEL_LIRC         (0x5UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as LIRC */
-#define CLK_CLKSEL1_TMR0SEL_HIRC_DIV2    (0x7UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as HIRC/2 */
+#define CLK_CLKSEL1_TMR0SEL_HIRC         (0x7UL<<CLK_CLKSEL1_TMR0SEL_Pos) /*!< Setting Timer 0 clock source as HIRC */
 
 #define CLK_CLKSEL1_TMR1SEL_HXT          (0x0UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as HXT */
 #define CLK_CLKSEL1_TMR1SEL_LXT          (0x1UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as LXT */
 #define CLK_CLKSEL1_TMR1SEL_PCLK0        (0x2UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as PCLK0 */
 #define CLK_CLKSEL1_TMR1SEL_EXT_TRG      (0x3UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as external trigger */
 #define CLK_CLKSEL1_TMR1SEL_LIRC         (0x5UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as LIRC */
-#define CLK_CLKSEL1_TMR1SEL_HIRC_DIV2    (0x7UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as HIRC/2 */
+#define CLK_CLKSEL1_TMR1SEL_HIRC         (0x7UL<<CLK_CLKSEL1_TMR1SEL_Pos) /*!< Setting Timer 1 clock source as HIRC */
 
 #define CLK_CLKSEL1_TMR2SEL_HXT          (0x0UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as HXT */
 #define CLK_CLKSEL1_TMR2SEL_LXT          (0x1UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as LXT */
 #define CLK_CLKSEL1_TMR2SEL_PCLK1        (0x2UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as PCLK1 */
 #define CLK_CLKSEL1_TMR2SEL_EXT_TRG      (0x3UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as external trigger */
 #define CLK_CLKSEL1_TMR2SEL_LIRC         (0x5UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as LIRC */
-#define CLK_CLKSEL1_TMR2SEL_HIRC_DIV2    (0x7UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as HIRC_DIV2 */
+#define CLK_CLKSEL1_TMR2SEL_HIRC         (0x7UL<<CLK_CLKSEL1_TMR2SEL_Pos) /*!< Setting Timer 2 clock source as HIRC */
 
 #define CLK_CLKSEL1_TMR3SEL_HXT          (0x0UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as HXT */
 #define CLK_CLKSEL1_TMR3SEL_LXT          (0x1UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as LXT */
 #define CLK_CLKSEL1_TMR3SEL_PCLK1        (0x2UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as PCLK1 */
 #define CLK_CLKSEL1_TMR3SEL_EXT_TRG      (0x3UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as external trigger */
 #define CLK_CLKSEL1_TMR3SEL_LIRC         (0x5UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as LIRC */
-#define CLK_CLKSEL1_TMR3SEL_HIRC_DIV2    (0x7UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as HIRC_DIV2 */
-
-#define CLK_CLKSEL1_UART0SEL_HXT         (0x0UL<<CLK_CLKSEL1_UART0SEL_Pos) /*!< Setting UART0 clock source as HXT */
-#define CLK_CLKSEL1_UART0SEL_PLL_DIV2    (0x1UL<<CLK_CLKSEL1_UART0SEL_Pos) /*!< Setting UART0 clock source as PLL/2 */
-#define CLK_CLKSEL1_UART0SEL_LXT         (0x2UL<<CLK_CLKSEL1_UART0SEL_Pos) /*!< Setting UART0 clock source as LXT */
-#define CLK_CLKSEL1_UART0SEL_HIRC_DIV2   (0x3UL<<CLK_CLKSEL1_UART0SEL_Pos) /*!< Setting UART0 clock source as HIRC/2 */
-
-#define CLK_CLKSEL1_UART1SEL_HXT         (0x0UL<<CLK_CLKSEL1_UART1SEL_Pos) /*!< Setting UART1 clock source as HXT */
-#define CLK_CLKSEL1_UART1SEL_PLL_DIV2    (0x1UL<<CLK_CLKSEL1_UART1SEL_Pos) /*!< Setting UART1 clock source as PLL/2 */
-#define CLK_CLKSEL1_UART1SEL_LXT         (0x2UL<<CLK_CLKSEL1_UART1SEL_Pos) /*!< Setting UART1 clock source as LXT */
-#define CLK_CLKSEL1_UART1SEL_HIRC_DIV2   (0x3UL<<CLK_CLKSEL1_UART1SEL_Pos) /*!< Setting UART1 clock source as HIRC/2 */
-
-#define CLK_CLKSEL1_UART2SEL_HXT         (0x0UL<<CLK_CLKSEL1_UART2SEL_Pos) /*!< Setting UART2 clock source as HXT */
-#define CLK_CLKSEL1_UART2SEL_PLL_DIV2    (0x1UL<<CLK_CLKSEL1_UART2SEL_Pos) /*!< Setting UART2 clock source as PLL/2 */
-#define CLK_CLKSEL1_UART2SEL_LXT         (0x2UL<<CLK_CLKSEL1_UART2SEL_Pos) /*!< Setting UART2 clock source as LXT */
-#define CLK_CLKSEL1_UART2SEL_HIRC_DIV2   (0x3UL<<CLK_CLKSEL1_UART2SEL_Pos) /*!< Setting UART2 clock source as HIRC/2 */
+#define CLK_CLKSEL1_TMR3SEL_HIRC         (0x7UL<<CLK_CLKSEL1_TMR3SEL_Pos) /*!< Setting Timer 3 clock source as HIRC */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL2 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define CLK_CLKSEL2_CLKOSEL_HXT             (0x0UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as HXT */
-#define CLK_CLKSEL2_CLKOSEL_LXT             (0x1UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as LXT */
-#define CLK_CLKSEL2_CLKOSEL_HCLK            (0x2UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as HCLK */
-#define CLK_CLKSEL2_CLKOSEL_HIRC_DIV2       (0x3UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as HIRC/2 */
-#define CLK_CLKSEL2_CLKOSEL_SOF             (0x4UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as SOF */
-#define CLK_CLKSEL2_CLKOSEL_HIRC            (0x5UL<<CLK_CLKSEL2_CLKOSEL_Pos) /*!< Setting CLKO clock source as HIRC */
+#define CLK_CLKSEL2_UART0SEL_HXT         (0x0UL<<CLK_CLKSEL2_UART0SEL_Pos)  /*!< Setting UART0 clock source as HXT */
+#define CLK_CLKSEL2_UART0SEL_PLL         (0x1UL<<CLK_CLKSEL2_UART0SEL_Pos)  /*!< Setting UART0 clock source as PLL */
+#define CLK_CLKSEL2_UART0SEL_LXT         (0x2UL<<CLK_CLKSEL2_UART0SEL_Pos)  /*!< Setting UART0 clock source as LXT */
+#define CLK_CLKSEL2_UART0SEL_HIRC        (0x3UL<<CLK_CLKSEL2_UART0SEL_Pos)  /*!< Setting UART0 clock source as HIRC */
 
-#define CLK_CLKSEL2_WWDTSEL_HCLK_DIV2048    (0x2UL<<CLK_CLKSEL2_WWDTSEL_Pos) /*!< Setting WWDT clock source as HCLK/2048 */
-#define CLK_CLKSEL2_WWDTSEL_LIRC            (0x3UL<<CLK_CLKSEL2_WWDTSEL_Pos) /*!< Setting WWDT clock source as LIRC */
+#define CLK_CLKSEL2_UART1SEL_HXT         (0x0UL<<CLK_CLKSEL2_UART1SEL_Pos)  /*!< Setting UART1 clock source as HXT */
+#define CLK_CLKSEL2_UART1SEL_PLL         (0x1UL<<CLK_CLKSEL2_UART1SEL_Pos)  /*!< Setting UART1 clock source as PLL */
+#define CLK_CLKSEL2_UART1SEL_LXT         (0x2UL<<CLK_CLKSEL2_UART1SEL_Pos)  /*!< Setting UART1 clock source as LXT */
+#define CLK_CLKSEL2_UART1SEL_HIRC        (0x3UL<<CLK_CLKSEL2_UART1SEL_Pos)  /*!< Setting UART1 clock source as HIRC */
 
-#define CLK_CLKSEL2_SPI0SEL_HXT             (0x0UL<<CLK_CLKSEL2_SPI0SEL_Pos) /*!< Setting SPI0 clock source as HXT */
-#define CLK_CLKSEL2_SPI0SEL_PLL_DIV2        (0x1UL<<CLK_CLKSEL2_SPI0SEL_Pos) /*!< Setting SPI0 clock source as PLL/2 */
-#define CLK_CLKSEL2_SPI0SEL_PCLK0           (0x2UL<<CLK_CLKSEL2_SPI0SEL_Pos) /*!< Setting SPI0 clock source as PCLK0 */
-#define CLK_CLKSEL2_SPI0SEL_HIRC            (0x3UL<<CLK_CLKSEL2_SPI0SEL_Pos) /*!< Setting SPI0 clock source as HIRC */
-
-#define CLK_CLKSEL2_SPI1SEL_HXT             (0x0UL<<CLK_CLKSEL2_SPI1SEL_Pos) /*!< Setting SPI1 clock source as HXT */
-#define CLK_CLKSEL2_SPI1SEL_PLL_DIV2        (0x1UL<<CLK_CLKSEL2_SPI1SEL_Pos) /*!< Setting SPI1 clock source as PLL/2 */
-#define CLK_CLKSEL2_SPI1SEL_PCLK0           (0x2UL<<CLK_CLKSEL2_SPI1SEL_Pos) /*!< Setting SPI1 clock source as PCLK0 */
-#define CLK_CLKSEL2_SPI1SEL_HIRC            (0x3UL<<CLK_CLKSEL2_SPI1SEL_Pos) /*!< Setting SPI1 clock source as HIRC */
-
-#define CLK_CLKSEL2_SPI2SEL_HXT             (0x0UL<<CLK_CLKSEL2_SPI2SEL_Pos) /*!< Setting SPI2 clock source as HXT */
-#define CLK_CLKSEL2_SPI2SEL_PLL_DIV2        (0x1UL<<CLK_CLKSEL2_SPI2SEL_Pos) /*!< Setting SPI2 clock source as PLL/2 */
-#define CLK_CLKSEL2_SPI2SEL_PCLK1           (0x2UL<<CLK_CLKSEL2_SPI2SEL_Pos) /*!< Setting SPI2 clock source as PCLK1 */
-#define CLK_CLKSEL2_SPI2SEL_HIRC            (0x3UL<<CLK_CLKSEL2_SPI2SEL_Pos) /*!< Setting SPI2 clock source as HIRC */
+#define CLK_CLKSEL2_SPI0SEL_HXT          (0x0UL<<CLK_CLKSEL2_SPI0SEL_Pos)   /*!< Setting SPI0 clock source as HXT */
+#define CLK_CLKSEL2_SPI0SEL_PLL_DIV2     (0x1UL<<CLK_CLKSEL2_SPI0SEL_Pos)   /*!< Setting SPI0 clock source as PLL/2 */
+#define CLK_CLKSEL2_SPI0SEL_PCLK1        (0x2UL<<CLK_CLKSEL2_SPI0SEL_Pos)   /*!< Setting SPI0 clock source as PCLK1 */
+#define CLK_CLKSEL2_SPI0SEL_HIRC         (0x3UL<<CLK_CLKSEL2_SPI0SEL_Pos)   /*!< Setting SPI0 clock source as HIRC */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL3 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define CLK_CLKSEL3_USBDSEL_HIRC        (0x0UL<<CLK_CLKSEL3_USBDSEL_Pos) /*!< Setting USBD clock source as HIRC */
-#define CLK_CLKSEL3_USBDSEL_PLL         (0x1UL<<CLK_CLKSEL3_USBDSEL_Pos) /*!< Setting USBD clock source as PLL */
+#define CLK_CLKSEL3_ADCSEL_PLL         (0x1UL<<CLK_CLKSEL3_ADCSEL_Pos) /*!< Setting ADC clock source as PLL */
+#define CLK_CLKSEL3_ADCSEL_HCLK        (0x2UL<<CLK_CLKSEL3_ADCSEL_Pos) /*!< Setting ADC clock source as HCLK */
+#define CLK_CLKSEL3_ADCSEL_HIRC        (0x3UL<<CLK_CLKSEL3_ADCSEL_Pos) /*!< Setting ADC clock source as HIRC */
 
+#define CLK_CLKSEL3_PWM0SEL_PLL        (0x0UL<<CLK_CLKSEL3_PWM0SEL_Pos) /*!< Setting PWM0 clock source as PLL */
+#define CLK_CLKSEL3_PWM0SEL_PCLK0      (0x1UL<<CLK_CLKSEL3_PWM0SEL_Pos) /*!< Setting PWM0 clock source as PCLK0 */
+
+#define CLK_CLKSEL3_BPWM0SEL_PLL       (0x0UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting PWM0 clock source as PLL */
+#define CLK_CLKSEL3_BPWM0SEL_PCLK0     (0x1UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting PWM0 clock source as PCLK0 */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKDIV0 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
 #define CLK_CLKDIV0_HCLK(x)     (((x)-1) << CLK_CLKDIV0_HCLKDIV_Pos)  /*!< CLKDIV0 Setting for HCLK clock divider. It could be 1~16 */
-#define CLK_CLKDIV0_USB(x)      (((x)-1) << CLK_CLKDIV0_USBDIV_Pos)   /*!< CLKDIV0 Setting for USB clock divider. It could be 1~16 */
 #define CLK_CLKDIV0_UART0(x)    (((x)-1) << CLK_CLKDIV0_UART0DIV_Pos) /*!< CLKDIV0 Setting for UART0 clock divider. It could be 1~16 */
 #define CLK_CLKDIV0_UART1(x)    (((x)-1) << CLK_CLKDIV0_UART1DIV_Pos) /*!< CLKDIV0 Setting for UART1 clock divider. It could be 1~16 */
-#define CLK_CLKDIV0_UART2(x)    (((x)-1) << CLK_CLKDIV0_UART2DIV_Pos) /*!< CLKDIV0 Setting for UART2 clock divider. It could be 1~16 */
 #define CLK_CLKDIV0_ADC(x)      (((x)-1) << CLK_CLKDIV0_ADCDIV_Pos)   /*!< CLKDIV0 Setting for ADC clock divider. It could be 1~256 */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*  CLKDIV1 constant definitions.                                                                          */
+/*---------------------------------------------------------------------------------------------------------*/
+#define CLK_CLKDIV1_CANFD0(x)   (((x) - 1UL) << CLK_CLKDIV1_CANFD0DIV_Pos) /*!< CLKDIV1 Setting for CANFD0 clock divider. It could be 1~16 */
+#define CLK_CLKDIV1_CANFD1(x)   (((x) - 1UL) << CLK_CLKDIV1_CANFD1DIV_Pos) /*!< CLKDIV1 Setting for CANFD1 clock divider. It could be 1~16 */
+#define CLK_CLKDIV1_CANFD2(x)   (((x) - 1UL) << CLK_CLKDIV1_CANFD2DIV_Pos) /*!< CLKDIV1 Setting for CANFD2 clock divider. It could be 1~16 */
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  PCLKDIV constant definitions.                                                                          */
+/*---------------------------------------------------------------------------------------------------------*/
+#define CLK_PCLKDIV_APB0DIV_DIV1         (0x0UL << CLK_PCLKDIV_APB0DIV_Pos)  /*!< PCLKDIV Setting for PCLK0 = HCLK \hideinitializer */
+#define CLK_PCLKDIV_APB0DIV_DIV2         (0x1UL << CLK_PCLKDIV_APB0DIV_Pos)  /*!< PCLKDIV Setting for PCLK0 = 1/2 HCLK \hideinitializer */
+#define CLK_PCLKDIV_APB1DIV_DIV1         (0x0UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = HCLK \hideinitializer */
+#define CLK_PCLKDIV_APB1DIV_DIV2         (0x1UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = 1/2 HCLK \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  PLLCTL constant definitions. PLL = FIN * NF / NR / NO                                                  */
@@ -225,7 +220,7 @@ extern "C"
 #define MODULE_IP_EN_Pos_ENC(x)     (((x) & 0x1f) <<  0)   /*!< AHBCLK/APBCLK offset on MODULE index */
 
 
-//AHBCLK
+/* AHBCLK */
 #define PDMA_MODULE    (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_PDMACKEN_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< PDMA Module */
@@ -234,13 +229,41 @@ extern "C"
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< ISP Module */
 
+#define ST_MODULE      (MODULE_APBCLK_ENC( 0UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_AHBCLK0_STCKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(  NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(  NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))    /*!< ST Module */
+
 #define CRC_MODULE     (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_CRCCKEN_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< CRC Module */
 
+#define CANFD0_MODULE  (MODULE_APBCLK_ENC( 0UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_AHBCLK_CANFD0CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC( 0UL)|MODULE_CLKSEL_Msk_ENC(   3UL)|MODULE_CLKSEL_Pos_ENC(24UL)|\
+                        MODULE_CLKDIV_ENC( 1UL)|MODULE_CLKDIV_Msk_ENC(0x0FUL)|MODULE_CLKDIV_Pos_ENC( 0UL))  /*!< CANFD0 Module */
+
+#define CANFD1_MODULE  (MODULE_APBCLK_ENC( 0UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_AHBCLK_CANFD1CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC( 0UL)|MODULE_CLKSEL_Msk_ENC(   3UL)|MODULE_CLKSEL_Pos_ENC(26UL)|\
+                        MODULE_CLKDIV_ENC( 1UL)|MODULE_CLKDIV_Msk_ENC(0x0FUL)|MODULE_CLKDIV_Pos_ENC( 4UL))  /*!< CANFD1 Module */
+
+#define CANFD2_MODULE  (MODULE_APBCLK_ENC( 0UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_AHBCLK_CANFD2CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC( 0UL)|MODULE_CLKSEL_Msk_ENC(   3UL)|MODULE_CLKSEL_Pos_ENC(28UL)|\
+                        MODULE_CLKDIV_ENC( 1UL)|MODULE_CLKDIV_Msk_ENC(0x0FUL)|MODULE_CLKDIV_Pos_ENC( 8UL))  /*!< CANFD2 Module */
+
 #define FMCIDLE_MODULE (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_FMCIDLE_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< FMCIDLE Module */
+
+#define CANRAM0_MODULE (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_CANRAM0CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< CANRAM0 Module */
+
+#define CANRAM1_MODULE (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_CANRAM1CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< CANRAM0 Module */
+
+#define CANRAM2_MODULE (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_CANRAM2CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< CANRAM0 Module */
 
 #define GPIOA_MODULE   (MODULE_APBCLK_ENC( 0)|MODULE_IP_EN_Pos_ENC(CLK_AHBCLK_GPIOACKEN_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
@@ -262,13 +285,13 @@ extern "C"
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< GPIOF Module */
 
-//APBCLK0
+/* APBCLK0 */
 #define WDT_MODULE     (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_WDTCKEN_Pos)|\
                         MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC( 0)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< WDT Module */
 
-#define WWDT_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_WDTCKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(16)|\
+#define WWDT_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_WWDTCKEN_Pos)|\
+                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC( 2)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< WWDT Module */
 
 #define TMR0_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_TMR0CKEN_Pos)|\
@@ -288,94 +311,50 @@ extern "C"
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< TMR3 Module */
 
 #define CLKO_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_CLKOCKEN_Pos) |\
-                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 7)|MODULE_CLKSEL_Pos_ENC(2)|\
+                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 7)|MODULE_CLKSEL_Pos_ENC(4|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< CLKO Module */
 
 #define I2C0_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_I2C0CKEN_Pos) |\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< I2C0 Module */
 
-#define I2C1_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_I2C1CKEN_Pos) |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< I2C1 Module */
-                        
-#define I2C2_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_I2C2CKEN_Pos) |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< I2C2 Module */
-
 #define SPI0_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_SPI0CKEN_Pos) |\
                         MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(24)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< SPI0 Module */
 
-#define SPI1_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_SPI1CKEN_Pos) |\
-                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(26)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< SPI1 Module */
-                        
-#define SPI2_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_SPI2CKEN_Pos) |\
-                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(28)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< SPI2 Module */
-
 #define UART0_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_UART0CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(24)|\
+                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC( 0)|\
                         MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0x0F)|MODULE_CLKDIV_Pos_ENC( 8))    /*!< UART0 Module */
 
 #define UART1_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_UART1CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(26)|\
+                        MODULE_CLKSEL_ENC( 2)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC( 2)|\
                         MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0x0F)|MODULE_CLKDIV_Pos_ENC(12))    /*!< UART1 Module */
-                        
-#define UART2_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_UART2CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(28)|\
-                        MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0x0F)|MODULE_CLKDIV_Pos_ENC(24))    /*!< UART2 Module */
-
-#define BPWM0_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_BPWM0CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC(4)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< BPWM0 Module */
-
-#define BPWM1_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_BPWM1CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC(5)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< BPWM1 Module */
-
-#define BPWM2_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_BPWM2CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC(6)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< BPWM2 Module */
-
-#define BPWM3_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_BPWM3CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC(7)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< BPWM3 Module */
-
-#define I3CS0_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_I3CS0CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< I3CS0 Module */
-
-#define I3CS1_MODULE   (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_I3CS1CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< I3CS1 Module */
-
-#define SPDH_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_SPDHCKEN_Pos)|\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< SPDH Module */
-
-#define USBD_MODULE    (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_USBDCKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 3)|MODULE_CLKSEL_Msk_ENC( 1)|MODULE_CLKSEL_Pos_ENC( 8)|\
-                        MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0x0F)|MODULE_CLKDIV_Pos_ENC(4))     /*!< USBD Module */
 
 #define ADC_MODULE     (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_ADCCKEN_Pos)|\
-                        MODULE_CLKSEL_ENC( 1)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC(2)|\
+                        MODULE_CLKSEL_ENC( 3)|MODULE_CLKSEL_Msk_ENC( 3)|MODULE_CLKSEL_Pos_ENC( 0)|\
                         MODULE_CLKDIV_ENC( 0)|MODULE_CLKDIV_Msk_ENC(0xFF)|MODULE_CLKDIV_Pos_ENC(16))    /*!< ADC Module */
 
-#define DAC_MODULE     (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_DACCKEN_Pos)|\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< DAC Module */
-                        
 #define ACMP01_MODULE  (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_ACMP01CKEN_Pos)|\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< ACMP01 Module */
-                        
-#define ACMP23_MODULE  (MODULE_APBCLK_ENC( 1)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK0_ACMP23CKEN_Pos)|\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< ACMP23 Module */
 
-//APBCLK1
+/* APBCLK1 */
+#define PWM0_MODULE    (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_PWM0CKEN_Pos)  |\
+                        MODULE_CLKSEL_ENC( 3UL)|MODULE_CLKSEL_Msk_ENC( 1UL)|MODULE_CLKSEL_Pos_ENC( 4UL)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< PWM0 Module */
+
+#define BPWM0_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_BPWM0CKEN_Pos)  |\
+                        MODULE_CLKSEL_ENC( 3UL)|MODULE_CLKSEL_Msk_ENC( 1UL)|MODULE_CLKSEL_Pos_ENC( 4UL)|\
+                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< BPWM0 Module */
+
+#define USCI0_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_APBCLK1_USCI0CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(  NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(  NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))        /*!< USCI0 Module */
+
+#define USCI1_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC((uint32_t)CLK_APBCLK1_USCI1CKEN_Pos)|\
+                        MODULE_CLKSEL_ENC(  NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
+                        MODULE_CLKDIV_ENC(  NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))        /*!< USCI1 Module */
+
 #define LLSI0_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI0CKEN_Pos)  |\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI0 Module */
@@ -383,22 +362,6 @@ extern "C"
 #define LLSI1_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI1CKEN_Pos)  |\
                         MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
                         MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI1 Module */
-
-#define LLSI2_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI2CKEN_Pos)  |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI2 Module */
-
-#define LLSI3_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI3CKEN_Pos)  |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI3 Module */
-
-#define LLSI4_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI4CKEN_Pos)  |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI4 Module */                        
-
-#define LLSI5_MODULE   (MODULE_APBCLK_ENC( 2UL)|MODULE_IP_EN_Pos_ENC(CLK_APBCLK1_LLSI5CKEN_Pos)  |\
-                        MODULE_CLKSEL_ENC(NA)|MODULE_CLKSEL_Msk_ENC(NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                        MODULE_CLKDIV_ENC(NA)|MODULE_CLKDIV_Msk_ENC(NA)|MODULE_CLKDIV_Pos_ENC(NA))      /*!< LLSI5 Module */  
 
 
 /*@}*/ /* end of group CLK_EXPORTED_CONSTANTS */

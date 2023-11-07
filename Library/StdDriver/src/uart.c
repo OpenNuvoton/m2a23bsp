@@ -4,7 +4,7 @@
  * @brief    M2A23 series UART Interface Controller (UART) driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -27,10 +27,12 @@
  *
  *    @param[in]    uart                The pointer of the specified UART module.
  *    @param[in]    u32InterruptFlag    The specified interrupt of UART module.
- *                                      - \ref UART_INTSTS_WKINT_Msk     : Wake-up interrupt
- *                                      - \ref UART_INTSTS_BUFERRINT_Msk : Buffer Error interrupt
- *                                      - \ref UART_INTSTS_MODEMINT_Msk  : MODEM Status Interrupt
- *                                      - \ref UART_INTSTS_RLSINT_Msk    : Receive Line Status interrupt
+ *                                      - \ref UART_INTSTS_SWBEINT_Msk   : Single-wire Bit Error Detect Interrupt Indicator
+ *                                      - \ref UART_INTSTS_LININT_Msk    : LIN Bus Interrupt Indicator
+ *                                      - \ref UART_INTSTS_WKINT_Msk     : Wake-up Interrupt Indicator
+ *                                      - \ref UART_INTSTS_BUFERRINT_Msk : Buffer Error Interrupt Indicator
+ *                                      - \ref UART_INTSTS_MODEMINT_Msk  : Modem Status Interrupt Indicator
+ *                                      - \ref UART_INTSTS_RLSINT_Msk    : Receive Line Status Interrupt Indicator
  *
  *    @return       None
  *
@@ -38,19 +40,40 @@
  */
 void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag)
 {
+    if(u32InterruptFlag & UART_INTSTS_SWBEINT_Msk)  /* Clear Single-wire Bit Error Detect Interrupt */
+    {
+        uart->FIFOSTS = UART_INTSTS_SWBEIF_Msk;
+    }
 
-    if(u32InterruptFlag & UART_INTSTS_RLSINT_Msk)       /* Clear Receive Line Status Interrupt */
+    if(u32InterruptFlag & UART_INTSTS_RLSINT_Msk)   /* Clear Receive Line Status Interrupt */
+    {
         uart->FIFOSTS = UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk | UART_FIFOSTS_ADDRDETF_Msk;
+    }
 
-    if(u32InterruptFlag & UART_INTSTS_MODEMINT_Msk)     /* Clear MODEM Status Interrupt */
+    if(u32InterruptFlag & UART_INTSTS_MODEMINT_Msk) /* Clear Modem Status Interrupt */
+    {
         uart->MODEMSTS |= UART_MODEMSTS_CTSDETF_Msk;
+    }
 
     if(u32InterruptFlag & UART_INTSTS_BUFERRINT_Msk)    /* Clear Buffer Error Interrupt */
+    {
         uart->FIFOSTS = UART_FIFOSTS_RXOVIF_Msk | UART_FIFOSTS_TXOVIF_Msk;
+    }
 
-    if(u32InterruptFlag & UART_INTSTS_WKINT_Msk)        /* Clear Wake-up Interrupt */
-        uart->WKSTS = uart->WKSTS;
+    if(u32InterruptFlag & UART_INTSTS_WKINT_Msk)    /* Clear Wake-up Interrupt */
+    {
+        uart->WKSTS = UART_WKSTS_CTSWKF_Msk  | UART_WKSTS_DATWKF_Msk  |
+                      UART_WKSTS_RFRTWKF_Msk |UART_WKSTS_RS485WKF_Msk |
+                      UART_WKSTS_TOUTWKF_Msk;
+    }
 
+    if(u32InterruptFlag & UART_INTSTS_LININT_Msk)   /* Clear LIN Bus Interrupt */
+    {
+        uart->INTSTS = UART_INTSTS_LINIF_Msk;
+        uart->LINSTS = UART_LINSTS_BITEF_Msk    | UART_LINSTS_BRKDETF_Msk  |
+                       UART_LINSTS_SLVSYNCF_Msk | UART_LINSTS_SLVIDPEF_Msk |
+                       UART_LINSTS_SLVHEF_Msk   | UART_LINSTS_SLVHDETF_Msk ;
+    }
 }
 
 
@@ -91,6 +114,8 @@ void UART_DisableFlowCtrl(UART_T* uart)
  *    @param[in]    u32InterruptFlag    The specified interrupt of UART module.
  *                                      - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
  *                                      - \ref UART_INTEN_ABRIEN_Msk     : Auto-baud Rate Interrupt
+ *                                      - \ref UART_INTEN_SWBEIEN_Msk    : Single-wire Bit Error Detect Interrupt
+ *                                      - \ref UART_INTEN_LINIEN_Msk     : Lin Bus interrupt
  *                                      - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
  *                                      - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error interrupt
  *                                      - \ref UART_INTEN_RXTOIEN_Msk    : Rx Time-out Interrupt
@@ -139,6 +164,8 @@ void UART_EnableFlowCtrl(UART_T* uart)
  *    @param[in]    u32InterruptFlag    The specified interrupt of UART module:
  *                                      - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
  *                                      - \ref UART_INTEN_ABRIEN_Msk     : Auto-baud Rate Interrupt
+ *                                      - \ref UART_INTEN_SWBEIEN_Msk    : Single-wire Bit Error Detect Interrupt
+ *                                      - \ref UART_INTEN_LINIEN_Msk     : Lin Bus interrupt
  *                                      - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
  *                                      - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error interrupt
  *                                      - \ref UART_INTEN_RXTOIEN_Msk    : Rx Time-out Interrupt
@@ -170,32 +197,25 @@ void UART_EnableInt(UART_T*  uart, uint32_t u32InterruptFlag)
  */
 void UART_Open(UART_T* uart, uint32_t u32baudrate)
 {
-    uint8_t u8UartClkSrcSel, u8UartClkDivNum;
-    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, (__HIRC>>1)};
-    uint32_t u32Baud_Div = 0;
+    uint8_t u8UartClkSrcSel = 0, u8UartClkDivNum = 0;
+    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, __HIRC};
+    uint32_t u32BaudDiv = 0;
 
     /* Get UART clock source selection and UART clock divider number */
     switch((uint32_t)uart)
     {
         case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART0SEL_Msk) >> CLK_CLKSEL1_UART0SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
         default:
             return;
-    }
-
-
-    /* Get PLL clock frequency if UART clock source selection is PLL/2 */
-    if(u8UartClkSrcSel == 1ul)
-    {
-        au32ClkTbl[u8UartClkSrcSel] = (CLK_GetPLLClockFreq()>>1);
     }
 
     /* Select UART function */
@@ -207,19 +227,19 @@ void UART_Open(UART_T* uart, uint32_t u32baudrate)
     /* Set UART Rx and RTS trigger level */
     uart->FIFO &= ~(UART_FIFO_RFITL_Msk | UART_FIFO_RTSTRGLV_Msk);
 
-    /* Get PLL clock frequency if UART clock source selection is PLL/2 */
+    /* Get PLL clock frequency if UART clock source selection is PLL */
     if(u8UartClkSrcSel == 1)
-        au32ClkTbl[u8UartClkSrcSel] = (CLK_GetPLLClockFreq()>>1);
+        au32ClkTbl[1] = CLK_GetPLLClockFreq();
 
     /* Set UART baud rate */
     if(u32baudrate != 0)
     {
-        u32Baud_Div = UART_BAUD_MODE2_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate);
+        u32BaudDiv = UART_BAUD_MODE2_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate);
 
-        if(u32Baud_Div > 0xFFFF)
+        if(u32BaudDiv > 0xFFFF)
             uart->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate));
         else
-            uart->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
+            uart->BAUD = (UART_BAUD_MODE2 | u32BaudDiv);
     }
 }
 
@@ -283,22 +303,22 @@ uint32_t UART_Read(UART_T* uart, uint8_t *pu8RxBuf, uint32_t u32ReadBytes)
  *
  *    @details      This function use to config UART line setting.
  */
-void UART_SetLine_Config(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits)
+void UART_SetLineConfig(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits)
 {
-    uint8_t u8UartClkSrcSel, u8UartClkDivNum;
-    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, (__HIRC>>1)};
-    uint32_t u32Baud_Div = 0;
+    uint8_t u8UartClkSrcSel = 0, u8UartClkDivNum = 0;
+    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, __HIRC};
+    uint32_t u32BaudDiv = 0;
 
     /* Get UART clock source selection and UART clock divider number */
     switch((uint32_t)uart)
     {
         case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART0SEL_Msk) >> CLK_CLKSEL1_UART0SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
@@ -309,18 +329,18 @@ void UART_SetLine_Config(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_wi
     /* Get PLL clock frequency if UART clock source selection is PLL/2 */
     if(u8UartClkSrcSel == 1ul)
     {
-        au32ClkTbl[u8UartClkSrcSel] = (CLK_GetPLLClockFreq()>>1);
+        au32ClkTbl[1] = CLK_GetPLLClockFreq();
     }
 
     /* Set UART baud rate */
     if(u32baudrate != 0)
     {
-        u32Baud_Div = UART_BAUD_MODE2_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate);
+        u32BaudDiv = UART_BAUD_MODE2_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate);
 
-        if(u32Baud_Div > 0xFFFF)
+        if(u32BaudDiv > 0xFFFF)
             uart->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32baudrate));
         else
-            uart->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
+            uart->BAUD = (UART_BAUD_MODE2 | u32BaudDiv);
     }
 
     /* Set UART line configuration */
@@ -363,9 +383,9 @@ void UART_SetTimeoutCnt(UART_T* uart, uint32_t u32TOC)
  */
 void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Direction)
 {
-    uint8_t u8UartClkSrcSel, u8UartClkDivNum;
-    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, (__HIRC>>1)};
-    uint32_t u32Baud_Div;
+    uint8_t u8UartClkSrcSel = 0, u8UartClkDivNum = 0;
+    uint32_t au32ClkTbl[4] = {__HXT, 0, __LXT, __HIRC};
+    uint32_t u32BaudDiv = 0;
 
     /* Select IrDA function mode */
     uart->FUNCSEL = UART_FUNCSEL_IrDA;
@@ -374,12 +394,12 @@ void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Directi
     switch((uint32_t)uart)
     {
         case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART0SEL_Msk) >> CLK_CLKSEL1_UART0SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
@@ -390,16 +410,16 @@ void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Directi
     /* Get PLL clock frequency if UART clock source selection is PLL/2 */
     if(u8UartClkSrcSel == 1ul)
     {
-        au32ClkTbl[u8UartClkSrcSel] = (CLK_GetPLLClockFreq()>>1);
+        au32ClkTbl[1] = CLK_GetPLLClockFreq();
     }
 
     /* Set UART IrDA baud rate in mode 0 */
     if(u32Buadrate != 0)
     {
-        u32Baud_Div = UART_BAUD_MODE0_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32Buadrate);
+        u32BaudDiv = UART_BAUD_MODE0_DIVIDER((au32ClkTbl[u8UartClkSrcSel]) / (u8UartClkDivNum + 1), u32Buadrate);
 
-        if(u32Baud_Div < 0xFFFF)
-            uart->BAUD = (UART_BAUD_MODE0 | u32Baud_Div);
+        if(u32BaudDiv < 0xFFFF)
+            uart->BAUD = (UART_BAUD_MODE0 | u32BaudDiv);
     }
 
     /* Configure IrDA relative settings */
@@ -443,6 +463,30 @@ void UART_SelectRS485Mode(UART_T* uart, uint32_t u32Mode, uint32_t u32Addr)
 
 
 /**
+ *    @brief        Select and configure LIN function
+ *
+ *    @param[in]    uart            The pointer of the specified UART module.
+ *    @param[in]    u32Mode         The LIN direction :
+ *                                  - \ref UART_ALTCTL_LINTXEN_Msk
+ *                                  - \ref UART_ALTCTL_LINRXEN_Msk
+ *    @param[in]    u32BreakLength  The break field length.
+ *
+ *    @return       None
+ *
+ *    @details      The function is used to set LIN relative setting.
+ */
+void UART_SelectLINMode(UART_T* uart, uint32_t u32Mode, uint32_t u32BreakLength)
+{
+    /* Select LIN function mode */
+    uart->FUNCSEL = UART_FUNCSEL_LIN;
+
+    /* Select LIN function setting : Tx enable, Rx enable and break field length */
+    uart->ALTCTL &= ~(UART_ALTCTL_LINTXEN_Msk | UART_ALTCTL_LINRXEN_Msk | UART_ALTCTL_BRKFL_Msk);
+    uart->ALTCTL |= (u32Mode | (u32BreakLength << UART_ALTCTL_BRKFL_Pos));
+}
+
+
+/**
  *    @brief        Write UART data
  *
  *    @param[in]    uart            The pointer of the specified UART module.
@@ -473,6 +517,20 @@ uint32_t UART_Write(UART_T* uart, uint8_t *pu8TxBuf, uint32_t u32WriteBytes)
 
 }
 
+/**
+ *    @brief        Select Single Wire mode function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module.
+ *
+ *    @return       None
+ *
+ *    @details      The function is used to select Single Wire mode.
+ */
+void UART_SelectSingleWireMode(UART_T *uart)
+{
+    /* Select UART Single Wire function mode */
+    uart->FUNCSEL = ((uart->FUNCSEL & (~UART_FUNCSEL_FUNCSEL_Msk)) | UART_FUNCSEL_SINGLE_WIRE);
+}
 
 /*@}*/ /* end of group UART_EXPORTED_FUNCTIONS */
 

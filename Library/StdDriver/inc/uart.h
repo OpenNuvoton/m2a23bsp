@@ -4,7 +4,7 @@
  * @brief    M2A23 series UART Interface Controller (UART) driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __UART_H__
 #define __UART_H__
@@ -84,8 +84,21 @@ extern "C"
 /* UART_FUNCSEL constants definitions                                                                      */
 /*---------------------------------------------------------------------------------------------------------*/
 #define UART_FUNCSEL_UART  (0x0 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set UART Function  (Default) */
+#define UART_FUNCSEL_LIN   (0x1ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set LIN Function             \hideinitializer */
 #define UART_FUNCSEL_IrDA  (0x2 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set IrDA Function            */
 #define UART_FUNCSEL_RS485 (0x3 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set RS485 Function           */
+#define UART_FUNCSEL_SINGLE_WIRE (0x4ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set Single Wire Function    */
+
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* UART_LINCTL constants definitions                                                                       */
+/*---------------------------------------------------------------------------------------------------------*/
+#define UART_LINCTL_BRKFL(x)    (((x)-1) << UART_LINCTL_BRKFL_Pos)  /*!< UART_LINCTL setting to set LIN Break Field Length, x = 10 ~ 15, default value is 12 \hideinitializer */
+#define UART_LINCTL_BSL(x)      (((x)-1) << UART_LINCTL_BSL_Pos)    /*!< UART_LINCTL setting to set LIN Break/Sync Delimiter Length, x = 1 ~ 4 \hideinitializer */
+#define UART_LINCTL_HSEL_BREAK             (0x0UL << UART_LINCTL_HSEL_Pos)    /*!< UART_LINCTL setting to set LIN Header Select to break field \hideinitializer */
+#define UART_LINCTL_HSEL_BREAK_SYNC        (0x1UL << UART_LINCTL_HSEL_Pos)    /*!< UART_LINCTL setting to set LIN Header Select to break field and sync field \hideinitializer */
+#define UART_LINCTL_HSEL_BREAK_SYNC_ID     (0x2UL << UART_LINCTL_HSEL_Pos)    /*!< UART_LINCTL setting to set LIN Header Select to break field, sync field and ID field \hideinitializer */
+#define UART_LINCTL_PID(x)      ((x) << UART_LINCTL_PID_Pos)       /*!< UART_LINCTL setting to set LIN PID value \hideinitializer */
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -271,21 +284,35 @@ extern "C"
  */
 #define UART_GET_RX_FULL(uart)    ((uart)->FIFOSTS & UART_FIFOSTS_RXFULL_Msk)
 
+/**
+ *    @brief        Rx Idle Status register value
+ *
+ *    @param[in]    uart    The pointer of the specified UART module
+ *
+ *    @retval       0 Rx is busy.
+ *    @retval       1 Rx is Idle(Default)
+ *
+ *    @details      This macro get Rx Idle Status register value.
+ *    \hideinitializer
+ */
+#define UART_RX_IDLE(uart) (((uart)->FIFOSTS & UART_FIFOSTS_RXIDLE_Msk )>> UART_FIFOSTS_RXIDLE_Pos)
 
 /**
  *    @brief        Enable specified UART interrupt
  *
  *    @param[in]    uart        The pointer of the specified UART module
  *    @param[in]    u32eIntSel  Interrupt type select
- *                              - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter empty interrupt
- *                              - \ref UART_INTEN_ABRIEN_Msk     : Auto baud rate interrupt
- *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
- *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error interrupt
- *                              - \ref UART_INTEN_RXTOIEN_Msk    : Rx time-out interrupt
- *                              - \ref UART_INTEN_MODEMIEN_Msk   : Modem interrupt
- *                              - \ref UART_INTEN_RLSIEN_Msk     : Rx Line status interrupt
- *                              - \ref UART_INTEN_THREIEN_Msk    : Tx empty interrupt
- *                              - \ref UART_INTEN_RDAIEN_Msk     : Rx ready interrupt
+ *                              - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
+ *                              - \ref UART_INTEN_ABRIEN_Msk     : Single-wire Bit Error Detection Interrupt
+ *                              - \ref UART_INTEN_SWBEIEN_Msk    : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_LINIEN_Msk     : Lin Bus Interrupt
+ *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up Interrupt
+ *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error Interrupt
+ *                              - \ref UART_INTEN_RXTOIEN_Msk    : Rx Time-out Interrupt
+ *                              - \ref UART_INTEN_MODEMIEN_Msk   : MODEM Status Interrupt
+ *                              - \ref UART_INTEN_RLSIEN_Msk     : Receive Line Status Interrupt
+ *                              - \ref UART_INTEN_THREIEN_Msk    : Transmit Holding Register Empty Interrupt
+ *                              - \ref UART_INTEN_RDAIEN_Msk     : Receive Data Available Interrupt
  *
  *    @return       None
  *
@@ -300,9 +327,11 @@ extern "C"
  *    @param[in]    uart        The pointer of the specified UART module
  *    @param[in]    u32eIntSel  Interrupt type select
  *                              - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
- *                              - \ref UART_INTEN_ABRIEN_Msk     : Auto-baud Rate Interrupt
- *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
- *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error interrupt
+ *                              - \ref UART_INTEN_ABRIEN_Msk     : Single-wire Bit Error Detection Interrupt
+ *                              - \ref UART_INTEN_SWBEIEN_Msk    : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_LINIEN_Msk     : Lin Bus Interrupt
+ *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up Interrupt
+ *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error Interrupt
  *                              - \ref UART_INTEN_RXTOIEN_Msk    : Rx Time-out Interrupt
  *                              - \ref UART_INTEN_MODEMIEN_Msk   : MODEM Status Interrupt
  *                              - \ref UART_INTEN_RLSIEN_Msk     : Receive Line Status Interrupt
@@ -321,16 +350,20 @@ extern "C"
  *
  *    @param[in]    uart            The pointer of the specified UART module
  *    @param[in]    u32eIntTypeFlag Interrupt Type Flag, should be
+ *                                  - \ref UART_INTSTS_ABRINT_Msk    : Auto-baud Rate Interrupt Indicator
  *                                  - \ref UART_INTSTS_HWBUFEINT_Msk : PDMA Mode Buffer Error Interrupt Indicator
  *                                  - \ref UART_INTSTS_HWTOINT_Msk   : PDMA Mode Rx Time-out Interrupt Indicator
  *                                  - \ref UART_INTSTS_HWMODINT_Msk  : PDMA Mode MODEM Status Interrupt Indicator
  *                                  - \ref UART_INTSTS_HWRLSINT_Msk  : PDMA Mode Receive Line Status Interrupt Indicator
+ *                                  - \ref UART_INTSTS_TXENDINT_Msk  : Transmitter Empty Interrupt Indicator
+ *                                  - \ref UART_INTSTS_SWBEINT_Msk   : Single-wire Bit Error Detect Interrupt Indicator
+ *                                  - \ref UART_INTSTS_TXENDIF_Msk   : Transmitter Empty Interrupt Flag
  *                                  - \ref UART_INTSTS_HWBUFEIF_Msk  : PDMA Mode Buffer Error Interrupt Flag
  *                                  - \ref UART_INTSTS_HWTOIF_Msk    : PDMA Mode Time-out Interrupt Flag
  *                                  - \ref UART_INTSTS_HWMODIF_Msk   : PDMA Mode MODEM Status Interrupt Flag
  *                                  - \ref UART_INTSTS_HWRLSIF_Msk   : PDMA Mode Receive Line Status Flag
- *                                  - \ref UART_INTSTS_ABRINT_Msk    : Auto-baud Rate Interrupt Indicator
- *                                  - \ref UART_INTSTS_TXENDINT_Msk  : Transmitter Empty Interrupt Indicator
+ *                                  - \ref UART_INTSTS_SWBEIF_Msk    : Single-wire Bit Error Detect Interrupt Flag
+ *                                  - \ref UART_INTSTS_LININT_Msk    : LIN Bus Interrupt Indicator
  *                                  - \ref UART_INTSTS_WKINT_Msk     : Wake-up Interrupt Indicator
  *                                  - \ref UART_INTSTS_BUFERRINT_Msk : Buffer Error Interrupt Indicator
  *                                  - \ref UART_INTSTS_RXTOINT_Msk   : Rx Time-out Interrupt Indicator
@@ -338,7 +371,7 @@ extern "C"
  *                                  - \ref UART_INTSTS_RLSINT_Msk    : Receive Line Status Interrupt Indicator
  *                                  - \ref UART_INTSTS_THREINT_Msk   : Transmit Holding Register Empty Interrupt Indicator
  *                                  - \ref UART_INTSTS_RDAINT_Msk    : Receive Data Available Interrupt Indicator
- *                                  - \ref UART_INTSTS_TXENDIF_Msk   : Transmitter Empty Interrupt Flag
+ *                                  - \ref UART_INTSTS_LINIF_Msk     : LIN Bus Interrupt Flag
  *                                  - \ref UART_INTSTS_WKIF_Msk      : Wake-up Interrupt Flag
  *                                  - \ref UART_INTSTS_BUFERRIF_Msk  : Buffer Error Interrupt Flag
  *                                  - \ref UART_INTSTS_RXTOIF_Msk    : Rx Time-out Interrupt Flag
@@ -410,6 +443,35 @@ __STATIC_INLINE void UART_SET_RTS(UART_T* uart)
  */
 #define UART_RS485_GET_ADDR_FLAG(uart)    (((uart)->FIFOSTS  & UART_FIFOSTS_ADDRDETF_Msk) >> UART_FIFOSTS_ADDRDETF_Pos)
 
+/**
+ *    @brief        Enable specified UART PDMA function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *    @param[in]    u32FuncSel  Combination of following functions
+ *                             - \ref UART_INTEN_TXPDMAEN_Msk
+ *                             - \ref UART_INTEN_RXPDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    @details      This macro enable specified UART PDMA function.
+ *    \hideinitializer
+ */
+#define UART_PDMA_ENABLE(uart, u32FuncSel)    ((uart)->INTEN |= (u32FuncSel))
+/**
+ *    @brief        Disable specified UART PDMA function
+ *
+ *    @param[in]    uart        The pointer of the specified UART module
+ *    @param[in]    u32FuncSel  Combination of following functions
+ *                             - \ref UART_INTEN_TXPDMAEN_Msk
+ *                             - \ref UART_INTEN_RXPDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    @details      This macro disable specified UART PDMA function.
+ *    \hideinitializer
+ */
+#define UART_PDMA_DISABLE(uart, u32FuncSel)    ((uart)->INTEN &= ~(u32FuncSel))
+
 
 
 void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag);
@@ -420,11 +482,13 @@ void UART_EnableFlowCtrl(UART_T* uart);
 void UART_EnableInt(UART_T*  uart, uint32_t u32InterruptFlag);
 void UART_Open(UART_T* uart, uint32_t u32baudrate);
 uint32_t UART_Read(UART_T* uart, uint8_t *pu8RxBuf, uint32_t u32ReadBytes);
-void UART_SetLine_Config(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits);
+void UART_SetLineConfig(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits);
 void UART_SetTimeoutCnt(UART_T* uart, uint32_t u32TOC);
 void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Direction);
 void UART_SelectRS485Mode(UART_T* uart, uint32_t u32Mode, uint32_t u32Addr);
+void UART_SelectLINMode(UART_T* uart, uint32_t u32Mode, uint32_t u32BreakLength);
 uint32_t UART_Write(UART_T* uart, uint8_t *pu8TxBuf, uint32_t u32WriteBytes);
+void UART_SelectSingleWireMode(UART_T *uart);
 
 
 /*@}*/ /* end of group UART_EXPORTED_FUNCTIONS */

@@ -243,7 +243,7 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0]     |MPBUSY    |ISP Multi-word Program Busy Flag (Read Only)
-     * |        |          |This bit is the mirror of ISPGO(FMC_ISPTRG[0]).
+     * |        |          |This bit is the mirror of ISPBUSY(FMC_ISPSTS[0]).
      * |        |          |0 = ISP multi-word program operation is finished.
      * |        |          |1 = ISP multi-word program operation is progressed.
      * |[1]     |PPGO      |ISP Multi-program Status (Read Only)
@@ -290,7 +290,7 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[n]     |APPROENn  |APROM Protect enable
+     * |[n]     |APPROENn  |APROM Protect Enable Bit
      * |n=0,1.. |          |This bit indicates which APROM region is protected.
      * | ..31   |          |The reset value is inverse of CONFIG8.
      * |        |          |0 = APROM region n is not protected.

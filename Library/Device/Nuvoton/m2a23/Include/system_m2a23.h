@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     system_M2A23.h
+ * @file     system_m2a23.h
  * @version  V3.00
  * @brief    M2A23 Series System Setting Header File
  *
@@ -26,7 +26,7 @@ extern "C" {
 #ifndef __HXT
 # define __HXT      (12000000UL)    /*!< External Crystal Clock Frequency     */
 #endif
-#define __LIRC      (10000UL)       /*!< Internal 10K RC Oscillator Frequency */
+#define __LIRC      (38400UL)       /*!< Internal 38.4K RC Oscillator Frequency */
 #define __HIRC      (48000000UL)    /*!< Internal 48M RC Oscillator Frequency */
 #ifndef __LXT
 # define __LXT      (32768UL)       /*!< External Crystal Clock Frequency 32.768KHz */

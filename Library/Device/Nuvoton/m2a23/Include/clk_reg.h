@@ -575,26 +575,28 @@ typedef struct
     __IO uint32_t PWRCTL;                /*!< [0x0000] System Power-down Control Register                               */
     __IO uint32_t AHBCLK;                /*!< [0x0004] AHB Devices Clock Enable Control Register                        */
     __IO uint32_t APBCLK0;               /*!< [0x0008] APB Devices Clock Enable Control Register 0                      */
-    __I  uint32_t STATUS;                /*!< [0x000c] Clock Status Monitor Register                                    */
+    __IO uint32_t APBCLK1;               /*!< [0x000c] APB Devices Clock Enable Control Register 1                      */
     __IO uint32_t CLKSEL0;               /*!< [0x0010] Clock Source Select Control Register 0                           */
     __IO uint32_t CLKSEL1;               /*!< [0x0014] Clock Source Select Control Register 1                           */
-    __IO uint32_t CLKDIV0;               /*!< [0x0018] Clock Divider Number Register 0                                  */
-    __IO uint32_t CLKSEL2;               /*!< [0x001c] Clock Source Select Control Register 2                           */
-    __IO uint32_t PLLCTL;                /*!< [0x0020] PLL Control Register                                             */
-    __IO uint32_t CLKOCTL;               /*!< [0x0024] Clock Output Control Register                                    */
-    __I  uint32_t RESERVE0[2];
-    __IO uint32_t APBCLK1;               /*!< [0x0030] APB Devices Clock Enable Control Register 1                      */
-    __IO uint32_t CLKSEL3;               /*!< [0x0034] Clock Source Select Control Register 3                           */
-    __IO uint32_t CLKDIV1;               /*!< [0x0038] Clock Divider Number Register 1                                  */
-    __I  uint32_t RESERVE1[1];
-    __IO uint32_t BODCLK;                /*!< [0x0040] Clock Source Select for BOD Control Register                     */
-    __I  uint32_t RESERVE2[4];
-    __IO uint32_t LXTCTL;                /*!< [0x0054] LXT Control Register                                             */
-    __I  uint32_t RESERVE3[6];
+    __IO uint32_t CLKSEL2;               /*!< [0x0018] Clock Source Select Control Register 2                           */
+    __IO uint32_t CLKSEL3;               /*!< [0x001c] Clock Source Select Control Register 3                           */
+    __IO uint32_t CLKDIV0;               /*!< [0x0020] Clock Divider Number Register 0                                  */
+    __IO uint32_t CLKDIV1;               /*!< [0x0024] Clock Divider Number Register 1                                  */
+    __I  uint32_t RESERVE0[3];
+    __IO uint32_t PCLKDIV;               /*!< [0x0034] APB Clock Divider Register                                       */
+    __I  uint32_t RESERVE1[2];
+    __IO uint32_t PLLCTL;                /*!< [0x0040] PLL Control Register                                             */
+    __I  uint32_t RESERVE2[3];
+    __I  uint32_t STATUS;                /*!< [0x0050] Clock Status Monitor Register                                    */
+    __I  uint32_t RESERVE3[3];
+    __IO uint32_t CLKOCTL;               /*!< [0x0060] Clock Output Control Register                                    */
+    __I  uint32_t RESERVE4[3];
     __IO uint32_t CLKDCTL;               /*!< [0x0070] Clock Fail Detector Control Register                             */
     __IO uint32_t CLKDSTS;               /*!< [0x0074] Clock Fail Detector Status Register                              */
-    __IO uint32_t CDUPB;                 /*!< [0x0078] Clock Frequency Detector Upper Boundary Register                 */
-    __IO uint32_t CDLOWB;                /*!< [0x007c] Clock Frequency Detector Low Boundary Register                   */
+    __IO uint32_t CDUPB;                 /*!< [0x0078] Clock Frequency Range Detector Upper Boundary Register           */
+    __IO uint32_t CDLOWB;                /*!< [0x007c] Clock Frequency Range Detector Lower Boundary Register           */
+    __IO uint32_t STOPREQ;               /*!< [0x0080] Clock Stop Request Register                                      */
+    __I  uint32_t STOPACK;               /*!< [0x0084] Clock Stop Acknowledge Register                                  */
 
 
 } CLK_T;
@@ -617,9 +619,6 @@ typedef struct
 #define CLK_PWRCTL_LIRCEN_Pos            (3)                                               /*!< CLK_T::PWRCTL: LIRCEN Position         */
 #define CLK_PWRCTL_LIRCEN_Msk            (0x1ul << CLK_PWRCTL_LIRCEN_Pos)                  /*!< CLK_T::PWRCTL: LIRCEN Mask             */
 
-#define CLK_PWRCTL_PDWKDLY_Pos           (4)                                               /*!< CLK_T::PWRCTL: PDWKDLY Position        */
-#define CLK_PWRCTL_PDWKDLY_Msk           (0x1ul << CLK_PWRCTL_PDWKDLY_Pos)                 /*!< CLK_T::PWRCTL: PDWKDLY Mask            */
-
 #define CLK_PWRCTL_PDWKIEN_Pos           (5)                                               /*!< CLK_T::PWRCTL: PDWKIEN Position        */
 #define CLK_PWRCTL_PDWKIEN_Msk           (0x1ul << CLK_PWRCTL_PDWKIEN_Pos)                 /*!< CLK_T::PWRCTL: PDWKIEN Mask            */
 
@@ -632,6 +631,12 @@ typedef struct
 #define CLK_PWRCTL_HXTGAIN_Pos           (10)                                              /*!< CLK_T::PWRCTL: HXTGAIN Position        */
 #define CLK_PWRCTL_HXTGAIN_Msk           (0x7ul << CLK_PWRCTL_HXTGAIN_Pos)                 /*!< CLK_T::PWRCTL: HXTGAIN Mask            */
 
+#define CLK_PWRCTL_LXTGAIN_Pos           (13)                                              /*!< CLK_T::PWRCTL: LXTGAIN Position        */
+#define CLK_PWRCTL_LXTGAIN_Msk           (0x7ul << CLK_PWRCTL_LXTGAIN_Pos)                 /*!< CLK_T::PWRCTL: LXTGAIN Mask            */
+
+#define CLK_PWRCTL_HIRCSTB_Pos           (16)                                              /*!< CLK_T::PWRCTL: HIRCSTB Position        */
+#define CLK_PWRCTL_HIRCSTB_Msk           (0x3ul << CLK_PWRCTL_HIRCSTB_Pos)                 /*!< CLK_T::PWRCTL: HIRCSTB Mask            */
+
 #define CLK_PWRCTL_HXTMD_Pos             (31)                                              /*!< CLK_T::PWRCTL: HXTMD Position          */
 #define CLK_PWRCTL_HXTMD_Msk             (0x1ul << CLK_PWRCTL_HXTMD_Pos)                   /*!< CLK_T::PWRCTL: HXTMD Mask              */
 
@@ -641,29 +646,53 @@ typedef struct
 #define CLK_AHBCLK_ISPCKEN_Pos           (2)                                               /*!< CLK_T::AHBCLK: ISPCKEN Position        */
 #define CLK_AHBCLK_ISPCKEN_Msk           (0x1ul << CLK_AHBCLK_ISPCKEN_Pos)                 /*!< CLK_T::AHBCLK: ISPCKEN Mask            */
 
+#define CLK_AHBCLK_STCKEN_Pos            (4)                                               /*!< CLK_T::AHBCLK: STCKEN Position         */
+#define CLK_AHBCLK_STCCKEN_Msk           (0x1ul << CLK_AHBCLK_STCKEN_Pos)                  /*!< CLK_T::AHBCLK: STCKEN Mask             */
+
 #define CLK_AHBCLK_CRCCKEN_Pos           (7)                                               /*!< CLK_T::AHBCLK: CRCCKEN Position        */
 #define CLK_AHBCLK_CRCCKEN_Msk           (0x1ul << CLK_AHBCLK_CRCCKEN_Pos)                 /*!< CLK_T::AHBCLK: CRCCKEN Mask            */
+
+#define CLK_AHBCLK_CANFD0CKEN_Pos        (8)                                               /*!< CLK_T::AHBCLK: CANFD0CKEN Position     */
+#define CLK_AHBCLK_CANFD0CKEN_Msk        (0x1ul << CLK_AHBCLK_CANFD0CKEN_Pos)              /*!< CLK_T::AHBCLK: CANFD0CKEN Mask         */
+
+#define CLK_AHBCLK_CANFD1CKEN_Pos        (9)                                               /*!< CLK_T::AHBCLK: CANFD1CKEN Position     */
+#define CLK_AHBCLK_CANFD1CKEN_Msk        (0x1ul << CLK_AHBCLK_CANFD1CKEN_Pos)              /*!< CLK_T::AHBCLK: CANFD1CKEN Mask         */
+
+#define CLK_AHBCLK_CANFD2CKEN_Pos        (10)                                              /*!< CLK_T::AHBCLK: CANFD2CKEN Position     */
+#define CLK_AHBCLK_CANFD2CKEN_Msk        (0x1ul << CLK_AHBCLK_CANFD2CKEN_Pos)              /*!< CLK_T::AHBCLK: CANFD2CKEN Mask         */
 
 #define CLK_AHBCLK_FMCIDLE_Pos           (15)                                              /*!< CLK_T::AHBCLK: FMCIDLE Position        */
 #define CLK_AHBCLK_FMCIDLE_Msk           (0x1ul << CLK_AHBCLK_FMCIDLE_Pos)                 /*!< CLK_T::AHBCLK: FMCIDLE Mask            */
 
-#define CLK_AHBCLK_GPIOACKEN_Pos         (16)                                              /*!< CLK_T::AHBCLK: GPIOACKEN Position      */
+#define CLK_AHBCLK_CANRAM0EN_Pos         (16)                                              /*!< CLK_T::AHBCLK: CANRAM0EN Position      */
+#define CLK_AHBCLK_CANRAM0EN_Msk         (0x1ul << CLK_AHBCLK_CANRAM0EN_Pos)               /*!< CLK_T::AHBCLK: CANRAM0EN Mask          */
+
+#define CLK_AHBCLK_CANRAM1EN_Pos         (17)                                              /*!< CLK_T::AHBCLK: CANRAM1EN Position      */
+#define CLK_AHBCLK_CANRAM1EN_Msk         (0x1ul << CLK_AHBCLK_CANRAM1EN_Pos)               /*!< CLK_T::AHBCLK: CANRAM1EN Mask          */
+
+#define CLK_AHBCLK_CANRAM2EN_Pos         (18)                                              /*!< CLK_T::AHBCLK: CANRAM2EN Position      */
+#define CLK_AHBCLK_CANRAM2EN_Msk         (0x1ul << CLK_AHBCLK_CANRAM2EN_Pos)               /*!< CLK_T::AHBCLK: CANRAM2EN Mask          */
+
+#define CLK_AHBCLK_GPIOACKEN_Pos         (24)                                              /*!< CLK_T::AHBCLK: GPIOACKEN Position      */
 #define CLK_AHBCLK_GPIOACKEN_Msk         (0x1ul << CLK_AHBCLK_GPIOACKEN_Pos)               /*!< CLK_T::AHBCLK: GPIOACKEN Mask          */
 
-#define CLK_AHBCLK_GPIOBCKEN_Pos         (17)                                              /*!< CLK_T::AHBCLK: GPIOBCKEN Position      */
+#define CLK_AHBCLK_GPIOBCKEN_Pos         (25)                                              /*!< CLK_T::AHBCLK: GPIOBCKEN Position      */
 #define CLK_AHBCLK_GPIOBCKEN_Msk         (0x1ul << CLK_AHBCLK_GPIOBCKEN_Pos)               /*!< CLK_T::AHBCLK: GPIOBCKEN Mask          */
 
-#define CLK_AHBCLK_GPIOCCKEN_Pos         (18)                                              /*!< CLK_T::AHBCLK: GPIOCCKEN Position      */
+#define CLK_AHBCLK_GPIOCCKEN_Pos         (26)                                              /*!< CLK_T::AHBCLK: GPIOCCKEN Position      */
 #define CLK_AHBCLK_GPIOCCKEN_Msk         (0x1ul << CLK_AHBCLK_GPIOCCKEN_Pos)               /*!< CLK_T::AHBCLK: GPIOCCKEN Mask          */
 
-#define CLK_AHBCLK_GPIODCKEN_Pos         (19)                                              /*!< CLK_T::AHBCLK: GPIODCKEN Position      */
+#define CLK_AHBCLK_GPIODCKEN_Pos         (27)                                              /*!< CLK_T::AHBCLK: GPIODCKEN Position      */
 #define CLK_AHBCLK_GPIODCKEN_Msk         (0x1ul << CLK_AHBCLK_GPIODCKEN_Pos)               /*!< CLK_T::AHBCLK: GPIODCKEN Mask          */
 
-#define CLK_AHBCLK_GPIOFCKEN_Pos         (21)                                              /*!< CLK_T::AHBCLK: GPIOFCKEN Position      */
+#define CLK_AHBCLK_GPIOFCKEN_Pos         (29)                                              /*!< CLK_T::AHBCLK: GPIOFCKEN Position      */
 #define CLK_AHBCLK_GPIOFCKEN_Msk         (0x1ul << CLK_AHBCLK_GPIOFCKEN_Pos)               /*!< CLK_T::AHBCLK: GPIOFCKEN Mask          */
 
 #define CLK_APBCLK0_WDTCKEN_Pos          (0)                                               /*!< CLK_T::APBCLK0: WDTCKEN Position       */
 #define CLK_APBCLK0_WDTCKEN_Msk          (0x1ul << CLK_APBCLK0_WDTCKEN_Pos)                /*!< CLK_T::APBCLK0: WDTCKEN Mask           */
+
+#define CLK_APBCLK0_WWDTCKEN_Pos         (1)                                               /*!< CLK_T::APBCLK0: WWDTCKEN Position      */
+#define CLK_APBCLK0_WWDTCKEN_Msk         (0x1ul << CLK_APBCLK0_WWDTCKEN_Pos)               /*!< CLK_T::APBCLK0: WWDTCKEN Mask          */
 
 #define CLK_APBCLK0_TMR0CKEN_Pos         (2)                                               /*!< CLK_T::APBCLK0: TMR0CKEN Position      */
 #define CLK_APBCLK0_TMR0CKEN_Msk         (0x1ul << CLK_APBCLK0_TMR0CKEN_Pos)               /*!< CLK_T::APBCLK0: TMR0CKEN Mask          */
@@ -683,20 +712,8 @@ typedef struct
 #define CLK_APBCLK0_I2C0CKEN_Pos         (8)                                               /*!< CLK_T::APBCLK0: I2C0CKEN Position      */
 #define CLK_APBCLK0_I2C0CKEN_Msk         (0x1ul << CLK_APBCLK0_I2C0CKEN_Pos)               /*!< CLK_T::APBCLK0: I2C0CKEN Mask          */
 
-#define CLK_APBCLK0_I2C1CKEN_Pos         (9)                                               /*!< CLK_T::APBCLK0: I2C1CKEN Position      */
-#define CLK_APBCLK0_I2C1CKEN_Msk         (0x1ul << CLK_APBCLK0_I2C1CKEN_Pos)               /*!< CLK_T::APBCLK0: I2C1CKEN Mask          */
-
-#define CLK_APBCLK0_I2C2CKEN_Pos         (10)                                              /*!< CLK_T::APBCLK0: I2C2CKEN Position      */
-#define CLK_APBCLK0_I2C2CKEN_Msk         (0x1ul << CLK_APBCLK0_I2C2CKEN_Pos)               /*!< CLK_T::APBCLK0: I2C2CKEN Mask          */
-
 #define CLK_APBCLK0_SPI0CKEN_Pos         (12)                                              /*!< CLK_T::APBCLK0: SPI0CKEN Position      */
 #define CLK_APBCLK0_SPI0CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI0CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI0CKEN Mask          */
-
-#define CLK_APBCLK0_SPI1CKEN_Pos         (13)                                              /*!< CLK_T::APBCLK0: SPI1CKEN Position      */
-#define CLK_APBCLK0_SPI1CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI1CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI1CKEN Mask          */
-
-#define CLK_APBCLK0_SPI2CKEN_Pos         (14)                                              /*!< CLK_T::APBCLK0: SPI2CKEN Position      */
-#define CLK_APBCLK0_SPI2CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI2CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI2CKEN Mask          */
 
 #define CLK_APBCLK0_UART0CKEN_Pos        (16)                                              /*!< CLK_T::APBCLK0: UART0CKEN Position     */
 #define CLK_APBCLK0_UART0CKEN_Msk        (0x1ul << CLK_APBCLK0_UART0CKEN_Pos)              /*!< CLK_T::APBCLK0: UART0CKEN Mask         */
@@ -704,62 +721,29 @@ typedef struct
 #define CLK_APBCLK0_UART1CKEN_Pos        (17)                                              /*!< CLK_T::APBCLK0: UART1CKEN Position     */
 #define CLK_APBCLK0_UART1CKEN_Msk        (0x1ul << CLK_APBCLK0_UART1CKEN_Pos)              /*!< CLK_T::APBCLK0: UART1CKEN Mask         */
 
-#define CLK_APBCLK0_UART2CKEN_Pos        (18)                                              /*!< CLK_T::APBCLK0: UART2CKEN Position     */
-#define CLK_APBCLK0_UART2CKEN_Msk        (0x1ul << CLK_APBCLK0_UART2CKEN_Pos)              /*!< CLK_T::APBCLK0: UART2CKEN Mask         */
-
-#define CLK_APBCLK0_BPWM0CKEN_Pos        (20)                                              /*!< CLK_T::APBCLK0: BPWM0CKEN Position     */
-#define CLK_APBCLK0_BPWM0CKEN_Msk        (0x1ul << CLK_APBCLK0_BPWM0CKEN_Pos)              /*!< CLK_T::APBCLK0: BPWM0CKEN Mask         */
-
-#define CLK_APBCLK0_BPWM1CKEN_Pos        (21)                                              /*!< CLK_T::APBCLK0: BPWM1CKEN Position     */
-#define CLK_APBCLK0_BPWM1CKEN_Msk        (0x1ul << CLK_APBCLK0_BPWM1CKEN_Pos)              /*!< CLK_T::APBCLK0: BPWM1CKEN Mask         */
-
-#define CLK_APBCLK0_BPWM2CKEN_Pos        (22)                                              /*!< CLK_T::APBCLK0: BPWM2CKEN Position     */
-#define CLK_APBCLK0_BPWM2CKEN_Msk        (0x1ul << CLK_APBCLK0_BPWM2CKEN_Pos)              /*!< CLK_T::APBCLK0: BPWM2CKEN Mask         */
-
-#define CLK_APBCLK0_BPWM3CKEN_Pos        (23)                                              /*!< CLK_T::APBCLK0: BPWM3CKEN Position     */
-#define CLK_APBCLK0_BPWM3CKEN_Msk        (0x1ul << CLK_APBCLK0_BPWM3CKEN_Pos)              /*!< CLK_T::APBCLK0: BPWM3CKEN Mask         */
-
-#define CLK_APBCLK0_I3CS0CKEN_Pos        (24)                                              /*!< CLK_T::APBCLK0: I3CS0CKEN Position     */
-#define CLK_APBCLK0_I3CS0CKEN_Msk        (0x1ul << CLK_APBCLK0_I3CS0CKEN_Pos)              /*!< CLK_T::APBCLK0: I3CS0CKEN Mask         */
-
-#define CLK_APBCLK0_I3CS1CKEN_Pos        (25)                                              /*!< CLK_T::APBCLK0: I3CS1CKEN Position     */
-#define CLK_APBCLK0_I3CS1CKEN_Msk        (0x1ul << CLK_APBCLK0_I3CS1CKEN_Pos)              /*!< CLK_T::APBCLK0: I3CS1CKEN Mask         */
-
-#define CLK_APBCLK0_SPDHCKEN_Pos         (26)                                              /*!< CLK_T::APBCLK0: SPDHCKEN Position      */
-#define CLK_APBCLK0_SPDHCKEN_Msk         (0x1ul << CLK_APBCLK0_SPDHCKEN_Pos)               /*!< CLK_T::APBCLK0: SPDHCKEN Mask          */
-
-#define CLK_APBCLK0_USBDCKEN_Pos         (27)                                              /*!< CLK_T::APBCLK0: USBDCKEN Position      */
-#define CLK_APBCLK0_USBDCKEN_Msk         (0x1ul << CLK_APBCLK0_USBDCKEN_Pos)               /*!< CLK_T::APBCLK0: USBDCKEN Mask          */
-
 #define CLK_APBCLK0_ADCCKEN_Pos          (28)                                              /*!< CLK_T::APBCLK0: ADCCKEN Position       */
 #define CLK_APBCLK0_ADCCKEN_Msk          (0x1ul << CLK_APBCLK0_ADCCKEN_Pos)                /*!< CLK_T::APBCLK0: ADCCKEN Mask           */
-
-#define CLK_APBCLK0_DACCKEN_Pos          (29)                                              /*!< CLK_T::APBCLK0: DACCKEN Position       */
-#define CLK_APBCLK0_DACCKEN_Msk          (0x1ul << CLK_APBCLK0_DACCKEN_Pos)                /*!< CLK_T::APBCLK0: DACCKEN Mask           */
 
 #define CLK_APBCLK0_ACMP01CKEN_Pos       (30)                                              /*!< CLK_T::APBCLK0: ACMP01CKEN Position    */
 #define CLK_APBCLK0_ACMP01CKEN_Msk       (0x1ul << CLK_APBCLK0_ACMP01CKEN_Pos)             /*!< CLK_T::APBCLK0: ACMP01CKEN Mask        */
 
-#define CLK_APBCLK0_ACMP23CKEN_Pos       (31)                                              /*!< CLK_T::APBCLK0: ACMP23CKEN Position    */
-#define CLK_APBCLK0_ACMP23CKEN_Msk       (0x1ul << CLK_APBCLK0_ACMP23CKEN_Pos)             /*!< CLK_T::APBCLK0: ACMP23CKEN Mask        */
+#define CLK_APBCLK1_PWM0CKEN_Pos         (0)                                               /*!< CLK_T::APBCLK1: PWM0CKEN Position      */
+#define CLK_APBCLK1_PWM0CKEN_Msk         (0x1ul << CLK_APBCLK1_PWM0CKEN_Pos)               /*!< CLK_T::APBCLK1: PWM0CKEN Mask          */
 
-#define CLK_STATUS_HXTSTB_Pos            (0)                                               /*!< CLK_T::STATUS: HXTSTB Position         */
-#define CLK_STATUS_HXTSTB_Msk            (0x1ul << CLK_STATUS_HXTSTB_Pos)                  /*!< CLK_T::STATUS: HXTSTB Mask             */
+#define CLK_APBCLK1_BPWM0CKEN_Pos        (4)                                               /*!< CLK_T::APBCLK1: BPWM0CKEN Position     */
+#define CLK_APBCLK1_BPWM0CKEN_Msk        (0x1ul << CLK_APBCLK1_BPWM0CKEN_Pos)              /*!< CLK_T::APBCLK1: BPWM0CKEN Mask         */
 
-#define CLK_STATUS_LXTSTB_Pos            (1)                                               /*!< CLK_T::STATUS: LXTSTB Position         */
-#define CLK_STATUS_LXTSTB_Msk            (0x1ul << CLK_STATUS_LXTSTB_Pos)                  /*!< CLK_T::STATUS: LXTSTB Mask             */
+#define CLK_APBCLK1_USCI0CKEN_Pos        (8)                                               /*!< CLK_T::APBCLK1: USCI0CKEN Position     */
+#define CLK_APBCLK1_USCI0CKEN_Msk        (0x1ul << CLK_APBCLK1_USCI0CKEN_Pos)              /*!< CLK_T::APBCLK1: USCI0CKEN Mask         */
 
-#define CLK_STATUS_PLLSTB_Pos            (2)                                               /*!< CLK_T::STATUS: PLLSTB Position         */
-#define CLK_STATUS_PLLSTB_Msk            (0x1ul << CLK_STATUS_PLLSTB_Pos)                  /*!< CLK_T::STATUS: PLLSTB Mask             */
+#define CLK_APBCLK1_USCI1CKEN_Pos        (9)                                               /*!< CLK_T::APBCLK1: USCI1CKEN Position     */
+#define CLK_APBCLK1_USCI1CKEN_Msk        (0x1ul << CLK_APBCLK1_USCI1CKEN_Pos)              /*!< CLK_T::APBCLK1: USCI1CKEN Mask         */
 
-#define CLK_STATUS_LIRCSTB_Pos           (3)                                               /*!< CLK_T::STATUS: LIRCSTB Position        */
-#define CLK_STATUS_LIRCSTB_Msk           (0x1ul << CLK_STATUS_LIRCSTB_Pos)                 /*!< CLK_T::STATUS: LIRCSTB Mask            */
+#define CLK_APBCLK1_LLSI0CKEN_Pos        (16)                                              /*!< CLK_T::APBCLK1: LLSI0CKEN Position     */
+#define CLK_APBCLK1_LLSI0CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI0CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI0CKEN Mask         */
 
-#define CLK_STATUS_HIRCSTB_Pos           (4)                                               /*!< CLK_T::STATUS: HIRCSTB Position        */
-#define CLK_STATUS_HIRCSTB_Msk           (0x1ul << CLK_STATUS_HIRCSTB_Pos)                 /*!< CLK_T::STATUS: HIRCSTB Mask            */
-
-#define CLK_STATUS_CLKSFAIL_Pos          (7)                                               /*!< CLK_T::STATUS: CLKSFAIL Position       */
-#define CLK_STATUS_CLKSFAIL_Msk          (0x1ul << CLK_STATUS_CLKSFAIL_Pos)                /*!< CLK_T::STATUS: CLKSFAIL Mask           */
+#define CLK_APBCLK1_LLSI1CKEN_Pos        (17)                                              /*!< CLK_T::APBCLK1: LLSI1CKEN Position     */
+#define CLK_APBCLK1_LLSI1CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI1CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI1CKEN Mask         */
 
 #define CLK_CLKSEL0_HCLKSEL_Pos          (0)                                               /*!< CLK_T::CLKSEL0: HCLKSEL Position       */
 #define CLK_CLKSEL0_HCLKSEL_Msk          (0x7ul << CLK_CLKSEL0_HCLKSEL_Pos)                /*!< CLK_T::CLKSEL0: HCLKSEL Mask           */
@@ -767,29 +751,23 @@ typedef struct
 #define CLK_CLKSEL0_STCLKSEL_Pos         (3)                                               /*!< CLK_T::CLKSEL0: STCLKSEL Position      */
 #define CLK_CLKSEL0_STCLKSEL_Msk         (0x7ul << CLK_CLKSEL0_STCLKSEL_Pos)               /*!< CLK_T::CLKSEL0: STCLKSEL Mask          */
 
-#define CLK_CLKSEL0_PCLK0SEL_Pos         (6)                                               /*!< CLK_T::CLKSEL0: PCLK0SEL Position      */
-#define CLK_CLKSEL0_PCLK0SEL_Msk         (0x1ul << CLK_CLKSEL0_PCLK0SEL_Pos)               /*!< CLK_T::CLKSEL0: PCLK0SEL Mask          */
+#define CLK_CLKSEL0_CANFD0SEL_Pos        (24)                                              /*!< CLK_T::CLKSEL0: CANFD0SEL Position     */
+#define CLK_CLKSEL0_CANFD0SEL_Msk        (0x3ul << CLK_CLKSEL0_CANFD0SEL_Pos)              /*!< CLK_T::CLKSEL0: CANFD0SEL Mask         */
 
-#define CLK_CLKSEL0_PCLK1SEL_Pos         (7)                                               /*!< CLK_T::CLKSEL0: PCLK1SEL Position      */
-#define CLK_CLKSEL0_PCLK1SEL_Msk         (0x1ul << CLK_CLKSEL0_PCLK1SEL_Pos)               /*!< CLK_T::CLKSEL0: PCLK1SEL Mask          */
+#define CLK_CLKSEL0_CANFD1SEL_Pos        (26)                                              /*!< CLK_T::CLKSEL0: CANFD1SEL Position     */
+#define CLK_CLKSEL0_CANFD1SEL_Msk        (0x1ul << CLK_CLKSEL0_CANFD1SEL_Pos)              /*!< CLK_T::CLKSEL0: CANFD1SEL Mask         */
+
+#define CLK_CLKSEL0_CANFD2SEL_Pos        (28)                                              /*!< CLK_T::CLKSEL0: CANFD2SEL Position     */
+#define CLK_CLKSEL0_CANFD2SEL_Msk        (0x1ul << CLK_CLKSEL0_CANFD2SEL_Pos)              /*!< CLK_T::CLKSEL0: CANFD2SEL Mask         */
 
 #define CLK_CLKSEL1_WDTSEL_Pos           (0)                                               /*!< CLK_T::CLKSEL1: WDTSEL Position        */
 #define CLK_CLKSEL1_WDTSEL_Msk           (0x3ul << CLK_CLKSEL1_WDTSEL_Pos)                 /*!< CLK_T::CLKSEL1: WDTSEL Mask            */
 
-#define CLK_CLKSEL1_ADCSEL_Pos           (2)                                               /*!< CLK_T::CLKSEL1: ADCSEL Position        */
-#define CLK_CLKSEL1_ADCSEL_Msk           (0x3ul << CLK_CLKSEL1_ADCSEL_Pos)                 /*!< CLK_T::CLKSEL1: ADCSEL Mask            */
+#define CLK_CLKSEL1_WWDTSEL_Pos          (2)                                               /*!< CLK_T::CLKSEL1: WWDTSEL Position       */
+#define CLK_CLKSEL1_WWDTSEL_Msk          (0x3ul << CLK_CLKSEL1_WWDTSEL_Pos)                /*!< CLK_T::CLKSEL1: WWDTSEL Mask           */
 
-#define CLK_CLKSEL1_BPWM0SEL_Pos         (4)                                               /*!< CLK_T::CLKSEL1: BPWM0SEL Position      */
-#define CLK_CLKSEL1_BPWM0SEL_Msk         (0x1ul << CLK_CLKSEL1_BPWM0SEL_Pos)               /*!< CLK_T::CLKSEL1: BPWM0SEL Mask          */
-
-#define CLK_CLKSEL1_BPWM1SEL_Pos         (5)                                               /*!< CLK_T::CLKSEL1: BPWM1SEL Position      */
-#define CLK_CLKSEL1_BPWM1SEL_Msk         (0x1ul << CLK_CLKSEL1_BPWM1SEL_Pos)               /*!< CLK_T::CLKSEL1: BPWM1SEL Mask          */
-
-#define CLK_CLKSEL1_BPWM2SEL_Pos         (6)                                               /*!< CLK_T::CLKSEL1: BPWM2SEL Position      */
-#define CLK_CLKSEL1_BPWM2SEL_Msk         (0x1ul << CLK_CLKSEL1_BPWM2SEL_Pos)               /*!< CLK_T::CLKSEL1: BPWM2SEL Mask          */
-
-#define CLK_CLKSEL1_BPWM3SEL_Pos         (7)                                               /*!< CLK_T::CLKSEL1: BPWM3SEL Position      */
-#define CLK_CLKSEL1_BPWM3SEL_Msk         (0x1ul << CLK_CLKSEL1_BPWM3SEL_Pos)               /*!< CLK_T::CLKSEL1: BPWM3SEL Mask          */
+#define CLK_CLKSEL1_CLKOSEL_Pos          (4)                                               /*!< CLK_T::CLKSEL1: CLKOSEL Position       */
+#define CLK_CLKSEL1_CLKOSEL_Msk          (0x7ul << CLK_CLKSEL1_CLKOSEL_Pos)                /*!< CLK_T::CLKSEL1: CLKOSEL Mask           */
 
 #define CLK_CLKSEL1_TMR0SEL_Pos          (8)                                               /*!< CLK_T::CLKSEL1: TMR0SEL Position       */
 #define CLK_CLKSEL1_TMR0SEL_Msk          (0x7ul << CLK_CLKSEL1_TMR0SEL_Pos)                /*!< CLK_T::CLKSEL1: TMR0SEL Mask           */
@@ -803,47 +781,50 @@ typedef struct
 #define CLK_CLKSEL1_TMR3SEL_Pos          (20)                                              /*!< CLK_T::CLKSEL1: TMR3SEL Position       */
 #define CLK_CLKSEL1_TMR3SEL_Msk          (0x7ul << CLK_CLKSEL1_TMR3SEL_Pos)                /*!< CLK_T::CLKSEL1: TMR3SEL Mask           */
 
-#define CLK_CLKSEL1_UART0SEL_Pos         (24)                                              /*!< CLK_T::CLKSEL1: UART0SEL Position      */
-#define CLK_CLKSEL1_UART0SEL_Msk         (0x3ul << CLK_CLKSEL1_UART0SEL_Pos)               /*!< CLK_T::CLKSEL1: UART0SEL Mask          */
+#define CLK_CLKSEL2_UART0SEL_Pos         (0)                                               /*!< CLK_T::CLKSEL2: UART0SEL Position      */
+#define CLK_CLKSEL2_UART0SEL_Msk         (0x3ul << CLK_CLKSEL2_UART0SEL_Pos)               /*!< CLK_T::CLKSEL2: UART0SEL Mask          */
 
-#define CLK_CLKSEL1_UART1SEL_Pos         (26)                                              /*!< CLK_T::CLKSEL1: UART1SEL Position      */
-#define CLK_CLKSEL1_UART1SEL_Msk         (0x3ul << CLK_CLKSEL1_UART1SEL_Pos)               /*!< CLK_T::CLKSEL1: UART1SEL Mask          */
+#define CLK_CLKSEL2_UART1SEL_Pos         (2)                                               /*!< CLK_T::CLKSEL2: UART1SEL Position      */
+#define CLK_CLKSEL2_UART1SEL_Msk         (0x3ul << CLK_CLKSEL2_UART1SEL_Pos)               /*!< CLK_T::CLKSEL2: UART1SEL Mask          */
 
-#define CLK_CLKSEL1_UART2SEL_Pos         (28)                                              /*!< CLK_T::CLKSEL1: UART2SEL Position      */
-#define CLK_CLKSEL1_UART2SEL_Msk         (0x3ul << CLK_CLKSEL1_UART2SEL_Pos)               /*!< CLK_T::CLKSEL1: UART2SEL Mask          */
+#define CLK_CLKSEL2_SPI0SEL_Pos          (24)                                              /*!< CLK_T::CLKSEL2: SPI0SEL Position       */
+#define CLK_CLKSEL2_SPI0SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI0SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI0SEL Mask           */
+
+#define CLK_CLKSEL3_ADCSEL_Pos           (0)                                               /*!< CLK_T::CLKSEL3: ADCSEL Position        */
+#define CLK_CLKSEL3_ADCSEL_Msk           (0x3ul << CLK_CLKSEL3_ADCSEL_Pos)                 /*!< CLK_T::CLKSEL3: ADCSEL Mask            */
+
+#define CLK_CLKSEL3_PWM0SEL_Pos          (4)                                               /*!< CLK_T::CLKSEL3: PWM0SEL Position       */
+#define CLK_CLKSEL3_PWM0SEL_Msk          (0x1ul << CLK_CLKSEL3_PWM0SEL_Pos)                /*!< CLK_T::CLKSEL3: PWM0SEL Mask           */
+
+#define CLK_CLKSEL3_BPWM0SEL_Pos         (6)                                               /*!< CLK_T::CLKSEL3: BPWM0SEL Position      */
+#define CLK_CLKSEL3_BPWM0SEL_Msk         (0x1ul << CLK_CLKSEL3_BPWM0SEL_Pos)               /*!< CLK_T::CLKSEL3: BPWM0SEL Mask          */
 
 #define CLK_CLKDIV0_HCLKDIV_Pos          (0)                                               /*!< CLK_T::CLKDIV0: HCLKDIV Position       */
 #define CLK_CLKDIV0_HCLKDIV_Msk          (0xful << CLK_CLKDIV0_HCLKDIV_Pos)                /*!< CLK_T::CLKDIV0: HCLKDIV Mask           */
 
-#define CLK_CLKDIV0_USBDIV_Pos           (4)                                               /*!< CLK_T::CLKDIV0: USBDIV Position        */
-#define CLK_CLKDIV0_USBDIV_Msk           (0xful << CLK_CLKDIV0_USBDIV_Pos)                 /*!< CLK_T::CLKDIV0: USBDIV Mask            */
-
 #define CLK_CLKDIV0_UART0DIV_Pos         (8)                                               /*!< CLK_T::CLKDIV0: UART0DIV Position      */
 #define CLK_CLKDIV0_UART0DIV_Msk         (0xful << CLK_CLKDIV0_UART0DIV_Pos)               /*!< CLK_T::CLKDIV0: UART0DIV Mask          */
 
-#define CLK_CLKDIV0_UART1DIV_Pos         (12)                                               /*!< CLK_T::CLKDIV0: UART1DIV Position      */
+#define CLK_CLKDIV0_UART1DIV_Pos         (12)                                              /*!< CLK_T::CLKDIV0: UART1DIV Position      */
 #define CLK_CLKDIV0_UART1DIV_Msk         (0xful << CLK_CLKDIV0_UART1DIV_Pos)               /*!< CLK_T::CLKDIV0: UART1DIV Mask          */
 
 #define CLK_CLKDIV0_ADCDIV_Pos           (16)                                              /*!< CLK_T::CLKDIV0: ADCDIV Position        */
 #define CLK_CLKDIV0_ADCDIV_Msk           (0xfful << CLK_CLKDIV0_ADCDIV_Pos)                /*!< CLK_T::CLKDIV0: ADCDIV Mask            */
 
-#define CLK_CLKDIV0_UART2DIV_Pos         (24)                                              /*!< CLK_T::CLKDIV0: UART2DIV Position      */
-#define CLK_CLKDIV0_UART2DIV_Msk         (0xful << CLK_CLKDIV0_UART2DIV_Pos)               /*!< CLK_T::CLKDIV0: UART2DIV Mask          */
+#define CLK_CLKDIV1_CANFD0DIV_Pos        (0)                                               /*!< CLK_T::CLKDIV1: CANFD0DIV Position     */
+#define CLK_CLKDIV1_CANFD0DIV_Msk        (0xful << CLK_CLKDIV1_CANFD0DIV_Pos)              /*!< CLK_T::CLKDIV1: CANFD0DIV Mask         */
 
-#define CLK_CLKSEL2_CLKOSEL_Pos          (2)                                               /*!< CLK_T::CLKSEL2: CLKOSEL Position       */
-#define CLK_CLKSEL2_CLKOSEL_Msk          (0x7ul << CLK_CLKSEL2_CLKOSEL_Pos)                /*!< CLK_T::CLKSEL2: CLKOSEL Mask           */
+#define CLK_CLKDIV1_CANFD1DIV_Pos        (4)                                               /*!< CLK_T::CLKDIV1: CANFD1DIV Position     */
+#define CLK_CLKDIV1_CANFD1DIV_Msk        (0xful << CLK_CLKDIV1_CANFD1DIV_Pos)              /*!< CLK_T::CLKDIV1: CANFD1DIV Mask         */
 
-#define CLK_CLKSEL2_WWDTSEL_Pos          (16)                                              /*!< CLK_T::CLKSEL2: WWDTSEL Position       */
-#define CLK_CLKSEL2_WWDTSEL_Msk          (0x3ul << CLK_CLKSEL2_WWDTSEL_Pos)                /*!< CLK_T::CLKSEL2: WWDTSEL Mask           */
+#define CLK_CLKDIV1_CANFD2DIV_Pos        (8)                                               /*!< CLK_T::CLKDIV1: CANFD2DIV Position     */
+#define CLK_CLKDIV1_CANFD2DIV_Msk        (0xful << CLK_CLKDIV1_CANFD2DIV_Pos)              /*!< CLK_T::CLKDIV1: CANFD2DIV Mask         */
 
-#define CLK_CLKSEL2_SPI0SEL_Pos          (24)                                              /*!< CLK_T::CLKSEL2: SPI0SEL Position       */
-#define CLK_CLKSEL2_SPI0SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI0SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI0SEL Mask           */
+#define CLK_PCLKDIV_APB0DIV_Pos          (0)                                               /*!< CLK_T::PCLKDIV: APB0DIV Position       */
+#define CLK_PCLKDIV_APB0DIV_Msk          (0x7ul << CLK_PCLKDIV_APB0DIV_Pos)                /*!< CLK_T::PCLKDIV: APB0DIV Mask           */
 
-#define CLK_CLKSEL2_SPI1SEL_Pos          (26)                                              /*!< CLK_T::CLKSEL2: SPI1SEL Position       */
-#define CLK_CLKSEL2_SPI1SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI1SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI1SEL Mask           */
-
-#define CLK_CLKSEL2_SPI2SEL_Pos          (28)                                              /*!< CLK_T::CLKSEL2: SPI2SEL Position       */
-#define CLK_CLKSEL2_SPI2SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI2SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI2SEL Mask           */
+#define CLK_PCLKDIV_APB1DIV_Pos          (4)                                               /*!< CLK_T::PCLKDIV: APB1DIV Position       */
+#define CLK_PCLKDIV_APB1DIV_Msk          (0x7ul << CLK_PCLKDIV_APB1DIV_Pos)                /*!< CLK_T::PCLKDIV: APB1DIV Mask           */
 
 #define CLK_PLLCTL_FBDIV_Pos             (0)                                               /*!< CLK_T::PLLCTL: FBDIV Position          */
 #define CLK_PLLCTL_FBDIV_Msk             (0x1fful << CLK_PLLCTL_FBDIV_Pos)                 /*!< CLK_T::PLLCTL: FBDIV Mask              */
@@ -869,6 +850,24 @@ typedef struct
 #define CLK_PLLCTL_STBSEL_Pos            (23)                                              /*!< CLK_T::PLLCTL: STBSEL Position         */
 #define CLK_PLLCTL_STBSEL_Msk            (0x1ul << CLK_PLLCTL_STBSEL_Pos)                  /*!< CLK_T::PLLCTL: STBSEL Mask             */
 
+#define CLK_STATUS_HXTSTB_Pos            (0)                                               /*!< CLK_T::STATUS: HXTSTB Position         */
+#define CLK_STATUS_HXTSTB_Msk            (0x1ul << CLK_STATUS_HXTSTB_Pos)                  /*!< CLK_T::STATUS: HXTSTB Mask             */
+
+#define CLK_STATUS_LXTSTB_Pos            (1)                                               /*!< CLK_T::STATUS: LXTSTB Position         */
+#define CLK_STATUS_LXTSTB_Msk            (0x1ul << CLK_STATUS_LXTSTB_Pos)                  /*!< CLK_T::STATUS: LXTSTB Mask             */
+
+#define CLK_STATUS_PLLSTB_Pos            (2)                                               /*!< CLK_T::STATUS: PLLSTB Position         */
+#define CLK_STATUS_PLLSTB_Msk            (0x1ul << CLK_STATUS_PLLSTB_Pos)                  /*!< CLK_T::STATUS: PLLSTB Mask             */
+
+#define CLK_STATUS_LIRCSTB_Pos           (3)                                               /*!< CLK_T::STATUS: LIRCSTB Position        */
+#define CLK_STATUS_LIRCSTB_Msk           (0x1ul << CLK_STATUS_LIRCSTB_Pos)                 /*!< CLK_T::STATUS: LIRCSTB Mask            */
+
+#define CLK_STATUS_HIRCSTB_Pos           (4)                                               /*!< CLK_T::STATUS: HIRCSTB Position        */
+#define CLK_STATUS_HIRCSTB_Msk           (0x1ul << CLK_STATUS_HIRCSTB_Pos)                 /*!< CLK_T::STATUS: HIRCSTB Mask            */
+
+#define CLK_STATUS_CLKSFAIL_Pos          (7)                                               /*!< CLK_T::STATUS: CLKSFAIL Position       */
+#define CLK_STATUS_CLKSFAIL_Msk          (0x1ul << CLK_STATUS_CLKSFAIL_Pos)                /*!< CLK_T::STATUS: CLKSFAIL Mask           */
+
 #define CLK_CLKOCTL_FREQSEL_Pos          (0)                                               /*!< CLK_T::CLKOCTL: FREQSEL Position       */
 #define CLK_CLKOCTL_FREQSEL_Msk          (0xful << CLK_CLKOCTL_FREQSEL_Pos)                /*!< CLK_T::CLKOCTL: FREQSEL Mask           */
 
@@ -877,36 +876,6 @@ typedef struct
 
 #define CLK_CLKOCTL_DIV1EN_Pos           (5)                                               /*!< CLK_T::CLKOCTL: DIV1EN Position        */
 #define CLK_CLKOCTL_DIV1EN_Msk           (0x1ul << CLK_CLKOCTL_DIV1EN_Pos)                 /*!< CLK_T::CLKOCTL: DIV1EN Mask            */
-
-#define CLK_APBCLK1_LLSI0CKEN_Pos        (16)                                              /*!< CLK_T::APBCLK1: LLSI0CKEN Position      */
-#define CLK_APBCLK1_LLSI0CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI0CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI0CKEN Mask          */
-
-#define CLK_APBCLK1_LLSI1CKEN_Pos        (17)                                              /*!< CLK_T::APBCLK1: LLSI1CKEN Position      */
-#define CLK_APBCLK1_LLSI1CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI1CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI1CKEN Mask          */
-
-#define CLK_APBCLK1_LLSI2CKEN_Pos        (18)                                              /*!< CLK_T::APBCLK1: LLSI2CKEN Position      */
-#define CLK_APBCLK1_LLSI2CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI2CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI2CKEN Mask          */
-
-#define CLK_APBCLK1_LLSI3CKEN_Pos        (19)                                              /*!< CLK_T::APBCLK1: LLSI3CKEN Position      */
-#define CLK_APBCLK1_LLSI3CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI3CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI3CKEN Mask          */
-
-#define CLK_APBCLK1_LLSI4CKEN_Pos        (20)                                              /*!< CLK_T::APBCLK1: LLSI4CKEN Position      */
-#define CLK_APBCLK1_LLSI4CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI4CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI4CKEN Mask          */
-
-#define CLK_APBCLK1_LLSI5CKEN_Pos        (21)                                              /*!< CLK_T::APBCLK1: LLSI5CKEN Position      */
-#define CLK_APBCLK1_LLSI5CKEN_Msk        (0x1ul << CLK_APBCLK1_LLSI5CKEN_Pos)              /*!< CLK_T::APBCLK1: LLSI5CKEN Mask          */
-
-#define CLK_CLKSEL3_USBDSEL_Pos          (8)                                               /*!< CLK_T::CLKSEL3: USBDSEL Position       */
-#define CLK_CLKSEL3_USBDSEL_Msk          (0x1ul << CLK_CLKSEL3_USBDSEL_Pos)                /*!< CLK_T::CLKSEL3: USBDSEL Mask           */
-
-#define CLK_BODCLK_VDETCKSEL_Pos         (0)                                               /*!< CLK_T::BODCLK: VDETCKSEL Position      */
-#define CLK_BODCLK_VDETCKSEL_Msk         (0x1ul << CLK_BODCLK_VDETCKSEL_Pos)               /*!< CLK_T::BODCLK: VDETCKSEL Mask          */
-
-#define CLK_BODCLK_VDETCKSEL_Pos         (0)                                               /*!< CLK_T::BODCLK: VDETCKSEL Position      */
-#define CLK_BODCLK_VDETCKSEL_Msk         (0x1ul << CLK_BODCLK_VDETCKSEL_Pos)               /*!< CLK_T::BODCLK: VDETCKSEL Mask          */
-
-#define CLK_LXTCTL_GAIN_Pos              (1)                                               /*!< CLK_T::LXTCTL: GAIN Position           */
-#define CLK_LXTCTL_GAIN_Msk              (0x7ul << CLK_LXTCTL_GAIN_Pos)                    /*!< CLK_T::LXTCTL: GAIN Mask               */
 
 #define CLK_CLKDCTL_HXTFDEN_Pos          (4)                                               /*!< CLK_T::CLKDCTL: HXTFDEN Position       */
 #define CLK_CLKDCTL_HXTFDEN_Msk          (0x1ul << CLK_CLKDCTL_HXTFDEN_Pos)                /*!< CLK_T::CLKDCTL: HXTFDEN Mask           */
@@ -940,6 +909,25 @@ typedef struct
 
 #define CLK_CDLOWB_LOWERBD_Pos           (0)                                               /*!< CLK_T::CDLOWB: LOWERBD Position        */
 #define CLK_CDLOWB_LOWERBD_Msk           (0x3fful << CLK_CDLOWB_LOWERBD_Pos)               /*!< CLK_T::CDLOWB: LOWERBD Mask            */
+
+#define CLK_STOPREQ_CANFD0REQ_Pos        (0)                                               /*!< CLK_T::STOPREQ: CANFD0REQ Position     */
+#define CLK_STOPREQ_CANFD0REQ_Msk        (0x1ul << CLK_STOPREQ_CANFD0REQ_Pos)              /*!< CLK_T::STOPREQ: CANFD0REQ Mask         */
+
+#define CLK_STOPREQ_CANFD1REQ_Pos        (1)                                               /*!< CLK_T::STOPREQ: CANFD1REQ Position     */
+#define CLK_STOPREQ_CANFD1REQ_Msk        (0x1ul << CLK_STOPREQ_CANFD1REQ_Pos)              /*!< CLK_T::STOPREQ: CANFD1REQ Mask         */
+
+#define CLK_STOPREQ_CANFD2REQ_Pos        (2)                                               /*!< CLK_T::STOPREQ: CANFD2REQ Position     */
+#define CLK_STOPREQ_CANFD2REQ_Msk        (0x1ul << CLK_STOPREQ_CANFD2REQ_Pos)              /*!< CLK_T::STOPREQ: CANFD2REQ Mask         */
+
+#define CLK_STOPACK_CANFD0ACK_Pos        (0)                                               /*!< CLK_T::STOPACK: CANFD0ACK Position     */
+#define CLK_STOPACK_CANFD0ACK_Msk        (0x1ul << CLK_STOPACK_CANFD0ACK_Pos)              /*!< CLK_T::STOPACK: CANFD0ACK Mask         */
+
+#define CLK_STOPACK_CANFD1ACK_Pos        (1)                                               /*!< CLK_T::STOPACK: CANFD1ACK Position     */
+#define CLK_STOPACK_CANFD1ACK_Msk        (0x1ul << CLK_STOPACK_CANFD1ACK_Pos)              /*!< CLK_T::STOPACK: CANFD1ACK Mask         */
+
+#define CLK_STOPACK_CANFD2ACK_Pos        (2)                                               /*!< CLK_T::STOPACK: CANFD2ACK Position     */
+#define CLK_STOPACK_CANFD2ACK_Msk        (0x1ul << CLK_STOPACK_CANFD2ACK_Pos)              /*!< CLK_T::STOPACK: CANFD2ACK Mask         */
+
 
 /**@}*/ /* CLK_CONST */
 /**@}*/ /* end of CLK register group */

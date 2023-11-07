@@ -24,7 +24,7 @@
   * @param[in]  u32Src is system reset source. Including :
   *             - \ref SYS_RSTSTS_CPULKRF_Msk
   *             - \ref SYS_RSTSTS_CPURF_Msk
-  *             - \ref SYS_RSTSTS_MCURF_Msk
+  *             - \ref SYS_RSTSTS_SYSRF_Msk
   *             - \ref SYS_RSTSTS_BODRF_Msk
   *             - \ref SYS_RSTSTS_LVRF_Msk
   *             - \ref SYS_RSTSTS_WDTRF_Msk
@@ -113,37 +113,26 @@ void SYS_ResetCPU(void)
   * @param[in]  u32ModuleIndex is module index. Including :
   *             - \ref PDMA_RST
   *             - \ref CRC_RST
+  *             - \ref CANFD0_RST
+  *             - \ref CANFD1_RST
+  *             - \ref CANFD2_RST
   *             - \ref GPIO_RST
   *             - \ref TMR0_RST
   *             - \ref TMR1_RST
   *             - \ref TMR2_RST
   *             - \ref TMR3_RST
   *             - \ref I2C0_RST
-  *             - \ref I2C1_RST
-  *             - \ref I2C2_RST
   *             - \ref SPI0_RST
-  *             - \ref SPI1_RST
-  *             - \ref SPI2_RST
   *             - \ref UART0_RST
   *             - \ref UART1_RST
-  *             - \ref UART2_RST
+  *             - \ref ADC_RST
+  *             - \ref ACMP01_RST
+  *             - \ref PWM0_RST
   *             - \ref BPWM0_RST
-  *             - \ref BPWM1_RST
-  *             - \ref BPWM2_RST
-  *             - \ref BPWM3_RST
+  *             - \ref USCI0_RST
+  *             - \ref USCI1_RST
   *             - \ref LLSI0_RST
   *             - \ref LLSI1_RST
-  *             - \ref LLSI2_RST
-  *             - \ref LLSI3_RST
-  *             - \ref LLSI4_RST
-  *             - \ref LLSI5_RST
-  *             - \ref DAC_RST
-  *             - \ref ACMP01_RST
-  *             - \ref ACMP23_RST
-  *             - \ref I3CS0_RST
-  *             - \ref I3CS1_RST
-  *             - \ref SPDH_RST
-  *             - \ref TS_RST
   * @return     None
   * @details    This function reset selected module.
   *             The register write-protection function should be disabled before using this function.
@@ -164,10 +153,10 @@ void SYS_ResetModule(uint32_t u32ModuleIndex)
   *             - \ref SYS_BODCTL_BOD_RST_EN
   *             - \ref SYS_BODCTL_BOD_INTERRUPT_EN
   * @param[in]  u32BODLevel is Brown-out voltage level. Including :
-  *             - \ref SYS_BODCTL_BODVL_4_5V
+  *             - \ref SYS_BODCTL_BODVL_4_4V
   *             - \ref SYS_BODCTL_BODVL_3_7V
   *             - \ref SYS_BODCTL_BODVL_2_7V
-  *             - \ref SYS_BODCTL_BODVL_2_2V
+  *             - \ref SYS_BODCTL_BODVL_2_3V
   * @return     None
   * @details    This function configure Brown-out detector reset or interrupt mode, enable Brown-out function and set Brown-out voltage level.
   *             The register write-protection function should be disabled before using this function.
@@ -194,25 +183,6 @@ void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel)
 void SYS_DisableBOD(void)
 {
     SYS->BODCTL &= ~SYS_BODCTL_BODEN_Msk;
-}
-
-
-/**
-  * @brief      Set Reference Voltage
-  * @param[in]  u32VRefCTL is reference voltage setting. Including :
-  *             - \ref SYS_VREFCTL_VREF_PIN
-  *             - \ref SYS_VREFCTL_VREF_2_048V
-  *             - \ref SYS_VREFCTL_VREF_2_56V
-  *             - \ref SYS_VREFCTL_VREF_3_072V
-  *             - \ref SYS_VREFCTL_VREF_4_096V
-  * @return     None
-  * @details    This function select reference voltage.
-  *             The register write-protection function should be disabled before using this function.
-  */
-void SYS_SetVRef(uint32_t u32VRefCTL)
-{
-    /* Set reference voltage */
-    SYS->VREFCTL = (SYS->VREFCTL & (~SYS_VREFCTL_VREFCTL_Msk)) | (u32VRefCTL);
 }
 
 

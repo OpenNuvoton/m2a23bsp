@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     system_M2A23.c
+ * @file     system_m2a23.c
  * @version  V3.00
  * @brief    M2A23 Series System Setting Source File
  *
@@ -18,7 +18,7 @@
 uint32_t SystemCoreClock  = __HSI;              /*!< System Clock Frequency (Core Clock) */
 uint32_t CyclesPerUs      = (__HSI / 1000000);  /*!< Cycles per micro second             */
 uint32_t PllClock         = __HSI;              /*!< PLL Output Clock Frequency          */
-const uint32_t gau32ClkSrcTbl[] = {__HXT, __LXT, __HSI, __LIRC, __HIRC, 0UL, 0UL, (__HIRC>>1)};
+const uint32_t gau32ClkSrcTbl[] = {__HXT, __LXT, __HSI, __LIRC, 0UL, 0UL, 0UL, __HIRC};
 
 
 /**

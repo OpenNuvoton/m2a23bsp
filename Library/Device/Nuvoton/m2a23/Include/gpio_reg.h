@@ -3,8 +3,8 @@
  * @version  V3.00
  * @brief    GPIO register definition header file
  *
- * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __GPIO_REG_H__
 #define __GPIO_REG_H__
@@ -49,14 +49,14 @@ typedef struct
      * |        |          |10 = Px.n is in Open-drain Output mode.
      * |        |          |11 = Px.n is in Quasi-bidirectional mode.
      * |        |          |Note1: The initial value of this field is defined by CIOINI (CONFIG0 [10]).
-     * |        |          |If CIOINI is set to 1, the default value is 0xFFFF_FFFF and all pins will be quasi-bidirectional mode after chip powered on.
-     * |        |          |If CIOINI is set to 0, the default value is 0x0000_0000 and all pins will be input mode after chip powered on.
+     * |        |          |If CIOINI is set to 0, the default value is 0xFFFF_FFFF and all pins will be quasi-bidirectional mode after chip powered on.
+     * |        |          |If CIOINI is set to 1, the default value is 0x0000_0000 and all pins will be input mode after chip powered on.
      * |        |          |Note2:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::DINOFF
      * Offset: 0x04/0x44/0x84/0xC4/0x144  PA-F Digital Input Path Disable Control
      * ---------------------------------------------------------------------------------------------------
@@ -68,11 +68,11 @@ typedef struct
      * |        |          |0 = Px.n digital input path Enabled.
      * |        |          |1 = Px.n digital input path Disabled (digital input tied to low).
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::DOUT
      * Offset: 0x08/0x48/0x88/0xC8/0x148  PA-F Data Output Value
      * ---------------------------------------------------------------------------------------------------
@@ -83,11 +83,11 @@ typedef struct
      * |        |          |0 = Px.n will drive Low if the Px.n pin is configured as Push-pull output, Open-drain output or Quasi-bidirectional mode.
      * |        |          |1 = Px.n will drive High if the Px.n pin is configured as Push-pull output or Quasi-bidirectional mode.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~14 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::DATMSK
      * Offset: 0x0C/0x4C/0x8C/0xCC/0x14C  PA-F Data Output Write Mask
      * ---------------------------------------------------------------------------------------------------
@@ -101,11 +101,11 @@ typedef struct
      * |        |          |1 = Corresponding DOUT (Px_DOUT[n]) bit protected.
      * |        |          |Note1: This function only protects the corresponding DOUT (Px_DOUT[n]) bit, and will not protect the corresponding PDIO (Pxn_PDIO[0]) bit.
      * |        |          |Note2:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6,14, 15 for port F.
      * @var GPIO_T::PIN
      * Offset: 0x10/0x50/0x90/0xD0/0x150  PA-F Pin Value
      * ---------------------------------------------------------------------------------------------------
@@ -115,11 +115,11 @@ typedef struct
      * |        |          |Each bit of the register reflects the actual status of the respective Px.n pin.
      * |        |          |If the bit is 1, it indicates the corresponding pin status is high; else the pin status is low.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::DBEN
      * Offset: 0x14/0x54/0x94/0xD4/0x154  PA-F De-Bounce Enable Control
      * ---------------------------------------------------------------------------------------------------
@@ -134,11 +134,11 @@ typedef struct
      * |        |          |The de-bounce function is valid only for edge triggered interrupt.
      * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::INTTYPE
      * Offset: 0x18/0x58/0x98/0xD8/0x158  PA-F Interrupt Trigger Type Control
      * ---------------------------------------------------------------------------------------------------
@@ -155,13 +155,13 @@ typedef struct
      * |        |          |The de-bounce function is valid only for edge triggered interrupt.
      * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_T::INTEN
-     * Offset: 0x1C/0x5C/0x9C/0xDC/0x15C  PA-F Interrupt Enable Control
+     * Offset: 0x1C/0x5C/0x9C/0xDC/0x15C  PA-F Interrupt Enable Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -174,11 +174,11 @@ typedef struct
      * |        |          |0 = Px.n level low or high to low interrupt Disabled.
      * |        |          |1 = Px.n level low or high to low interrupt Enabled.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
      * |[n+16]  |RHIENn    |Port A-F Pin[n] Rising Edge or High Level Interrupt Trigger Type Enable Bit
      * |        |          |The RHIEN (Px_INTEN[n+16]) bit is used to enable the interrupt for each of the corresponding input Px.n pin.
      * |        |          |Set bit to 1 also enable the pin wake-up function.
@@ -188,11 +188,12 @@ typedef struct
      * |        |          |0 = Px.n level high or low to high interrupt Disabled.
      * |        |          |1 = Px.n level high or low to high interrupt Enabled.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
+
      * @var GPIO_T::INTSRC
      * Offset: 0x20/0x60/0xA0/0xE0/0x160  PA-F Interrupt Source Flag
      * ---------------------------------------------------------------------------------------------------
@@ -205,12 +206,12 @@ typedef struct
      * |        |          |Read Operation :
      * |        |          |0 = No interrupt at Px.n.
      * |        |          |1 = Px.n generates an interrupt.
-     * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
+     * |        |          |n = 0~6, 14, 15 for port F.
+
      * @var GPIO_T::SMTEN
      * Offset: 0x24/0x64/0xA4/0xE4/0x164  PA-F Input Schmitt Trigger Enable
      * ---------------------------------------------------------------------------------------------------
@@ -220,37 +221,14 @@ typedef struct
      * |        |          |0 = Px.n input schmitt trigger function Disabled.
      * |        |          |1 = Px.n input schmitt trigger function Enabled.
      * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
-     * @var GPIO_T::SLEWCTL
-     * Offset: 0x28/0x68/0xA8/0xE8/0x128/0x168  PA-F High Slew Rate Control
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[n]     |HSRENn    |Port A-F Pin[n] High Slew Rate Control
-     * |        |          |0 = Px.n output with basic slew rate.
-     * |        |          |1 = Px.n output with higher slew rate.
-     * |        |          |Note:
-     * |        |          |n = 0~11 for port A.
-     * |        |          |n = 0~15 for port B.
-     * |        |          |n = 0~7, 14 for port C.
-     * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
-     * |[n+16]  |UHSRENn   |Port A-F Pin[n] Ultra High Slew Rate Control
-     * |        |          |0 = Px.n output with basic/higher slew rate according to HSREN[n] setting.
-     * |        |          |1 = Px.n output with ultra higher slew rate when HSREN[n] is 1.
-     * |        |          |Note:
-     * |        |          |Note 1:
-     * |        |          |This function is used for port A and port F.
-     * |        |          |n=0~3, 8~11 for port A.
-     * |        |          |n=4~6 for port F.
-     * |        |          |Note 2: Ultra higher slew rate function is used to match I3C and SPI application when releate pins are in 1.8V domain. 
-     * |        |          |Both UHSREN[n] and HSREN[n] need to be set to 1.
+     * |        |          |n = 0~6, 14, 15 for port F.
+
      * @var GPIO_T::PUSEL
-     * Offset: 0x30/0x70/0xB0/0xF0/0x170  PA-F Pull-up  Selection Register
+     * Offset: 0x30/0x70/0xB0/0xF0/0x170  PA-F Pull-up Selection Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -259,42 +237,15 @@ typedef struct
      * |        |          |0 = Px.n pull-up disabled.
      * |        |          |1 = Px.n pull-up enabled.
      * |        |          |Note1:
-     * |        |          |Basically, the pull-up control has following behavior limitation.
      * |        |          |The independent pull-up control register only valid when MODEn (Px_MODE[2n+1:2n]) set as tri-state and open-drain mode.
      * |        |          |Note2:
-     * |        |          |n = 0~11 for port A.
+     * |        |          |n = 0~15 for port A.
      * |        |          |n = 0~15 for port B.
      * |        |          |n = 0~7, 14 for port C.
      * |        |          |n = 0~3, 15 for port D.
-     * |        |          |n = 0~6 for port F.
-     */
-
-
-    __IO uint32_t MODE;                  /*!< [0x00/0x40/0x80/0xC0/0x140] PA-F I/O Mode Control                         */
-    __IO uint32_t DINOFF;                /*!< [0x04/0x44/0x84/0xC4/0x144] PA-F Digital Input Path Disable Control       */
-    __IO uint32_t DOUT;                  /*!< [0x08/0x48/0x88/0xC8/0x148] PA-F Data Output Value                        */
-    __IO uint32_t DATMSK;                /*!< [0x0C/0x4C/0x8C/0xCC/0x14C] PA-F Data Output Write Mask                   */
-    __I  uint32_t PIN;                   /*!< [0x10/0x50/0x90/0xD0/0x150] PA-F Pin Value                                */
-    __IO uint32_t DBEN;                  /*!< [0x14/0x54/0x94/0xD4/0x154] PA-F De-Bounce Enable Control                 */
-    __IO uint32_t INTTYPE;               /*!< [0x18/0x58/0x98/0xD8/0x158] PA-F Interrupt Trigger Type Control           */
-    __IO uint32_t INTEN;                 /*!< [0x1C/0x5C/0x9C/0xDC/0x15C] PA-F Interrupt Enable Control                 */
-    __IO uint32_t INTSRC;                /*!< [0x20/0x60/0xA0/0xE0/0x160] PA-F Interrupt Source Flag                    */
-    __IO uint32_t SMTEN;                 /*!< [0x24/0x64/0xA4/0xE4/0x164] PA-F Input Schmitt Trigger Enable             */
-    __IO uint32_t SLEWCTL;               /*!< [0x28/0x68/0xA8/0xE8/0x168] PA-F High Slew Rate Control                   */
-    __I  uint32_t RESERVE0[1];
-    __IO uint32_t PUSEL;                 /*!< [0x30/0x70/0xB0/0xF0/0x170] PA-F Pull-up Selection Register               */
-
-
-} GPIO_T;
-
-
-typedef struct
-{
-
-
-    /**
+     * |        |          |n = 0~6, 14, 15 for port F.
      * @var GPIO_DBCTL_T::DBCTL
-     * Offset: 0x180  Interrupt De-bounce Control
+     * Offset: 0x34/0x74/0xB4/0xF4/0x174  Interrupt De-bounce Control
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -317,16 +268,95 @@ typedef struct
      * |        |          |1111 = Sample interrupt input once per 128*256 clocks.
      * |[4]     |DBCLKSRC  |De-bounce Counter Clock Source Selection
      * |        |          |0 = De-bounce counter clock source is the HCLK.
-     * |        |          |1 = De-bounce counter clock source is the internal 10 kHz internal low speed oscillator.
+     * |        |          |1 = De-bounce counter clock source is LIRC.
      * |[5]     |ICLKON    |Interrupt Clock on Mode
      * |        |          |0 = Edge detection circuit is active only if I/O pin corresponding RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]) bit is set to 1.
      * |        |          |1 = All I/O pins edge detection circuit is always active after reset.
      * |        |          |Note: It is recommended to disable this bit to save system power if no special application concern.
+     * |[31]    |DBCLKBUSY |De-bounce Clock Switching Busy Flag (Read Only)
+     * |        |          |This bit is set when de-bounce clock source is changed by setting DBCLKSRC(Px_DBCTL[4]).
+     * |        |          |And it is cleared after de-bounce clock source switching is finished. De-bounce function can work normally after de-bounce clock switch done.
+     * |        |          |0 = De-bounce clock switch done.
+     * |        |          |1 = De-bounce clock is switching.
      */
 
-    __IO uint32_t DBCTL;                 /*!< [0x0180] Interrupt De-bounce Control                                      */
 
-} GPIO_DBCTL_T;
+    __IO uint32_t MODE;                  /*!< [0x00/0x40/0x80/0xC0/0x140] PA-F I/O Mode Control                         */
+    __IO uint32_t DINOFF;                /*!< [0x04/0x44/0x84/0xC4/0x144] PA-F Digital Input Path Disable Control       */
+    __IO uint32_t DOUT;                  /*!< [0x08/0x48/0x88/0xC8/0x148] PA-F Data Output Value                        */
+    __IO uint32_t DATMSK;                /*!< [0x0C/0x4C/0x8C/0xCC/0x14C] PA-F Data Output Write Mask                   */
+    __I  uint32_t PIN;                   /*!< [0x10/0x50/0x90/0xD0/0x150] PA-F Pin Value                                */
+    __IO uint32_t DBEN;                  /*!< [0x14/0x54/0x94/0xD4/0x154] PA-F De-Bounce Enable Control                 */
+    __IO uint32_t INTTYPE;               /*!< [0x18/0x58/0x98/0xD8/0x158] PA-F Interrupt Trigger Type Control           */
+    __IO uint32_t INTEN;                 /*!< [0x1C/0x5C/0x9C/0xDC/0x15C] PA-F Interrupt Enable Control                 */
+    __IO uint32_t INTSRC;                /*!< [0x20/0x60/0xA0/0xE0/0x160] PA-F Interrupt Source Flag                    */
+    __IO uint32_t SMTEN;                 /*!< [0x24/0x64/0xA4/0xE4/0x164] PA-F Input Schmitt Trigger Enable             */
+    __I  uint32_t RESERVE0[2];
+    __IO uint32_t PUSEL;                 /*!< [0x30/0x70/0xB0/0xF0/0x170] PA-F Pull-up Selection Register               */
+    __IO uint32_t DBCTL;                 /*!< [0x34/0x74/0xB4/0xF4/0x174] PA-F Interrupt De-bounce Control Register     */
+
+} GPIO_T;
+
+typedef struct
+{
+
+    /**
+     * @var GPIO_INT_T::INTn_INNF
+     * Offset: 0x450/0x454/0x458/0x45C/0x460/0x464  INT0~5 Input Noise Filter Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |NFEN      |Noise Filter Enable
+     * |        |          |0 = Noise Filter function Disabled.
+     * |        |          |1 = Noise Filter function Enabled.
+     * |[6:4]   |NFSEL     |Noise Filter Clock Selection
+     * |        |          |000 = Filter clock is HCLK.
+     * |        |          |001 = Filter clock is HCLK/2.
+     * |        |          |010 = Filter clock is HCLK/4.
+     * |        |          |011 = Filter clock is HCLK/8.
+     * |        |          |100 = Filter clock is HCLK/16
+     * |        |          |101 = Filter clock is HCLK/32.
+     * |        |          |110 = Filter clock is HCLK/64.
+     * |        |          |111 = Filter clock is HCLK/128.
+     * |[10:8]  |NFCNT     |Noise Filter Count
+     * |        |          |The register bits control the filter counter to count from 0 to NFCNT.
+     * @var GPIO_INT_T::INT_EDETCTL
+     * Offset: 0x490  INT Edge Detect Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2n+1:2n]|EDETCTLn |INTn Edge Detect Control Bits
+     * |        |          |00 = Not detect.
+     * |        |          |01 = INTn low to high detection Enable.
+     * |        |          |10 = INTn high to low detection Enable.
+     * |        |          |11 = INTn both low to high and high to low detection Enable.
+     * @var GPIO_INT_T::INT_EDINTEN
+     * Offset: 0x498  INT Edge Detect Interrupt Enable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |EDIENn    |INTn Edge Detect Interrupt Enable Bit
+     * |        |          |0 = INTn Edge Detect Interrupt Disable.
+     * |        |          |1 = INTn Edge Detect Interrupt Enable.
+     * @var GPIO_INT_T::INT_EDSTS
+     * Offset: 0x49C  INT Edge Detect Interrupt Flag Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |EDIFn     |INTn Edge Detect Interrupt Flag
+     * |        |          |0 = No Edge Detection happened.
+     * |        |          |1 = Rising Edge or Falling edge has been detected.
+     * |        |          |Note: This bit is cleared by writing 1 to it.
+     */
+
+    __IO uint32_t INT_INNF[6];   /* Offset: 0x450/0x454/0x458/0x45C/0x460/0x464  INT0~5 Input Noise Filter Register             */
+    __I  uint32_t RESERVE1[10];
+    __IO uint32_t INT_EDETCTL;   /* Offset: 0x490  INT Edge Detect Control Register                                             */
+    __I  uint32_t RESERVE2[1];
+    __IO uint32_t INT_EDINTEN;   /* Offset: 0x498  INT Edge Detect Interrupt Enable Control Register                            */
+    __IO uint32_t INT_EDSTS;     /* Offset: 0x49C  INT Edge Detect Interrupt Flag Register                                      */
+
+} GPIO_INT_T;
 
 /**
     @addtogroup GPIO_CONST GPIO Bit Field Definition
@@ -862,102 +892,6 @@ typedef struct
 #define GPIO_SMTEN_SMTEN15_Pos           (15)                                              /*!< GPIO_T::SMTEN: SMTEN15 Position        */
 #define GPIO_SMTEN_SMTEN15_Msk           (0x1ul << GPIO_SMTEN_SMTEN15_Pos)                 /*!< GPIO_T::SMTEN: SMTEN15 Mask            */
 
-#define GPIO_SLEWCTL_HSREN0_Pos          (0)                                               /*!< GPIO_T::SLEWCTL: HSREN0 Position       */
-#define GPIO_SLEWCTL_HSREN0_Msk          (0x1ul << GPIO_SLEWCTL_HSREN0_Pos)                /*!< GPIO_T::SLEWCTL: HSREN0 Mask           */
-
-#define GPIO_SLEWCTL_HSREN1_Pos          (1)                                               /*!< GPIO_T::SLEWCTL: HSREN1 Position       */
-#define GPIO_SLEWCTL_HSREN1_Msk          (0x1ul << GPIO_SLEWCTL_HSREN1_Pos)                /*!< GPIO_T::SLEWCTL: HSREN1 Mask           */
-
-#define GPIO_SLEWCTL_HSREN2_Pos          (2)                                               /*!< GPIO_T::SLEWCTL: HSREN2 Position       */
-#define GPIO_SLEWCTL_HSREN2_Msk          (0x1ul << GPIO_SLEWCTL_HSREN2_Pos)                /*!< GPIO_T::SLEWCTL: HSREN2 Mask           */
-
-#define GPIO_SLEWCTL_HSREN3_Pos          (3)                                               /*!< GPIO_T::SLEWCTL: HSREN3 Position       */
-#define GPIO_SLEWCTL_HSREN3_Msk          (0x1ul << GPIO_SLEWCTL_HSREN3_Pos)                /*!< GPIO_T::SLEWCTL: HSREN3 Mask           */
-
-#define GPIO_SLEWCTL_HSREN4_Pos          (4)                                               /*!< GPIO_T::SLEWCTL: HSREN4 Position       */
-#define GPIO_SLEWCTL_HSREN4_Msk          (0x1ul << GPIO_SLEWCTL_HSREN4_Pos)                /*!< GPIO_T::SLEWCTL: HSREN4 Mask           */
-
-#define GPIO_SLEWCTL_HSREN5_Pos          (5)                                               /*!< GPIO_T::SLEWCTL: HSREN5 Position       */
-#define GPIO_SLEWCTL_HSREN5_Msk          (0x1ul << GPIO_SLEWCTL_HSREN5_Pos)                /*!< GPIO_T::SLEWCTL: HSREN5 Mask           */
-
-#define GPIO_SLEWCTL_HSREN6_Pos          (6)                                               /*!< GPIO_T::SLEWCTL: HSREN6 Position       */
-#define GPIO_SLEWCTL_HSREN6_Msk          (0x1ul << GPIO_SLEWCTL_HSREN6_Pos)                /*!< GPIO_T::SLEWCTL: HSREN6 Mask           */
-
-#define GPIO_SLEWCTL_HSREN7_Pos          (7)                                               /*!< GPIO_T::SLEWCTL: HSREN7 Position       */
-#define GPIO_SLEWCTL_HSREN7_Msk          (0x1ul << GPIO_SLEWCTL_HSREN7_Pos)                /*!< GPIO_T::SLEWCTL: HSREN7 Mask           */
-
-#define GPIO_SLEWCTL_HSREN8_Pos          (8)                                               /*!< GPIO_T::SLEWCTL: HSREN8 Position       */
-#define GPIO_SLEWCTL_HSREN8_Msk          (0x1ul << GPIO_SLEWCTL_HSREN8_Pos)                /*!< GPIO_T::SLEWCTL: HSREN8 Mask           */
-
-#define GPIO_SLEWCTL_HSREN9_Pos          (9)                                               /*!< GPIO_T::SLEWCTL: HSREN9 Position       */
-#define GPIO_SLEWCTL_HSREN9_Msk          (0x1ul << GPIO_SLEWCTL_HSREN9_Pos)                /*!< GPIO_T::SLEWCTL: HSREN9 Mask           */
-
-#define GPIO_SLEWCTL_HSREN10_Pos         (10)                                              /*!< GPIO_T::SLEWCTL: HSREN10 Position      */
-#define GPIO_SLEWCTL_HSREN10_Msk         (0x1ul << GPIO_SLEWCTL_HSREN10_Pos)               /*!< GPIO_T::SLEWCTL: HSREN10 Mask          */
-
-#define GPIO_SLEWCTL_HSREN11_Pos         (11)                                              /*!< GPIO_T::SLEWCTL: HSREN11 Position      */
-#define GPIO_SLEWCTL_HSREN11_Msk         (0x1ul << GPIO_SLEWCTL_HSREN11_Pos)               /*!< GPIO_T::SLEWCTL: HSREN11 Mask          */
-
-#define GPIO_SLEWCTL_HSREN12_Pos         (12)                                              /*!< GPIO_T::SLEWCTL: HSREN12 Position      */
-#define GPIO_SLEWCTL_HSREN12_Msk         (0x1ul << GPIO_SLEWCTL_HSREN12_Pos)               /*!< GPIO_T::SLEWCTL: HSREN12 Mask          */
-
-#define GPIO_SLEWCTL_HSREN13_Pos         (13)                                              /*!< GPIO_T::SLEWCTL: HSREN13 Position      */
-#define GPIO_SLEWCTL_HSREN13_Msk         (0x1ul << GPIO_SLEWCTL_HSREN13_Pos)               /*!< GPIO_T::SLEWCTL: HSREN13 Mask          */
-
-#define GPIO_SLEWCTL_HSREN14_Pos         (14)                                              /*!< GPIO_T::SLEWCTL: HSREN14 Position      */
-#define GPIO_SLEWCTL_HSREN14_Msk         (0x1ul << GPIO_SLEWCTL_HSREN14_Pos)               /*!< GPIO_T::SLEWCTL: HSREN14 Mask          */
-
-#define GPIO_SLEWCTL_HSREN15_Pos         (15)                                              /*!< GPIO_T::SLEWCTL: HSREN15 Position      */
-#define GPIO_SLEWCTL_HSREN15_Msk         (0x1ul << GPIO_SLEWCTL_HSREN15_Pos)               /*!< GPIO_T::SLEWCTL: HSREN15 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN0_Pos         (16)                                              /*!< GPIO_T::SLEWCTL: HSREN0 Position       */
-#define GPIO_SLEWCTL_UHSREN0_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN0_Pos)               /*!< GPIO_T::SLEWCTL: HSREN0 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN1_Pos         (17)                                              /*!< GPIO_T::SLEWCTL: HSREN1 Position       */
-#define GPIO_SLEWCTL_UHSREN1_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN1_Pos)               /*!< GPIO_T::SLEWCTL: HSREN1 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN2_Pos         (18)                                              /*!< GPIO_T::SLEWCTL: HSREN2 Position       */
-#define GPIO_SLEWCTL_UHSREN2_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN2_Pos)               /*!< GPIO_T::SLEWCTL: HSREN2 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN3_Pos         (19)                                              /*!< GPIO_T::SLEWCTL: HSREN3 Position       */
-#define GPIO_SLEWCTL_UHSREN3_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN3_Pos)               /*!< GPIO_T::SLEWCTL: HSREN3 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN4_Pos         (20)                                              /*!< GPIO_T::SLEWCTL: HSREN4 Position       */
-#define GPIO_SLEWCTL_UHSREN4_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN4_Pos)               /*!< GPIO_T::SLEWCTL: HSREN4 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN5_Pos         (21)                                              /*!< GPIO_T::SLEWCTL: HSREN5 Position       */
-#define GPIO_SLEWCTL_UHSREN5_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN5_Pos)               /*!< GPIO_T::SLEWCTL: HSREN5 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN6_Pos         (22)                                              /*!< GPIO_T::SLEWCTL: HSREN6 Position       */
-#define GPIO_SLEWCTL_UHSREN6_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN6_Pos)               /*!< GPIO_T::SLEWCTL: HSREN6 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN7_Pos         (23)                                              /*!< GPIO_T::SLEWCTL: HSREN7 Position       */
-#define GPIO_SLEWCTL_UHSREN7_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN7_Pos)               /*!< GPIO_T::SLEWCTL: HSREN7 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN8_Pos         (24)                                              /*!< GPIO_T::SLEWCTL: HSREN8 Position       */
-#define GPIO_SLEWCTL_UHSREN8_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN8_Pos)               /*!< GPIO_T::SLEWCTL: HSREN8 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN9_Pos         (25)                                              /*!< GPIO_T::SLEWCTL: HSREN9 Position       */
-#define GPIO_SLEWCTL_UHSREN9_Msk         (0x1ul << GPIO_SLEWCTL_UHSREN9_Pos)               /*!< GPIO_T::SLEWCTL: HSREN9 Mask           */
-
-#define GPIO_SLEWCTL_UHSREN10_Pos        (26)                                              /*!< GPIO_T::SLEWCTL: HSREN10 Position      */
-#define GPIO_SLEWCTL_UHSREN10_Msk        (0x1ul << GPIO_SLEWCTL_UHSREN10_Pos)              /*!< GPIO_T::SLEWCTL: HSREN10 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN11_Pos        (27)                                              /*!< GPIO_T::SLEWCTL: HSREN11 Position      */
-#define GPIO_SLEWCTL_UHSREN11_Msk        (0x1ul << GPIO_SLEWCTL_HSREN11_Pos)               /*!< GPIO_T::SLEWCTL: HSREN11 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN12_Pos        (28)                                              /*!< GPIO_T::SLEWCTL: HSREN12 Position      */
-#define GPIO_SLEWCTL_UHSREN12_Msk        (0x1ul << GPIO_SLEWCTL_UHSREN12_Pos)              /*!< GPIO_T::SLEWCTL: HSREN12 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN13_Pos        (29)                                              /*!< GPIO_T::SLEWCTL: HSREN13 Position      */
-#define GPIO_SLEWCTL_UHSREN13_Msk        (0x1ul << GPIO_SLEWCTL_UHSREN13_Pos)              /*!< GPIO_T::SLEWCTL: HSREN13 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN14_Pos        (30)                                              /*!< GPIO_T::SLEWCTL: HSREN14 Position      */
-#define GPIO_SLEWCTL_UHSREN14_Msk        (0x1ul << GPIO_SLEWCTL_UHSREN14_Pos)              /*!< GPIO_T::SLEWCTL: HSREN14 Mask          */
-
-#define GPIO_SLEWCTL_UHSREN15_Pos        (31)                                              /*!< GPIO_T::SLEWCTL: HSREN15 Position      */
-#define GPIO_SLEWCTL_UHSREN15_Msk        (0x1ul << GPIO_SLEWCTL_UHSREN15_Pos)              /*!< GPIO_T::SLEWCTL: HSREN15 Mask          */
-
 #define GPIO_PUSEL_PUSEL0_Pos            (0)                                               /*!< GPIO_T::PUSEL: PUSEL0 Position         */
 #define GPIO_PUSEL_PUSEL0_Msk            (0x3ul << GPIO_PUSEL_PUSEL0_Pos)                  /*!< GPIO_T::PUSEL: PUSEL0 Mask             */
 
@@ -1006,14 +940,80 @@ typedef struct
 #define GPIO_PUSEL_PUSEL15_Pos           (30)                                              /*!< GPIO_T::PUSEL: PUSEL15 Position        */
 #define GPIO_PUSEL_PUSEL15_Msk           (0x3ul << GPIO_PUSEL_PUSEL15_Pos)                 /*!< GPIO_T::PUSEL: PUSEL15 Mask            */
 
-#define GPIO_DBCTL_DBCLKSEL_Pos          (0)                                               /*!< GPIO_DBCTL_T::DBCTL: DBCLKSEL Position */
-#define GPIO_DBCTL_DBCLKSEL_Msk          (0xful << GPIO_DBCTL_DBCLKSEL_Pos)                /*!< GPIO_DBCTL_T::DBCTL: DBCLKSEL Mask     */
+#define GPIO_DBCTL_DBCLKSEL_Pos          (0)                                               /*!< GPIO_T::DBCTL: DBCLKSEL Position       */
+#define GPIO_DBCTL_DBCLKSEL_Msk          (0xFul << GPIO_DBCTL_DBCLKSEL_Pos)                /*!< GPIO_T::DBCTL: DBCLKSEL Mask           */
 
-#define GPIO_DBCTL_DBCLKSRC_Pos          (4)                                               /*!< GPIO_DBCTL_T::DBCTL: DBCLKSRC Position */
-#define GPIO_DBCTL_DBCLKSRC_Msk          (0x1ul << GPIO_DBCTL_DBCLKSRC_Pos)                /*!< GPIO_DBCTL_T::DBCTL: DBCLKSRC Mask     */
+#define GPIO_DBCTL_DBCLKSRC_Pos          (4)                                               /*!< GPIO_T::DBCTL: DBCLKSRC Position       */
+#define GPIO_DBCTL_DBCLKSRC_Msk          (0x1ul << GPIO_DBCTL_DBCLKSRC_Pos)                /*!< GPIO_T::DBCTL: DBCLKSRC Mask           */
 
-#define GPIO_DBCTL_ICLKON_Pos            (5)                                               /*!< GPIO_DBCTL_T::DBCTL: ICLKON Position   */
-#define GPIO_DBCTL_ICLKON_Msk            (0x1ul << GPIO_DBCTL_ICLKON_Pos)                  /*!< GPIO_DBCTL_T::DBCTL: ICLKON Mask       */
+#define GPIO_DBCTL_ICLKON_Pos            (5)                                               /*!< GPIO_T::DBCTL: ICLKON Position         */
+#define GPIO_DBCTL_ICLKON_Msk            (0x1ul << GPIO_DBCTL_ICLKON_Pos)                  /*!< GPIO_T::DBCTL: ICLKON Mask             */
+
+#define GPIO_DBCTL_DBCLKBUSY_Pos         (31)                                              /*!< GPIO_T::DBCTL: DBCLKBUSY Position      */
+#define GPIO_DBCTL_DBCLKBUSY_Msk         (0x1ul << GPIO_DBCTL_DBCLKBUSY_Pos)               /*!< GPIO_T::DBCTL: DBCLKBUSY Mask          */
+
+#define GPIO_INT_INNF_NFEN_Pos           (0)                                               /*!< GPIO_T::INT_INNF: NFEN Position        */
+#define GPIO_INT_INNF_NFEN_Msk           (0x1ul << GPIO_INT_INNF_NFEN_Pos)                 /*!< GPIO_T::INT_INNF: NFEN Mask            */
+
+#define GPIO_INT_INNF_NFSEL_Pos          (4)                                               /*!< GPIO_T::INT_INNF: NFSEL Position       */
+#define GPIO_INT_INNF_NFSEL_Msk          (0x7ul << GPIO_INT_INNF_NFSEL_Pos)                /*!< GPIO_T::INT_INNF: NFSEL Mask           */
+
+#define GPIO_INT_INNF_NFCNT_Pos          (8)                                               /*!< GPIO_T::INT_INNF: NFCNT Position       */
+#define GPIO_INT_INNF_NFCNT_Msk          (0x7ul << GPIO_INT_INNF_NFCNT_Pos)                /*!< GPIO_T::INT_INNF: NFCNT Mask           */
+
+#define GPIO_INT_EDETCTL_EDETCTL0_Pos    (0)                                               /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL0 Position */
+#define GPIO_INT_EDETCTL_EDETCTL0_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL0_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL0 Mask     */
+
+#define GPIO_INT_EDETCTL_EDETCTL1_Pos    (2)                                               /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL1 Position */
+#define GPIO_INT_EDETCTL_EDETCTL1_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL1_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL1 Mask     */
+
+#define GPIO_INT_EDETCTL_EDETCTL2_Pos    (4)                                               /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL2 Position */
+#define GPIO_INT_EDETCTL_EDETCTL2_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL2_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL2 Mask     */
+
+#define GPIO_INT_EDETCTL_EDETCTL3_Pos    (6)                                               /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL3 Position */
+#define GPIO_INT_EDETCTL_EDETCTL3_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL3_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL3 Mask     */
+
+#define GPIO_INT_EDETCTL_EDETCTL4_Pos    (8)                                               /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL4 Position */
+#define GPIO_INT_EDETCTL_EDETCTL4_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL4_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL4 Mask     */
+
+#define GPIO_INT_EDETCTL_EDETCTL5_Pos    (10)                                              /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL5 Position */
+#define GPIO_INT_EDETCTL_EDETCTL5_Msk    (0x3ul << GPIO_INT_EDETCTL_EDETCTL5_Pos)          /*!< GPIO_INT_T::INT_EDETCTL: EDETCTL5 Mask     */
+
+#define GPIO_INT_EDINTEN_EDIEN0_Pos      (0)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN0 Position   */
+#define GPIO_INT_EDINTEN_EDIEN0_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN0_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN0 Mask       */
+
+#define GPIO_INT_EDINTEN_EDIEN1_Pos      (1)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN1 Position   */
+#define GPIO_INT_EDINTEN_EDIEN1_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN1_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN1 Mask       */
+
+#define GPIO_INT_EDINTEN_EDIEN2_Pos      (2)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN2 Position   */
+#define GPIO_INT_EDINTEN_EDIEN2_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN2_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN2 Mask       */
+
+#define GPIO_INT_EDINTEN_EDIEN3_Pos      (3)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN3 Position   */
+#define GPIO_INT_EDINTEN_EDIEN3_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN3_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN3 Mask       */
+
+#define GPIO_INT_EDINTEN_EDIEN4_Pos      (4)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN4 Position   */
+#define GPIO_INT_EDINTEN_EDIEN4_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN4_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN4 Mask       */
+
+#define GPIO_INT_EDINTEN_EDIEN5_Pos      (5)                                               /*!< GPIO_INT_T::INT_EDINTEN: EDIEN5 Position   */
+#define GPIO_INT_EDINTEN_EDIEN5_Msk      (0x1ul << GPIO_INT_EDINTEN_EDIEN5_Pos)            /*!< GPIO_INT_T::INT_EDINTEN: EDIEN5 Mask       */
+
+#define GPIO_INT_EDSTS_EDIF0_Pos         (0)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF0 Position      */
+#define GPIO_INT_EDSTS_EDIF0_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF0_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF0 Mask          */
+
+#define GPIO_INT_EDSTS_EDIF1_Pos         (1)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF1 Position      */
+#define GPIO_INT_EDSTS_EDIF1_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF1_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF1 Mask          */
+
+#define GPIO_INT_EDSTS_EDIF2_Pos         (2)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF2 Position      */
+#define GPIO_INT_EDSTS_EDIF2_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF2_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF2 Mask          */
+
+#define GPIO_INT_EDSTS_EDIF3_Pos         (3)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF3 Position      */
+#define GPIO_INT_EDSTS_EDIF3_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF3_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF3 Mask          */
+
+#define GPIO_INT_EDSTS_EDIF4_Pos         (4)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF4 Position      */
+#define GPIO_INT_EDSTS_EDIF4_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF4_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF4 Mask          */
+
+#define GPIO_INT_EDSTS_EDIF5_Pos         (5)                                               /*!< GPIO_INT_T::INT_EDSTS: EDIF5 Position      */
+#define GPIO_INT_EDSTS_EDIF5_Msk         (0x1ul << GPIO_INT_EDSTS_EDIF5_Pos)               /*!< GPIO_INT_T::INT_EDSTS: EDIF5 Mask          */
 
 /**@}*/ /* GPIO_CONST */
 /**@}*/ /* end of GPIO register group */
