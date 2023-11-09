@@ -647,7 +647,7 @@ typedef struct
 #define CLK_AHBCLK_ISPCKEN_Msk           (0x1ul << CLK_AHBCLK_ISPCKEN_Pos)                 /*!< CLK_T::AHBCLK: ISPCKEN Mask            */
 
 #define CLK_AHBCLK_STCKEN_Pos            (4)                                               /*!< CLK_T::AHBCLK: STCKEN Position         */
-#define CLK_AHBCLK_STCCKEN_Msk           (0x1ul << CLK_AHBCLK_STCKEN_Pos)                  /*!< CLK_T::AHBCLK: STCKEN Mask             */
+#define CLK_AHBCLK_STCKEN_Msk            (0x1ul << CLK_AHBCLK_STCKEN_Pos)                  /*!< CLK_T::AHBCLK: STCKEN Mask             */
 
 #define CLK_AHBCLK_CRCCKEN_Pos           (7)                                               /*!< CLK_T::AHBCLK: CRCCKEN Position        */
 #define CLK_AHBCLK_CRCCKEN_Msk           (0x1ul << CLK_AHBCLK_CRCCKEN_Pos)                 /*!< CLK_T::AHBCLK: CRCCKEN Mask            */

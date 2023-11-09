@@ -259,7 +259,7 @@ extern void SystemInit(void);
 
 #define SYS                 ((SYS_T *) SYS_BASE)                        /*!< System Global Controller Configuration Struct    */
 
-#define SYSINT              ((SYS_INT_T *) INT_BASE)                    /*!< Interrupt Source Controller Configuration Struct */
+#define NMI                 ((NMI_T *) NMI_BASE)                        /*!< Interrupt Source Controller Configuration Struct */
 
 #define FMC                 ((FMC_T *) FMC_BASE)                        /*!< Flash Memory Controller */
 

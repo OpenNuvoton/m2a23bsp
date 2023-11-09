@@ -210,7 +210,7 @@ void UART_Open(UART_T* uart, uint32_t u32baudrate)
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
@@ -313,12 +313,12 @@ void UART_SetLineConfig(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_wid
     switch((uint32_t)uart)
     {
         case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 
@@ -394,12 +394,12 @@ void UART_SelectIrDAMode(UART_T* uart, uint32_t u32Buadrate, uint32_t u32Directi
     switch((uint32_t)uart)
     {
         case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART0SEL_Msk) >> CLK_CLKSEL2_UART0SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
             break;
 
         case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
+            u8UartClkSrcSel = (CLK->CLKSEL2 & CLK_CLKSEL2_UART1SEL_Msk) >> CLK_CLKSEL2_UART1SEL_Pos;
             u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
             break;
 

@@ -121,6 +121,7 @@ void SYS_ResetCPU(void)
   *             - \ref TMR1_RST
   *             - \ref TMR2_RST
   *             - \ref TMR3_RST
+  *             - \ref WWDT_RST
   *             - \ref I2C0_RST
   *             - \ref SPI0_RST
   *             - \ref UART0_RST

@@ -369,14 +369,14 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
   * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_EXT_TRG      | x                         |
   * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_LIRC         | x                         |
   * |\ref TMR3_MODULE    |\ref CLK_CLKSEL1_TMR3SEL_HIRC         | x                         |
-  * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_HXT         |\ref CLK_CLKDIV0_UART0(x)  |
-  * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_PLL         |\ref CLK_CLKDIV0_UART0(x)  |
-  * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_LXT         |\ref CLK_CLKDIV0_UART0(x)  |
-  * |\ref UART0_MODULE   |\ref CLK_CLKSEL1_UART0SEL_HIRC        |\ref CLK_CLKDIV0_UART0(x)  |
-  * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_HXT         |\ref CLK_CLKDIV0_UART1(x)  |
-  * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_PLL         |\ref CLK_CLKDIV0_UART1(x)  |
-  * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_LXT         |\ref CLK_CLKDIV0_UART1(x)  |
-  * |\ref UART1_MODULE   |\ref CLK_CLKSEL1_UART1SEL_HIRC        |\ref CLK_CLKDIV0_UART1(x)  |
+  * |\ref UART0_MODULE   |\ref CLK_CLKSEL2_UART0SEL_HXT         |\ref CLK_CLKDIV0_UART0(x)  |
+  * |\ref UART0_MODULE   |\ref CLK_CLKSEL2_UART0SEL_PLL         |\ref CLK_CLKDIV0_UART0(x)  |
+  * |\ref UART0_MODULE   |\ref CLK_CLKSEL2_UART0SEL_LXT         |\ref CLK_CLKDIV0_UART0(x)  |
+  * |\ref UART0_MODULE   |\ref CLK_CLKSEL2_UART0SEL_HIRC        |\ref CLK_CLKDIV0_UART0(x)  |
+  * |\ref UART1_MODULE   |\ref CLK_CLKSEL2_UART1SEL_HXT         |\ref CLK_CLKDIV0_UART1(x)  |
+  * |\ref UART1_MODULE   |\ref CLK_CLKSEL2_UART1SEL_PLL         |\ref CLK_CLKDIV0_UART1(x)  |
+  * |\ref UART1_MODULE   |\ref CLK_CLKSEL2_UART1SEL_LXT         |\ref CLK_CLKDIV0_UART1(x)  |
+  * |\ref UART1_MODULE   |\ref CLK_CLKSEL2_UART1SEL_HIRC        |\ref CLK_CLKDIV0_UART1(x)  |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HXT          | x                         |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PLL_DIV2     | x                         |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PCLK1        | x                         |
