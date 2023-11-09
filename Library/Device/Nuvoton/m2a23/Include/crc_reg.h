@@ -106,11 +106,19 @@ typedef struct
      * |[31:0]  |CHECKSUM  |CRC Checksum Results
      * |        |          |This field indicates the CRC checksum result.
      * |        |          |Note: The valid bits of CRC_CHECKSUM[31:0] is correlated to CRCMODE (CRC_CTL[31:30]).
+     * @var CRC_T::POLYNOMIAL
+     * Offset: 0x10  CRC Polynomial Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field       |Descriptions
+     * | :----: | :----:     | :---- |
+     * |[31:0]  |POLYNOMIAL  |CRC Polynomial Register
+     * |        |            |This field indicates the value of CRC polynomial.
      */
     __IO uint32_t CTL;                   /*!< [0x0000] CRC Control Register                                             */
     __IO uint32_t DAT;                   /*!< [0x0004] CRC Write Data Register                                          */
     __IO uint32_t SEED;                  /*!< [0x0008] CRC Seed Register                                                */
     __I  uint32_t CHECKSUM;              /*!< [0x000c] CRC Checksum Register                                            */
+    __IO uint32_t POLYNOMIAL;            /*!< [0x0010] CRC Polynomial Register                                          */
 
 } CRC_T;
 
@@ -152,6 +160,10 @@ typedef struct
 
 #define CRC_CHECKSUM_CHECKSUM_Pos        (0)                                               /*!< CRC_T::CHECKSUM: CHECKSUM Position     */
 #define CRC_CHECKSUM_CHECKSUM_Msk        (0xfffffffful << CRC_CHECKSUM_CHECKSUM_Pos)       /*!< CRC_T::CHECKSUM: CHECKSUM Mask         */
+
+#define CRC_POLYNOMIAL_POLYNOMIAL_Pos    (0)                                               /*!< CRC_T::POLYNOMIAL: POLYNOMIAL Position     */
+#define CRC_POLYNOMIAL_POLYNOMIAL_Msk    (0xfffffffful << CRC_POLYNOMIAL_POLYNOMIAL_Pos)       /*!< CRC_T::POLYNOMIAL: POLYNOMIAL Mask         */
+
 
 /**@}*/ /* CRC_CONST */
 /**@}*/ /* end of CRC register group */
