@@ -4,10 +4,14 @@
  * @brief    PDMA register definition header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __PDMA_REG_H__
 #define __PDMA_REG_H__
+
+#if defined ( __CC_ARM   )
+#pragma anon_unions
+#endif
 
 /** @addtogroup REGISTER Control Register
 
@@ -15,30 +19,30 @@
 
 */
 
+
 /*---------------------- Peripheral Direct Memory Access Controller -------------------------*/
 /**
     @addtogroup PDMA Peripheral Direct Memory Access Controller(PDMA)
     Memory Mapped Structure for PDMA Controller
-    @{ 
-*/
-
-
+@{ */
 
 typedef struct
 {
+
+
     /**
      * @var DSCT_T::CTL
-     * Offset: 0x00/0x10/0x20/0x30/0x40/0x50/0x60/0x70/0x80/0x90  Descriptor Table Control Register of PDMA Channel 0~9
+     * Offset: 0x00  Descriptor Table Control Register of PDMA Channel n
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1:0]   |OPMODE    |PDMA Operation Mode Selection
      * |        |          |00 = Idle state: Channel is stopped or this table is complete, when PDMA finish channel table task, OPMODE will be cleared to idle state automatically.
      * |        |          |01 = Basic mode: The descriptor table only has one task
-     * |        |          |When this task is finished, the TDIF(PDMA_INTSTS[1]) will be asserted.
-     * |        |          |10 = Scatter-Gather mode: When operating in this mode, user must give the first descriptor table address in PDMA_DSCT_FIRST register; PDMA controller will ignore this task, then load the next task to execute.
+     * |        |          |When this task is finished, PDMA_INTSTS[1] will be asserted.
+     * |        |          |10 = Scatter-gather mode: When operating in this mode, user must give the next descriptor table address in PDMA_DSCTn_NEXT register; PDMA controller will ignore this task, then load the next task to execute.
      * |        |          |11 = Reserved.
-     * |        |          |Note: Before filling transfer task in the Descriptor Table, user must check if the descriptor table is complete.
+     * |        |          |Note: Before filling new transfer task in the Descriptor Table, user must check PDMA_INTSTS[1] to make sure the current task is complete.
      * |[2]     |TXTYPE    |Transfer Type
      * |        |          |0 = Burst transfer type.
      * |        |          |1 = Single transfer type.
@@ -55,72 +59,65 @@ typedef struct
      * |        |          |Note: This field is only useful in burst transfer type.
      * |[7]     |TBINTDIS  |Table Interrupt Disable Bit
      * |        |          |This field can be used to decide whether to enable table interrupt or not
-     * |        |          |If the TBINTDIS bit is enabled when PDMA controller finishes transfer task, it will not generates transfer done interrupt.
+     * |        |          |If the TBINTDIS bit is 1 it will not generates TDIFn(PDMA_TDSTS[15:0]) when PDMA controller finishes transfer task.
      * |        |          |0 = Table interrupt Enabled.
      * |        |          |1 = Table interrupt Disabled.
-     * |        |          |Note: If this bit set to 1, the TEMPTYF will not be set.
+     * |        |          |Note: This function only for Scatter-gather mode.
      * |[9:8]   |SAINC     |Source Address Increment
-     * |        |          |This Field Is Used To Set The Source Address Increment Size.
-     * |        |          |11 = No Increment (Fixed Address).
-     * |        |          |Others = Increment And Size Is Depended On TXWIDTH Selection.
+     * |        |          |This field is used to set the source address increment size.
+     * |        |          |11 = No increment (fixed address).
+     * |        |          |Others = Increment and size is depended on TXWIDTH selection.
+     * |        |          |Note: The fixed address function does not support in memory to memory transfer type.
      * |[11:10] |DAINC     |Destination Address Increment
      * |        |          |This field is used to set the destination address increment size.
      * |        |          |11 = No increment (fixed address).
      * |        |          |Others = Increment and size is depended on TXWIDTH selection.
+     * |        |          |Note: The fixed address function does not support in memory to memory transfer type.
      * |[13:12] |TXWIDTH   |Transfer Width Selection
      * |        |          |This field is used for transfer width.
      * |        |          |00 = One byte (8 bit) is transferred for every operation.
-     * |        |          |01 = One half-word (16 bit) is transferred for every operation.
+     * |        |          |01= One half-word (16 bit) is transferred for every operation.
      * |        |          |10 = One word (32-bit) is transferred for every operation.
      * |        |          |11 = Reserved.
-     * |        |          |Note: The PDMA transfer source address (PDMA_DSCT_SA) and PDMA transfer destination address (PDMA_DSCT_DA) should be alignment under the TXWIDTH selection
-     * |        |          |For example, if source address is 0x2000_0202, but TXWIDTH is word transfer, the source address is not word alignment
-     * |        |          |The source address is aligned when TXWIDTH is byte or half-word transfer.
-     * |[29:16] |TXCNT     |Transfer Count
-     * |        |          |The TXCNT represents the required number of PDMA transfer, the real transfer count is (TXCNT + 1); The maximum transfer count is 16384 , every transfer may be byte, half-word or word that is dependent on TXWIDTH field.
-     * |        |          |Note: When PDMA finish each transfer data, this field will be decrease immediately.
+     * |        |          |Note: PDMA transfer source address (PDMA_DSCTn_SA) and PDMA transfer destination address (PDMA_DSCTn_DA) should be alignment under the TXWIDTH selection
+     * |[31:16] |TXCNT     |Transfer Count
+     * |        |          |The TXCNT represents the required number of PDMA transfer, the real transfer count is (TXCNT + 1); The maximum transfer count is 65536, every transfer may be byte, half-word or word that is dependent on TXWIDTH field.
+     * |        |          |Note: When PDMA finishes each transfer data, this field will be decreased immediately.
      * @var DSCT_T::SA
-     * Offset: 0x04/0x14/0x24/0x34/0x44/0x54/0x64/0x74/0x84/0x94  Source Address Register of PDMA Channel 0~9
+     * Offset: 0x04  Source Address Register of PDMA Channel n
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:0]  |SA        |PDMA Transfer Source Address Register
+     * |[31:0]  |SA        |PDMA Transfer Source Address
      * |        |          |This field indicates a 32-bit source address of PDMA controller.
-     * |        |          |Note: The PDMA transfer source address should be aligned with the TXWIDTH(PDMA_DSCTn_CTL[13:12], n=0,1..9) selection.
      * @var DSCT_T::DA
-     * Offset: 0x08/0x18/0x28/0x38/0x48/0x58/0x68/0x78/0x88/0x98  Destination Address Register of PDMA Channel 0~9
+     * Offset: 0x08  Destination Address Register of PDMA Channel n
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:0]  |DA        |PDMA Transfer Destination Address Register
+     * |[31:0]  |DA        |PDMA Transfer Destination Address
      * |        |          |This field indicates a 32-bit destination address of PDMA controller.
-     * |        |          |Note: The PDMA transfer destination address should be aligned with the TXWIDTH(PDMA_DSCTn_CTL[13:12], n=0,1..9) selection.
-     * @var DSCT_T::FIRST
-     * Offset: 0x0C/0x1C/0x2C/0x3C/0x4C/0x5C/0x6C/0x7C/0x8C/0x9C  First Scatter-Gather Descriptor Table Offset of PDMA Channel 0~9
+     * @var DSCT_T::NEXT
+     * Offset: 0x0C  Next Scatter-gather Descriptor Table Offset Address of PDMA Channel n
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[15:0]  |FIRST     |PDMA First Descriptor Table Offset
-     * |        |          |This field indicates the offset of the first descriptor table address in system memory.
+     * |[15:0]  |NEXT      |PDMA Next Descriptor Table Offset
+     * |        |          |This field indicates the offset of the next descriptor table address in system memory.
      * |        |          |Write Operation:
-     * |        |          |If the system memory based address is 0x2000_0000 (PDMA_SCATBA), and the first descriptor table is start from 0x2000_0100, then this field must fill in 0x0100.
+     * |        |          |If the system memory based address is 0x2000_0000 (PDMA_SCATBA), and the next descriptor table is start from 0x2000_0100, then this field must fill in 0x0100.
      * |        |          |Read Operation:
-     * |        |          |When operating in scatter-gather mode, the last two bits FIRST[1:0] will become reserved.
-     * |        |          |Note1: The first descriptor table address must be word boundary.
-     * |        |          |Note2: Before filled transfer task in the descriptor table, user must check if the descriptor table is complete.
-     * |[31:16] |NEXT      |PDMA Next Descriptor Table Offset
-     * |        |          |This field indicates the offset of next descriptor table address in system memory.
-     * |        |          |Note: write operation is useless in this field.
+     * |        |          |When operating in Scatter-gather mode, the last two bits NEXT[1:0] will become reserved, and indicate the first next address of system memory.
+     * |        |          |Note 1: The descriptor table address must be word boundary.
+     * |        |          |Note 2: Before filling transfer task in the descriptor table, user must check if the descriptor table is complete.
+     * |[31:16] |EXENEXT   |PDMA Execution Next Descriptor Table Offset
+     * |        |          |This field indicates the offset of next descriptor table address of current execution descriptor table in system memory.
+     * |        |          |Note: Write operation is useless in this field.
      */
-
-    __IO uint32_t CTL;             /*!< [0x00/0x10/0x20/0x30/0x40/0x50/0x60/0x70/0x80/0x90] Descriptor Table Control Register of PDMA Channel 0~9              */
-    __IO uint32_t SA;              /*!< [0x04/0x14/0x24/0x34/0x44/0x54/0x64/0x74/0x84/0x94] Source Address Register of PDMA Channel 0~9                        */
-    __IO uint32_t DA;              /*!< [0x08/0x18/0x28/0x38/0x48/0x58/0x68/0x78/0x88/0x98] Destination Address Register of PDMA Channel 0~9                   */
-    union
-    {
-        __IO uint32_t FIRST;       /*!< [0x0C/0x1C/0x2C/0x3C/0x4C/0x5C/0x6C/0x7C/0x8C/0x9C] First Scatter-Gather Descriptor Table Offset of PDMA Channel 0~9   */
-        __IO uint32_t NEXT;        /*!< Next Scatter-Gather Descriptor Table Offset                                                   */
-    };
+    __IO uint32_t CTL;             /*!< [0x0000] Descriptor Table Control Register of PDMA Channel n              */
+    __IO uint32_t SA;              /*!< [0x0004] Source Address Register of PDMA Channel n                        */
+    __IO uint32_t DA;              /*!< [0x0008] Destination Address Register of PDMA Channel n                   */
+    __IO uint32_t NEXT;            /*!< [0x000c] Next Scatter-gather Descriptor Table Offset Address of PDMA Channel n */
 
 } DSCT_T;
 
@@ -130,131 +127,32 @@ typedef struct
 
     /**
      * @var PDMA_T::CURSCAT
-     * Offset: 0xA0/0xA4/0xA8/0xAC/0xB0/0xB4/0xB8/0xBC/0xC0/0xC4  Current Scatter-Gather Descriptor Table Address of PDMA Channel 0~9
+     * Offset: 0x100  Current Scatter-gather Descriptor Table Address of PDMA Channel n
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:0]  |CURADDR   |PDMA Current Description Address Register (Read Only)
+     * |[31:0]  |CURADDR   |PDMA Current Description Address (Read Only)
      * |        |          |This field indicates a 32-bit current external description address of PDMA controller.
-     * |        |          |Note: This field is read only and only used for Scatter-Gather mode to indicate the current external description address.
+     * |        |          |Note: This field is read only and used for Scatter-gather mode only to indicate the current external description address.
      * @var PDMA_T::CHCTL
      * Offset: 0x400  PDMA Channel Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |CHEN0     |PDMA Channel N Enable Bit
+     * |[15:0]  |CHENn     |PDMA Channel Enable Bits
      * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
      * |        |          |0 = PDMA channel [n] Disabled.
      * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[1]     |CHEN1     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[2]     |CHEN2     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[3]     |CHEN3     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[4]     |CHEN4     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[5]     |CHEN5     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[6]     |CHEN6     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[7]     |CHEN7     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[8]     |CHEN8     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
-     * |[9]     |CHEN9     |PDMA Channel N Enable Bit
-     * |        |          |Set this bit to 1 to enable PDMAn operation. Channel cannot be active if it is not set as enabled.
-     * |        |          |0 = PDMA channel [n] Disabled.
-     * |        |          |1 = PDMA channel [n] Enabled.
-     * |        |          |Note: Set PDMA_PAUSE or PDMA_RESET register will also clear this bit.
+     * |        |          |Note: Setting the corresponding bit of PDMA_PAUSE or PDMA_CHRST register will also clear this bit.
      * @var PDMA_T::PAUSE
      * Offset: 0x404  PDMA Transfer Pause Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |PAUSE0    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[1]     |PAUSE1    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[2]     |PAUSE2    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[3]     |PAUSE3    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[4]     |PAUSE4    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[5]     |PAUSE5    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[6]     |PAUSE6    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[7]     |PAUSE7    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[8]     |PAUSE8    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Pause PDMA channel n transfer.
-     * |[9]     |PAUSE9    |PDMA Channel N Transfer Pause Control Register (Write Only)
-     * |        |          |User can set PAUSEn bit field to pause the PDMA transfer
-     * |        |          |When user sets PAUSEn bit, the PDMA controller will pause the on-going transfer, then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1..9) and clear request active flag
-     * |        |          |If re-enable the paused channel agian, the remaining transfers will be processed.
+     * |[15:0]  |PAUSEn    |PDMA Channel n Transfer Pause Control (Write Only)
+     * |        |          |User can set PAUSEn bit field to pause PDMA transfer
+     * |        |          |When user sets PAUSEn bit, PDMA will pause the on-going transfer, then clear channel enable bit CHENn(PDMA_CHCTL [n], n=0,1..15) and clear request active flag(PDMA_TRGSTS[n:0], n=0,1..15)
+     * |        |          |If the paused channel is re-enabled again, the remaining transfers will be processed.
      * |        |          |0 = No effect.
      * |        |          |1 = Pause PDMA channel n transfer.
      * @var PDMA_T::SWREQ
@@ -262,307 +160,44 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |SWREQ0    |PDMA Channel N Software Request Register (Write Only)
+     * |[15:0]  |SWREQn    |PDMA Software Request (Write Only)
      * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
      * |        |          |0 = No effect.
      * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
+     * |        |          |Note 1: User can read PDMA_TRGSTS register to know which channel is on active
      * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[1]     |SWREQ1    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[2]     |SWREQ2    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[3]     |SWREQ3    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[4]     |SWREQ4    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[5]     |SWREQ5    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[6]     |SWREQ6    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[7]     |SWREQ7    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[8]     |SWREQ8    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
-     * |[9]     |SWREQ9    |PDMA Channel N Software Request Register (Write Only)
-     * |        |          |Set this bit to 1 to generate a software request to PDMA [n].
-     * |        |          |0 = No effect.
-     * |        |          |1 = Generate a software request.
-     * |        |          |Note1: User can read PDMA_TRGSTS register to know which channel is on active
-     * |        |          |Active flag may be triggered by software request or peripheral request.
-     * |        |          |Note2: If user does not enable corresponding PDMA channel, the software request will be ignored.
+     * |        |          |Note 2: If user does not enable corresponding PDMA channel, the software request will be ignored.
      * @var PDMA_T::TRGSTS
      * Offset: 0x40C  PDMA Channel Request Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |REQSTS0   |PDMA Channel N Request Status (Read Only)
+     * |[15:0]  |REQSTSn   |PDMA Channel Request Status (Read Only)
      * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
      * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
      * |        |          |0 = PDMA Channel n has no request.
      * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[1]     |REQSTS1   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[2]     |REQSTS2   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[3]     |REQSTS3   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[4]     |REQSTS4   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[5]     |REQSTS5   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[6]     |REQSTS6   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[7]     |REQSTS7   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[8]     |REQSTS8   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
-     * |[9]     |REQSTS9   |PDMA Channel N Request Status (Read Only)
-     * |        |          |This flag indicates whether channel[n] have a request or not, no matter request from software or peripheral
-     * |        |          |When PDMA controller finishes channel transfer, this bit will be cleared automatically.
-     * |        |          |0 = PDMA Channel n has no request.
-     * |        |          |1 = PDMA Channel n has a request.
-     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_RESET register respectively, this bit will be cleared automatically after finishing current transfer.
+     * |        |          |Note: If user pauses or resets each PDMA transfer by setting PDMA_PAUSE or PDMA_CHRST register respectively, this bit will be cleared automatically after finishing the current transfer.
      * @var PDMA_T::PRISET
      * Offset: 0x410  PDMA Fixed Priority Setting Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |FPRISET0  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
+     * |[15:0]  |FPRISETn  |PDMA Fixed Priority Setting
+     * |        |          |Set this bit to 1 to enable fixed priority level.
      * |        |          |Write Operation:
      * |        |          |0 = No effect.
      * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
      * |        |          |Read Operation:
      * |        |          |0 = Corresponding PDMA channel is round-robin priority.
      * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[1]     |FPRISET1  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[2]     |FPRISET2  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[3]     |FPRISET3  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[4]     |FPRISET4  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[5]     |FPRISET5  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[6]     |FPRISET6  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[7]     |FPRISET7  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[8]     |FPRISET8  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
-     * |[9]     |FPRISET9  |PDMA Channel N Fixed Priority Setting Register
-     * |        |          |Set this bit to 1 to enable fixed priority level
-     * |        |          |The fixed priority channel has higher priority than round-robin priority channel
-     * |        |          |If multiple channels are set as the same priority, the higher number of channels have higher priority.
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set PDMA channel [n] to fixed priority channel.
-     * |        |          |Read Operation:
-     * |        |          |0 = Corresponding PDMA channel is round-robin priority.
-     * |        |          |1 = Corresponding PDMA channel is fixed priority.
-     * |        |          |Note: This field only set to fixed priority, clear fixed priority use PDMA_PRICLR register.
+     * |        |          |Note: This field is only set to fixed priority. To clear fixed priority, use PDMA_PRICLR register.
      * @var PDMA_T::PRICLR
      * Offset: 0x414  PDMA Fixed Priority Clear Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |FPRICLR0  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[1]     |FPRICLR1  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[2]     |FPRICLR2  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[3]     |FPRICLR3  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[4]     |FPRICLR4  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[5]     |FPRICLR5  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[6]     |FPRICLR6  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[7]     |FPRICLR7  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[8]     |FPRICLR8  |PDMA Channel N Fixed Priority Clear Register (Write Only)
-     * |        |          |Set this bit to 1 to clear fixed priority level.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
-     * |        |          |Note: User can read PDMA_PRISET register to know the channel priority.
-     * |[9]     |FPRICLR9  |PDMA Channel N Fixed Priority Clear Register (Write Only)
+     * |[15:0]  |FPRICLRn  |PDMA Fixed Priority Clear Bits (Write Only)
      * |        |          |Set this bit to 1 to clear fixed priority level.
      * |        |          |0 = No effect.
      * |        |          |1 = Clear PDMA channel [n] fixed priority setting.
@@ -572,46 +207,11 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |INTEN0    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
+     * |[15:0]  |INTENn    |PDMA Interrupt Enable Bits
+     * |        |          |This field is used to enable PDMA channel[n] interrupt.
      * |        |          |0 = PDMA channel n interrupt Disabled.
      * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[1]     |INTEN1    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[2]     |INTEN2    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[3]     |INTEN3    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[4]     |INTEN4    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[5]     |INTEN5    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[6]     |INTEN6    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[7]     |INTEN7    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[8]     |INTEN8    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
-     * |[9]     |INTEN9    |PDMA Channel N Interrupt Enable Register
-     * |        |          |This field is used for enabling PDMA channel[n] interrupt.
-     * |        |          |0 = PDMA channel n interrupt Disabled.
-     * |        |          |1 = PDMA channel n interrupt Enabled.
+     * |        |          |Note: The interrupt flag is time-out, abort, transfer done and align.
      * @var PDMA_T::INTSTS
      * Offset: 0x41C  PDMA Interrupt Status Register
      * ---------------------------------------------------------------------------------------------------
@@ -625,211 +225,63 @@ typedef struct
      * |        |          |This bit indicates that PDMA controller has finished transmission; User can read PDMA_TDSTS register to indicate which channel finished transfer.
      * |        |          |0 = Not finished yet.
      * |        |          |1 = PDMA channel has finished transmission.
-     * |[2]     |TEIF      |Table Empty Interrupt Flag (Read Only)
-     * |        |          |This bit indicates PDMA channel scatter-gather table is empty
-     * |        |          |User can read PDMA_SCATSTS register to indicate which channel scatter-gather table is empty.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty.
-     * |[8]     |REQTOF0   |PDMA Channel N Request Time-out Flag for Each Channel [N]
-     * |        |          |This flag indicates that PDMA controller has waited peripheral request for a period defined by PDMA_TOC0, user can write 1 to clear these bits.
+     * |[2]     |ALIGNF    |Transfer Alignment Interrupt Flag (Read Only)
+     * |        |          |0 = PDMA channel source address and destination address both follow transfer width setting.
+     * |        |          |1 = PDMA channel source address or destination address is not follow transfer width setting.
+     * |[8]     |REQTOF0   |Request Time-out Flag for Channel 0
+     * |        |          |This flag indicates that PDMA controller has waited peripheral request for a period defined by TOC0(PDMA_TOC0_1[15:0].
      * |        |          |0 = No request time-out.
      * |        |          |1 = Peripheral request time-out.
-     * |[9]     |REQTOF1   |PDMA Channel N Request Time-out Flag for Each Channel [N]
-     * |        |          |This flag indicates that PDMA controller has waited peripheral request for a period defined by PDMA_TOC10, user can write 1 to clear these bits.
+     * |        |          |Note 1: Please disable time-out function before clearing this bit.
+     * |        |          |Note 2: User can write 1 to clear this bit.
+     * |[9]     |REQTOF1   |Request Time-out Flag for Channel 1
+     * |        |          |This flag indicates that PDMA controller has waited peripheral request for a period defined by TOC1(PDMA_TOC0_1[31:16]).
      * |        |          |0 = No request time-out.
      * |        |          |1 = Peripheral request time-out.
+     * |        |          |Note 1: Please disable time-out function before clearing this bit.
+     * |        |          |Note 2: User can write 1 to clear this bit.
      * @var PDMA_T::ABTSTS
      * Offset: 0x420  PDMA Channel Read/Write Target Abort Flag Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |ABTIF0    |PDMA Channel 0 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
+     * |[15:0]  |ABTIFn    |PDMA Read/Write Target Abort Interrupt Status Flag
+     * |        |          |This bit indicates which PDMA controller has target abort error.
      * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
      * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[1]     |ABTIF1    |PDMA Channel 1 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[2]     |ABTIF2    |PDMA Channel 2 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[3]     |ABTIF3    |PDMA Channel 3 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[4]     |ABTIF4    |PDMA Channel 4 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[5]     |ABTIF5    |PDMA Channel 5 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[6]     |ABTIF6    |PDMA Channel 6 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[7]     |ABTIF7    |PDMA Channel 7 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[8]     |ABTIF8    |PDMA Channel 8 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
-     * |[9]     |ABTIF9    |PDMA Channel 9 Read/Write Target Abort Interrupt Status Flag
-     * |        |          |This bit indicates which PDMA controller has target abort error; User can write 1 to clear these bits.
-     * |        |          |0 = No AHB bus ERROR response received when channel n transfer.
-     * |        |          |1 = AHB bus ERROR response received when channel n transfer.
+     * |        |          |Note 1: If channel n target abort, REQSRCn should set0 to disable peripheral request.
+     * |        |          |Note 2: User can write 1 to clear this bit.
      * @var PDMA_T::TDSTS
      * Offset: 0x424  PDMA Channel Transfer Done Flag Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |TDIF0     |PDMA Channel 0 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
+     * |[15:0]  |TDIFn     |Transfer Done Flag
+     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not.
      * |        |          |0 = PDMA channel transfer has not finished.
      * |        |          |1 = PDMA channel has finished transmission.
-     * |[1]     |TDIF1     |PDMA Channel 1 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[2]     |TDIF2     |PDMA Channel 2 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[3]     |TDIF3     |PDMA Channel 3 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[4]     |TDIF4     |PDMA Channel 4 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[5]     |TDIF5     |PDMA Channel 5 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[6]     |TDIF6     |PDMA Channel 6 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[7]     |TDIF7     |PDMA Channel 7 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[8]     |TDIF8     |PDMA Channel 8 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * |[9]     |TDIF9     |PDMA Channel 9 Transfer Done Flag Register
-     * |        |          |This bit indicates whether PDMA controller channel transfer has been finished or not, user can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel transfer has not finished.
-     * |        |          |1 = PDMA channel has finished transmission.
-     * @var PDMA_T::SCATSTS
-     * Offset: 0x428  PDMA Scatter-Gather Table Empty Status Register
+     * |        |          |Note: User can write 1 to clear these bits.
+     * @var PDMA_T::ALIGN
+     * Offset: 0x428  PDMA Transfer Alignment Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |TEMPTYF0  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[1]     |TEMPTYF1  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[2]     |TEMPTYF2  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[3]     |TEMPTYF3  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[4]     |TEMPTYF4  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[5]     |TEMPTYF5  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[6]     |TEMPTYF6  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[7]     |TEMPTYF7  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[8]     |TEMPTYF8  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
-     * |[9]     |TEMPTYF9  |Table Empty Flag Register
-     * |        |          |This bit indicates which PDMA channel table is empty when channel have a request , no matter request from software or peripheral, but operation mode of channel descriptor table is idle state, or channel has finished current transfer and next table operation mode is idle state for PDMA Scatter-Gather mode
-     * |        |          |User can write 1 to clear these bits.
-     * |        |          |0 = PDMA channel scatter-gather table is not empty.
-     * |        |          |1 = PDMA channel scatter-gather table is empty and PDMA SWREQ has be set.
+     * |[15:0]  |ALIGNn    |Transfer Alignment Flag
+     * |        |          |This bit indicates whether source and destination address both follow transfer width setting.
+     * |        |          |0 = PDMA channel source address and destination address both follow transfer width setting.
+     * |        |          |1 = PDMA channel source address or destination address is not follow transfer width setting.
+     * |        |          |Note: User can write 1 to clear these bits.
      * @var PDMA_T::TACTSTS
      * Offset: 0x42C  PDMA Transfer Active Flag Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |TXACTF0   |PDMA Channel 0 Transfer on Active Flag Register (Read Only)
+     * |[15:0]  |TXACTFn   |Transfer on Active Flag (Read Only)
      * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[1]     |TXACTF1   |PDMA Channel 1 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[2]     |TXACTF2   |PDMA Channel 2 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[3]     |TXACTF3   |PDMA Channel 3 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[4]     |TXACTF4   |PDMA Channel 4 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[5]     |TXACTF5   |PDMA Channel 5 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[6]     |TXACTF6   |PDMA Channel 6 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[7]     |TXACTF7   |PDMA Channel 7 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[8]     |TXACTF8   |PDMA Channel 8 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
-     * |        |          |1 = PDMA channel is active.
-     * |[9]     |TXACTF9   |PDMA Channel 9 Transfer on Active Flag Register (Read Only)
-     * |        |          |This bit indicates which PDMA channel is in active.
-     * |        |          |0 = PDMA channel is not finished.
+     * |        |          |0 = PDMA channel is finished.
      * |        |          |1 = PDMA channel is active.
      * @var PDMA_T::TOUTPSC
-     * Offset: 0x430  PDMA Time-out Prescaler Register
+     * Offset: 0x430  PDMA Time-out Prescaler Register(CH0 to CH1)
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -856,221 +308,244 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |TOUTEN0   |PDMA Channel 0 Time-out Enable Bit
-     * |        |          |0 = PDMA Channel 0 time-out function Disable.
-     * |        |          |1 = PDMA Channel 0 time-out function Enable.
-     * |[1]     |TOUTEN1   |PDMA Channel 1 Time-out Enable Bit
-     * |        |          |0 = PDMA Channel 1 time-out function Disable.
-     * |        |          |1 = PDMA Channel 1 time-out function Enable.
+     * |[1:0]   |TOUTENn   |PDMA Time-out Enable Bits
+     * |        |          |0 = PDMA Channel n time-out function Disabled.
+     * |        |          |1 = PDMA Channel n time-out function Enabled.
      * @var PDMA_T::TOUTIEN
      * Offset: 0x438  PDMA Time-out Interrupt Enable Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |TOUTIEN0  |PDMA Channel 0 Time-out Interrupt Enable Bit
-     * |        |          |0 = PDMA Channel 0 time-out interrupt Disable.
-     * |        |          |1 = PDMA Channel 0 time-out interrupt Enable.
-     * |[1]     |TOUTIEN1  |PDMA Channel 1 Time-out Interrupt Enable Bit
-     * |        |          |0 = PDMA Channel 1 time-out interrupt Disable.
-     * |        |          |1 = PDMA Channel 1 time-out interrupt Enable.
+     * |[1:0]   |TOUTIENn  |PDMA Time-out Interrupt Enable Bits
+     * |        |          |0 = PDMA Channel n time-out interrupt Disabled.
+     * |        |          |1 = PDMA Channel n time-out interrupt Enabled.
      * @var PDMA_T::SCATBA
-     * Offset: 0x43C  PDMA Scatter-Gather Descriptor Table Base Address Register
+     * Offset: 0x43C  PDMA Scatter-gather Descriptor Table Base Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:16] |SCATBA    |PDMA Scatter-gather Descriptor Table Address Register
-     * |        |          |In Scatter-Gather mode, this is the base address for calculating the next link - list address
+     * |[31:16] |SCATBA    |PDMA Scatter-gather Descriptor Table Address
+     * |        |          |In Scatter-gather mode, this is the base address for calculating the next link - list address
      * |        |          |The next link address equation is
-     * |        |          |Next Link Address = PDMA_SCATBA + PDMA_DSCT_FIRST.
-     * |        |          |Note: Only useful in Scatter-Gather mode.
-     * @var PDMA_T::TOC0_1
-     * Offset: 0x440  PDMA Channel 0 and Channel 1 Time-out Counter Register
+     * |        |          |Next Link Address = PDMA_SCATBA + PDMA_DSCTn_NEXT.
+     * |        |          |Note: Only useful in Scatter-gather mode.
+     * @var PDMA_T::TOC
+     * Offset: 0x440  PDMA Time-out Counter Ch0 and Ch1 Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[15:0]  |TOC0      |Time-out Counter for Channel 0
      * |        |          |This controls the period of time-out function for channel 0
      * |        |          |The calculation unit is based on TOUTPSC0 (PDMA_TOUTPSC[2:0]) clock.
-     * |        |          |Time-out period = (Period of time-out clock) * (16-bit TOCn),n = 0,1.
+     * |        |          |Time-out period = (Period of time-out clock) * (16-bit TOCn),n=0,1.
      * |[31:16] |TOC1      |Time-out Counter for Channel 1
      * |        |          |This controls the period of time-out function for channel 1
-     * |        |          |The calculation unit is based on TOUTPSC1 (PDMA_TOUTPSC[5:3]) clock
+     * |        |          |The calculation unit is based on TOUTPSC1 (PDMA_TOUTPSC[6:4]) clock
      * |        |          |The example of time-out period can refer TOC0 bit description.
-     * @var PDMA_T::RESET
-     * Offset: 0x460  PDMA Channel Reset Control Register
+     * @var PDMA_T::CHRST
+     * Offset: 0x460  PDMA Channel Reset Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |RESET0    |PDMA Channel 0 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 0.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[1]     |RESET1    |PDMA Channel 1 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 1.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[2]     |RESET2    |PDMA Channel 2 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 2.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[3]     |RESET3    |PDMA Channel 3 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 3.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[4]     |RESET4    |PDMA Channel 4 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 4.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[5]     |RESET5    |PDMA Channel 5 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 5.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[6]     |RESET6    |PDMA Channel 6 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 6.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[7]     |RESET7    |PDMA Channel 7 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 7.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[8]     |RESET8    |PDMA Channel 8 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 8.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
-     * |[9]     |RESET9    |PDMA Channel 9 Reset Control Register
-     * |        |          |User can set this bit field to reset the PDMA channel
-     * |        |          |When user sets RESETn bit, the PDMA controller will finish the on-going transfer then clear the channel enable bit CHEN(PDMA_CHCTL [n], n=0,1...9)) and clear request active flag
-     * |        |          |If re-enable channel after channel reset, PDMA will re-load the channel description table to execute PDMA task.
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset PDMA channel 9.
-     * |        |          |Note: This bit will be cleared automatically after finishing reset process.
+     * |[15:0]  |CHnRST    |Channel n Reset
+     * |        |          |0 = Corresponding channel n is not reset.
+     * |        |          |1 = Corresponding channel n is reset.
      * @var PDMA_T::REQSEL0_3
-     * Offset: 0x480  PDMA Channel 0 to Channel 3 Request Source Select Register
+     * Offset: 0x480  PDMA Request Source Select Register 0
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[5:0]   |REQSRC0   |Channel 0 Request Source Selection
+     * |[6:0]   |REQSRC0   |Channel 0 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 0
      * |        |          |User can configure the peripheral by setting REQSRC0.
-     * |        |          |0 = Disable PDMA.
+     * |        |          |0 = Disable PDMA peripheral request.
      * |        |          |1 = Reserved.
+     * |        |          |2 = Channel connects to USB_TX.
+     * |        |          |3 = Channel connects to USB_RX.
      * |        |          |4 = Channel connects to UART0_TX.
      * |        |          |5 = Channel connects to UART0_RX.
      * |        |          |6 = Channel connects to UART1_TX.
      * |        |          |7 = Channel connects to UART1_RX.
-     * |        |          |16 = Channel connects to SPI0_TX.
-     * |        |          |17 = Channel connects to SPI0_RX.
-     * |        |          |18 = Channel connects to SPI1_TX.
-     * |        |          |19 = Channel connects to SPI1_RX.
-     * |        |          |20 = Channel connects to ADC_RX.
-     * |        |          |28 = Channel connects to I2C0_TX.
-     * |        |          |29 = Channel connects to I2C0_RX.
-     * |        |          |30 = Channel connects to I2C1_TX.
-     * |        |          |31 = Channel connects to I2C1_RX.
-     * |        |          |32 = Channel connects to TMR0.
-     * |        |          |33 = Channel connects to TMR1.
-     * |        |          |34 = Channel connects to TMR2.
-     * |        |          |35 = Channel connects to TMR3.
-     * |        |          |36 = Channel connects to LLSI0.
-     * |        |          |37 = Channel connects to LLSI1.
-     * |        |          |38 = Channel connects to LLSI2.
-     * |        |          |39 = Channel connects to LLSI3.
-     * |        |          |40 = Channel connects to LLSI4.
-     * |        |          |41 = Channel connects to LLSI5.
-     * |        |          |42 = Channel connects to LLSI6.
-     * |        |          |43 = Channel connects to LLSI7.
-     * |        |          |44 = Channel connects to LLSI8.
-     * |        |          |45 = Channel connects to LLSI9.
+     * |        |          |8 = Channel connects to UART2_TX.
+     * |        |          |9 = Channel connects to UART2_RX.
+     * |        |          |10 = Channel connects to UART3_TX.
+     * |        |          |11 = Channel connects to UART3_RX.
+     * |        |          |12 = Channel connects to UART4_TX.
+     * |        |          |13 = Channel connects to UART4_RX.
+     * |        |          |14 = Channel connects to UART5_TX.
+     * |        |          |15 = Channel connects to UART5_RX.
+     * |        |          |16 = Channel connects to USCI0_TX.
+     * |        |          |17 = Channel connects to USCI0_RX.
+     * |        |          |18 = Channel connects to USCI1_TX.
+     * |        |          |19 = Channel connects to USCI1_RX .
+     * |        |          |20 = Channel connects to QSPI0_TX.
+     * |        |          |21 = Channel connects to QSPI0_RX.
+     * |        |          |22 = Channel connects to SPI0_TX.
+     * |        |          |23 = Channel connects to SPI0_RX.
+     * |        |          |24 = Channel connects to SPI1_TX.
+     * |        |          |25 = Channel connects to SPI1_RX.
+     * |        |          |26 = Channel connects to SPI2_TX.
+     * |        |          |27 = Channel connects to SPI2_RX.
+     * |        |          |28 = Channel connects to SPI3_TX.
+     * |        |          |29 = Channel connects to SPI3_RX.
+     * |        |          |30 = Channel connects to ACMP0.
+     * |        |          |31 = Channel connects to ACMP1.
+     * |        |          |32 = Channel connects to EPWM0_P1_RX.
+     * |        |          |33 = Channel connects to EPWM0_P2_RX.
+     * |        |          |34 = Channel connects to EPWM0_P3_RX.
+     * |        |          |35 = Channel connects to EPWM1_P1_RX.
+     * |        |          |36 = Channel connects to EPWM1_P2_RX.
+     * |        |          |37 = Channel connects to EPWM1_P3_RX.
+     * |        |          |38 = Channel connects to I2C0_TX.
+     * |        |          |39 = Channel connects to I2C0_RX.
+     * |        |          |40 = Channel connects to I2C1_TX.
+     * |        |          |41 = Channel connects to I2C1_RX.
+     * |        |          |42 = Channel connects to I2C2_TX.
+     * |        |          |43 = Channel connects to I2C2_RX.
+     * |        |          |44 = Channel connects to I2C3_TX.
+     * |        |          |45 = Channel connects to I2C3_RX.
+     * |        |          |46 = Channel connects to TMR0.
+     * |        |          |47 = Channel connects to TMR1.
+     * |        |          |48 = Channel connects to TMR2.
+     * |        |          |49 = Channel connects to TMR3.
+     * |        |          |50 = Channel connects to DAC0_TX.
+     * |        |          |51 = Channel connects to DAC1_TX.
+     * |        |          |52 = Channel connects to EPWM0_CH0_TX.
+     * |        |          |53 = Channel connects to EPWM0_CH1_TX.
+     * |        |          |54 = Channel connects to EPWM0_CH2_TX.
+     * |        |          |55 = Channel connects to EPWM0_CH3_TX.
+     * |        |          |56 = Channel connects to EPWM0_CH4_TX.
+     * |        |          |57 = Channel connects to EPWM0_CH5_TX.
+     * |        |          |58 = Channel connects to EPWM1_CH0_TX.
+     * |        |          |59 = Channel connects to EPWM1_CH1_TX.
+     * |        |          |60 = Channel connects to EPWM1_CH2_TX.
+     * |        |          |61 = Channel connects to EPWM1_CH3_TX.
+     * |        |          |62 = Channel connects to EPWM1_CH4_TX.
+     * |        |          |63 = Channel connects to EPWM1_CH5_TX.
+     * |        |          |64 = Channel connects to EADC0_RX.
+     * |        |          |65 = Channel connects to EADC1_RX.
+     * |        |          |66 = Channel connects to UART6_TX.
+     * |        |          |67 = Channel connects to UART6_RX.
+     * |        |          |68 = Channel connects to UART7_TX.
+     * |        |          |69 = Channel connects to UART7_RX.
+     * |        |          |70 = Channel connects to PWM0_P1_RX.
+     * |        |          |71 = Channel connects to PWM0_P2_RX.
+     * |        |          |72 = Channel connects to PWM0_P3_RX.
+     * |        |          |73 = Channel connects to PWM1_P1_RX.
+     * |        |          |74 = Channel connects to PWM1_P2_RX.
+     * |        |          |75 = Channel connects to PWM1_P3_RX.
+     * |        |          |76 = Channel connects to PWM0_CH0_TX.
+     * |        |          |77 = Channel connects to PWM0_CH2_TX.
+     * |        |          |78 = Channel connects to PWM0_CH4_TX.
+     * |        |          |79 = Channel connects to PWM1_CH0_TX.
+     * |        |          |80 = Channel connects to PWM1_CH2_TX.
+     * |        |          |81 = Channel connects to PWM1_CH4_TX.
+     * |        |          |82 = Channel connects to EINT0.
+     * |        |          |83 = Channel connects to EINT1.
+     * |        |          |84 = Channel connects to EINT2.
+     * |        |          |85 = Channel connects to EINT3.
+     * |        |          |86 = Channel connects to EINT4.
+     * |        |          |87 = Channel connects to EINT5.
+     * |        |          |88 = Channel connects to EINT6.
+     * |        |          |89 = Channel connects to EINT7.
+     * |        |          |90 = Channel connects to ACMP2.
      * |        |          |Others = Reserved.
-     * |        |          |Note 1: A request source cannot assign to two channels at the same time.
+     * |        |          |Note 1: A peripheral cannot be assigned to two channels at the same time.
      * |        |          |Note 2: This field is useless when transfer between memory and memory.
-     * |[13:8]  |REQSRC1   |Channel 1 Request Source Selection
+     * |[14:8]  |REQSRC1   |Channel 1 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 1
      * |        |          |User can configure the peripheral setting by REQSRC1.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[21:16] |REQSRC2   |Channel 2 Request Source Selection
+     * |[22:16] |REQSRC2   |Channel 2 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 2
      * |        |          |User can configure the peripheral setting by REQSRC2.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[29:24] |REQSRC3   |Channel 3 Request Source Selection
+     * |[30:24] |REQSRC3   |Channel 3 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 3
      * |        |          |User can configure the peripheral setting by REQSRC3.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
      * @var PDMA_T::REQSEL4_7
-     * Offset: 0x484  PDMA Channel 4 to Channel 7 Request Source Select Register
+     * Offset: 0x484  PDMA Request Source Select Register 1
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[5:0]   |REQSRC4   |Channel 4 Request Source Selection
+     * |[6:0]   |REQSRC4   |Channel 4 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 4
      * |        |          |User can configure the peripheral setting by REQSRC4.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[13:8]  |REQSRC5   |Channel 5 Request Source Selection
+     * |[14:8]  |REQSRC5   |Channel 5 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 5
      * |        |          |User can configure the peripheral setting by REQSRC5.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[21:16] |REQSRC6   |Channel 6 Request Source Selection
+     * |[22:16] |REQSRC6   |Channel 6 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 6
      * |        |          |User can configure the peripheral setting by REQSRC6.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[29:24] |REQSRC7   |Channel 7 Request Source Selection
+     * |[30:24] |REQSRC7   |Channel 7 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 7
-     * |        |          |User can configure the peripheral setting by REQSRC5.
+     * |        |          |User can configure the peripheral setting by REQSRC7.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * @var PDMA_T::REQSEL8_9
-     * Offset: 0x488  PDMA Channel 8 to Channel 9 Request Source Select Register
+     * @var PDMA_T::REQSEL8_11
+     * Offset: 0x488  PDMA Request Source Select Register 2
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[5:0]   |REQSRC8   |Channel 8 Request Source Selection
+     * |[6:0]   |REQSRC8   |Channel 8 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 8
      * |        |          |User can configure the peripheral setting by REQSRC8.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
-     * |[13:8]  |REQSRC9   |Channel 9 Request Source Selection
+     * |[14:8]  |REQSRC9   |Channel 9 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 9
      * |        |          |User can configure the peripheral setting by REQSRC9.
      * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
+     * |[22:16] |REQSRC10  |Channel 10 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 10
+     * |        |          |User can configure the peripheral setting by REQSRC10.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
+     * |[30:24] |REQSRC11  |Channel 11 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 11
+     * |        |          |User can configure the peripheral setting by REQSRC11.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
+     * @var PDMA_T::REQSEL12_15
+     * Offset: 0x48C  PDMA Request Source Select Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[6:0]   |REQSRC12  |Channel 12 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 12
+     * |        |          |User can configure the peripheral setting by REQSRC12.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
+     * |[14:8]  |REQSRC13  |Channel 13 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 13
+     * |        |          |User can configure the peripheral setting by REQSRC13.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
+     * |[22:16] |REQSRC14  |Channel 14 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 14
+     * |        |          |User can configure the peripheral setting by REQSRC14.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
+     * |[30:24] |REQSRC15  |Channel 15 Request Source Selection
+     * |        |          |This filed defines which peripheral is connected to PDMA channel 15
+     * |        |          |User can configure the peripheral setting by REQSRC15.
+     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |Please refer to the explanation of REQSRC0.
      */
-
-    DSCT_T        DSCT[10];               /*!< [0x0000 ~ 0x009C] DMA Embedded Description Table 0~9                      */
-    __I  uint32_t CURSCAT[10];            /*!< [0x00A0~0x00C0] Current Scatter-Gather Descriptor Table Address of PDMA Channel 0~9 */
-    __I  uint32_t RESERVE0[206];
+    DSCT_T DSCT[16];                     /*!< [0x0000 ~ 0x015C] Control Register of PDMA Channel 0 ~ 15                  */
+    __I  uint32_t CURSCAT[16];           /*!< [0x0100] Current Scatter-gather Descriptor Table Address of PDMA Channel n */
+    __I  uint32_t RESERVE0[176];
     __IO uint32_t CHCTL;                 /*!< [0x0400] PDMA Channel Control Register                                    */
     __O  uint32_t PAUSE;                 /*!< [0x0404] PDMA Transfer Pause Control Register                             */
     __O  uint32_t SWREQ;                 /*!< [0x0408] PDMA Software Request Register                                   */
@@ -1081,279 +556,87 @@ typedef struct
     __IO uint32_t INTSTS;                /*!< [0x041c] PDMA Interrupt Status Register                                   */
     __IO uint32_t ABTSTS;                /*!< [0x0420] PDMA Channel Read/Write Target Abort Flag Register               */
     __IO uint32_t TDSTS;                 /*!< [0x0424] PDMA Channel Transfer Done Flag Register                         */
-    __IO uint32_t SCATSTS;               /*!< [0x0428] PDMA Scatter-Gather Table Empty Status Register                  */
+    __IO uint32_t ALIGN;                 /*!< [0x0428] PDMA Transfer Alignment Status Register                          */
     __I  uint32_t TACTSTS;               /*!< [0x042c] PDMA Transfer Active Flag Register                               */
-    __IO uint32_t TOUTPSC;               /*!< [0x0430] PDMA Time-out Prescaler Register                                 */
+    __IO uint32_t TOUTPSC;               /*!< [0x0430] PDMA Time-out Prescaler Register(CH0 to CH1)                     */
     __IO uint32_t TOUTEN;                /*!< [0x0434] PDMA Time-out Enable Register                                    */
     __IO uint32_t TOUTIEN;               /*!< [0x0438] PDMA Time-out Interrupt Enable Register                          */
-    __IO uint32_t SCATBA;                /*!< [0x043c] PDMA Scatter-Gather Descriptor Table Base Address Register       */
-    __IO uint32_t TOC0_1;                /*!< [0x0440] PDMA Channel 0 and Channel 1 Time-out Counter Register           */
+    __IO uint32_t SCATBA;                /*!< [0x043c] PDMA Scatter-gather Descriptor Table Base Address Register       */
+    __IO uint32_t TOC;                   /*!< [0x0440] PDMA Time-out Counter Ch0 and Ch1 Register                       */
     __I  uint32_t RESERVE1[7];
-    __IO uint32_t RESET;                 /*!< [0x0460] PDMA Channel Reset Control Register                              */
+    __IO uint32_t CHRST;                 /*!< [0x0460] PDMA Channel Reset Register                                      */
     __I  uint32_t RESERVE2[7];
-    __IO uint32_t REQSEL0_3;             /*!< [0x0480] PDMA Channel 0 to Channel 3 Request Source Select Register       */
-    __IO uint32_t REQSEL4_7;             /*!< [0x0484] PDMA Channel 4 to Channel 7 Request Source Select Register       */
-    __IO uint32_t REQSEL8_9;             /*!< [0x0488] PDMA Channel 8 to Channel 9 Request Source Select Register       */
+    __IO uint32_t REQSEL0_3;             /*!< [0x0480] PDMA Request Source Select Register 0                            */
+    __IO uint32_t REQSEL4_7;             /*!< [0x0484] PDMA Request Source Select Register 1                            */
+    __IO uint32_t REQSEL8_11;            /*!< [0x0488] PDMA Request Source Select Register 2                            */
+    __IO uint32_t REQSEL12_15;           /*!< [0x048c] PDMA Request Source Select Register 3                            */
 
 } PDMA_T;
-
-
-
 
 /**
     @addtogroup PDMA_CONST PDMA Bit Field Definition
     Constant Definitions for PDMA Controller
-    @{ 
-*/
+@{ */
 
-#define PDMA_DSCT_CTL_OPMODE_Pos         (0)                                               /*!< PDMA_T::DSCT_CTL: OPMODE Position     */
-#define PDMA_DSCT_CTL_OPMODE_Msk         (0x3ul << PDMA_DSCT_CTL_OPMODE_Pos)               /*!< PDMA_T::DSCT_CTL: OPMODE Mask         */
+#define PDMA_DSCT_CTL_OPMODE_Pos         (0)                                               /*!< DSCT_T::CTL: OPMODE Position           */
+#define PDMA_DSCT_CTL_OPMODE_Msk         (0x3ul << PDMA_DSCT_CTL_OPMODE_Pos)               /*!< DSCT_T::CTL: OPMODE Mask               */
 
-#define PDMA_DSCT_CTL_TXTYPE_Pos         (2)                                               /*!< PDMA_T::DSCT_CTL: TXTYPE Position     */
-#define PDMA_DSCT_CTL_TXTYPE_Msk         (0x1ul << PDMA_DSCT_CTL_TXTYPE_Pos)               /*!< PDMA_T::DSCT_CTL: TXTYPE Mask         */
+#define PDMA_DSCT_CTL_TXTYPE_Pos         (2)                                               /*!< DSCT_T::CTL: TXTYPE Position           */
+#define PDMA_DSCT_CTL_TXTYPE_Msk         (0x1ul << PDMA_DSCT_CTL_TXTYPE_Pos)               /*!< DSCT_T::CTL: TXTYPE Mask               */
 
-#define PDMA_DSCT_CTL_BURSIZE_Pos        (4)                                               /*!< PDMA_T::DSCT_CTL: BURSIZE Position    */
-#define PDMA_DSCT_CTL_BURSIZE_Msk        (0x7ul << PDMA_DSCT_CTL_BURSIZE_Pos)              /*!< PDMA_T::DSCT_CTL: BURSIZE Mask        */
+#define PDMA_DSCT_CTL_BURSIZE_Pos        (4)                                               /*!< DSCT_T::CTL: BURSIZE Position          */
+#define PDMA_DSCT_CTL_BURSIZE_Msk        (0x7ul << PDMA_DSCT_CTL_BURSIZE_Pos)              /*!< DSCT_T::CTL: BURSIZE Mask              */
 
-#define PDMA_DSCT_CTL_TBINTDIS_Pos       (7)                                               /*!< PDMA_T::DSCT_CTL: TBINTDIS Position   */
-#define PDMA_DSCT_CTL_TBINTDIS_Msk       (0x1ul << PDMA_DSCT_CTL_TBINTDIS_Pos)             /*!< PDMA_T::DSCT_CTL: TBINTDIS Mask       */
+#define PDMA_DSCT_CTL_TBINTDIS_Pos       (7)                                               /*!< DSCT_T::CTL: TBINTDIS Position         */
+#define PDMA_DSCT_CTL_TBINTDIS_Msk       (0x1ul << PDMA_DSCT_CTL_TBINTDIS_Pos)             /*!< DSCT_T::CTL: TBINTDIS Mask             */
 
-#define PDMA_DSCT_CTL_SAINC_Pos          (8)                                               /*!< PDMA_T::DSCT_CTL: SAINC Position      */
-#define PDMA_DSCT_CTL_SAINC_Msk          (0x3ul << PDMA_DSCT_CTL_SAINC_Pos)                /*!< PDMA_T::DSCT_CTL: SAINC Mask          */
+#define PDMA_DSCT_CTL_SAINC_Pos          (8)                                               /*!< DSCT_T::CTL: SAINC Position            */
+#define PDMA_DSCT_CTL_SAINC_Msk          (0x3ul << PDMA_DSCT_CTL_SAINC_Pos)                /*!< DSCT_T::CTL: SAINC Mask                */
 
-#define PDMA_DSCT_CTL_DAINC_Pos          (10)                                              /*!< PDMA_T::DSCT_CTL: DAINC Position      */
-#define PDMA_DSCT_CTL_DAINC_Msk          (0x3ul << PDMA_DSCT_CTL_DAINC_Pos)                /*!< PDMA_T::DSCT_CTL: DAINC Mask          */
+#define PDMA_DSCT_CTL_DAINC_Pos          (10)                                              /*!< DSCT_T::CTL: DAINC Position            */
+#define PDMA_DSCT_CTL_DAINC_Msk          (0x3ul << PDMA_DSCT_CTL_DAINC_Pos)                /*!< DSCT_T::CTL: DAINC Mask                */
 
-#define PDMA_DSCT_CTL_TXWIDTH_Pos        (12)                                              /*!< PDMA_T::DSCT_CTL: TXWIDTH Position    */
-#define PDMA_DSCT_CTL_TXWIDTH_Msk        (0x3ul << PDMA_DSCT_CTL_TXWIDTH_Pos)              /*!< PDMA_T::DSCT_CTL: TXWIDTH Mask        */
+#define PDMA_DSCT_CTL_TXWIDTH_Pos        (12)                                              /*!< DSCT_T::CTL: TXWIDTH Position          */
+#define PDMA_DSCT_CTL_TXWIDTH_Msk        (0x3ul << PDMA_DSCT_CTL_TXWIDTH_Pos)              /*!< DSCT_T::CTL: TXWIDTH Mask              */
 
-#define PDMA_DSCT_CTL_TXCNT_Pos          (16)                                              /*!< PDMA_T::DSCT_CTL: TXCNT Position      */
-#define PDMA_DSCT_CTL_TXCNT_Msk          (0x3ffful << PDMA_DSCT_CTL_TXCNT_Pos)             /*!< PDMA_T::DSCT_CTL: TXCNT Mask          */
+#define PDMA_DSCT_CTL_TXCNT_Pos          (16)                                              /*!< DSCT_T::CTL: TXCNT Position            */
+#define PDMA_DSCT_CTL_TXCNT_Msk          (0xfffful << PDMA_DSCT_CTL_TXCNT_Pos)             /*!< DSCT_T::CTL: TXCNT Mask                */
 
-#define PDMA_DSCT_SA_SA_Pos              (0)                                               /*!< PDMA_T::DSCT_SA: SA Position          */
-#define PDMA_DSCT_SA_SA_Msk              (0xfffffffful << PDMA_DSCT_SA_SA_Pos)             /*!< PDMA_T::DSCT_SA: SA Mask              */
+#define PDMA_DSCT_SA_SA_Pos              (0)                                               /*!< DSCT_T::SA: SA Position                */
+#define PDMA_DSCT_SA_SA_Msk              (0xfffffffful << PDMA_DSCT_SA_SA_Pos)             /*!< DSCT_T::SA: SA Mask                    */
 
-#define PDMA_DSCT_DA_DA_Pos              (0)                                               /*!< PDMA_T::DSCT_DA: DA Position          */
-#define PDMA_DSCT_DA_DA_Msk              (0xfffffffful << PDMA_DSCT_DA_DA_Pos)             /*!< PDMA_T::DSCT_DA: DA Mask              */
+#define PDMA_DSCT_DA_DA_Pos              (0)                                               /*!< DSCT_T::DA: DA Position                */
+#define PDMA_DSCT_DA_DA_Msk              (0xfffffffful << PDMA_DSCT_DA_DA_Pos)             /*!< DSCT_T::DA: DA Mask                    */
 
-#define PDMA_DSCT_FIRST_FIRST_Pos        (0)                                               /*!< PDMA_T::DSCT_FIRST: FIRST Position    */
-#define PDMA_DSCT_FIRST_FIRST_Msk        (0xfffful << PDMA_DSCT_FIRST_FIRST_Pos)           /*!< PDMA_T::DSCT_FIRST: FIRST Mask        */
+#define PDMA_DSCT_NEXT_NEXT_Pos          (0)                                               /*!< DSCT_T::NEXT: NEXT Position            */
+#define PDMA_DSCT_NEXT_NEXT_Msk          (0xfffful << PDMA_DSCT_NEXT_NEXT_Pos)             /*!< DSCT_T::NEXT: NEXT Mask                */
 
-#define PDMA_DSCT_FIRST_NEXT_Pos         (16)                                              /*!< PDMA_T::DSCT_FIRST: NEXT Position     */
-#define PDMA_DSCT_FIRST_NEXT_Msk         (0xfffful << PDMA_DSCT_FIRST_NEXT_Pos)            /*!< PDMA_T::DSCT_FIRST: NEXT Mask         */
+#define PDMA_DSCT_NEXT_EXENEXT_Pos       (16)                                              /*!< DSCT_T::NEXT: EXENEXT Position         */
+#define PDMA_DSCT_NEXT_EXENEXT_Msk       (0xfffful << PDMA_DSCT_NEXT_EXENEXT_Pos)          /*!< DSCT_T::NEXT: EXENEXT Mask             */
 
-#define PDMA_CURSCAT_CURADDR_Pos         (0)                                               /*!< PDMA_T::CURSCAT: CURADDR Position     */
-#define PDMA_CURSCAT_CURADDR_Msk         (0xfffffffful << PDMA_CURSCAT_CURADDR_Pos)        /*!< PDMA_T::CURSCAT: CURADDR Mask         */
+#define PDMA_CURSCAT_CURADDR_Pos         (0)                                               /*!< PDMA_T::CURSCAT: CURADDR Position      */
+#define PDMA_CURSCAT_CURADDR_Msk         (0xfffffffful << PDMA_CURSCAT_CURADDR_Pos)        /*!< PDMA_T::CURSCAT: CURADDR Mask          */
 
-#define PDMA_CHCTL_CHEN0_Pos             (0)                                               /*!< PDMA_T::CHCTL: CHEN0 Position          */
-#define PDMA_CHCTL_CHEN0_Msk             (0x1ul << PDMA_CHCTL_CHEN0_Pos)                   /*!< PDMA_T::CHCTL: CHEN0 Mask              */
+#define PDMA_CHCTL_CHENn_Pos             (0)                                               /*!< PDMA_T::CHCTL: CHENn Position          */
+#define PDMA_CHCTL_CHENn_Msk             (0xfffful << PDMA_CHCTL_CHENn_Pos)                /*!< PDMA_T::CHCTL: CHENn Mask              */
 
-#define PDMA_CHCTL_CHEN1_Pos             (1)                                               /*!< PDMA_T::CHCTL: CHEN1 Position          */
-#define PDMA_CHCTL_CHEN1_Msk             (0x1ul << PDMA_CHCTL_CHEN1_Pos)                   /*!< PDMA_T::CHCTL: CHEN1 Mask              */
+#define PDMA_PAUSE_PAUSEn_Pos            (0)                                               /*!< PDMA_T::PAUSE: PAUSEn Position         */
+#define PDMA_PAUSE_PAUSEn_Msk            (0xfffful << PDMA_PAUSE_PAUSEn_Pos)               /*!< PDMA_T::PAUSE: PAUSEn Mask             */
 
-#define PDMA_CHCTL_CHEN2_Pos             (2)                                               /*!< PDMA_T::CHCTL: CHEN2 Position          */
-#define PDMA_CHCTL_CHEN2_Msk             (0x1ul << PDMA_CHCTL_CHEN2_Pos)                   /*!< PDMA_T::CHCTL: CHEN2 Mask              */
+#define PDMA_SWREQ_SWREQn_Pos            (0)                                               /*!< PDMA_T::SWREQ: SWREQn Position         */
+#define PDMA_SWREQ_SWREQn_Msk            (0xfffful << PDMA_SWREQ_SWREQn_Pos)               /*!< PDMA_T::SWREQ: SWREQn Mask             */
 
-#define PDMA_CHCTL_CHEN3_Pos             (3)                                               /*!< PDMA_T::CHCTL: CHEN3 Position          */
-#define PDMA_CHCTL_CHEN3_Msk             (0x1ul << PDMA_CHCTL_CHEN3_Pos)                   /*!< PDMA_T::CHCTL: CHEN3 Mask              */
+#define PDMA_TRGSTS_REQSTSn_Pos          (0)                                               /*!< PDMA_T::TRGSTS: REQSTSn Position       */
+#define PDMA_TRGSTS_REQSTSn_Msk          (0xfffful << PDMA_TRGSTS_REQSTSn_Pos)             /*!< PDMA_T::TRGSTS: REQSTSn Mask           */
 
-#define PDMA_CHCTL_CHEN4_Pos             (4)                                               /*!< PDMA_T::CHCTL: CHEN4 Position          */
-#define PDMA_CHCTL_CHEN4_Msk             (0x1ul << PDMA_CHCTL_CHEN4_Pos)                   /*!< PDMA_T::CHCTL: CHEN4 Mask              */
+#define PDMA_PRISET_FPRISETn_Pos         (0)                                               /*!< PDMA_T::PRISET: FPRISETn Position      */
+#define PDMA_PRISET_FPRISETn_Msk         (0xfffful << PDMA_PRISET_FPRISETn_Pos)            /*!< PDMA_T::PRISET: FPRISETn Mask          */
 
-#define PDMA_CHCTL_CHEN5_Pos             (5)                                               /*!< PDMA_T::CHCTL: CHEN5 Position          */
-#define PDMA_CHCTL_CHEN5_Msk             (0x1ul << PDMA_CHCTL_CHEN5_Pos)                   /*!< PDMA_T::CHCTL: CHEN5 Mask              */
+#define PDMA_PRICLR_FPRICLRn_Pos         (0)                                               /*!< PDMA_T::PRICLR: FPRICLRn Position      */
+#define PDMA_PRICLR_FPRICLRn_Msk         (0xfffful << PDMA_PRICLR_FPRICLRn_Pos)            /*!< PDMA_T::PRICLR: FPRICLRn Mask          */
 
-#define PDMA_CHCTL_CHEN6_Pos             (6)                                               /*!< PDMA_T::CHCTL: CHEN6 Position          */
-#define PDMA_CHCTL_CHEN6_Msk             (0x1ul << PDMA_CHCTL_CHEN6_Pos)                   /*!< PDMA_T::CHCTL: CHEN6 Mask              */
-
-#define PDMA_CHCTL_CHEN7_Pos             (7)                                               /*!< PDMA_T::CHCTL: CHEN7 Position          */
-#define PDMA_CHCTL_CHEN7_Msk             (0x1ul << PDMA_CHCTL_CHEN7_Pos)                   /*!< PDMA_T::CHCTL: CHEN7 Mask              */
-
-#define PDMA_CHCTL_CHEN8_Pos             (8)                                               /*!< PDMA_T::CHCTL: CHEN8 Position          */
-#define PDMA_CHCTL_CHEN8_Msk             (0x1ul << PDMA_CHCTL_CHEN8_Pos)                   /*!< PDMA_T::CHCTL: CHEN8 Mask              */
-
-#define PDMA_CHCTL_CHEN9_Pos             (9)                                               /*!< PDMA_T::CHCTL: CHEN9 Position          */
-#define PDMA_CHCTL_CHEN9_Msk             (0x1ul << PDMA_CHCTL_CHEN9_Pos)                   /*!< PDMA_T::CHCTL: CHEN9 Mask              */
-
-#define PDMA_PAUSE_PAUSE0_Pos            (0)                                               /*!< PDMA_T::PAUSE: PAUSE0 Position         */
-#define PDMA_PAUSE_PAUSE0_Msk            (0x1ul << PDMA_PAUSE_PAUSE0_Pos)                  /*!< PDMA_T::PAUSE: PAUSE0 Mask             */
-
-#define PDMA_PAUSE_PAUSE1_Pos            (1)                                               /*!< PDMA_T::PAUSE: PAUSE1 Position         */
-#define PDMA_PAUSE_PAUSE1_Msk            (0x1ul << PDMA_PAUSE_PAUSE1_Pos)                  /*!< PDMA_T::PAUSE: PAUSE1 Mask             */
-
-#define PDMA_PAUSE_PAUSE2_Pos            (2)                                               /*!< PDMA_T::PAUSE: PAUSE2 Position         */
-#define PDMA_PAUSE_PAUSE2_Msk            (0x1ul << PDMA_PAUSE_PAUSE2_Pos)                  /*!< PDMA_T::PAUSE: PAUSE2 Mask             */
-
-#define PDMA_PAUSE_PAUSE3_Pos            (3)                                               /*!< PDMA_T::PAUSE: PAUSE3 Position         */
-#define PDMA_PAUSE_PAUSE3_Msk            (0x1ul << PDMA_PAUSE_PAUSE3_Pos)                  /*!< PDMA_T::PAUSE: PAUSE3 Mask             */
-
-#define PDMA_PAUSE_PAUSE4_Pos            (4)                                               /*!< PDMA_T::PAUSE: PAUSE4 Position         */
-#define PDMA_PAUSE_PAUSE4_Msk            (0x1ul << PDMA_PAUSE_PAUSE4_Pos)                  /*!< PDMA_T::PAUSE: PAUSE4 Mask             */
-
-#define PDMA_PAUSE_PAUSE5_Pos            (5)                                               /*!< PDMA_T::PAUSE: PAUSE5 Position         */
-#define PDMA_PAUSE_PAUSE5_Msk            (0x1ul << PDMA_PAUSE_PAUSE5_Pos)                  /*!< PDMA_T::PAUSE: PAUSE5 Mask             */
-
-#define PDMA_PAUSE_PAUSE6_Pos            (6)                                               /*!< PDMA_T::PAUSE: PAUSE6 Position         */
-#define PDMA_PAUSE_PAUSE6_Msk            (0x1ul << PDMA_PAUSE_PAUSE6_Pos)                  /*!< PDMA_T::PAUSE: PAUSE6 Mask             */
-
-#define PDMA_PAUSE_PAUSE7_Pos            (7)                                               /*!< PDMA_T::PAUSE: PAUSE7 Position         */
-#define PDMA_PAUSE_PAUSE7_Msk            (0x1ul << PDMA_PAUSE_PAUSE7_Pos)                  /*!< PDMA_T::PAUSE: PAUSE7 Mask             */
-
-#define PDMA_PAUSE_PAUSE8_Pos            (8)                                               /*!< PDMA_T::PAUSE: PAUSE8 Position         */
-#define PDMA_PAUSE_PAUSE8_Msk            (0x1ul << PDMA_PAUSE_PAUSE8_Pos)                  /*!< PDMA_T::PAUSE: PAUSE8 Mask             */
-
-#define PDMA_PAUSE_PAUSE9_Pos            (9)                                               /*!< PDMA_T::PAUSE: PAUSE9 Position         */
-#define PDMA_PAUSE_PAUSE9_Msk            (0x1ul << PDMA_PAUSE_PAUSE9_Pos)                  /*!< PDMA_T::PAUSE: PAUSE9 Mask             */
-
-#define PDMA_SWREQ_SWREQ0_Pos            (0)                                               /*!< PDMA_T::SWREQ: SWREQ0 Position         */
-#define PDMA_SWREQ_SWREQ0_Msk            (0x1ul << PDMA_SWREQ_SWREQ0_Pos)                  /*!< PDMA_T::SWREQ: SWREQ0 Mask             */
-
-#define PDMA_SWREQ_SWREQ1_Pos            (1)                                               /*!< PDMA_T::SWREQ: SWREQ1 Position         */
-#define PDMA_SWREQ_SWREQ1_Msk            (0x1ul << PDMA_SWREQ_SWREQ1_Pos)                  /*!< PDMA_T::SWREQ: SWREQ1 Mask             */
-
-#define PDMA_SWREQ_SWREQ2_Pos            (2)                                               /*!< PDMA_T::SWREQ: SWREQ2 Position         */
-#define PDMA_SWREQ_SWREQ2_Msk            (0x1ul << PDMA_SWREQ_SWREQ2_Pos)                  /*!< PDMA_T::SWREQ: SWREQ2 Mask             */
-
-#define PDMA_SWREQ_SWREQ3_Pos            (3)                                               /*!< PDMA_T::SWREQ: SWREQ3 Position         */
-#define PDMA_SWREQ_SWREQ3_Msk            (0x1ul << PDMA_SWREQ_SWREQ3_Pos)                  /*!< PDMA_T::SWREQ: SWREQ3 Mask             */
-
-#define PDMA_SWREQ_SWREQ4_Pos            (4)                                               /*!< PDMA_T::SWREQ: SWREQ4 Position         */
-#define PDMA_SWREQ_SWREQ4_Msk            (0x1ul << PDMA_SWREQ_SWREQ4_Pos)                  /*!< PDMA_T::SWREQ: SWREQ4 Mask             */
-
-#define PDMA_SWREQ_SWREQ5_Pos            (5)                                               /*!< PDMA_T::SWREQ: SWREQ5 Position         */
-#define PDMA_SWREQ_SWREQ5_Msk            (0x1ul << PDMA_SWREQ_SWREQ5_Pos)                  /*!< PDMA_T::SWREQ: SWREQ5 Mask             */
-
-#define PDMA_SWREQ_SWREQ6_Pos            (6)                                               /*!< PDMA_T::SWREQ: SWREQ6 Position         */
-#define PDMA_SWREQ_SWREQ6_Msk            (0x1ul << PDMA_SWREQ_SWREQ6_Pos)                  /*!< PDMA_T::SWREQ: SWREQ6 Mask             */
-
-#define PDMA_SWREQ_SWREQ7_Pos            (7)                                               /*!< PDMA_T::SWREQ: SWREQ7 Position         */
-#define PDMA_SWREQ_SWREQ7_Msk            (0x1ul << PDMA_SWREQ_SWREQ7_Pos)                  /*!< PDMA_T::SWREQ: SWREQ7 Mask             */
-
-#define PDMA_SWREQ_SWREQ8_Pos            (8)                                               /*!< PDMA_T::SWREQ: SWREQ8 Position         */
-#define PDMA_SWREQ_SWREQ8_Msk            (0x1ul << PDMA_SWREQ_SWREQ8_Pos)                  /*!< PDMA_T::SWREQ: SWREQ8 Mask             */
-
-#define PDMA_SWREQ_SWREQ9_Pos            (9)                                               /*!< PDMA_T::SWREQ: SWREQ9 Position         */
-#define PDMA_SWREQ_SWREQ9_Msk            (0x1ul << PDMA_SWREQ_SWREQ9_Pos)                  /*!< PDMA_T::SWREQ: SWREQ9 Mask             */
-
-#define PDMA_TRGSTS_REQSTS0_Pos          (0)                                               /*!< PDMA_T::TRGSTS: REQSTS0 Position       */
-#define PDMA_TRGSTS_REQSTS0_Msk          (0x1ul << PDMA_TRGSTS_REQSTS0_Pos)                /*!< PDMA_T::TRGSTS: REQSTS0 Mask           */
-
-#define PDMA_TRGSTS_REQSTS1_Pos          (1)                                               /*!< PDMA_T::TRGSTS: REQSTS1 Position       */
-#define PDMA_TRGSTS_REQSTS1_Msk          (0x1ul << PDMA_TRGSTS_REQSTS1_Pos)                /*!< PDMA_T::TRGSTS: REQSTS1 Mask           */
-
-#define PDMA_TRGSTS_REQSTS2_Pos          (2)                                               /*!< PDMA_T::TRGSTS: REQSTS2 Position       */
-#define PDMA_TRGSTS_REQSTS2_Msk          (0x1ul << PDMA_TRGSTS_REQSTS2_Pos)                /*!< PDMA_T::TRGSTS: REQSTS2 Mask           */
-
-#define PDMA_TRGSTS_REQSTS3_Pos          (3)                                               /*!< PDMA_T::TRGSTS: REQSTS3 Position       */
-#define PDMA_TRGSTS_REQSTS3_Msk          (0x1ul << PDMA_TRGSTS_REQSTS3_Pos)                /*!< PDMA_T::TRGSTS: REQSTS3 Mask           */
-
-#define PDMA_TRGSTS_REQSTS4_Pos          (4)                                               /*!< PDMA_T::TRGSTS: REQSTS4 Position       */
-#define PDMA_TRGSTS_REQSTS4_Msk          (0x1ul << PDMA_TRGSTS_REQSTS4_Pos)                /*!< PDMA_T::TRGSTS: REQSTS4 Mask           */
-
-#define PDMA_TRGSTS_REQSTS5_Pos          (5)                                               /*!< PDMA_T::TRGSTS: REQSTS5 Position       */
-#define PDMA_TRGSTS_REQSTS5_Msk          (0x1ul << PDMA_TRGSTS_REQSTS5_Pos)                /*!< PDMA_T::TRGSTS: REQSTS5 Mask           */
-
-#define PDMA_TRGSTS_REQSTS6_Pos          (6)                                               /*!< PDMA_T::TRGSTS: REQSTS6 Position       */
-#define PDMA_TRGSTS_REQSTS6_Msk          (0x1ul << PDMA_TRGSTS_REQSTS6_Pos)                /*!< PDMA_T::TRGSTS: REQSTS6 Mask           */
-
-#define PDMA_TRGSTS_REQSTS7_Pos          (7)                                               /*!< PDMA_T::TRGSTS: REQSTS7 Position       */
-#define PDMA_TRGSTS_REQSTS7_Msk          (0x1ul << PDMA_TRGSTS_REQSTS7_Pos)                /*!< PDMA_T::TRGSTS: REQSTS7 Mask           */
-
-#define PDMA_TRGSTS_REQSTS8_Pos          (8)                                               /*!< PDMA_T::TRGSTS: REQSTS8 Position       */
-#define PDMA_TRGSTS_REQSTS8_Msk          (0x1ul << PDMA_TRGSTS_REQSTS8_Pos)                /*!< PDMA_T::TRGSTS: REQSTS8 Mask           */
-
-#define PDMA_TRGSTS_REQSTS9_Pos          (9)                                               /*!< PDMA_T::TRGSTS: REQSTS9 Position       */
-#define PDMA_TRGSTS_REQSTS9_Msk          (0x1ul << PDMA_TRGSTS_REQSTS9_Pos)                /*!< PDMA_T::TRGSTS: REQSTS9 Mask           */
-
-#define PDMA_PRISET_FPRISET0_Pos         (0)                                               /*!< PDMA_T::PRISET: FPRISET0 Position      */
-#define PDMA_PRISET_FPRISET0_Msk         (0x1ul << PDMA_PRISET_FPRISET0_Pos)               /*!< PDMA_T::PRISET: FPRISET0 Mask          */
-
-#define PDMA_PRISET_FPRISET1_Pos         (1)                                               /*!< PDMA_T::PRISET: FPRISET1 Position      */
-#define PDMA_PRISET_FPRISET1_Msk         (0x1ul << PDMA_PRISET_FPRISET1_Pos)               /*!< PDMA_T::PRISET: FPRISET1 Mask          */
-
-#define PDMA_PRISET_FPRISET2_Pos         (2)                                               /*!< PDMA_T::PRISET: FPRISET2 Position      */
-#define PDMA_PRISET_FPRISET2_Msk         (0x1ul << PDMA_PRISET_FPRISET2_Pos)               /*!< PDMA_T::PRISET: FPRISET2 Mask          */
-
-#define PDMA_PRISET_FPRISET3_Pos         (3)                                               /*!< PDMA_T::PRISET: FPRISET3 Position      */
-#define PDMA_PRISET_FPRISET3_Msk         (0x1ul << PDMA_PRISET_FPRISET3_Pos)               /*!< PDMA_T::PRISET: FPRISET3 Mask          */
-
-#define PDMA_PRISET_FPRISET4_Pos         (4)                                               /*!< PDMA_T::PRISET: FPRISET4 Position      */
-#define PDMA_PRISET_FPRISET4_Msk         (0x1ul << PDMA_PRISET_FPRISET4_Pos)               /*!< PDMA_T::PRISET: FPRISET4 Mask          */
-
-#define PDMA_PRISET_FPRISET5_Pos         (5)                                               /*!< PDMA_T::PRISET: FPRISET5 Position      */
-#define PDMA_PRISET_FPRISET5_Msk         (0x1ul << PDMA_PRISET_FPRISET5_Pos)               /*!< PDMA_T::PRISET: FPRISET5 Mask          */
-
-#define PDMA_PRISET_FPRISET6_Pos         (6)                                               /*!< PDMA_T::PRISET: FPRISET6 Position      */
-#define PDMA_PRISET_FPRISET6_Msk         (0x1ul << PDMA_PRISET_FPRISET6_Pos)               /*!< PDMA_T::PRISET: FPRISET6 Mask          */
-
-#define PDMA_PRISET_FPRISET7_Pos         (7)                                               /*!< PDMA_T::PRISET: FPRISET7 Position      */
-#define PDMA_PRISET_FPRISET7_Msk         (0x1ul << PDMA_PRISET_FPRISET7_Pos)               /*!< PDMA_T::PRISET: FPRISET7 Mask          */
-
-#define PDMA_PRISET_FPRISET8_Pos         (8)                                               /*!< PDMA_T::PRISET: FPRISET8 Position      */
-#define PDMA_PRISET_FPRISET8_Msk         (0x1ul << PDMA_PRISET_FPRISET8_Pos)               /*!< PDMA_T::PRISET: FPRISET8 Mask          */
-
-#define PDMA_PRISET_FPRISET9_Pos         (9)                                               /*!< PDMA_T::PRISET: FPRISET9 Position      */
-#define PDMA_PRISET_FPRISET9_Msk         (0x1ul << PDMA_PRISET_FPRISET9_Pos)               /*!< PDMA_T::PRISET: FPRISET9 Mask          */
-
-#define PDMA_PRICLR_FPRICLR0_Pos         (0)                                               /*!< PDMA_T::PRICLR: FPRICLR0 Position      */
-#define PDMA_PRICLR_FPRICLR0_Msk         (0x1ul << PDMA_PRICLR_FPRICLR0_Pos)               /*!< PDMA_T::PRICLR: FPRICLR0 Mask          */
-
-#define PDMA_PRICLR_FPRICLR1_Pos         (1)                                               /*!< PDMA_T::PRICLR: FPRICLR1 Position      */
-#define PDMA_PRICLR_FPRICLR1_Msk         (0x1ul << PDMA_PRICLR_FPRICLR1_Pos)               /*!< PDMA_T::PRICLR: FPRICLR1 Mask          */
-
-#define PDMA_PRICLR_FPRICLR2_Pos         (2)                                               /*!< PDMA_T::PRICLR: FPRICLR2 Position      */
-#define PDMA_PRICLR_FPRICLR2_Msk         (0x1ul << PDMA_PRICLR_FPRICLR2_Pos)               /*!< PDMA_T::PRICLR: FPRICLR2 Mask          */
-
-#define PDMA_PRICLR_FPRICLR3_Pos         (3)                                               /*!< PDMA_T::PRICLR: FPRICLR3 Position      */
-#define PDMA_PRICLR_FPRICLR3_Msk         (0x1ul << PDMA_PRICLR_FPRICLR3_Pos)               /*!< PDMA_T::PRICLR: FPRICLR3 Mask          */
-
-#define PDMA_PRICLR_FPRICLR4_Pos         (4)                                               /*!< PDMA_T::PRICLR: FPRICLR4 Position      */
-#define PDMA_PRICLR_FPRICLR4_Msk         (0x1ul << PDMA_PRICLR_FPRICLR4_Pos)               /*!< PDMA_T::PRICLR: FPRICLR4 Mask          */
-
-#define PDMA_PRICLR_FPRICLR5_Pos         (5)                                               /*!< PDMA_T::PRICLR: FPRICLR5 Position      */
-#define PDMA_PRICLR_FPRICLR5_Msk         (0x1ul << PDMA_PRICLR_FPRICLR5_Pos)               /*!< PDMA_T::PRICLR: FPRICLR5 Mask          */
-
-#define PDMA_PRICLR_FPRICLR6_Pos         (6)                                               /*!< PDMA_T::PRICLR: FPRICLR6 Position      */
-#define PDMA_PRICLR_FPRICLR6_Msk         (0x1ul << PDMA_PRICLR_FPRICLR6_Pos)               /*!< PDMA_T::PRICLR: FPRICLR6 Mask          */
-
-#define PDMA_PRICLR_FPRICLR7_Pos         (7)                                               /*!< PDMA_T::PRICLR: FPRICLR7 Position      */
-#define PDMA_PRICLR_FPRICLR7_Msk         (0x1ul << PDMA_PRICLR_FPRICLR7_Pos)               /*!< PDMA_T::PRICLR: FPRICLR7 Mask          */
-
-#define PDMA_PRICLR_FPRICLR8_Pos         (8)                                               /*!< PDMA_T::PRICLR: FPRICLR8 Position      */
-#define PDMA_PRICLR_FPRICLR8_Msk         (0x1ul << PDMA_PRICLR_FPRICLR8_Pos)               /*!< PDMA_T::PRICLR: FPRICLR8 Mask          */
-
-#define PDMA_PRICLR_FPRICLR9_Pos         (9)                                               /*!< PDMA_T::PRICLR: FPRICLR9 Position      */
-#define PDMA_PRICLR_FPRICLR9_Msk         (0x1ul << PDMA_PRICLR_FPRICLR9_Pos)               /*!< PDMA_T::PRICLR: FPRICLR9 Mask          */
-
-#define PDMA_INTEN_INTEN0_Pos            (0)                                               /*!< PDMA_T::INTEN: INTEN0 Position         */
-#define PDMA_INTEN_INTEN0_Msk            (0x1ul << PDMA_INTEN_INTEN0_Pos)                  /*!< PDMA_T::INTEN: INTEN0 Mask             */
-
-#define PDMA_INTEN_INTEN1_Pos            (1)                                               /*!< PDMA_T::INTEN: INTEN1 Position         */
-#define PDMA_INTEN_INTEN1_Msk            (0x1ul << PDMA_INTEN_INTEN1_Pos)                  /*!< PDMA_T::INTEN: INTEN1 Mask             */
-
-#define PDMA_INTEN_INTEN2_Pos            (2)                                               /*!< PDMA_T::INTEN: INTEN2 Position         */
-#define PDMA_INTEN_INTEN2_Msk            (0x1ul << PDMA_INTEN_INTEN2_Pos)                  /*!< PDMA_T::INTEN: INTEN2 Mask             */
-
-#define PDMA_INTEN_INTEN3_Pos            (3)                                               /*!< PDMA_T::INTEN: INTEN3 Position         */
-#define PDMA_INTEN_INTEN3_Msk            (0x1ul << PDMA_INTEN_INTEN3_Pos)                  /*!< PDMA_T::INTEN: INTEN3 Mask             */
-
-#define PDMA_INTEN_INTEN4_Pos            (4)                                               /*!< PDMA_T::INTEN: INTEN4 Position         */
-#define PDMA_INTEN_INTEN4_Msk            (0x1ul << PDMA_INTEN_INTEN4_Pos)                  /*!< PDMA_T::INTEN: INTEN4 Mask             */
-
-#define PDMA_INTEN_INTEN5_Pos            (5)                                               /*!< PDMA_T::INTEN: INTEN5 Position         */
-#define PDMA_INTEN_INTEN5_Msk            (0x1ul << PDMA_INTEN_INTEN5_Pos)                  /*!< PDMA_T::INTEN: INTEN5 Mask             */
-
-#define PDMA_INTEN_INTEN6_Pos            (6)                                               /*!< PDMA_T::INTEN: INTEN6 Position         */
-#define PDMA_INTEN_INTEN6_Msk            (0x1ul << PDMA_INTEN_INTEN6_Pos)                  /*!< PDMA_T::INTEN: INTEN6 Mask             */
-
-#define PDMA_INTEN_INTEN7_Pos            (7)                                               /*!< PDMA_T::INTEN: INTEN7 Position         */
-#define PDMA_INTEN_INTEN7_Msk            (0x1ul << PDMA_INTEN_INTEN7_Pos)                  /*!< PDMA_T::INTEN: INTEN7 Mask             */
-
-#define PDMA_INTEN_INTEN8_Pos            (8)                                               /*!< PDMA_T::INTEN: INTEN8 Position         */
-#define PDMA_INTEN_INTEN8_Msk            (0x1ul << PDMA_INTEN_INTEN8_Pos)                  /*!< PDMA_T::INTEN: INTEN8 Mask             */
-
-#define PDMA_INTEN_INTEN9_Pos            (9)                                               /*!< PDMA_T::INTEN: INTEN9 Position         */
-#define PDMA_INTEN_INTEN9_Msk            (0x1ul << PDMA_INTEN_INTEN9_Pos)                  /*!< PDMA_T::INTEN: INTEN9 Mask             */
+#define PDMA_INTEN_INTENn_Pos            (0)                                               /*!< PDMA_T::INTEN: INTENn Position         */
+#define PDMA_INTEN_INTENn_Msk            (0xfffful << PDMA_INTEN_INTENn_Pos)               /*!< PDMA_T::INTEN: INTENn Mask             */
 
 #define PDMA_INTSTS_ABTIF_Pos            (0)                                               /*!< PDMA_T::INTSTS: ABTIF Position         */
 #define PDMA_INTSTS_ABTIF_Msk            (0x1ul << PDMA_INTSTS_ABTIF_Pos)                  /*!< PDMA_T::INTSTS: ABTIF Mask             */
@@ -1361,8 +644,8 @@ typedef struct
 #define PDMA_INTSTS_TDIF_Pos             (1)                                               /*!< PDMA_T::INTSTS: TDIF Position          */
 #define PDMA_INTSTS_TDIF_Msk             (0x1ul << PDMA_INTSTS_TDIF_Pos)                   /*!< PDMA_T::INTSTS: TDIF Mask              */
 
-#define PDMA_INTSTS_TEIF_Pos             (2)                                               /*!< PDMA_T::INTSTS: TEIF Position          */
-#define PDMA_INTSTS_TEIF_Msk             (0x1ul << PDMA_INTSTS_TEIF_Pos)                   /*!< PDMA_T::INTSTS: TEIF Mask              */
+#define PDMA_INTSTS_ALIGNF_Pos           (2)                                               /*!< PDMA_T::INTSTS: ALIGNF Position        */
+#define PDMA_INTSTS_ALIGNF_Msk           (0x1ul << PDMA_INTSTS_ALIGNF_Pos)                 /*!< PDMA_T::INTSTS: ALIGNF Mask            */
 
 #define PDMA_INTSTS_REQTOF0_Pos          (8)                                               /*!< PDMA_T::INTSTS: REQTOF0 Position       */
 #define PDMA_INTSTS_REQTOF0_Msk          (0x1ul << PDMA_INTSTS_REQTOF0_Pos)                /*!< PDMA_T::INTSTS: REQTOF0 Mask           */
@@ -1400,6 +683,24 @@ typedef struct
 #define PDMA_ABTSTS_ABTIF9_Pos           (9)                                               /*!< PDMA_T::ABTSTS: ABTIF9 Position        */
 #define PDMA_ABTSTS_ABTIF9_Msk           (0x1ul << PDMA_ABTSTS_ABTIF9_Pos)                 /*!< PDMA_T::ABTSTS: ABTIF9 Mask            */
 
+#define PDMA_ABTSTS_ABTIF10_Pos          (10)                                              /*!< PDMA_T::ABTSTS: ABTIF10 Position       */
+#define PDMA_ABTSTS_ABTIF10_Msk          (0x1ul << PDMA_ABTSTS_ABTIF10_Pos)                /*!< PDMA_T::ABTSTS: ABTIF10 Mask           */
+
+#define PDMA_ABTSTS_ABTIF11_Pos          (11)                                              /*!< PDMA_T::ABTSTS: ABTIF11 Position       */
+#define PDMA_ABTSTS_ABTIF11_Msk          (0x1ul << PDMA_ABTSTS_ABTIF11_Pos)                /*!< PDMA_T::ABTSTS: ABTIF11 Mask           */
+
+#define PDMA_ABTSTS_ABTIF12_Pos          (12)                                              /*!< PDMA_T::ABTSTS: ABTIF12 Position       */
+#define PDMA_ABTSTS_ABTIF12_Msk          (0x1ul << PDMA_ABTSTS_ABTIF12_Pos)                /*!< PDMA_T::ABTSTS: ABTIF12 Mask           */
+
+#define PDMA_ABTSTS_ABTIF13_Pos          (13)                                              /*!< PDMA_T::ABTSTS: ABTIF13 Position       */
+#define PDMA_ABTSTS_ABTIF13_Msk          (0x1ul << PDMA_ABTSTS_ABTIF13_Pos)                /*!< PDMA_T::ABTSTS: ABTIF13 Mask           */
+
+#define PDMA_ABTSTS_ABTIF14_Pos          (14)                                              /*!< PDMA_T::ABTSTS: ABTIF14 Position       */
+#define PDMA_ABTSTS_ABTIF14_Msk          (0x1ul << PDMA_ABTSTS_ABTIF14_Pos)                /*!< PDMA_T::ABTSTS: ABTIF14 Mask           */
+
+#define PDMA_ABTSTS_ABTIF15_Pos          (15)                                              /*!< PDMA_T::ABTSTS: ABTIF15 Position       */
+#define PDMA_ABTSTS_ABTIF15_Msk          (0x1ul << PDMA_ABTSTS_ABTIF15_Pos)                /*!< PDMA_T::ABTSTS: ABTIF15 Mask           */
+
 #define PDMA_TDSTS_TDIF0_Pos             (0)                                               /*!< PDMA_T::TDSTS: TDIF0 Position          */
 #define PDMA_TDSTS_TDIF0_Msk             (0x1ul << PDMA_TDSTS_TDIF0_Pos)                   /*!< PDMA_T::TDSTS: TDIF0 Mask              */
 
@@ -1430,65 +731,29 @@ typedef struct
 #define PDMA_TDSTS_TDIF9_Pos             (9)                                               /*!< PDMA_T::TDSTS: TDIF9 Position          */
 #define PDMA_TDSTS_TDIF9_Msk             (0x1ul << PDMA_TDSTS_TDIF9_Pos)                   /*!< PDMA_T::TDSTS: TDIF9 Mask              */
 
-#define PDMA_SCATSTS_TEMPTYF0_Pos        (0)                                               /*!< PDMA_T::SCATSTS: TEMPTYF0 Position     */
-#define PDMA_SCATSTS_TEMPTYF0_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF0_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF0 Mask         */
+#define PDMA_TDSTS_TDIF10_Pos            (10)                                              /*!< PDMA_T::TDSTS: TDIF10 Position         */
+#define PDMA_TDSTS_TDIF10_Msk            (0x1ul << PDMA_TDSTS_TDIF10_Pos)                  /*!< PDMA_T::TDSTS: TDIF10 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF1_Pos        (1)                                               /*!< PDMA_T::SCATSTS: TEMPTYF1 Position     */
-#define PDMA_SCATSTS_TEMPTYF1_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF1_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF1 Mask         */
+#define PDMA_TDSTS_TDIF11_Pos            (11)                                              /*!< PDMA_T::TDSTS: TDIF11 Position         */
+#define PDMA_TDSTS_TDIF11_Msk            (0x1ul << PDMA_TDSTS_TDIF11_Pos)                  /*!< PDMA_T::TDSTS: TDIF11 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF2_Pos        (2)                                               /*!< PDMA_T::SCATSTS: TEMPTYF2 Position     */
-#define PDMA_SCATSTS_TEMPTYF2_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF2_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF2 Mask         */
+#define PDMA_TDSTS_TDIF12_Pos            (12)                                              /*!< PDMA_T::TDSTS: TDIF12 Position         */
+#define PDMA_TDSTS_TDIF12_Msk            (0x1ul << PDMA_TDSTS_TDIF12_Pos)                  /*!< PDMA_T::TDSTS: TDIF12 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF3_Pos        (3)                                               /*!< PDMA_T::SCATSTS: TEMPTYF3 Position     */
-#define PDMA_SCATSTS_TEMPTYF3_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF3_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF3 Mask         */
+#define PDMA_TDSTS_TDIF13_Pos            (13)                                              /*!< PDMA_T::TDSTS: TDIF13 Position         */
+#define PDMA_TDSTS_TDIF13_Msk            (0x1ul << PDMA_TDSTS_TDIF13_Pos)                  /*!< PDMA_T::TDSTS: TDIF13 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF4_Pos        (4)                                               /*!< PDMA_T::SCATSTS: TEMPTYF4 Position     */
-#define PDMA_SCATSTS_TEMPTYF4_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF4_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF4 Mask         */
+#define PDMA_TDSTS_TDIF14_Pos            (14)                                              /*!< PDMA_T::TDSTS: TDIF14 Position         */
+#define PDMA_TDSTS_TDIF14_Msk            (0x1ul << PDMA_TDSTS_TDIF14_Pos)                  /*!< PDMA_T::TDSTS: TDIF14 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF5_Pos        (5)                                               /*!< PDMA_T::SCATSTS: TEMPTYF5 Position     */
-#define PDMA_SCATSTS_TEMPTYF5_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF5_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF5 Mask         */
+#define PDMA_TDSTS_TDIF15_Pos            (15)                                              /*!< PDMA_T::TDSTS: TDIF15 Position         */
+#define PDMA_TDSTS_TDIF15_Msk            (0x1ul << PDMA_TDSTS_TDIF15_Pos)                  /*!< PDMA_T::TDSTS: TDIF15 Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF6_Pos        (6)                                               /*!< PDMA_T::SCATSTS: TEMPTYF6 Position     */
-#define PDMA_SCATSTS_TEMPTYF6_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF6_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF6 Mask         */
+#define PDMA_ALIGN_ALIGNn_Pos            (0)                                               /*!< PDMA_T::ALIGN: ALIGNn Position         */
+#define PDMA_ALIGN_ALIGNn_Msk            (0xfffful << PDMA_ALIGN_ALIGNn_Pos)               /*!< PDMA_T::ALIGN: ALIGNn Mask             */
 
-#define PDMA_SCATSTS_TEMPTYF7_Pos        (7)                                               /*!< PDMA_T::SCATSTS: TEMPTYF7 Position     */
-#define PDMA_SCATSTS_TEMPTYF7_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF7_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF7 Mask         */
-
-#define PDMA_SCATSTS_TEMPTYF8_Pos        (8)                                               /*!< PDMA_T::SCATSTS: TEMPTYF8 Position     */
-#define PDMA_SCATSTS_TEMPTYF8_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF8_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF8 Mask         */
-
-#define PDMA_SCATSTS_TEMPTYF9_Pos        (9)                                               /*!< PDMA_T::SCATSTS: TEMPTYF9 Position     */
-#define PDMA_SCATSTS_TEMPTYF9_Msk        (0x1ul << PDMA_SCATSTS_TEMPTYF9_Pos)              /*!< PDMA_T::SCATSTS: TEMPTYF9 Mask         */
-
-#define PDMA_TACTSTS_TXACTF0_Pos         (0)                                               /*!< PDMA_T::TACTSTS: TXACTF0 Position      */
-#define PDMA_TACTSTS_TXACTF0_Msk         (0x1ul << PDMA_TACTSTS_TXACTF0_Pos)               /*!< PDMA_T::TACTSTS: TXACTF0 Mask          */
-
-#define PDMA_TACTSTS_TXACTF1_Pos         (1)                                               /*!< PDMA_T::TACTSTS: TXACTF1 Position      */
-#define PDMA_TACTSTS_TXACTF1_Msk         (0x1ul << PDMA_TACTSTS_TXACTF1_Pos)               /*!< PDMA_T::TACTSTS: TXACTF1 Mask          */
-
-#define PDMA_TACTSTS_TXACTF2_Pos         (2)                                               /*!< PDMA_T::TACTSTS: TXACTF2 Position      */
-#define PDMA_TACTSTS_TXACTF2_Msk         (0x1ul << PDMA_TACTSTS_TXACTF2_Pos)               /*!< PDMA_T::TACTSTS: TXACTF2 Mask          */
-
-#define PDMA_TACTSTS_TXACTF3_Pos         (3)                                               /*!< PDMA_T::TACTSTS: TXACTF3 Position      */
-#define PDMA_TACTSTS_TXACTF3_Msk         (0x1ul << PDMA_TACTSTS_TXACTF3_Pos)               /*!< PDMA_T::TACTSTS: TXACTF3 Mask          */
-
-#define PDMA_TACTSTS_TXACTF4_Pos         (4)                                               /*!< PDMA_T::TACTSTS: TXACTF4 Position      */
-#define PDMA_TACTSTS_TXACTF4_Msk         (0x1ul << PDMA_TACTSTS_TXACTF4_Pos)               /*!< PDMA_T::TACTSTS: TXACTF4 Mask          */
-
-#define PDMA_TACTSTS_TXACTF5_Pos         (5)                                               /*!< PDMA_T::TACTSTS: TXACTF5 Position      */
-#define PDMA_TACTSTS_TXACTF5_Msk         (0x1ul << PDMA_TACTSTS_TXACTF5_Pos)               /*!< PDMA_T::TACTSTS: TXACTF5 Mask          */
-
-#define PDMA_TACTSTS_TXACTF6_Pos         (6)                                               /*!< PDMA_T::TACTSTS: TXACTF6 Position      */
-#define PDMA_TACTSTS_TXACTF6_Msk         (0x1ul << PDMA_TACTSTS_TXACTF6_Pos)               /*!< PDMA_T::TACTSTS: TXACTF6 Mask          */
-
-#define PDMA_TACTSTS_TXACTF7_Pos         (7)                                               /*!< PDMA_T::TACTSTS: TXACTF7 Position      */
-#define PDMA_TACTSTS_TXACTF7_Msk         (0x1ul << PDMA_TACTSTS_TXACTF7_Pos)               /*!< PDMA_T::TACTSTS: TXACTF7 Mask          */
-
-#define PDMA_TACTSTS_TXACTF8_Pos         (8)                                               /*!< PDMA_T::TACTSTS: TXACTF8 Position      */
-#define PDMA_TACTSTS_TXACTF8_Msk         (0x1ul << PDMA_TACTSTS_TXACTF8_Pos)               /*!< PDMA_T::TACTSTS: TXACTF8 Mask          */
-
-#define PDMA_TACTSTS_TXACTF9_Pos         (9)                                               /*!< PDMA_T::TACTSTS: TXACTF9 Position      */
-#define PDMA_TACTSTS_TXACTF9_Msk         (0x1ul << PDMA_TACTSTS_TXACTF9_Pos)               /*!< PDMA_T::TACTSTS: TXACTF9 Mask          */
+#define PDMA_TACTSTS_TXACTFn_Pos         (0)                                               /*!< PDMA_T::TACTSTS: TXACTFn Position      */
+#define PDMA_TACTSTS_TXACTFn_Msk         (0xfffful << PDMA_TACTSTS_TXACTFn_Pos)            /*!< PDMA_T::TACTSTS: TXACTFn Mask          */
 
 #define PDMA_TOUTPSC_TOUTPSC0_Pos        (0)                                               /*!< PDMA_T::TOUTPSC: TOUTPSC0 Position     */
 #define PDMA_TOUTPSC_TOUTPSC0_Msk        (0x7ul << PDMA_TOUTPSC_TOUTPSC0_Pos)              /*!< PDMA_T::TOUTPSC: TOUTPSC0 Mask         */
@@ -1496,90 +761,78 @@ typedef struct
 #define PDMA_TOUTPSC_TOUTPSC1_Pos        (4)                                               /*!< PDMA_T::TOUTPSC: TOUTPSC1 Position     */
 #define PDMA_TOUTPSC_TOUTPSC1_Msk        (0x7ul << PDMA_TOUTPSC_TOUTPSC1_Pos)              /*!< PDMA_T::TOUTPSC: TOUTPSC1 Mask         */
 
-#define PDMA_TOUTEN_TOUTEN0_Pos          (0)                                               /*!< PDMA_T::TOUTEN: TOUTEN0 Position       */
-#define PDMA_TOUTEN_TOUTEN0_Msk          (0x1ul << PDMA_TOUTEN_TOUTEN0_Pos)                /*!< PDMA_T::TOUTEN: TOUTEN0 Mask           */
+#define PDMA_TOUTEN_TOUTENn_Pos          (0)                                               /*!< PDMA_T::TOUTEN: TOUTENn Position       */
+#define PDMA_TOUTEN_TOUTENn_Msk          (0x3ul << PDMA_TOUTEN_TOUTENn_Pos)                /*!< PDMA_T::TOUTEN: TOUTENn Mask           */
 
-#define PDMA_TOUTEN_TOUTEN1_Pos          (1)                                               /*!< PDMA_T::TOUTEN: TOUTEN1 Position       */
-#define PDMA_TOUTEN_TOUTEN1_Msk          (0x1ul << PDMA_TOUTEN_TOUTEN1_Pos)                /*!< PDMA_T::TOUTEN: TOUTEN1 Mask           */
-
-#define PDMA_TOUTIEN_TOUTIEN0_Pos        (0)                                               /*!< PDMA_T::TOUTIEN: TOUTIEN0 Position     */
-#define PDMA_TOUTIEN_TOUTIEN0_Msk        (0x1ul << PDMA_TOUTIEN_TOUTIEN0_Pos)              /*!< PDMA_T::TOUTIEN: TOUTIEN0 Mask         */
-
-#define PDMA_TOUTIEN_TOUTIEN1_Pos        (1)                                               /*!< PDMA_T::TOUTIEN: TOUTIEN1 Position     */
-#define PDMA_TOUTIEN_TOUTIEN1_Msk        (0x1ul << PDMA_TOUTIEN_TOUTIEN1_Pos)              /*!< PDMA_T::TOUTIEN: TOUTIEN1 Mask         */
+#define PDMA_TOUTIEN_TOUTIENn_Pos        (0)                                               /*!< PDMA_T::TOUTIEN: TOUTIENn Position     */
+#define PDMA_TOUTIEN_TOUTIENn_Msk        (0x3ul << PDMA_TOUTIEN_TOUTIENn_Pos)              /*!< PDMA_T::TOUTIEN: TOUTIENn Mask         */
 
 #define PDMA_SCATBA_SCATBA_Pos           (16)                                              /*!< PDMA_T::SCATBA: SCATBA Position        */
 #define PDMA_SCATBA_SCATBA_Msk           (0xfffful << PDMA_SCATBA_SCATBA_Pos)              /*!< PDMA_T::SCATBA: SCATBA Mask            */
 
-#define PDMA_TOC0_1_TOC0_Pos             (0)                                               /*!< PDMA_T::TOC0_1: TOC0 Position          */
-#define PDMA_TOC0_1_TOC0_Msk             (0xfffful << PDMA_TOC0_1_TOC0_Pos)                /*!< PDMA_T::TOC0_1: TOC0 Mask              */
+#define PDMA_TOC_TOC0_Pos                (0)                                               /*!< PDMA_T::TOC: TOC0 Position             */
+#define PDMA_TOC_TOC0_Msk                (0xfffful << PDMA_TOC_TOC0_Pos)                   /*!< PDMA_T::TOC: TOC0 Mask                 */
 
-#define PDMA_TOC0_1_TOC1_Pos             (16)                                              /*!< PDMA_T::TOC0_1: TOC1 Position          */
-#define PDMA_TOC0_1_TOC1_Msk             (0xfffful << PDMA_TOC0_1_TOC1_Pos)                /*!< PDMA_T::TOC0_1: TOC1 Mask              */
+#define PDMA_TOC_TOC1_Pos                (16)                                              /*!< PDMA_T::TOC: TOC1 Position             */
+#define PDMA_TOC_TOC1_Msk                (0xfffful << PDMA_TOC_TOC1_Pos)                   /*!< PDMA_T::TOC: TOC1 Mask                 */
 
-#define PDMA_RESET_RESET0_Pos            (0)                                               /*!< PDMA_T::RESET: RESET0 Position         */
-#define PDMA_RESET_RESET0_Msk            (0x1ul << PDMA_RESET_RESET0_Pos)                  /*!< PDMA_T::RESET: RESET0 Mask             */
-
-#define PDMA_RESET_RESET1_Pos            (1)                                               /*!< PDMA_T::RESET: RESET1 Position         */
-#define PDMA_RESET_RESET1_Msk            (0x1ul << PDMA_RESET_RESET1_Pos)                  /*!< PDMA_T::RESET: RESET1 Mask             */
-
-#define PDMA_RESET_RESET2_Pos            (2)                                               /*!< PDMA_T::RESET: RESET2 Position         */
-#define PDMA_RESET_RESET2_Msk            (0x1ul << PDMA_RESET_RESET2_Pos)                  /*!< PDMA_T::RESET: RESET2 Mask             */
-
-#define PDMA_RESET_RESET3_Pos            (3)                                               /*!< PDMA_T::RESET: RESET3 Position         */
-#define PDMA_RESET_RESET3_Msk            (0x1ul << PDMA_RESET_RESET3_Pos)                  /*!< PDMA_T::RESET: RESET3 Mask             */
-
-#define PDMA_RESET_RESET4_Pos            (4)                                               /*!< PDMA_T::RESET: RESET4 Position         */
-#define PDMA_RESET_RESET4_Msk            (0x1ul << PDMA_RESET_RESET4_Pos)                  /*!< PDMA_T::RESET: RESET4 Mask             */
-
-#define PDMA_RESET_RESET5_Pos            (5)                                               /*!< PDMA_T::RESET: RESET5 Position         */
-#define PDMA_RESET_RESET5_Msk            (0x1ul << PDMA_RESET_RESET5_Pos)                  /*!< PDMA_T::RESET: RESET5 Mask             */
-
-#define PDMA_RESET_RESET6_Pos            (6)                                               /*!< PDMA_T::RESET: RESET6 Position         */
-#define PDMA_RESET_RESET6_Msk            (0x1ul << PDMA_RESET_RESET6_Pos)                  /*!< PDMA_T::RESET: RESET6 Mask             */
-
-#define PDMA_RESET_RESET7_Pos            (7)                                               /*!< PDMA_T::RESET: RESET7 Position         */
-#define PDMA_RESET_RESET7_Msk            (0x1ul << PDMA_RESET_RESET7_Pos)                  /*!< PDMA_T::RESET: RESET7 Mask             */
-
-#define PDMA_RESET_RESET8_Pos            (8)                                               /*!< PDMA_T::RESET: RESET8 Position         */
-#define PDMA_RESET_RESET8_Msk            (0x1ul << PDMA_RESET_RESET8_Pos)                  /*!< PDMA_T::RESET: RESET8 Mask             */
-
-#define PDMA_RESET_RESET9_Pos            (9)                                               /*!< PDMA_T::RESET: RESET9 Position         */
-#define PDMA_RESET_RESET9_Msk            (0x1ul << PDMA_RESET_RESET9_Pos)                  /*!< PDMA_T::RESET: RESET9 Mask             */
+#define PDMA_CHRST_CHnRST_Pos            (0)                                               /*!< PDMA_T::CHRST: CHnRST Position         */
+#define PDMA_CHRST_CHnRST_Msk            (0xfffful << PDMA_CHRST_CHnRST_Pos)               /*!< PDMA_T::CHRST: CHnRST Mask             */
 
 #define PDMA_REQSEL0_3_REQSRC0_Pos       (0)                                               /*!< PDMA_T::REQSEL0_3: REQSRC0 Position    */
-#define PDMA_REQSEL0_3_REQSRC0_Msk       (0x3ful << PDMA_REQSEL0_3_REQSRC0_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC0 Mask        */
+#define PDMA_REQSEL0_3_REQSRC0_Msk       (0x7ful << PDMA_REQSEL0_3_REQSRC0_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC0 Mask        */
 
 #define PDMA_REQSEL0_3_REQSRC1_Pos       (8)                                               /*!< PDMA_T::REQSEL0_3: REQSRC1 Position    */
-#define PDMA_REQSEL0_3_REQSRC1_Msk       (0x3ful << PDMA_REQSEL0_3_REQSRC1_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC1 Mask        */
+#define PDMA_REQSEL0_3_REQSRC1_Msk       (0x7ful << PDMA_REQSEL0_3_REQSRC1_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC1 Mask        */
 
 #define PDMA_REQSEL0_3_REQSRC2_Pos       (16)                                              /*!< PDMA_T::REQSEL0_3: REQSRC2 Position    */
-#define PDMA_REQSEL0_3_REQSRC2_Msk       (0x3ful << PDMA_REQSEL0_3_REQSRC2_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC2 Mask        */
+#define PDMA_REQSEL0_3_REQSRC2_Msk       (0x7ful << PDMA_REQSEL0_3_REQSRC2_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC2 Mask        */
 
 #define PDMA_REQSEL0_3_REQSRC3_Pos       (24)                                              /*!< PDMA_T::REQSEL0_3: REQSRC3 Position    */
-#define PDMA_REQSEL0_3_REQSRC3_Msk       (0x3ful << PDMA_REQSEL0_3_REQSRC3_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC3 Mask        */
+#define PDMA_REQSEL0_3_REQSRC3_Msk       (0x7ful << PDMA_REQSEL0_3_REQSRC3_Pos)            /*!< PDMA_T::REQSEL0_3: REQSRC3 Mask        */
 
 #define PDMA_REQSEL4_7_REQSRC4_Pos       (0)                                               /*!< PDMA_T::REQSEL4_7: REQSRC4 Position    */
-#define PDMA_REQSEL4_7_REQSRC4_Msk       (0x3ful << PDMA_REQSEL4_7_REQSRC4_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC4 Mask        */
+#define PDMA_REQSEL4_7_REQSRC4_Msk       (0x7ful << PDMA_REQSEL4_7_REQSRC4_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC4 Mask        */
 
 #define PDMA_REQSEL4_7_REQSRC5_Pos       (8)                                               /*!< PDMA_T::REQSEL4_7: REQSRC5 Position    */
-#define PDMA_REQSEL4_7_REQSRC5_Msk       (0x3ful << PDMA_REQSEL4_7_REQSRC5_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC5 Mask        */
+#define PDMA_REQSEL4_7_REQSRC5_Msk       (0x7ful << PDMA_REQSEL4_7_REQSRC5_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC5 Mask        */
 
 #define PDMA_REQSEL4_7_REQSRC6_Pos       (16)                                              /*!< PDMA_T::REQSEL4_7: REQSRC6 Position    */
-#define PDMA_REQSEL4_7_REQSRC6_Msk       (0x3ful << PDMA_REQSEL4_7_REQSRC6_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC6 Mask        */
+#define PDMA_REQSEL4_7_REQSRC6_Msk       (0x7ful << PDMA_REQSEL4_7_REQSRC6_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC6 Mask        */
 
 #define PDMA_REQSEL4_7_REQSRC7_Pos       (24)                                              /*!< PDMA_T::REQSEL4_7: REQSRC7 Position    */
-#define PDMA_REQSEL4_7_REQSRC7_Msk       (0x3ful << PDMA_REQSEL4_7_REQSRC7_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC7 Mask        */
+#define PDMA_REQSEL4_7_REQSRC7_Msk       (0x7ful << PDMA_REQSEL4_7_REQSRC7_Pos)            /*!< PDMA_T::REQSEL4_7: REQSRC7 Mask        */
 
-#define PDMA_REQSEL8_9_REQSRC8_Pos       (0)                                               /*!< PDMA_T::REQSEL8_9: REQSRC8 Position    */
-#define PDMA_REQSEL8_9_REQSRC8_Msk       (0x3ful << PDMA_REQSEL8_9_REQSRC8_Pos)            /*!< PDMA_T::REQSEL8_9: REQSRC8 Mask        */
+#define PDMA_REQSEL8_11_REQSRC8_Pos      (0)                                               /*!< PDMA_T::REQSEL8_11: REQSRC8 Position   */
+#define PDMA_REQSEL8_11_REQSRC8_Msk      (0x7ful << PDMA_REQSEL8_11_REQSRC8_Pos)           /*!< PDMA_T::REQSEL8_11: REQSRC8 Mask       */
 
-#define PDMA_REQSEL8_9_REQSRC9_Pos       (8)                                               /*!< PDMA_T::REQSEL8_9: REQSRC9 Position    */
-#define PDMA_REQSEL8_9_REQSRC9_Msk       (0x3ful << PDMA_REQSEL8_9_REQSRC9_Pos)            /*!< PDMA_T::REQSEL8_9: REQSRC9 Mask        */
+#define PDMA_REQSEL8_11_REQSRC9_Pos      (8)                                               /*!< PDMA_T::REQSEL8_11: REQSRC9 Position   */
+#define PDMA_REQSEL8_11_REQSRC9_Msk      (0x7ful << PDMA_REQSEL8_11_REQSRC9_Pos)           /*!< PDMA_T::REQSEL8_11: REQSRC9 Mask       */
+
+#define PDMA_REQSEL8_11_REQSRC10_Pos     (16)                                              /*!< PDMA_T::REQSEL8_11: REQSRC10 Position  */
+#define PDMA_REQSEL8_11_REQSRC10_Msk     (0x7ful << PDMA_REQSEL8_11_REQSRC10_Pos)          /*!< PDMA_T::REQSEL8_11: REQSRC10 Mask      */
+
+#define PDMA_REQSEL8_11_REQSRC11_Pos     (24)                                              /*!< PDMA_T::REQSEL8_11: REQSRC11 Position  */
+#define PDMA_REQSEL8_11_REQSRC11_Msk     (0x7ful << PDMA_REQSEL8_11_REQSRC11_Pos)          /*!< PDMA_T::REQSEL8_11: REQSRC11 Mask      */
+
+#define PDMA_REQSEL12_15_REQSRC12_Pos    (0)                                               /*!< PDMA_T::REQSEL12_15: REQSRC12 Position */
+#define PDMA_REQSEL12_15_REQSRC12_Msk    (0x7ful << PDMA_REQSEL12_15_REQSRC12_Pos)         /*!< PDMA_T::REQSEL12_15: REQSRC12 Mask     */
+
+#define PDMA_REQSEL12_15_REQSRC13_Pos    (8)                                               /*!< PDMA_T::REQSEL12_15: REQSRC13 Position */
+#define PDMA_REQSEL12_15_REQSRC13_Msk    (0x7ful << PDMA_REQSEL12_15_REQSRC13_Pos)         /*!< PDMA_T::REQSEL12_15: REQSRC13 Mask     */
+
+#define PDMA_REQSEL12_15_REQSRC14_Pos    (16)                                              /*!< PDMA_T::REQSEL12_15: REQSRC14 Position */
+#define PDMA_REQSEL12_15_REQSRC14_Msk    (0x7ful << PDMA_REQSEL12_15_REQSRC14_Pos)         /*!< PDMA_T::REQSEL12_15: REQSRC14 Mask     */
+
+#define PDMA_REQSEL12_15_REQSRC15_Pos    (24)                                              /*!< PDMA_T::REQSEL12_15: REQSRC15 Position */
+#define PDMA_REQSEL12_15_REQSRC15_Msk    (0x7ful << PDMA_REQSEL12_15_REQSRC15_Pos)         /*!< PDMA_T::REQSEL12_15: REQSRC15 Mask     */
 
 /**@}*/ /* PDMA_CONST */
 /**@}*/ /* end of PDMA register group */
 /**@}*/ /* end of REGISTER group */
 
+#if defined ( __CC_ARM   )
+#pragma no_anon_unions
+#endif
 
 #endif /* __PDMA_REG_H__ */

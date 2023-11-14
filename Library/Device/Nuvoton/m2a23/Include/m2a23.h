@@ -182,6 +182,7 @@ extern void SystemInit(void);
 #define GPIO_INT_BASE          (PERIPH_BASE + 0x04450UL)
 #define GPIO_PIN_DATA_BASE     (PERIPH_BASE + 0x04800UL)
 #define PDMA0_BASE             (PERIPH_BASE + 0x08000UL)
+#define PDMA_BASE              PDMA0_BASE
 #define FMC_BASE               (PERIPH_BASE + 0x0C000UL)
 #define CANFD0_BASE            (PERIPH_BASE + 0x20000UL)
 #define CANFD1_BASE            (PERIPH_BASE + 0x24000UL)
@@ -245,12 +246,9 @@ extern void SystemInit(void);
 #define WWDT                ((WWDT_T *) WWDT_BASE)                      /*!< Window Watch Dog Timer Configuration Struct      */
 
 #define SPI0                ((SPI_T *) SPI0_BASE)                       /*!< SPI0 Configuration Struct                        */
-#define SPI1                ((SPI_T *) SPI1_BASE)                       /*!< SPI1 Configuration Struct                        */
-#define SPI2                ((SPI_T *) SPI2_BASE)                       /*!< SPI2 Configuration Struct                        */
 
 #define I2C0                ((I2C_T *) I2C0_BASE)                       /*!< I2C0 Configuration Struct                        */
-#define I2C1                ((I2C_T *) I2C1_BASE)                       /*!< I2C1 Configuration Struct                        */
-#define I2C2                ((I2C_T *) I2C2_BASE)                       /*!< I2C2 Configuration Struct                        */
+#define I2C                 I2C0
 
 #define ADC                 ((ADC_T *) ADC_BASE)                        /*!< ADC Configuration Struct                         */
 
@@ -266,23 +264,18 @@ extern void SystemInit(void);
 #define BPWM1               ((BPWM_T *) BPWM1_BASE)                     /*!< BPWM1 Configuration Struct                        */
 #define BPWM2               ((BPWM_T *) BPWM2_BASE)                     /*!< BPWM2 Configuration Struct                        */
 #define BPWM3               ((BPWM_T *) BPWM3_BASE)                     /*!< BPWM3 Configuration Struct                        */
-                                                                     
+
 #define CRC                 ((CRC_T *) CRC_BASE)                        /*!< CRC Configuration Struct                          */
-                                                                                                                        
-#define USBD                ((USBD_T *) USBD_BASE)                      /*!< USB Device Configuration Struct                   */
-                                                                                                                        
+
 #define PDMA                ((PDMA_T *) PDMA_BASE)                      /*!< PDMA Configuration Struct                         */
-                                                                                                                        
+#define PDMA0               PDMA
+
 #define LLSI0               ((LLSI_T *) LLSI0_BASE)                     /*!< LLSI0 Configuration Struct                        */
 #define LLSI1               ((LLSI_T *) LLSI1_BASE)                     /*!< LLSI1 Configuration Struct                        */
-#define LLSI2               ((LLSI_T *) LLSI2_BASE)                     /*!< LLSI2 Configuration Struct                        */
-#define LLSI3               ((LLSI_T *) LLSI3_BASE)                     /*!< LLSI3 Configuration Struct                        */
-#define LLSI4               ((LLSI_T *) LLSI4_BASE)                     /*!< LLSI4 Configuration Struct                        */
-#define LLSI5               ((LLSI_T *) LLSI5_BASE)                     /*!< LLSI5 Configuration Struct                        */
-                                                                                                                        
+
 #define ACMP01              ((ACMP_T *) ACMP01_BASE)                    /*!< ACMP01 Configuration Struct                       */
 #define ACMP23              ((ACMP_T *) ACMP23_BASE)                    /*!< ACMP23 Configuration Struct                       */
-                                                                     
+
 #define DAC0                ((DAC_T *) DAC0_BASE)                       /*!< DAC0 Configuration Struct                         */
 #define DAC1                ((DAC_T *) DAC1_BASE)                       /*!< DAC1 Configuration Struct                         */
 #define DAC2                ((DAC_T *) DAC2_BASE)                       /*!< DAC2 Configuration Struct                         */
