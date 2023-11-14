@@ -89,6 +89,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     GPD_IRQHandler
                 DCD     DEFAULT_IRQHandler
                 DCD     GPF_IRQHandler
+                DCD     DEFAULT_IRQHandler                    
                 DCD     SPI0_IRQHandler
                 DCD     BRAKE0_IRQHandler
                 DCD     PWM0P0_IRQHandler
@@ -105,8 +106,11 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     UART0_IRQHandler
                 DCD     UART1_IRQHandler
                 DCD     I2C0_IRQHandler
+                DCD     DEFAULT_IRQHandler
                 DCD     PDMA0_IRQHandler
+                DCD     DEFAULT_IRQHandler                    
                 DCD     ADC0_IRQHandler
+                DCD     DEFAULT_IRQHandler                    
                 DCD     ACMP01_IRQHandler
                 DCD     BPWM0_IRQHandler
                 DCD     LLSI0_IRQHandler
@@ -121,7 +125,6 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     DEFAULT_IRQHandler
                 DCD     USCI0_IRQHandler
                 DCD     USCI1_IRQHandler
-                DCD     CRC_IRQHandler
 
 __Vectors_End
 
@@ -227,7 +230,6 @@ Default_Handler PROC
                 EXPORT  CANFD21_IRQHandler        [WEAK]
                 EXPORT  USCI0_IRQHandler          [WEAK]
                 EXPORT  USCI1_IRQHandler          [WEAK]
-                EXPORT  CRC_IRQHandler            [WEAK]
                 EXPORT  DEFAULT_IRQHandler        [WEAK]
 
 BOD_IRQHandler
@@ -275,7 +277,6 @@ CANFD20_IRQHandler
 CANFD21_IRQHandler
 USCI0_IRQHandler
 USCI1_IRQHandler
-CRC_IRQHandler
 DEFAULT_IRQHandler
                 B       .
                 ENDP

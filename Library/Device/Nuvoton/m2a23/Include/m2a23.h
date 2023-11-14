@@ -94,7 +94,6 @@ typedef enum IRQn
     CANFD21_IRQn                  = 53,       /*!< CANFD21 Interrupt                                */
     USCI0_IRQn                    = 56,       /*!< USCI0 Interrupt                                  */
     USCI1_IRQn                    = 57,       /*!< USCI1 Interrupt                                  */
-    CRC_IRQn                      = 58,       /*!< CRC Interrupt                                    */
 } IRQn_Type;
 
 
