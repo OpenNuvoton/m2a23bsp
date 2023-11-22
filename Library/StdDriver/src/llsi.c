@@ -3,9 +3,8 @@
  * @version  V3.00
  * @brief    M2A23 series LLSI driver source file
  *
- * @note
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -165,30 +164,6 @@ void LLSI_Close(LLSI_T *llsi)
         /* Reset LLSI1 */
         SYS->IPRST2 |= SYS_IPRST2_LLSI1RST_Msk;
         SYS->IPRST2 &= ~SYS_IPRST2_LLSI1RST_Msk;
-    }
-    else if(llsi == LLSI2)
-    {
-        /* Reset LLSI2 */
-        SYS->IPRST2 |= SYS_IPRST2_LLSI2RST_Msk;
-        SYS->IPRST2 &= ~SYS_IPRST2_LLSI2RST_Msk;
-    }
-    else if(llsi == LLSI3)
-    {
-        /* Reset LLSI3 */
-        SYS->IPRST2 |= SYS_IPRST2_LLSI3RST_Msk;
-        SYS->IPRST2 &= ~SYS_IPRST2_LLSI3RST_Msk;
-    }
-    else if(llsi == LLSI4)
-    {
-        /* Reset LLSI4 */
-        SYS->IPRST2 |= SYS_IPRST2_LLSI4RST_Msk;
-        SYS->IPRST2 &= ~SYS_IPRST2_LLSI4RST_Msk;
-    }
-    else if(llsi == LLSI5)
-    {
-        /* Reset LLSI5 */
-        SYS->IPRST2 |= SYS_IPRST2_LLSI5RST_Msk;
-        SYS->IPRST2 &= ~SYS_IPRST2_LLSI5RST_Msk;
     }
 }
 

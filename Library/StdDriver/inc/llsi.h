@@ -3,9 +3,8 @@
  * @version  V3.00
  * @brief    M2A23 series LLSI driver header file
  *
- * @note
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __LLSI_H__
 #define __LLSI_H__

@@ -3,9 +3,8 @@
  * @version  V3.00
  * @brief    M2A23 series SPI driver header file
  *
- * @note
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __SPI_H__
 #define __SPI_H__
@@ -62,54 +61,8 @@ extern "C"
 #define SPI_SPIEN_STS_MASK               (0x40)                           /*!< SPIEN status mask */
 #define SPI_SSLINE_STS_MASK              (0x80)                           /*!< SPIx_SS line status mask */
 
-
-/* SPII2S Data Width */
-#define SPII2S_DATABIT_8           (0 << SPI_I2SCTL_WDWIDTH_Pos)      /*!< SPII2S data width is 8-bit */
-#define SPII2S_DATABIT_16          (1 << SPI_I2SCTL_WDWIDTH_Pos)      /*!< SPII2S data width is 16-bit */
-#define SPII2S_DATABIT_24          (2 << SPI_I2SCTL_WDWIDTH_Pos)      /*!< SPII2S data width is 24-bit */
-#define SPII2S_DATABIT_32          (3 << SPI_I2SCTL_WDWIDTH_Pos)      /*!< SPII2S data width is 32-bit */
-
-/* SPII2S Audio Format */
-#define SPII2S_MONO                SPI_I2SCTL_MONO_Msk                /*!< Monaural channel */
-#define SPII2S_STEREO              0                                  /*!< Stereo channel */
-
-/* SPII2S Data Format */
-#define SPII2S_FORMAT_I2S          (0<<SPI_I2SCTL_FORMAT_Pos)         /*!< I2S data format */
-#define SPII2S_FORMAT_MSB          (1<<SPI_I2SCTL_FORMAT_Pos)         /*!< MSB justified data format */
-#define SPII2S_FORMAT_PCMA         (2<<SPI_I2SCTL_FORMAT_Pos)         /*!< PCM mode A data format */
-#define SPII2S_FORMAT_PCMB         (3<<SPI_I2SCTL_FORMAT_Pos)         /*!< PCM mode B data format */
-
-/* SPII2S Operation mode */
-#define SPII2S_MODE_SLAVE          SPI_I2SCTL_SLAVE_Msk               /*!< As slave mode */
-#define SPII2S_MODE_MASTER         0                                  /*!< As master mode */
-
-/* SPII2S TX FIFO Threshold */
-#define SPII2S_FIFO_TX_LEVEL_WORD_0    0                              /*!< TX threshold is 0 word */
-#define SPII2S_FIFO_TX_LEVEL_WORD_1    (1 << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 1 word */
-#define SPII2S_FIFO_TX_LEVEL_WORD_2    (2 << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 2 words */
-#define SPII2S_FIFO_TX_LEVEL_WORD_3    (3 << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 3 words */
-/* SPII2S RX FIFO Threshold */
-#define SPII2S_FIFO_RX_LEVEL_WORD_1    0                              /*!< RX threshold is 1 word */
-#define SPII2S_FIFO_RX_LEVEL_WORD_2    (1 << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 2 words */
-#define SPII2S_FIFO_RX_LEVEL_WORD_3    (2 << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 3 words */
-#define SPII2S_FIFO_RX_LEVEL_WORD_4    (3 << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 4 words */
-
-/* SPII2S Record Channel */
-#define SPII2S_MONO_RIGHT          0                                  /*!< Record mono right channel */
-#define SPII2S_MONO_LEFT           SPI_I2SCTL_RXLCH_Msk               /*!< Record mono left channel */
-
-/* SPII2S Channel */
-#define SPII2S_RIGHT               0                                  /*!< Select right channel */
-#define SPII2S_LEFT                1                                  /*!< Select left channel */
-
-/* SPII2S Interrupt Mask */
-#define SPII2S_FIFO_TXTH_INT_MASK           (0x01)                          /*!< TX FIFO threshold interrupt mask */
-#define SPII2S_FIFO_RXTH_INT_MASK           (0x02)                          /*!< RX FIFO threshold interrupt mask */
-#define SPII2S_FIFO_RXOV_INT_MASK           (0x04)                          /*!< RX FIFO overrun interrupt mask */
-#define SPII2S_FIFO_RXTO_INT_MASK           (0x08)                          /*!< RX FIFO time-out interrupt mask */
-#define SPII2S_TXUF_INT_MASK                (0x10)                          /*!< TX FIFO underflow interrupt mask */
-#define SPII2S_RIGHT_ZC_INT_MASK            (0x20)                          /*!< Right channel zero cross interrupt mask */
-#define SPII2S_LEFT_ZC_INT_MASK             (0x40)                          /*!< Left channel zero cross interrupt mask */
+/* SPI Status2 Mask */
+#define SPI_SLVBENUM_MASK                (0x01)                           /*!< Effective bit number of uncompleted RX data status mask */
 
 /*@}*/ /* end of group SPI_EXPORTED_CONSTANTS */
 
@@ -125,6 +78,22 @@ extern "C"
   * @details    Write 1 to UNITIF bit of SPI_STATUS register to clear the unit transfer interrupt flag.
   */
 #define SPI_CLR_UNIT_TRANS_INT_FLAG(spi)   ((spi)->STATUS = SPI_STATUS_UNITIF_Msk)
+
+/**
+  * @brief      Disable Slave 3-wire mode.
+  * @param[in]  spi The pointer of the specified SPI module.
+  * @return     None.
+  * @details    Clear SLV3WIRE bit of SPI_SSCTL register to disable Slave 3-wire mode.
+  */
+#define SPI_DISABLE_3WIRE_MODE(spi)   ((spi)->SSCTL &= ~SPI_SSCTL_SLV3WIRE_Msk)
+
+/**
+  * @brief      Enable Slave 3-wire mode.
+  * @param[in]  spi The pointer of the specified SPI module.
+  * @return     None.
+  * @details    Set SLV3WIRE bit of SPI_SSCTL register to enable Slave 3-wire mode.
+  */
+#define SPI_ENABLE_3WIRE_MODE(spi)   ((spi)->SSCTL |= SPI_SSCTL_SLV3WIRE_Msk)
 
 /**
   * @brief      Trigger RX PDMA function.
@@ -289,7 +258,7 @@ extern "C"
   * @param[in]  spi The pointer of the specified SPI module.
   * @param[in]  u32Width The bit width of one transaction.
   * @return     None.
-  * @details    The data width can be 8 ~ 32 bits.
+  * @details    The data width can be 4 ~ 32 bits.
   */
 #define SPI_SET_DATA_WIDTH(spi, u32Width)   ((spi)->CTL = ((spi)->CTL & ~SPI_CTL_DWIDTH_Msk) | (((u32Width)&0x1F) << SPI_CTL_DWIDTH_Pos))
 
@@ -319,205 +288,6 @@ extern "C"
 #define SPI_DISABLE(spi)   ((spi)->CTL &= ~SPI_CTL_SPIEN_Msk)
 
 
-/**
-  * @brief  Enable zero cross detection function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32ChMask The mask for left or right channel. Valid values are:
-  *                    - \ref SPII2S_RIGHT
-  *                    - \ref SPII2S_LEFT
-  * @return None
-  * @details This function will set RZCEN or LZCEN bit of SPI_I2SCTL register to enable zero cross detection function.
-  */
-static __INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
-{
-    if(u32ChMask == SPII2S_RIGHT)
-        i2s->I2SCTL |= SPI_I2SCTL_RZCEN_Msk;
-    else
-        i2s->I2SCTL |= SPI_I2SCTL_LZCEN_Msk;
-}
-
-/**
-  * @brief  Disable zero cross detection function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32ChMask The mask for left or right channel. Valid values are:
-  *                    - \ref SPII2S_RIGHT
-  *                    - \ref SPII2S_LEFT
-  * @return None
-  * @details This function will clear RZCEN or LZCEN bit of SPI_I2SCTL register to disable zero cross detection function.
-  */
-static __INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
-{
-    if(u32ChMask == SPII2S_RIGHT)
-        i2s->I2SCTL &= ~SPI_I2SCTL_RZCEN_Msk;
-    else
-        i2s->I2SCTL &= ~SPI_I2SCTL_LZCEN_Msk;
-}
-
-/**
-  * @brief  Enable SPII2S TX DMA function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will set TXPDMAEN bit of SPI_PDMACTL register to transmit data with PDMA.
-  */
-#define SPII2S_ENABLE_TXDMA(i2s)  ( (i2s)->PDMACTL |= SPI_PDMACTL_TXPDMAEN_Msk )
-
-/**
-  * @brief  Disable SPII2S TX DMA function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear TXPDMAEN bit of SPI_PDMACTL register to disable TX DMA function.
-  */
-#define SPII2S_DISABLE_TXDMA(i2s) ( (i2s)->PDMACTL &= ~SPI_PDMACTL_TXPDMAEN_Msk )
-
-/**
-  * @brief  Enable SPII2S RX DMA function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will set RXPDMAEN bit of SPI_PDMACTL register to receive data with PDMA.
-  */
-#define SPII2S_ENABLE_RXDMA(i2s) ( (i2s)->PDMACTL |= SPI_PDMACTL_RXPDMAEN_Msk )
-
-/**
-  * @brief  Disable SPII2S RX DMA function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear RXPDMAEN bit of SPI_PDMACTL register to disable RX DMA function.
-  */
-#define SPII2S_DISABLE_RXDMA(i2s) ( (i2s)->PDMACTL &= ~SPI_PDMACTL_RXPDMAEN_Msk )
-
-/**
-  * @brief  Enable SPII2S TX function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will set TXEN bit of SPI_I2SCTL register to enable SPII2S TX function.
-  */
-#define SPII2S_ENABLE_TX(i2s) ( (i2s)->I2SCTL |= SPI_I2SCTL_TXEN_Msk )
-
-/**
-  * @brief  Disable SPII2S TX function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear TXEN bit of SPI_I2SCTL register to disable SPII2S TX function.
-  */
-#define SPII2S_DISABLE_TX(i2s) ( (i2s)->I2SCTL &= ~SPI_I2SCTL_TXEN_Msk )
-
-/**
-  * @brief  Enable SPII2S RX function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will set RXEN bit of SPI_I2SCTL register to enable SPII2S RX function.
-  */
-#define SPII2S_ENABLE_RX(i2s) ( (i2s)->I2SCTL |= SPI_I2SCTL_RXEN_Msk )
-
-/**
-  * @brief  Disable SPII2S RX function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear RXEN bit of SPI_I2SCTL register to disable SPII2S RX function.
-  */
-#define SPII2S_DISABLE_RX(i2s) ( (i2s)->I2SCTL &= ~SPI_I2SCTL_RXEN_Msk )
-
-/**
-  * @brief  Enable TX Mute function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will set MUTE bit of SPI_I2SCTL register to enable SPII2S TX mute function.
-  */
-#define SPII2S_ENABLE_TX_MUTE(i2s)  ( (i2s)->I2SCTL |= SPI_I2SCTL_MUTE_Msk )
-
-/**
-  * @brief  Disable TX Mute function.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear MUTE bit of SPI_I2SCTL register to disable SPII2S TX mute function.
-  */
-#define SPII2S_DISABLE_TX_MUTE(i2s) ( (i2s)->I2SCTL &= ~SPI_I2SCTL_MUTE_Msk )
-
-/**
-  * @brief  Clear TX FIFO.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear TX FIFO. The internal TX FIFO pointer will be reset to FIFO start point.
-  */
-#define SPII2S_CLR_TX_FIFO(i2s) ( (i2s)->FIFOCTL |= SPI_FIFOCTL_TXFBCLR_Msk )
-
-/**
-  * @brief  Clear RX FIFO.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return None
-  * @details This macro will clear RX FIFO. The internal RX FIFO pointer will be reset to FIFO start point.
-  */
-#define SPII2S_CLR_RX_FIFO(i2s) ( (i2s)->FIFOCTL |= SPI_FIFOCTL_RXFBCLR_Msk )
-
-/**
-  * @brief  This function sets the recording source channel when mono mode is used.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32Ch left or right channel. Valid values are:
-  *                - \ref SPII2S_MONO_LEFT
-  *                - \ref SPII2S_MONO_RIGHT
-  * @return None
-  * @details This function selects the recording source channel of monaural mode.
-  */
-static __INLINE void SPII2S_SET_MONO_RX_CHANNEL(SPI_T *i2s, uint32_t u32Ch)
-{
-    u32Ch == SPII2S_MONO_LEFT ?
-    (i2s->I2SCTL |= SPI_I2SCTL_RXLCH_Msk) :
-    (i2s->I2SCTL &= ~SPI_I2SCTL_RXLCH_Msk);
-}
-
-/**
-  * @brief  Write data to SPII2S TX FIFO.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32Data The value written to TX FIFO.
-  * @return None
-  * @details This macro will write a value to TX FIFO.
-  */
-#define SPII2S_WRITE_TX_FIFO(i2s, u32Data)  ( (i2s)->TX = (u32Data) )
-
-/**
-  * @brief  Read RX FIFO.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return The value read from RX FIFO.
-  * @details This function will return a value read from RX FIFO.
-  */
-#define SPII2S_READ_RX_FIFO(i2s) ( (i2s)->RX )
-
-/**
-  * @brief  Get the interrupt flag.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32Mask The mask value for all interrupt flags.
-  * @return The interrupt flags specified by the u32mask parameter.
-  * @details This macro will return the combination interrupt flags of SPI_I2SSTS register. The flags are specified by the u32mask parameter.
-  */
-#define SPII2S_GET_INT_FLAG(i2s, u32Mask) ( (i2s)->I2SSTS & (u32Mask) )
-
-/**
-  * @brief  Clear the interrupt flag.
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @param[in] u32Mask The mask value for all interrupt flags.
-  * @return None
-  * @details This macro will clear the interrupt flags specified by the u32mask parameter.
-  * @note Except TX and RX FIFO threshold interrupt flags, the other interrupt flags can be cleared by writing 1 to itself.
-  */
-#define SPII2S_CLR_INT_FLAG(i2s, u32Mask) ( (i2s)->I2SSTS = (u32Mask) )
-
-/**
-  * @brief  Get transmit FIFO level
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return TX FIFO level
-  * @details This macro will return the number of available words in TX FIFO.
-  */
-#define SPII2S_GET_TX_FIFO_LEVEL(i2s) ( ((i2s)->I2SSTS & SPI_I2SSTS_TXCNT_Msk) >> SPI_I2SSTS_TXCNT_Pos  )
-
-/**
-  * @brief  Get receive FIFO level
-  * @param[in] i2s The pointer of the specified SPII2S module.
-  * @return RX FIFO level
-  * @details This macro will return the number of available words in RX FIFO.
-  */
-#define SPII2S_GET_RX_FIFO_LEVEL(i2s) ( ((i2s)->I2SSTS & SPI_I2SSTS_RXCNT_Msk) >> SPI_I2SSTS_RXCNT_Pos )
-
-
 
 /* Function prototype declaration */
 uint32_t SPI_Open(SPI_T *spi, uint32_t u32MasterSlave, uint32_t u32SPIMode, uint32_t u32DataWidth, uint32_t u32BusClock);
@@ -534,14 +304,7 @@ void SPI_DisableInt(SPI_T *spi, uint32_t u32Mask);
 uint32_t SPI_GetIntFlag(SPI_T *spi, uint32_t u32Mask);
 void SPI_ClearIntFlag(SPI_T *spi, uint32_t u32Mask);
 uint32_t SPI_GetStatus(SPI_T *spi, uint32_t u32Mask);
-
-uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, uint32_t u32WordWidth, uint32_t u32Channels, uint32_t u32DataFormat);
-void SPII2S_Close(SPI_T *i2s);
-void SPII2S_EnableInt(SPI_T *i2s, uint32_t u32Mask);
-void SPII2S_DisableInt(SPI_T *i2s, uint32_t u32Mask);
-uint32_t SPII2S_EnableMCLK(SPI_T *i2s, uint32_t u32BusClock);
-void SPII2S_DisableMCLK(SPI_T *i2s);
-void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold);
+uint32_t SPI_GetStatus2(SPI_T *spi, uint32_t u32Mask);
 
 
 /*@}*/ /* end of group SPI_EXPORTED_FUNCTIONS */

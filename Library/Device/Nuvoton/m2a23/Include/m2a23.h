@@ -144,7 +144,6 @@ extern void SystemInit(void);
 #include "uart_reg.h"
 #include "llsi_reg.h"
 #include "spi_reg.h"
-#include "usbd_reg.h"
 #include "adc_reg.h"
 #include "bpwm_reg.h"
 #include "dac_reg.h"
@@ -156,6 +155,7 @@ extern void SystemInit(void);
 #include "i3cs_reg.h"
 #include "spdh_reg.h"
 #include "uuart_reg.h"
+#include "uspi_reg.h"
 
 
 /******************************************************************************/
@@ -287,7 +287,10 @@ extern void SystemInit(void);
 #define SPDH                ((SPDH_T *) SPDH_BASE)                      /*!< SPDH Configuration Struct                         */
 
 #define UUART0              ((UUART_T *) USCI0_BASE)                    /*!< UUART0 Configuration Struct                       */
-#define UUART1              ((UUART_T *) USCI1_BASE)                    /*!< UUART0 Configuration Struct                       */
+#define UUART1              ((UUART_T *) USCI1_BASE)                    /*!< UUART1 Configuration Struct                       */
+
+#define USPI0               ((USPI_T *) USCI0_BASE)                     /*!< USPI0 Configuration Struct                       */
+#define USPI1               ((USPI_T *) USCI1_BASE)                     /*!< USPI1 Configuration Struct                       */
 
 /**@}*/ /* end of group PMODULE */
 
@@ -396,4 +399,5 @@ typedef volatile unsigned short vu16;
 #include "i3cs.h"
 #include "ts.h"
 #include "usci_uart.h"
+#include "usci_spi.h"
 #endif
