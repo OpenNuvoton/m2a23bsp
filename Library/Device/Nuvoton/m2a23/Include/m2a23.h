@@ -212,8 +212,8 @@ extern void SystemInit(void);
 #define USCI1_BASE             (PERIPH_BASE + 0xD1000UL)
 
 
-#define APB1_BASE           ((     uint32_t)0x40000000)
-#define DAC0_BASE            (APB1_BASE     + 0xF0000UL)                 /*!< DAC0 Base Address                                */
+#define APB1_BASE             ((     uint32_t)0x40000000)
+#define DAC0_BASE             (APB1_BASE     + 0xF0000UL)                 /*!< DAC0 Base Address                                */
 
 
 /**@}*/ /* PERIPHERAL_BASE */
@@ -250,7 +250,7 @@ extern void SystemInit(void);
 #define I2C0                ((I2C_T *) I2C0_BASE)                       /*!< I2C0 Configuration Struct                        */
 #define I2C                 I2C0
 
-#define ADC                 ((ADC_T *) ADC_BASE)                        /*!< ADC Configuration Struct                         */
+#define ADC0                 ((ADC_T *) ADC0_BASE)                      /*!< ADC Configuration Struct                         */
 
 #define CLK                 ((CLK_T *) CLK_BASE)                        /*!< System Clock Controller Configuration Struct     */
 
@@ -281,8 +281,8 @@ extern void SystemInit(void);
 #define DAC2                ((DAC_T *) DAC2_BASE)                       /*!< DAC2 Configuration Struct                         */
 #define DAC3                ((DAC_T *) DAC3_BASE)                       /*!< DAC3 Configuration Struct                         */
 
-#define I3CS0           	((I3CS_T *) I3CS0_BASE)                 	/*!< I3CS0 Configuration Struct                        */
-#define I3CS1             	((I3CS_T *) I3CS1_BASE)                  	/*!< I3CS1 Configuration Struct                        */
+#define I3CS0           	  ((I3CS_T *) I3CS0_BASE)                 	  /*!< I3CS0 Configuration Struct                        */
+#define I3CS1             	((I3CS_T *) I3CS1_BASE)                  	  /*!< I3CS1 Configuration Struct                        */
 
 #define SPDH                ((SPDH_T *) SPDH_BASE)                      /*!< SPDH Configuration Struct                         */
 

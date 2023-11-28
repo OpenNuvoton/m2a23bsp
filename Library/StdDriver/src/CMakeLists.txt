@@ -13,7 +13,6 @@ spi.c
 sys.c
 timer.c
 uart.c
-usbd.c
 wdt.c
 wwdt.c
 dac.c
