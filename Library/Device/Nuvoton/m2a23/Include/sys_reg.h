@@ -695,6 +695,7 @@ typedef struct
 
 } SYS_T;
 
+
 /**
     @addtogroup SYS_CONST SYS Bit Field Definition
     Constant Definitions for SYS Controller
@@ -838,245 +839,245 @@ typedef struct
 #define SYS_PORCTL_POROFF_Pos            (0)                                               /*!< SYS_T::PORCTL: POROFF Position         */
 #define SYS_PORCTL_POROFF_Msk            (0xfffful << SYS_PORCTL_POROFF_Pos)               /*!< SYS_T::PORCTL: POROFF Mask             */
 
-#define SYS_GPA_MFPL_PA0MFP_Pos          (0)                                               /*!< SYS_T::GPA_MFPL: PA0MFP Position       */
-#define SYS_GPA_MFPL_PA0MFP_Msk          (0xful << SYS_GPA_MFPL_PA0MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA0MFP Mask           */
+#define SYS_GPA_MFPL_PA0MFP_Pos         (0)                                               /*!< SYS_T::GPA_MFPL: GPA0MFP Position      */
+#define SYS_GPA_MFPL_PA0MFP_Msk         (0xful << SYS_GPA_MFPL_PA0MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA0MFP Mask          */
 
-#define SYS_GPA_MFPL_PA1MFP_Pos          (4)                                               /*!< SYS_T::GPA_MFPL: PA1MFP Position       */
-#define SYS_GPA_MFPL_PA1MFP_Msk          (0xful << SYS_GPA_MFPL_PA1MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA1MFP Mask           */
+#define SYS_GPA_MFPL_PA1MFP_Pos         (4)                                              /*!< SYS_T::GPA_MFPL: GPA1MFP Position      */
+#define SYS_GPA_MFPL_PA1MFP_Msk         (0xful << SYS_GPA_MFPL_PA1MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA1MFP Mask          */
 
-#define SYS_GPA_MFPL_PA2MFP_Pos          (8)                                               /*!< SYS_T::GPA_MFPL: PA2MFP Position       */
-#define SYS_GPA_MFPL_PA2MFP_Msk          (0xful << SYS_GPA_MFPL_PA2MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA2MFP Mask           */
+#define SYS_GPA_MFPL_PA2MFP_Pos         (8)                                              /*!< SYS_T::GPA_MFPL: GPA2MFP Position      */
+#define SYS_GPA_MFPL_PA2MFP_Msk         (0xful << SYS_GPA_MFPL_PA2MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA2MFP Mask          */
 
-#define SYS_GPA_MFPL_PA3MFP_Pos          (12)                                              /*!< SYS_T::GPA_MFPL: PA3MFP Position       */
-#define SYS_GPA_MFPL_PA3MFP_Msk          (0xful << SYS_GPA_MFPL_PA3MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA3MFP Mask           */
+#define SYS_GPA_MFPL_PA3MFP_Pos         (12)                                             /*!< SYS_T::GPA_MFPL: GPA3MFP Position      */
+#define SYS_GPA_MFPL_PA3MFP_Msk         (0xful << SYS_GPA_MFPL_PA3MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA3MFP Mask          */
 
-#define SYS_GPA_MFPL_PA4MFP_Pos          (16)                                              /*!< SYS_T::GPA_MFPL: PA4MFP Position       */
-#define SYS_GPA_MFPL_PA4MFP_Msk          (0xful << SYS_GPA_MFPL_PA4MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA4MFP Mask           */
+#define SYS_GPA_MFPL_PA4MFP_Pos         (16)                                             /*!< SYS_T::GPA_MFPL: GPA4MFP Position      */
+#define SYS_GPA_MFPL_PA4MFP_Msk         (0xful << SYS_GPA_MFPL_PA4MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA4MFP Mask          */
 
-#define SYS_GPA_MFPL_PA5MFP_Pos          (20)                                              /*!< SYS_T::GPA_MFPL: PA5MFP Position       */
-#define SYS_GPA_MFPL_PA5MFP_Msk          (0xful << SYS_GPA_MFPL_PA5MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA5MFP Mask           */
+#define SYS_GPA_MFPL_PA5MFP_Pos         (20)                                             /*!< SYS_T::GPA_MFPL: GPA5MFP Position      */
+#define SYS_GPA_MFPL_PA5MFP_Msk         (0xful << SYS_GPA_MFPL_PA5MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA5MFP Mask          */
 
-#define SYS_GPA_MFPL_PA6MFP_Pos          (24)                                              /*!< SYS_T::GPA_MFPL: PA6MFP Position       */
-#define SYS_GPA_MFPL_PA6MFP_Msk          (0xful << SYS_GPA_MFPL_PA6MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA6MFP Mask           */
+#define SYS_GPA_MFPL_PA6MFP_Pos         (24)                                             /*!< SYS_T::GPA_MFPL: GPA6MFP Position      */
+#define SYS_GPA_MFPL_PA6MFP_Msk         (0xful << SYS_GPA_MFPL_PA6MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA6MFP Mask          */
 
-#define SYS_GPA_MFPL_PA7MFP_Pos          (28)                                              /*!< SYS_T::GPA_MFPL: PA7MFP Position       */
-#define SYS_GPA_MFPL_PA7MFP_Msk          (0xful << SYS_GPA_MFPL_PA7MFP_Pos)                /*!< SYS_T::GPA_MFPL: PA7MFP Mask           */
+#define SYS_GPA_MFPL_PA7MFP_Pos         (28)                                             /*!< SYS_T::GPA_MFPL: GPA7MFP Position      */
+#define SYS_GPA_MFPL_PA7MFP_Msk         (0xful << SYS_GPA_MFPL_PA7MFP_Pos)               /*!< SYS_T::GPA_MFPL: GPA7MFP Mask          */
 
-#define SYS_GPA_MFPH_PA8MFP_Pos          (0)                                               /*!< SYS_T::GPA_MFPH: PA8MFP Position       */
-#define SYS_GPA_MFPH_PA8MFP_Msk          (0xful << SYS_GPA_MFPH_PA8MFP_Pos)                /*!< SYS_T::GPA_MFPH: PA8MFP Mask           */
+#define SYS_GPA_MFPH_PA8MFP_Pos         (0)                                              /*!< SYS_T::GPA_MFPH: GPA8MFP Position      */
+#define SYS_GPA_MFPH_PA8MFP_Msk         (0xful << SYS_GPA_MFPH_PA8MFP_Pos)               /*!< SYS_T::GPA_MFPH: GPA8MFP Mask          */
 
-#define SYS_GPA_MFPH_PA9MFP_Pos          (4)                                               /*!< SYS_T::GPA_MFPH: PA9MFP Position       */
-#define SYS_GPA_MFPH_PA9MFP_Msk          (0xful << SYS_GPA_MFPH_PA9MFP_Pos)                /*!< SYS_T::GPA_MFPH: PA9MFP Mask           */
+#define SYS_GPA_MFPH_PA9MFP_Pos         (4)                                              /*!< SYS_T::GPA_MFPH: GPA9MFP Position      */
+#define SYS_GPA_MFPH_PA9MFP_Msk         (0xful << SYS_GPA_MFPH_PA9MFP_Pos)               /*!< SYS_T::GPA_MFPH: GPA9MFP Mask          */
 
-#define SYS_GPA_MFPH_PA10MFP_Pos         (8)                                               /*!< SYS_T::GPA_MFPH: PA10MFP Position      */
-#define SYS_GPA_MFPH_PA10MFP_Msk         (0xful << SYS_GPA_MFPH_PA10MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA10MFP Mask          */
+#define SYS_GPA_MFPH_PA10MFP_Pos        (8)                                              /*!< SYS_T::GPA_MFPH: GPA10MFP Position     */
+#define SYS_GPA_MFPH_PA10MFP_Msk        (0xful << SYS_GPA_MFPH_PA10MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA10MFP Mask         */
 
-#define SYS_GPA_MFPH_PA11MFP_Pos         (12)                                              /*!< SYS_T::GPA_MFPH: PA11MFP Position      */
-#define SYS_GPA_MFPH_PA11MFP_Msk         (0xful << SYS_GPA_MFPH_PA11MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA11MFP Mask          */
+#define SYS_GPA_MFPH_PA11MFP_Pos        (12)                                             /*!< SYS_T::GPA_MFPH: GPA11MFP Position     */
+#define SYS_GPA_MFPH_PA11MFP_Msk        (0xful << SYS_GPA_MFPH_PA11MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA11MFP Mask         */
 
-#define SYS_GPA_MFPH_PA12MFP_Pos         (0)                                               /*!< SYS_T::GPA_MFPH: PA12MFP Position      */
-#define SYS_GPA_MFPH_PA12MFP_Msk         (0xful << SYS_GPA_MFPH_PA12MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA12MFP Mask          */
+#define SYS_GPA_MFPH_PA12MFP_Pos        (16)                                             /*!< SYS_T::GPA_MFPH: GPA12MFP Position     */
+#define SYS_GPA_MFPH_PA12MFP_Msk        (0xful << SYS_GPA_MFPH_PA12MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA12MFP Mask         */
 
-#define SYS_GPA_MFPH_PA13MFP_Pos         (4)                                               /*!< SYS_T::GPA_MFPH: PA13MFP Position      */
-#define SYS_GPA_MFPH_PA13MFP_Msk         (0xful << SYS_GPA_MFPH_PA13MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA13MFP Mask          */
+#define SYS_GPA_MFPH_PA13MFP_Pos        (20)                                             /*!< SYS_T::GPA_MFPH: GPA13MFP Position     */
+#define SYS_GPA_MFPH_PA13MFP_Msk        (0xful << SYS_GPA_MFPH_PA13MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA13MFP Mask         */
 
-#define SYS_GPA_MFPH_PA14MFP_Pos         (8)                                               /*!< SYS_T::GPA_MFPH: PA14MFP Position      */
-#define SYS_GPA_MFPH_PA14MFP_Msk         (0xful << SYS_GPA_MFPH_PA14MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA14MFP Mask          */
+#define SYS_GPA_MFPH_PA14MFP_Pos        (24)                                             /*!< SYS_T::GPA_MFPH: GPA14MFP Position     */
+#define SYS_GPA_MFPH_PA14MFP_Msk        (0xful << SYS_GPA_MFPH_PA14MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA14MFP Mask         */
 
-#define SYS_GPA_MFPH_PA15MFP_Pos         (12)                                              /*!< SYS_T::GPA_MFPH: PA15MFP Position      */
-#define SYS_GPA_MFPH_PA15MFP_Msk         (0xful << SYS_GPA_MFPH_PA15MFP_Pos)               /*!< SYS_T::GPA_MFPH: PA15MFP Mask          */
+#define SYS_GPA_MFPH_PA15MFP_Pos        (28)                                             /*!< SYS_T::GPA_MFPH: GPA15MFP Position     */
+#define SYS_GPA_MFPH_PA15MFP_Msk        (0xful << SYS_GPA_MFPH_PA15MFP_Pos)              /*!< SYS_T::GPA_MFPH: GPA15MFP Mask         */
 
-#define SYS_GPB_MFPL_PB0MFP_Pos          (0)                                               /*!< SYS_T::GPB_MFPL: PB0MFP Position       */
-#define SYS_GPB_MFPL_PB0MFP_Msk          (0xful << SYS_GPB_MFPL_PB0MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB0MFP Mask           */
+#define SYS_GPB_MFPL_PB0MFP_Pos         (0)                                              /*!< SYS_T::GPB_MFPL: GPB0MFP Position      */
+#define SYS_GPB_MFPL_PB0MFP_Msk         (0xful << SYS_GPB_MFPL_PB0MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB0MFP Mask          */
 
-#define SYS_GPB_MFPL_PB1MFP_Pos          (4)                                               /*!< SYS_T::GPB_MFPL: PB1MFP Position       */
-#define SYS_GPB_MFPL_PB1MFP_Msk          (0xful << SYS_GPB_MFPL_PB1MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB1MFP Mask           */
+#define SYS_GPB_MFPL_PB1MFP_Pos         (4)                                              /*!< SYS_T::GPB_MFPL: GPB1MFP Position      */
+#define SYS_GPB_MFPL_PB1MFP_Msk         (0xful << SYS_GPB_MFPL_PB1MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB1MFP Mask          */
 
-#define SYS_GPB_MFPL_PB2MFP_Pos          (8)                                               /*!< SYS_T::GPB_MFPL: PB2MFP Position       */
-#define SYS_GPB_MFPL_PB2MFP_Msk          (0xful << SYS_GPB_MFPL_PB2MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB2MFP Mask           */
+#define SYS_GPB_MFPL_PB2MFP_Pos         (8)                                              /*!< SYS_T::GPB_MFPL: GPB2MFP Position      */
+#define SYS_GPB_MFPL_PB2MFP_Msk         (0xful << SYS_GPB_MFPL_PB2MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB2MFP Mask          */
 
-#define SYS_GPB_MFPL_PB3MFP_Pos          (12)                                              /*!< SYS_T::GPB_MFPL: PB3MFP Position       */
-#define SYS_GPB_MFPL_PB3MFP_Msk          (0xful << SYS_GPB_MFPL_PB3MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB3MFP Mask           */
+#define SYS_GPB_MFPL_PB3MFP_Pos         (12)                                             /*!< SYS_T::GPB_MFPL: GPB3MFP Position      */
+#define SYS_GPB_MFPL_PB3MFP_Msk         (0xful << SYS_GPB_MFPL_PB3MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB3MFP Mask          */
 
-#define SYS_GPB_MFPL_PB4MFP_Pos          (16)                                              /*!< SYS_T::GPB_MFPL: PB4MFP Position       */
-#define SYS_GPB_MFPL_PB4MFP_Msk          (0xful << SYS_GPB_MFPL_PB4MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB4MFP Mask           */
+#define SYS_GPB_MFPL_PB4MFP_Pos         (16)                                             /*!< SYS_T::GPB_MFPL: GPB4MFP Position      */
+#define SYS_GPB_MFPL_PB4MFP_Msk         (0xful << SYS_GPB_MFPL_PB4MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB4MFP Mask          */
 
-#define SYS_GPB_MFPL_PB5MFP_Pos          (20)                                              /*!< SYS_T::GPB_MFPL: PB5MFP Position       */
-#define SYS_GPB_MFPL_PB5MFP_Msk          (0xful << SYS_GPB_MFPL_PB5MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB5MFP Mask           */
+#define SYS_GPB_MFPL_PB5MFP_Pos         (20)                                             /*!< SYS_T::GPB_MFPL: GPB5MFP Position      */
+#define SYS_GPB_MFPL_PB5MFP_Msk         (0xful << SYS_GPB_MFPL_PB5MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB5MFP Mask          */
 
-#define SYS_GPB_MFPL_PB6MFP_Pos          (24)                                              /*!< SYS_T::GPB_MFPL: PB6MFP Position       */
-#define SYS_GPB_MFPL_PB6MFP_Msk          (0xful << SYS_GPB_MFPL_PB6MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB6MFP Mask           */
+#define SYS_GPB_MFPL_PB6MFP_Pos         (24)                                             /*!< SYS_T::GPB_MFPL: GPB6MFP Position      */
+#define SYS_GPB_MFPL_PB6MFP_Msk         (0xful << SYS_GPB_MFPL_PB6MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB6MFP Mask          */
 
-#define SYS_GPB_MFPL_PB7MFP_Pos          (28)                                              /*!< SYS_T::GPB_MFPL: PB7MFP Position       */
-#define SYS_GPB_MFPL_PB7MFP_Msk          (0xful << SYS_GPB_MFPL_PB7MFP_Pos)                /*!< SYS_T::GPB_MFPL: PB7MFP Mask           */
+#define SYS_GPB_MFPL_PB7MFP_Pos         (28)                                             /*!< SYS_T::GPB_MFPL: GPB7MFP Position      */
+#define SYS_GPB_MFPL_PB7MFP_Msk         (0xful << SYS_GPB_MFPL_PB7MFP_Pos)               /*!< SYS_T::GPB_MFPL: GPB7MFP Mask          */
 
-#define SYS_GPB_MFPH_PB8MFP_Pos          (0)                                               /*!< SYS_T::GPB_MFPH: PB8MFP Position       */
-#define SYS_GPB_MFPH_PB8MFP_Msk          (0xful << SYS_GPB_MFPH_PB8MFP_Pos)                /*!< SYS_T::GPB_MFPH: PB8MFP Mask           */
+#define SYS_GPB_MFPH_PB8MFP_Pos         (0)                                              /*!< SYS_T::GPB_MFPH: GPB8MFP Position      */
+#define SYS_GPB_MFPH_PB8MFP_Msk         (0xful << SYS_GPB_MFPH_PB8MFP_Pos)               /*!< SYS_T::GPB_MFPH: GPB8MFP Mask          */
 
-#define SYS_GPB_MFPH_PB9MFP_Pos          (4)                                               /*!< SYS_T::GPB_MFPH: PB9MFP Position       */
-#define SYS_GPB_MFPH_PB9MFP_Msk          (0xful << SYS_GPB_MFPH_PB9MFP_Pos)                /*!< SYS_T::GPB_MFPH: PB9MFP Mask           */
+#define SYS_GPB_MFPH_PB9MFP_Pos         (4)                                              /*!< SYS_T::GPB_MFPH: GPB9MFP Position      */
+#define SYS_GPB_MFPH_PB9MFP_Msk         (0xful << SYS_GPB_MFPH_PB9MFP_Pos)               /*!< SYS_T::GPB_MFPH: GPB9MFP Mask          */
 
-#define SYS_GPB_MFPH_PB10MFP_Pos         (8)                                               /*!< SYS_T::GPB_MFPH: PB10MFP Position      */
-#define SYS_GPB_MFPH_PB10MFP_Msk         (0xful << SYS_GPB_MFPH_PB10MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB10MFP Mask          */
+#define SYS_GPB_MFPH_PB10MFP_Pos        (8)                                              /*!< SYS_T::GPB_MFPH: GPB10MFP Position     */
+#define SYS_GPB_MFPH_PB10MFP_Msk        (0xful << SYS_GPB_MFPH_PB10MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB10MFP Mask         */
 
-#define SYS_GPB_MFPH_PB11MFP_Pos         (12)                                              /*!< SYS_T::GPB_MFPH: PB11MFP Position      */
-#define SYS_GPB_MFPH_PB11MFP_Msk         (0xful << SYS_GPB_MFPH_PB11MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB11MFP Mask          */
+#define SYS_GPB_MFPH_PB11MFP_Pos        (12)                                             /*!< SYS_T::GPB_MFPH: GPB11MFP Position     */
+#define SYS_GPB_MFPH_PB11MFP_Msk        (0xful << SYS_GPB_MFPH_PB11MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB11MFP Mask         */
 
-#define SYS_GPB_MFPH_PB12MFP_Pos         (16)                                              /*!< SYS_T::GPB_MFPH: PB12MFP Position      */
-#define SYS_GPB_MFPH_PB12MFP_Msk         (0xful << SYS_GPB_MFPH_PB12MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB12MFP Mask          */
+#define SYS_GPB_MFPH_PB12MFP_Pos        (16)                                             /*!< SYS_T::GPB_MFPH: GPB12MFP Position     */
+#define SYS_GPB_MFPH_PB12MFP_Msk        (0xful << SYS_GPB_MFPH_PB12MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB12MFP Mask         */
 
-#define SYS_GPB_MFPH_PB13MFP_Pos         (20)                                              /*!< SYS_T::GPB_MFPH: PB13MFP Position      */
-#define SYS_GPB_MFPH_PB13MFP_Msk         (0xful << SYS_GPB_MFPH_PB13MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB13MFP Mask          */
+#define SYS_GPB_MFPH_PB13MFP_Pos        (20)                                             /*!< SYS_T::GPB_MFPH: GPB13MFP Position     */
+#define SYS_GPB_MFPH_PB13MFP_Msk        (0xful << SYS_GPB_MFPH_PB13MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB13MFP Mask         */
 
-#define SYS_GPB_MFPH_PB14MFP_Pos         (24)                                              /*!< SYS_T::GPB_MFPH: PB14MFP Position      */
-#define SYS_GPB_MFPH_PB14MFP_Msk         (0xful << SYS_GPB_MFPH_PB14MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB14MFP Mask          */
+#define SYS_GPB_MFPH_PB14MFP_Pos        (24)                                             /*!< SYS_T::GPB_MFPH: GPB14MFP Position     */
+#define SYS_GPB_MFPH_PB14MFP_Msk        (0xful << SYS_GPB_MFPH_PB14MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB14MFP Mask         */
 
-#define SYS_GPB_MFPH_PB15MFP_Pos         (28)                                              /*!< SYS_T::GPB_MFPH: PB15MFP Position      */
-#define SYS_GPB_MFPH_PB15MFP_Msk         (0xful << SYS_GPB_MFPH_PB15MFP_Pos)               /*!< SYS_T::GPB_MFPH: PB15MFP Mask          */
+#define SYS_GPB_MFPH_PB15MFP_Pos        (28)                                             /*!< SYS_T::GPB_MFPH: GPB15MFP Position     */
+#define SYS_GPB_MFPH_PB15MFP_Msk        (0xful << SYS_GPB_MFPH_PB15MFP_Pos)              /*!< SYS_T::GPB_MFPH: GPB15MFP Mask         */
 
-#define SYS_GPC_MFPL_PC0MFP_Pos          (0)                                               /*!< SYS_T::GPC_MFPL: PC0MFP Position       */
-#define SYS_GPC_MFPL_PC0MFP_Msk          (0xful << SYS_GPC_MFPL_PC0MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC0MFP Mask           */
+#define SYS_GPC_MFPL_PC0MFP_Pos         (0)                                              /*!< SYS_T::GPC_MFPL: GPC0MFP Position      */
+#define SYS_GPC_MFPL_PC0MFP_Msk         (0xful << SYS_GPC_MFPL_PC0MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC0MFP Mask          */
 
-#define SYS_GPC_MFPL_PC1MFP_Pos          (4)                                               /*!< SYS_T::GPC_MFPL: PC1MFP Position       */
-#define SYS_GPC_MFPL_PC1MFP_Msk          (0xful << SYS_GPC_MFPL_PC1MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC1MFP Mask           */
+#define SYS_GPC_MFPL_PC1MFP_Pos         (4)                                              /*!< SYS_T::GPC_MFPL: GPC1MFP Position      */
+#define SYS_GPC_MFPL_PC1MFP_Msk         (0xful << SYS_GPC_MFPL_PC1MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC1MFP Mask          */
 
-#define SYS_GPC_MFPL_PC2MFP_Pos          (8)                                               /*!< SYS_T::GPC_MFPL: PC2MFP Position       */
-#define SYS_GPC_MFPL_PC2MFP_Msk          (0xful << SYS_GPC_MFPL_PC2MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC2MFP Mask           */
+#define SYS_GPC_MFPL_PC2MFP_Pos         (8)                                              /*!< SYS_T::GPC_MFPL: GPC2MFP Position      */
+#define SYS_GPC_MFPL_PC2MFP_Msk         (0xful << SYS_GPC_MFPL_PC2MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC2MFP Mask          */
 
-#define SYS_GPC_MFPL_PC3MFP_Pos          (12)                                              /*!< SYS_T::GPC_MFPL: PC3MFP Position       */
-#define SYS_GPC_MFPL_PC3MFP_Msk          (0xful << SYS_GPC_MFPL_PC3MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC3MFP Mask           */
+#define SYS_GPC_MFPL_PC3MFP_Pos         (12)                                             /*!< SYS_T::GPC_MFPL: GPC3MFP Position      */
+#define SYS_GPC_MFPL_PC3MFP_Msk         (0xful << SYS_GPC_MFPL_PC3MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC3MFP Mask          */
 
-#define SYS_GPC_MFPL_PC4MFP_Pos          (16)                                              /*!< SYS_T::GPC_MFPL: PC4MFP Position       */
-#define SYS_GPC_MFPL_PC4MFP_Msk          (0xful << SYS_GPC_MFPL_PC4MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC4MFP Mask           */
+#define SYS_GPC_MFPL_PC4MFP_Pos         (16)                                             /*!< SYS_T::GPC_MFPL: GPC4MFP Position      */
+#define SYS_GPC_MFPL_PC4MFP_Msk         (0xful << SYS_GPC_MFPL_PC4MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC4MFP Mask          */
 
-#define SYS_GPC_MFPL_PC5MFP_Pos          (20)                                              /*!< SYS_T::GPC_MFPL: PC5MFP Position       */
-#define SYS_GPC_MFPL_PC5MFP_Msk          (0xful << SYS_GPC_MFPL_PC5MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC5MFP Mask           */
+#define SYS_GPC_MFPL_PC5MFP_Pos         (20)                                             /*!< SYS_T::GPC_MFPL: GPC5MFP Position      */
+#define SYS_GPC_MFPL_PC5MFP_Msk         (0xful << SYS_GPC_MFPL_PC5MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC5MFP Mask          */
 
-#define SYS_GPC_MFPL_PC6MFP_Pos          (24)                                              /*!< SYS_T::GPC_MFPL: PC6MFP Position       */
-#define SYS_GPC_MFPL_PC6MFP_Msk          (0xful << SYS_GPC_MFPL_PC6MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC6MFP Mask           */
+#define SYS_GPC_MFPL_PC6MFP_Pos         (24)                                             /*!< SYS_T::GPC_MFPL: GPC6MFP Position      */
+#define SYS_GPC_MFPL_PC6MFP_Msk         (0xful << SYS_GPC_MFPL_PC6MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC6MFP Mask          */
 
-#define SYS_GPC_MFPL_PC7MFP_Pos          (28)                                              /*!< SYS_T::GPC_MFPL: PC7MFP Position       */
-#define SYS_GPC_MFPL_PC7MFP_Msk          (0xful << SYS_GPC_MFPL_PC7MFP_Pos)                /*!< SYS_T::GPC_MFPL: PC7MFP Mask           */
+#define SYS_GPC_MFPL_PC7MFP_Pos         (28)                                             /*!< SYS_T::GPC_MFPL: GPC7MFP Position      */
+#define SYS_GPC_MFPL_PC7MFP_Msk         (0xful << SYS_GPC_MFPL_PC7MFP_Pos)               /*!< SYS_T::GPC_MFPL: GPC7MFP Mask          */
 
-#define SYS_GPC_MFPH_PC8MFP_Pos          (0)                                               /*!< SYS_T::GPC_MFPH: PC8MFP Position       */
-#define SYS_GPC_MFPH_PC8MFP_Msk          (0xful << SYS_GPC_MFPH_PC8MFP_Pos)                /*!< SYS_T::GPC_MFPH: PC8MFP Mask           */
+#define SYS_GPC_MFPH_PC8MFP_Pos         (0)                                              /*!< SYS_T::GPC_MFPH: GPC8MFP Position      */
+#define SYS_GPC_MFPH_PC8MFP_Msk         (0xful << SYS_GPC_MFPH_PC8MFP_Pos)               /*!< SYS_T::GPC_MFPH: GPC8MFP Mask          */
 
-#define SYS_GPC_MFPH_PC9MFP_Pos          (4)                                               /*!< SYS_T::GPC_MFPH: PC9MFP Position       */
-#define SYS_GPC_MFPH_PC9MFP_Msk          (0xful << SYS_GPC_MFPH_PC9MFP_Pos)                /*!< SYS_T::GPC_MFPH: PC9MFP Mask           */
+#define SYS_GPC_MFPH_PC9MFP_Pos         (4)                                              /*!< SYS_T::GPC_MFPH: GPC9MFP Position      */
+#define SYS_GPC_MFPH_PC9MFP_Msk         (0xful << SYS_GPC_MFPH_PC9MFP_Pos)               /*!< SYS_T::GPC_MFPH: GPC9MFP Mask          */
 
-#define SYS_GPC_MFPH_PC10MFP_Pos         (8)                                               /*!< SYS_T::GPC_MFPH: PC10MFP Position      */
-#define SYS_GPC_MFPH_PC10MFP_Msk         (0xful << SYS_GPC_MFPH_PC10MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC10MFP Mask          */
+#define SYS_GPC_MFPH_PC10MFP_Pos        (8)                                              /*!< SYS_T::GPC_MFPH: GPC10MFP Position     */
+#define SYS_GPC_MFPH_PC10MFP_Msk        (0xful << SYS_GPC_MFPH_PC10MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC10MFP Mask         */
 
-#define SYS_GPC_MFPH_PC11MFP_Pos         (12)                                              /*!< SYS_T::GPC_MFPH: PC11MFP Position      */
-#define SYS_GPC_MFPH_PC11MFP_Msk         (0xful << SYS_GPC_MFPH_PC11MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC11MFP Mask          */
+#define SYS_GPC_MFPH_PC11MFP_Pos        (12)                                             /*!< SYS_T::GPC_MFPH: GPC11MFP Position     */
+#define SYS_GPC_MFPH_PC11MFP_Msk        (0xful << SYS_GPC_MFPH_PC11MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC11MFP Mask         */
 
-#define SYS_GPC_MFPH_PC12MFP_Pos         (16)                                              /*!< SYS_T::GPC_MFPH: PC12MFP Position      */
-#define SYS_GPC_MFPH_PC12MFP_Msk         (0xful << SYS_GPC_MFPH_PC12MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC12MFP Mask          */
+#define SYS_GPC_MFPH_PC12MFP_Pos        (16)                                             /*!< SYS_T::GPC_MFPH: GPC12MFP Position     */
+#define SYS_GPC_MFPH_PC12MFP_Msk        (0xful << SYS_GPC_MFPH_PC12MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC12MFP Mask         */
 
-#define SYS_GPC_MFPH_PC13MFP_Pos         (20)                                              /*!< SYS_T::GPC_MFPH: PC13MFP Position      */
-#define SYS_GPC_MFPH_PC13MFP_Msk         (0xful << SYS_GPC_MFPH_PC13MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC13MFP Mask          */
+#define SYS_GPC_MFPH_PC13MFP_Pos        (20)                                             /*!< SYS_T::GPC_MFPH: GPC13MFP Position     */
+#define SYS_GPC_MFPH_PC13MFP_Msk        (0xful << SYS_GPC_MFPH_PC13MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC13MFP Mask         */
 
-#define SYS_GPC_MFPH_PC14MFP_Pos         (24)                                              /*!< SYS_T::GPC_MFPH: PC14MFP Position      */
-#define SYS_GPC_MFPH_PC14MFP_Msk         (0xful << SYS_GPC_MFPH_PC14MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC14MFP Mask          */
+#define SYS_GPC_MFPH_PC14MFP_Pos        (24)                                             /*!< SYS_T::GPC_MFPH: GPC14MFP Position     */
+#define SYS_GPC_MFPH_PC14MFP_Msk        (0xful << SYS_GPC_MFPH_PC14MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC14MFP Mask         */
 
-#define SYS_GPC_MFPH_PC15MFP_Pos         (28)                                              /*!< SYS_T::GPC_MFPH: PC15MFP Position      */
-#define SYS_GPC_MFPH_PC15MFP_Msk         (0xful << SYS_GPC_MFPH_PC15MFP_Pos)               /*!< SYS_T::GPC_MFPH: PC15MFP Mask          */
+#define SYS_GPC_MFPH_PC15MFP_Pos        (28)                                             /*!< SYS_T::GPC_MFPH: GPC15MFP Position     */
+#define SYS_GPC_MFPH_PC15MFP_Msk        (0xful << SYS_GPC_MFPH_PC15MFP_Pos)              /*!< SYS_T::GPC_MFPH: GPC15MFP Mask         */
 
-#define SYS_GPD_MFPL_PD0MFP_Pos          (0)                                               /*!< SYS_T::GPD_MFPL: PD0MFP Position       */
-#define SYS_GPD_MFPL_PD0MFP_Msk          (0xful << SYS_GPD_MFPL_PD0MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD0MFP Mask           */
+#define SYS_GPD_MFPL_PD0MFP_Pos         (0)                                              /*!< SYS_T::GPD_MFPL: GPD0MFP Position      */
+#define SYS_GPD_MFPL_PD0MFP_Msk         (0xful << SYS_GPD_MFPL_PD0MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD0MFP Mask          */
 
-#define SYS_GPD_MFPL_PD1MFP_Pos          (4)                                               /*!< SYS_T::GPD_MFPL: PD1MFP Position       */
-#define SYS_GPD_MFPL_PD1MFP_Msk          (0xful << SYS_GPD_MFPL_PD1MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD1MFP Mask           */
+#define SYS_GPD_MFPL_PD1MFP_Pos         (4)                                              /*!< SYS_T::GPD_MFPL: GPD1MFP Position      */
+#define SYS_GPD_MFPL_PD1MFP_Msk         (0xful << SYS_GPD_MFPL_PD1MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD1MFP Mask          */
 
-#define SYS_GPD_MFPL_PD2MFP_Pos          (8)                                               /*!< SYS_T::GPD_MFPL: PD2MFP Position       */
-#define SYS_GPD_MFPL_PD2MFP_Msk          (0xful << SYS_GPD_MFPL_PD2MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD2MFP Mask           */
+#define SYS_GPD_MFPL_PD2MFP_Pos         (8)                                              /*!< SYS_T::GPD_MFPL: GPD2MFP Position      */
+#define SYS_GPD_MFPL_PD2MFP_Msk         (0xful << SYS_GPD_MFPL_PD2MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD2MFP Mask          */
 
-#define SYS_GPD_MFPL_PD3MFP_Pos          (12)                                              /*!< SYS_T::GPD_MFPL: PD3MFP Position       */
-#define SYS_GPD_MFPL_PD3MFP_Msk          (0xful << SYS_GPD_MFPL_PD3MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD3MFP Mask           */
+#define SYS_GPD_MFPL_PD3MFP_Pos         (12)                                             /*!< SYS_T::GPD_MFPL: GPD3MFP Position      */
+#define SYS_GPD_MFPL_PD3MFP_Msk         (0xful << SYS_GPD_MFPL_PD3MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD3MFP Mask          */
 
-#define SYS_GPD_MFPL_PD4MFP_Pos          (16)                                              /*!< SYS_T::GPD_MFPL: PD4MFP Position       */
-#define SYS_GPD_MFPL_PD4MFP_Msk          (0xful << SYS_GPD_MFPL_PD4MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD4MFP Mask           */
+#define SYS_GPD_MFPL_PD4MFP_Pos         (16)                                             /*!< SYS_T::GPD_MFPL: GPD4MFP Position      */
+#define SYS_GPD_MFPL_PD4MFP_Msk         (0xful << SYS_GPD_MFPL_PD4MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD4MFP Mask          */
 
-#define SYS_GPD_MFPL_PD5MFP_Pos          (20)                                              /*!< SYS_T::GPD_MFPL: PD5MFP Position       */
-#define SYS_GPD_MFPL_PD5MFP_Msk          (0xful << SYS_GPD_MFPL_PD5MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD5MFP Mask           */
+#define SYS_GPD_MFPL_PD5MFP_Pos         (20)                                             /*!< SYS_T::GPD_MFPL: GPD5MFP Position      */
+#define SYS_GPD_MFPL_PD5MFP_Msk         (0xful << SYS_GPD_MFPL_PD5MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD5MFP Mask          */
 
-#define SYS_GPD_MFPL_PD6MFP_Pos          (24)                                              /*!< SYS_T::GPD_MFPL: PD6MFP Position       */
-#define SYS_GPD_MFPL_PD6MFP_Msk          (0xful << SYS_GPD_MFPL_PD6MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD6MFP Mask           */
+#define SYS_GPD_MFPL_PD6MFP_Pos         (24)                                             /*!< SYS_T::GPD_MFPL: GPD6MFP Position      */
+#define SYS_GPD_MFPL_PD6MFP_Msk         (0xful << SYS_GPD_MFPL_PD6MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD6MFP Mask          */
 
-#define SYS_GPD_MFPL_PD7MFP_Pos          (28)                                              /*!< SYS_T::GPD_MFPL: PD7MFP Position       */
-#define SYS_GPD_MFPL_PD7MFP_Msk          (0xful << SYS_GPD_MFPL_PD7MFP_Pos)                /*!< SYS_T::GPD_MFPL: PD7MFP Mask           */
+#define SYS_GPD_MFPL_PD7MFP_Pos         (28)                                             /*!< SYS_T::GPD_MFPL: GPD7MFP Position      */
+#define SYS_GPD_MFPL_PD7MFP_Msk         (0xful << SYS_GPD_MFPL_PD7MFP_Pos)               /*!< SYS_T::GPD_MFPL: GPD7MFP Mask          */
 
-#define SYS_GPD_MFPH_PD8MFP_Pos          (0)                                               /*!< SYS_T::GPD_MFPH: PD8MFP Position       */
-#define SYS_GPD_MFPH_PD8MFP_Msk          (0xful << SYS_GPD_MFPH_PD8MFP_Pos)                /*!< SYS_T::GPD_MFPH: PD8MFP Mask           */
+#define SYS_GPD_MFPH_PD8MFP_Pos         (0)                                              /*!< SYS_T::GPD_MFPH: GPD8MFP Position      */
+#define SYS_GPD_MFPH_PD8MFP_Msk         (0xful << SYS_GPD_MFPH_PD8MFP_Pos)               /*!< SYS_T::GPD_MFPH: GPD8MFP Mask          */
 
-#define SYS_GPD_MFPH_PD9MFP_Pos          (4)                                               /*!< SYS_T::GPD_MFPH: PD9MFP Position       */
-#define SYS_GPD_MFPH_PD9MFP_Msk          (0xful << SYS_GPD_MFPH_PD9MFP_Pos)                /*!< SYS_T::GPD_MFPH: PD9MFP Mask           */
+#define SYS_GPD_MFPH_PD9MFP_Pos         (4)                                              /*!< SYS_T::GPD_MFPH: GPD9MFP Position      */
+#define SYS_GPD_MFPH_PD9MFP_Msk         (0xful << SYS_GPD_MFPH_PD9MFP_Pos)               /*!< SYS_T::GPD_MFPH: GPD9MFP Mask          */
 
-#define SYS_GPD_MFPH_PD10MFP_Pos         (8)                                               /*!< SYS_T::GPD_MFPH: PD10MFP Position      */
-#define SYS_GPD_MFPH_PD10MFP_Msk         (0xful << SYS_GPD_MFPH_PD10MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD10MFP Mask          */
+#define SYS_GPD_MFPH_PD10MFP_Pos        (8)                                              /*!< SYS_T::GPD_MFPH: GPD10MFP Position     */
+#define SYS_GPD_MFPH_PD10MFP_Msk        (0xful << SYS_GPD_MFPH_PD10MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD10MFP Mask         */
 
-#define SYS_GPD_MFPH_PD11MFP_Pos         (12)                                              /*!< SYS_T::GPD_MFPH: PD11MFP Position      */
-#define SYS_GPD_MFPH_PD11MFP_Msk         (0xful << SYS_GPD_MFPH_PD11MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD11MFP Mask          */
+#define SYS_GPD_MFPH_PD11MFP_Pos        (12)                                             /*!< SYS_T::GPD_MFPH: GPD11MFP Position     */
+#define SYS_GPD_MFPH_PD11MFP_Msk        (0xful << SYS_GPD_MFPH_PD11MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD11MFP Mask         */
 
-#define SYS_GPD_MFPH_PD12MFP_Pos         (16)                                              /*!< SYS_T::GPD_MFPH: PD12MFP Position      */
-#define SYS_GPD_MFPH_PD12MFP_Msk         (0xful << SYS_GPD_MFPH_PD12MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD12MFP Mask          */
+#define SYS_GPD_MFPH_PD12MFP_Pos        (16)                                             /*!< SYS_T::GPD_MFPH: GPD12MFP Position     */
+#define SYS_GPD_MFPH_PD12MFP_Msk        (0xful << SYS_GPD_MFPH_PD12MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD12MFP Mask         */
 
-#define SYS_GPD_MFPH_PD13MFP_Pos         (20)                                              /*!< SYS_T::GPD_MFPH: PD13MFP Position      */
-#define SYS_GPD_MFPH_PD13MFP_Msk         (0xful << SYS_GPD_MFPH_PD13MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD13MFP Mask          */
+#define SYS_GPD_MFPH_PD13MFP_Pos        (20)                                             /*!< SYS_T::GPD_MFPH: GPD13MFP Position     */
+#define SYS_GPD_MFPH_PD13MFP_Msk        (0xful << SYS_GPD_MFPH_PD13MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD13MFP Mask         */
 
-#define SYS_GPD_MFPH_PD14MFP_Pos         (24)                                              /*!< SYS_T::GPD_MFPH: PD14MFP Position      */
-#define SYS_GPD_MFPH_PD14MFP_Msk         (0xful << SYS_GPD_MFPH_PD14MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD14MFP Mask          */
+#define SYS_GPD_MFPH_PD14MFP_Pos        (24)                                             /*!< SYS_T::GPD_MFPH: GPD14MFP Position     */
+#define SYS_GPD_MFPH_PD14MFP_Msk        (0xful << SYS_GPD_MFPH_PD14MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD14MFP Mask         */
 
-#define SYS_GPD_MFPH_PD15MFP_Pos         (28)                                              /*!< SYS_T::GPD_MFPH: PD15MFP Position      */
-#define SYS_GPD_MFPH_PD15MFP_Msk         (0xful << SYS_GPD_MFPH_PD15MFP_Pos)               /*!< SYS_T::GPD_MFPH: PD15MFP Mask          */
+#define SYS_GPD_MFPH_PD15MFP_Pos        (28)                                             /*!< SYS_T::GPD_MFPH: GPD15MFP Position     */
+#define SYS_GPD_MFPH_PD15MFP_Msk        (0xful << SYS_GPD_MFPH_PD15MFP_Pos)              /*!< SYS_T::GPD_MFPH: GPD15MFP Mask         */
 
-#define SYS_GPF_MFPL_PF0MFP_Pos          (0)                                               /*!< SYS_T::GPF_MFPL: PF0MFP Position       */
-#define SYS_GPF_MFPL_PF0MFP_Msk          (0xful << SYS_GPF_MFPL_PF0MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF0MFP Mask           */
+#define SYS_GPF_MFPL_PF0MFP_Pos         (0)                                              /*!< SYS_T::GPF_MFPL: GPF0MFP Position      */
+#define SYS_GPF_MFPL_PF0MFP_Msk         (0xful << SYS_GPF_MFPL_PF0MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF0MFP Mask          */
 
-#define SYS_GPF_MFPL_PF1MFP_Pos          (4)                                               /*!< SYS_T::GPF_MFPL: PF1MFP Position       */
-#define SYS_GPF_MFPL_PF1MFP_Msk          (0xful << SYS_GPF_MFPL_PF1MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF1MFP Mask           */
+#define SYS_GPF_MFPL_PF1MFP_Pos         (4)                                              /*!< SYS_T::GPF_MFPL: GPF1MFP Position      */
+#define SYS_GPF_MFPL_PF1MFP_Msk         (0xful << SYS_GPF_MFPL_PF1MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF1MFP Mask          */
 
-#define SYS_GPF_MFPL_PF2MFP_Pos          (8)                                               /*!< SYS_T::GPF_MFPL: PF2MFP Position       */
-#define SYS_GPF_MFPL_PF2MFP_Msk          (0xful << SYS_GPF_MFPL_PF2MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF2MFP Mask           */
+#define SYS_GPF_MFPL_PF2MFP_Pos         (8)                                              /*!< SYS_T::GPF_MFPL: GPF2MFP Position      */
+#define SYS_GPF_MFPL_PF2MFP_Msk         (0xful << SYS_GPF_MFPL_PF2MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF2MFP Mask          */
 
-#define SYS_GPF_MFPL_PF3MFP_Pos          (12)                                              /*!< SYS_T::GPF_MFPL: PF3MFP Position       */
-#define SYS_GPF_MFPL_PF3MFP_Msk          (0xful << SYS_GPF_MFPL_PF3MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF3MFP Mask           */
+#define SYS_GPF_MFPL_PF3MFP_Pos         (12)                                             /*!< SYS_T::GPF_MFPL: GPF3MFP Position      */
+#define SYS_GPF_MFPL_PF3MFP_Msk         (0xful << SYS_GPF_MFPL_PF3MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF3MFP Mask          */
 
-#define SYS_GPF_MFPL_PF4MFP_Pos          (16)                                              /*!< SYS_T::GPF_MFPL: PF4MFP Position       */
-#define SYS_GPF_MFPL_PF4MFP_Msk          (0xful << SYS_GPF_MFPL_PF4MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF4MFP Mask           */
+#define SYS_GPF_MFPL_PF4MFP_Pos         (16)                                             /*!< SYS_T::GPF_MFPL: GPF4MFP Position      */
+#define SYS_GPF_MFPL_PF4MFP_Msk         (0xful << SYS_GPF_MFPL_PF4MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF4MFP Mask          */
 
-#define SYS_GPF_MFPL_PF5MFP_Pos          (20)                                              /*!< SYS_T::GPF_MFPL: PF5MFP Position       */
-#define SYS_GPF_MFPL_PF5MFP_Msk          (0xful << SYS_GPF_MFPL_PF5MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF5MFP Mask           */
+#define SYS_GPF_MFPL_PF5MFP_Pos         (20)                                             /*!< SYS_T::GPF_MFPL: GPF5MFP Position      */
+#define SYS_GPF_MFPL_PF5MFP_Msk         (0xful << SYS_GPF_MFPL_PF5MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF5MFP Mask          */
 
-#define SYS_GPF_MFPL_PF6MFP_Pos          (24)                                              /*!< SYS_T::GPF_MFPL: PF6MFP Position       */
-#define SYS_GPF_MFPL_PF6MFP_Msk          (0xful << SYS_GPF_MFPL_PF6MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF6MFP Mask           */
+#define SYS_GPF_MFPL_PF6MFP_Pos         (24)                                             /*!< SYS_T::GPF_MFPL: GPF6MFP Position      */
+#define SYS_GPF_MFPL_PF6MFP_Msk         (0xful << SYS_GPF_MFPL_PF6MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF6MFP Mask          */
 
-#define SYS_GPF_MFPL_PF7MFP_Pos          (28)                                              /*!< SYS_T::GPF_MFPL: PF7MFP Position       */
-#define SYS_GPF_MFPL_PF7MFP_Msk          (0xful << SYS_GPF_MFPL_PF7MFP_Pos)                /*!< SYS_T::GPF_MFPL: PF7MFP Mask           */
+#define SYS_GPF_MFPL_PF7MFP_Pos         (28)                                             /*!< SYS_T::GPF_MFPL: GPF7MFP Position      */
+#define SYS_GPF_MFPL_PF7MFP_Msk         (0xful << SYS_GPF_MFPL_PF7MFP_Pos)               /*!< SYS_T::GPF_MFPL: GPF7MFP Mask          */
 
-#define SYS_GPF_MFPH_PF8MFP_Pos          (0)                                               /*!< SYS_T::GPF_MFPH: PF8MFP Position       */
-#define SYS_GPF_MFPH_PF8MFP_Msk          (0xful << SYS_GPF_MFPH_PF8MFP_Pos)                /*!< SYS_T::GPF_MFPH: PF8MFP Mask           */
+#define SYS_GPF_MFPH_PF8MFP_Pos         (0)                                              /*!< SYS_T::GPF_MFPH: GPF8MFP Position      */
+#define SYS_GPF_MFPH_PF8MFP_Msk         (0xful << SYS_GPF_MFPH_PF8MFP_Pos)               /*!< SYS_T::GPF_MFPH: GPF8MFP Mask          */
 
-#define SYS_GPF_MFPH_PF9MFP_Pos          (4)                                               /*!< SYS_T::GPF_MFPH: PF9MFP Position       */
-#define SYS_GPF_MFPH_PF9MFP_Msk          (0xful << SYS_GPF_MFPH_PF9MFP_Pos)                /*!< SYS_T::GPF_MFPH: PF9MFP Mask           */
+#define SYS_GPF_MFPH_PF9MFP_Pos         (4)                                              /*!< SYS_T::GPF_MFPH: GPF9MFP Position      */
+#define SYS_GPF_MFPH_PF9MFP_Msk         (0xful << SYS_GPF_MFPH_PF9MFP_Pos)               /*!< SYS_T::GPF_MFPH: GPF9MFP Mask          */
 
-#define SYS_GPF_MFPH_PF10MFP_Pos         (8)                                               /*!< SYS_T::GPF_MFPH: PF10MFP Position      */
-#define SYS_GPF_MFPH_PF10MFP_Msk         (0xful << SYS_GPF_MFPH_PF10MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF10MFP Mask          */
+#define SYS_GPF_MFPH_PF10MFP_Pos        (8)                                              /*!< SYS_T::GPF_MFPH: GPF10MFP Position     */
+#define SYS_GPF_MFPH_PF10MFP_Msk        (0xful << SYS_GPF_MFPH_PF10MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF10MFP Mask         */
 
-#define SYS_GPF_MFPH_PF11MFP_Pos         (12)                                              /*!< SYS_T::GPF_MFPH: PF11MFP Position      */
-#define SYS_GPF_MFPH_PF11MFP_Msk         (0xful << SYS_GPF_MFPH_PF11MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF11MFP Mask          */
+#define SYS_GPF_MFPH_PF11MFP_Pos        (12)                                             /*!< SYS_T::GPF_MFPH: GPF11MFP Position     */
+#define SYS_GPF_MFPH_PF11MFP_Msk        (0xful << SYS_GPF_MFPH_PF11MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF11MFP Mask         */
 
-#define SYS_GPF_MFPH_PF12MFP_Pos         (16)                                              /*!< SYS_T::GPF_MFPH: PF12MFP Position      */
-#define SYS_GPF_MFPH_PF12MFP_Msk         (0xful << SYS_GPF_MFPH_PF12MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF12MFP Mask          */
+#define SYS_GPF_MFPH_PF12MFP_Pos        (16)                                             /*!< SYS_T::GPF_MFPH: GPF12MFP Position     */
+#define SYS_GPF_MFPH_PF12MFP_Msk        (0xful << SYS_GPF_MFPH_PF12MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF12MFP Mask         */
 
-#define SYS_GPF_MFPH_PF13MFP_Pos         (20)                                              /*!< SYS_T::GPF_MFPH: PF13MFP Position      */
-#define SYS_GPF_MFPH_PF13MFP_Msk         (0xful << SYS_GPF_MFPH_PF13MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF13MFP Mask          */
+#define SYS_GPF_MFPH_PF13MFP_Pos        (20)                                             /*!< SYS_T::GPF_MFPH: GPF13MFP Position     */
+#define SYS_GPF_MFPH_PF13MFP_Msk        (0xful << SYS_GPF_MFPH_PF13MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF13MFP Mask         */
 
-#define SYS_GPF_MFPH_PF14MFP_Pos         (24)                                              /*!< SYS_T::GPF_MFPH: PF14MFP Position      */
-#define SYS_GPF_MFPH_PF14MFP_Msk         (0xful << SYS_GPF_MFPH_PF14MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF14MFP Mask          */
+#define SYS_GPF_MFPH_PF14MFP_Pos        (24)                                             /*!< SYS_T::GPF_MFPH: GPF14MFP Position     */
+#define SYS_GPF_MFPH_PF14MFP_Msk        (0xful << SYS_GPF_MFPH_PF14MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF14MFP Mask         */
 
-#define SYS_GPF_MFPH_PF15MFP_Pos         (28)                                              /*!< SYS_T::GPF_MFPH: PF15MFP Position      */
-#define SYS_GPF_MFPH_PF15MFP_Msk         (0xful << SYS_GPF_MFPH_PF15MFP_Pos)               /*!< SYS_T::GPF_MFPH: PF15MFP Mask          */
+#define SYS_GPF_MFPH_PF15MFP_Pos        (28)                                             /*!< SYS_T::GPF_MFPH: GPF15MFP Position     */
+#define SYS_GPF_MFPH_PF15MFP_Msk        (0xful << SYS_GPF_MFPH_PF15MFP_Pos)              /*!< SYS_T::GPF_MFPH: GPF15MFP Mask         */
 
 #define SYS_GPA_MFOS_MFOS0_Pos           (0)                                               /*!< SYS_T::GPA_MFOS: MFOS0 Position        */
 #define SYS_GPA_MFOS_MFOS0_Msk           (0x1ul << SYS_GPA_MFOS_MFOS0_Pos)                 /*!< SYS_T::GPA_MFOS: MFOS0 Mask            */
