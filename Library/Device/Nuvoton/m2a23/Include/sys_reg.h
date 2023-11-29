@@ -728,6 +728,9 @@ typedef struct
 #define SYS_RSTSTS_CPULKRF_Pos           (8)                                               /*!< SYS_T::RSTSTS: CPULKRF Position        */
 #define SYS_RSTSTS_CPULKRF_Msk           (0x1ul << SYS_RSTSTS_CPULKRF_Pos)                 /*!< SYS_T::RSTSTS: CPULKRF Mask            */
 
+#define SYS_RSTSTS_POR18F_Pos            (9)                                               /*!< SYS_T::RSTSTS: POR18F Position         */
+#define SYS_RSTSTS_POR18F_Msk            (0x1ul << SYS_RSTSTS_POR18F_Pos)                  /*!< SYS_T::RSTSTS: POR18F Mask             */
+
 #define SYS_IPRST0_CHIPRST_Pos           (0)                                               /*!< SYS_T::IPRST0: CHIPRST Position        */
 #define SYS_IPRST0_CHIPRST_Msk           (0x1ul << SYS_IPRST0_CHIPRST_Pos)                 /*!< SYS_T::IPRST0: CHIPRST Mask            */
 
@@ -802,6 +805,66 @@ typedef struct
 
 #define SYS_IPRST2_LLSI1RST_Pos          (17)                                              /*!< SYS_T::IPRST2: LLSI1RST Position       */
 #define SYS_IPRST2_LLSI1RST_Msk          (0x1ul << SYS_IPRST2_LLSI1RST_Pos)                /*!< SYS_T::IPRST2: LLSI1RST Mask           */
+
+#define SYS_ALTCTL_SELF_TEST_Pos         (0)                                               /*!< SYS_T::ALTCTL: SELF_TEST Position      */
+#define SYS_ALTCTL_SELF_TEST_Msk         (0x1ul << SYS_ALTCTL_SELF_TEST_Pos)               /*!< SYS_T::ALTCTL: SELF_TEST Mask          */
+
+#define SYS_ALTCTL_DLY_TEST_Pos          (1)                                               /*!< SYS_T::ALTCTL: DLY_TEST Position       */
+#define SYS_ALTCTL_DLY_TEST_Msk          (0x1ul << SYS_ALTCTL_DLY_TEST_Pos)                /*!< SYS_T::ALTCTL: DLY_TEST Mask           */
+
+#define SYS_ALTCTL_FORCE_LDO_OFF_Pos     (3)                                               /*!< SYS_T::ALTCTL: FORCE_LDO_OFF Position  */
+#define SYS_ALTCTL_FORCE_LDO_OFF_Msk     (0x1ul << SYS_ALTCTL_FORCE_LDO_OFF_Pos)           /*!< SYS_T::ALTCTL: FORCE_LDO_OFF Mask      */
+
+#define SYS_ALTCTL_TEST_ULDO_Pos         (8)                                               /*!< SYS_T::ALTCTL: TEST_ULDO Position      */
+#define SYS_ALTCTL_TEST_ULDO_Msk         (0x1ul << SYS_ALTCTL_TEST_ULDO_Pos)               /*!< SYS_T::ALTCTL: TEST_ULDO Mask          */
+
+#define SYS_ALTCTL_TEST18_Pos            (9)                                               /*!< SYS_T::ALTCTL: TEST18 Position         */
+#define SYS_ALTCTL_TEST18_Msk            (0x1ul << SYS_ALTCTL_TEST18_Pos)                  /*!< SYS_T::ALTCTL: TEST18 Mask             */
+
+#define SYS_ALTCTL_VBGFEN_Pos            (10)                                              /*!< SYS_T::ALTCTL: VBGFEN Position         */
+#define SYS_ALTCTL_VBGFEN_Msk            (0x1ul << SYS_ALTCTL_VBGFEN_Pos)                  /*!< SYS_T::ALTCTL: VBGFEN Mask             */
+
+#define SYS_ALTCTL_HXTCKFTEST_Pos        (14)                                              /*!< SYS_T::ALTCTL: HXTCKFTEST Position     */
+#define SYS_ALTCTL_HXTCKFTEST_Msk        (0x1ul << SYS_ALTCTL_HXTCKFTEST_Pos)              /*!< SYS_T::ALTCTL: HXTCKFTEST Mask         */
+
+#define SYS_ALTCTL_HIRCCKFTEST_Pos       (15)                                              /*!< SYS_T::ALTCTL: HIRCCKFTEST Position    */
+#define SYS_ALTCTL_HIRCCKFTEST_Msk       (0x1ul << SYS_ALTCTL_HIRCCKFTEST_Pos)             /*!< SYS_T::ALTCTL: HIRCCKFTEST Mask        */
+
+#define SYS_ALTCTL_RC48M_G_EN_Pos        (16)                                              /*!< SYS_T::ALTCTL: RC48M_G_EN Position     */
+#define SYS_ALTCTL_RC48M_G_EN_Msk        (0x1ul << SYS_ALTCTL_RC48M_G_EN_Pos)              /*!< SYS_T::ALTCTL: RC48M_G_EN Mask         */
+
+#define SYS_ALTCTL_XTL12M_G_EN_Pos       (17)                                              /*!< SYS_T::ALTCTL: XTL12M_G_EN Position    */
+#define SYS_ALTCTL_XTL12M_G_EN_Msk       (0x1ul << SYS_ALTCTL_XTL12M_G_EN_Pos)             /*!< SYS_T::ALTCTL: XTL12M_G_EN Mask        */
+
+#define SYS_ALTCTL_RC38K_G_EN_Pos        (18)                                              /*!< SYS_T::ALTCTL: RC38K_G_EN Position     */
+#define SYS_ALTCTL_RC38K_G_EN_Msk        (0x1ul << SYS_ALTCTL_RC38K_G_EN_Pos)              /*!< SYS_T::ALTCTL: RC38K_G_EN Mask         */
+
+#define SYS_ALTCTL_XTL32K_G_EN_Pos       (19)                                              /*!< SYS_T::ALTCTL: XTL32K_G_EN Position    */
+#define SYS_ALTCTL_XTL32K_G_EN_Msk       (0x1ul << SYS_ALTCTL_XTL32K_G_EN_Pos)             /*!< SYS_T::ALTCTL: XTL32K_G_EN Mask        */
+
+#define SYS_ALTCTL_PLL_G_EN_Pos          (20)                                              /*!< SYS_T::ALTCTL: PLL_G_EN Position       */
+#define SYS_ALTCTL_PLL_G_EN_Msk          (0x1ul << SYS_ALTCTL_PLL_G_EN_Pos)                /*!< SYS_T::ALTCTL: PLL_G_EN Mask           */
+
+#define SYS_ALTCTL_PORLVDR_TEST_Pos      (22)                                              /*!< SYS_T::ALTCTL: PORLVDR_TEST Position   */
+#define SYS_ALTCTL_PORLVDR_TEST_Msk      (0x1ul << SYS_ALTCTL_PORLVDR_TEST_Pos)            /*!< SYS_T::ALTCTL: PORLVDR_TEST Mask       */
+
+#define SYS_ALTCTL_POR18FEN_Pos          (23)                                              /*!< SYS_T::ALTCTL: POR18FEN Position       */
+#define SYS_ALTCTL_POR18FEN_Msk          (0x1ul << SYS_ALTCTL_POR18FEN_Pos)                /*!< SYS_T::ALTCTL: POR18FEN Mask           */
+
+#define SYS_ALTCTL_CLK_UART_DIS_Pos      (24)                                              /*!< SYS_T::ALTCTL: CLK_UART_DIS Position   */
+#define SYS_ALTCTL_CLK_UART_DIS_Msk      (0x1ul << SYS_ALTCTL_CLK_UART_DIS_Pos)            /*!< SYS_T::ALTCTL: CLK_UART_DIS Mask       */
+
+#define SYS_ALTCTL_ADCTEST_Pos           (25)                                              /*!< SYS_T::ALTCTL: ADCTEST Position        */
+#define SYS_ALTCTL_ADCTEST_Msk           (0x1ul << SYS_ALTCTL_ADCTEST_Pos)                 /*!< SYS_T::ALTCTL: ADCTEST Mask            */
+
+#define SYS_ALTCTL_DGH300TEST_Pos        (26)                                              /*!< SYS_T::ALTCTL: DGH300TEST Position     */
+#define SYS_ALTCTL_DGH300TEST_Msk        (0x1ul << SYS_ALTCTL_DGH300TEST_Pos)              /*!< SYS_T::ALTCTL: DGH300TEST Mask         */
+
+#define SYS_ALTCTL_DLY500TEST_Pos        (27)                                              /*!< SYS_T::ALTCTL: DLY500TEST Position     */
+#define SYS_ALTCTL_DLY500TEST_Msk        (0x1ul << SYS_ALTCTL_DLY500TEST_Pos)              /*!< SYS_T::ALTCTL: DLY500TEST Mask         */
+
+#define SYS_ALTCTL_AVDDDIVTEST_Pos       (28)                                              /*!< SYS_T::ALTCTL: AVDDDIVTEST Position    */
+#define SYS_ALTCTL_AVDDDIVTEST_Msk       (0x1ul << SYS_ALTCTL_AVDDDIVTEST_Pos)             /*!< SYS_T::ALTCTL: AVDDDIVTEST Mask        */
 
 #define SYS_BODCTL_BODEN_Pos             (0)                                               /*!< SYS_T::BODCTL: BODEN Position          */
 #define SYS_BODCTL_BODEN_Msk             (0x1ul << SYS_BODCTL_BODEN_Pos)                   /*!< SYS_T::BODCTL: BODEN Mask              */
@@ -1364,6 +1427,15 @@ typedef struct
 #define SYS_SRAM_BISTSTS_CANBEND_Pos     (19)                                              /*!< SYS_T::SRAM_BISTSTS: CANBEND Position  */
 #define SYS_SRAM_BISTSTS_CANBEND_Msk     (0x1ul << SYS_SRAM_BISTSTS_CANBEND_Pos)           /*!< SYS_T::SRAM_BISTSTS: CANBEND Mask      */
 
+#define SYS_SRAM_PARITY_PTESTEN_Pos      (0)                                               /*!< SYS_T::SRAM_PARITY: PTESTEN Position   */
+#define SYS_SRAM_PARITY_PTESTEN_Msk      (0x1ul << SYS_SRAM_PARITY_PTESTEN_Pos)            /*!< SYS_T::SRAM_PARITY: PTESTEN Mask       */
+
+#define SYS_SRAM_PARITY_PTESTPB_Pos      (4)                                               /*!< SYS_T::SRAM_PARITY: PTESTPB Position   */
+#define SYS_SRAM_PARITY_PTESTPB_Msk      (0xful << SYS_SRAM_PARITY_PTESTPB_Pos)            /*!< SYS_T::SRAM_PARITY: PTESTPB Mask       */
+
+#define SYS_LPLDOCTL_LPLDO_EN_Pos        (0)                                               /*!< SYS_T::LPLDOCTL: LPLDO_EN Position     */
+#define SYS_LPLDOCTL_LPLDO_EN_Msk        (0x1ul << SYS_LPLDOCTL_LPLDO_EN_Pos)              /*!< SYS_T::LPLDOCTL: LPLDO_EN Mask         */
+
 #define SYS_HIRCTRIMCTL_FREQSEL_Pos      (0)                                               /*!< SYS_T::HIRCTRIMCTL: FREQSEL Position   */
 #define SYS_HIRCTRIMCTL_FREQSEL_Msk      (0x3ul << SYS_HIRCTRIMCTL_FREQSEL_Pos)            /*!< SYS_T::HIRCTRIMCTL: FREQSEL Mask       */
 
@@ -1381,6 +1453,9 @@ typedef struct
 
 #define SYS_HIRCTRIMCTL_REFCKSEL_Pos     (10)                                              /*!< SYS_T::HIRCTRIMCTL: REFCKSEL Position  */
 #define SYS_HIRCTRIMCTL_REFCKSEL_Msk     (0x1ul << SYS_HIRCTRIMCTL_REFCKSEL_Pos)           /*!< SYS_T::HIRCTRIMCTL: REFCKSEL Mask      */
+
+#define SYS_HIRCTRIMCTL_IGNORE_Pos       (11)                                              /*!< SYS_T::HIRCTRIMCTL: IGNORE Position    */
+#define SYS_HIRCTRIMCTL_IGNORE_Msk       (0x1ul << SYS_HIRCTRIMCTL_IGNORE_Pos)             /*!< SYS_T::HIRCTRIMCTL: IGNORE Mask        */
 
 #define SYS_HIRCTRIMCTL_BOUNDARY_Pos     (16)                                              /*!< SYS_T::HIRCTRIMCTL: BOUNDARY Position  */
 #define SYS_HIRCTRIMCTL_BOUNDARY_Msk     (0x1ful << SYS_HIRCTRIMCTL_BOUNDARY_Pos)          /*!< SYS_T::HIRCTRIMCTL: BOUNDARY Mask      */
@@ -1406,8 +1481,68 @@ typedef struct
 #define SYS_REGLCTL_REGLCTL_Pos          (0)                                               /*!< SYS_T::REGLCTL: REGLCTL Position       */
 #define SYS_REGLCTL_REGLCTL_Msk          (0xfful << SYS_REGLCTL_REGLCTL_Pos)               /*!< SYS_T::REGLCTL: REGLCTL Mask           */
 
+#define SYS_HIRCADJO_ORCADJ_Pos          (0)                                               /*!< SYS_T::HIRCADJO: ORCADJ Position       */
+#define SYS_HIRCADJO_ORCADJ_Msk          (0x3fful << SYS_HIRCADJO_ORCADJ_Pos)              /*!< SYS_T::HIRCADJO: ORCADJ Mask           */
+
+#define SYS_HIRCADJ_RCADJ1_Pos           (0)                                               /*!< SYS_T::HIRCADJ: RCADJ1 Position        */
+#define SYS_HIRCADJ_RCADJ1_Msk           (0x3fful << SYS_HIRCADJ_RCADJ1_Pos)               /*!< SYS_T::HIRCADJ: RCADJ1 Mask            */
+
+#define SYS_HTRIMKEY_HTRIMKEY_Pos        (0)                                               /*!< SYS_T::HTRIMKEY: HTRIMKEY Position     */
+#define SYS_HTRIMKEY_HTRIMKEY_Msk        (0xfffffffful << SYS_HTRIMKEY_HTRIMKEY_Pos)       /*!< SYS_T::HTRIMKEY: HTRIMKEY Mask         */
+
+#define SYS_LDOTRIM_LDOTRIM_Pos          (0)                                               /*!< SYS_T::LDOTRIM: LDOTRIM Position       */
+#define SYS_LDOTRIM_LDOTRIM_Msk          (0x1ful << SYS_LDOTRIM_LDOTRIM_Pos)               /*!< SYS_T::LDOTRIM: LDOTRIM Mask           */
+
+#define SYS_BODTRIM_BOD23TRIM_Pos        (0)                                               /*!< SYS_T::BODTRIM: BOD23TRIM Position     */
+#define SYS_BODTRIM_BOD23TRIM_Msk        (0xful << SYS_BODTRIM_BOD23TRIM_Pos)              /*!< SYS_T::BODTRIM: BOD23TRIM Mask         */
+
+#define SYS_BODTRIM_BOD27TRIM_Pos        (8)                                               /*!< SYS_T::BODTRIM: BOD27TRIM Position     */
+#define SYS_BODTRIM_BOD27TRIM_Msk        (0xful << SYS_BODTRIM_BOD27TRIM_Pos)              /*!< SYS_T::BODTRIM: BOD27TRIM Mask         */
+
+#define SYS_BODTRIM_BOD37TRIM_Pos        (16)                                              /*!< SYS_T::BODTRIM: BOD37TRIM Position     */
+#define SYS_BODTRIM_BOD37TRIM_Msk        (0xful << SYS_BODTRIM_BOD37TRIM_Pos)              /*!< SYS_T::BODTRIM: BOD37TRIM Mask         */
+
+#define SYS_BODTRIM_BOD44TRIM_Pos        (24)                                              /*!< SYS_T::BODTRIM: BOD44TRIM Position     */
+#define SYS_BODTRIM_BOD44TRIM_Msk        (0xful << SYS_BODTRIM_BOD44TRIM_Pos)              /*!< SYS_T::BODTRIM: BOD44TRIM Mask         */
+
+#define SYS_LIRCT_RCADJ1_Pos             (0)                                               /*!< SYS_T::LIRCT: RCADJ1 Position          */
+#define SYS_LIRCT_RCADJ1_Msk             (0x1fful << SYS_LIRCT_RCADJ1_Pos)                 /*!< SYS_T::LIRCT: RCADJ1 Mask              */
+
+#define SYS_uLDOVITRIM_uLDOVTRIM_Pos     (0)                                               /*!< SYS_T::uLDOVITRIM: uLDOVTRIM Position  */
+#define SYS_uLDOVITRIM_uLDOVTRIM_Msk     (0x1ful << SYS_uLDOVITRIM_uLDOVTRIM_Pos)          /*!< SYS_T::uLDOVITRIM: uLDOVTRIM Mask      */
+
+#define SYS_LDOCTL_LDORDYSEL_Pos         (0)                                               /*!< SYS_T::LDOCTL: LDORDYSEL Position      */
+#define SYS_LDOCTL_LDORDYSEL_Msk         (0x1ul << SYS_LDOCTL_LDORDYSEL_Pos)               /*!< SYS_T::LDOCTL: LDORDYSEL Mask          */
+
+#define SYS_LDOCTL_RDYEFTEN_Pos          (1)                                               /*!< SYS_T::LDOCTL: RDYEFTEN Position       */
+#define SYS_LDOCTL_RDYEFTEN_Msk          (0x1ul << SYS_LDOCTL_RDYEFTEN_Pos)                /*!< SYS_T::LDOCTL: RDYEFTEN Mask           */
+
+#define SYS_LDOCTL_RDYSUDIS_Pos          (2)                                               /*!< SYS_T::LDOCTL: RDYSUDIS Position       */
+#define SYS_LDOCTL_RDYSUDIS_Msk          (0x1ul << SYS_LDOCTL_RDYSUDIS_Pos)                /*!< SYS_T::LDOCTL: RDYSUDIS Mask           */
+
+#define SYS_HIRCTCTL_NTC_Pos             (0)                                               /*!< SYS_T::HIRCTCTL: NTC Position          */
+#define SYS_HIRCTCTL_NTC_Msk             (0xful << SYS_HIRCTCTL_NTC_Pos)                   /*!< SYS_T::HIRCTCTL: NTC Mask              */
+
+#define SYS_HIRCTCTL_PTC_Pos             (4)                                               /*!< SYS_T::HIRCTCTL: PTC Position          */
+#define SYS_HIRCTCTL_PTC_Msk             (0xful << SYS_HIRCTCTL_PTC_Pos)                   /*!< SYS_T::HIRCTCTL: PTC Mask              */
+
+#define SYS_HIRCTCTL_TRIMOS_Pos          (8)                                               /*!< SYS_T::HIRCTCTL: TRIMOS Position       */
+#define SYS_HIRCTCTL_TRIMOS_Msk          (0x3ul << SYS_HIRCTCTL_TRIMOS_Pos)                /*!< SYS_T::HIRCTCTL: TRIMOS Mask           */
+
+#define SYS_HIRCTCTL_ICOMP_TRIM_Pos      (12)                                              /*!< SYS_T::HIRCTCTL: ICOMP_TRIM Position   */
+#define SYS_HIRCTCTL_ICOMP_TRIM_Msk      (0x3ul << SYS_HIRCTCTL_ICOMP_TRIM_Pos)            /*!< SYS_T::HIRCTCTL: ICOMP_TRIM Mask       */
+
+#define SYS_HIRCTCTL_FILTEREN_Pos        (15)                                              /*!< SYS_T::HIRCTCTL: FILTEREN Position     */
+#define SYS_HIRCTCTL_FILTEREN_Msk        (0x1ul << SYS_HIRCTCTL_FILTEREN_Pos)              /*!< SYS_T::HIRCTCTL: FILTEREN Mask         */
+
+#define SYS_ADCCHIP_ADC_CHIP_EN_Pos      (0)                                               /*!< SYS_T::ADCCHIP: ADC_CHIP_EN Position   */
+#define SYS_ADCCHIP_ADC_CHIP_EN_Msk      (0x1ul << SYS_ADCCHIP_ADC_CHIP_EN_Pos)            /*!< SYS_T::ADCCHIP: ADC_CHIP_EN Mask       */
+
 #define SYS_PORDISAN_POROFFAN_Pos        (0)                                               /*!< SYS_T::PORDISAN: POROFFAN Position     */
 #define SYS_PORDISAN_POROFFAN_Msk        (0xfffful << SYS_PORDISAN_POROFFAN_Pos)           /*!< SYS_T::PORDISAN: POROFFAN Mask         */
+
+#define SYS_PORDISAN_PORHLSEL_Pos        (16)                                              /*!< SYS_T::PORDISAN: PORHLSEL Position     */
+#define SYS_PORDISAN_PORHLSEL_Msk        (0xfful << SYS_PORDISAN_PORHLSEL_Pos)             /*!< SYS_T::PORDISAN: PORHLSEL Mask         */
 
 /**@}*/ /* SYS_CONST */
 /**@}*/ /* end of SYS register group */
