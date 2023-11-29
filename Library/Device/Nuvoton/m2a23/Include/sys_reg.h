@@ -690,7 +690,7 @@ typedef struct
     __IO uint32_t HIRCTRIMSTS;           /*!< [0x00f8] HIRC Trim Interrupt Status Register                              */
     __I  uint32_t RESERVE9[1];
     __O  uint32_t REGLCTL;               /*!< [0x0100] Register Lock Control Register                                   */
-    __I  uint32_t RESERVE10[59];
+    __I  uint32_t RESERVE10[58];
     __IO uint32_t PORDISAN;              /*!< [0x01ec] Analog POR Disable Control Register                              */
 
 } SYS_T;
