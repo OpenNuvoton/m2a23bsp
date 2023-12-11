@@ -109,8 +109,8 @@ typedef enum IRQn
 #define __Vendor_SysTickConfig  0       /*!< Set to 1 if different SysTick Config is used         */
 
 
-#include "core_cm23.h"                   /*!< Cortex-M23 processor and core peripherals           */
-#include "system_m2a23.h"              /*!< M2A23 System                                      */
+#include "core_cm23.h"                  /*!< Cortex-M23 processor and core peripherals            */
+#include "system_m2a23.h"               /*!< M2A23 System                                         */
 
 
 #if defined ( __CC_ARM   )
