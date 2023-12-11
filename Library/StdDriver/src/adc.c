@@ -1,12 +1,10 @@
 /**************************************************************************//**
  * @file     adc.c
  * @version  V3.00
- * $Revision: 6 $
- * $Date: 16/10/25 4:25p $
- * @brief    ADC driver source file
+ * @brief    M2A23 series ADC driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include "NuMicro.h"
 
@@ -35,7 +33,7 @@
   *                       - \ref ADC_ADCR_ADMD_CONTINUOUS           :Continuous scan mode.
   * @param[in] u32ChMask Channel enable bit. Each bit corresponds to a input channel. Bit 0 is channel 0, bit 1 is channel 1..., bit 7 is channel 7.
   * @return  None
-  * @note M2A23 series MCU ADC can only convert 1 channel at a time. If more than 1 channels are enabled, only channel
+  * @note NUC1263 series MCU ADC can only convert 1 channel at a time. If more than 1 channels are enabled, only channel
   *       with smallest number will be convert.
   * @note This API does not turn on ADC power nor does trigger ADC conversion
   */
@@ -52,26 +50,19 @@ void ADC_Open(ADC_T *adc,
 
     if ((adc)->ADCHER & BIT29)
     {
-        /* Enable VBG gain buffer */
-        //SYS->IVSCTL |= SYS_IVSCTL_VBGUGEN_Msk;
+        // CH-29 for band-gap voltage
     }
 
     if ((adc)->ADCHER & BIT30)
     {
-        uint32_t u32RegLockState = SYS_IsRegLocked();
-        if (u32RegLockState)
-        {
-            SYS_UnlockReg();
-        }
+        // CH-30 for temperature sensor
+        SYS->IVSCTL |= SYS_IVSCTL_VTEMPEN_Msk;
+    }
 
-        /* Enable HSA Resistor */
-        //outpw(SYS_BASE + 0x150, inpw(SYS_BASE + 0x150) | BIT30);
-        //SYS->SPDHCTL &= (~SYS_SPDHCTL_HSADIS_Msk);
-
-        if (u32RegLockState)
-        {
-            SYS_LockReg();
-        }
+    if ((adc)->ADCHER & BIT31)
+    {
+        // CH-31 for AVDD divide 4 
+        SYS->IVSCTL |= SYS_IVSCTL_AVDDDIVEN_Msk;
     }
 
     return;
@@ -83,25 +74,12 @@ void ADC_Open(ADC_T *adc,
   * @return None
   */
 void ADC_Close(ADC_T *adc)
-{
-    uint32_t u32RegLockState = SYS_IsRegLocked();
-    (void) adc;
+{    
     SYS->IPRST1 |= SYS_IPRST1_ADCRST_Msk;
     SYS->IPRST1 &= ~SYS_IPRST1_ADCRST_Msk;
-    /* Disable VBG gain buffer and disable temperature sensor */
-    //SYS->IVSCTL &= ~(SYS_IVSCTL_VBGUGEN_Msk);
+    
+    SYS->IVSCTL &= ~(SYS_IVSCTL_VTEMPEN_Msk | SYS_IVSCTL_AVDDDIVEN_Msk);
 
-    if (u32RegLockState)
-    {
-        SYS_UnlockReg();
-    }
-    /* Disable HSA Resistor */
-    outpw(SYS_BASE + 0x150, inpw(SYS_BASE + 0x150) & ~BIT30);
-
-    if (u32RegLockState)
-    {
-        SYS_LockReg();
-    }
     return;
 }
 

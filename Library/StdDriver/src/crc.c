@@ -30,15 +30,15 @@
   *                             - \ref CRC_16
   *                             - \ref CRC_32
   * @param[in]  u32Attribute    CRC operation data attribute. Valid values are combined with:
-  *                             - \ref CRC_CHECKSUM_COM
-  *                             - \ref CRC_CHECKSUM_RVS
-  *                             - \ref CRC_WDATA_COM
-  *                             - \ref CRC_WDATA_RVS
+  *                             - \ref CRC_CHECKSUM_COM, enable checksum 1's complement
+  *                             - \ref CRC_CHECKSUM_RVS, enable checksum bit order reverse
+  *                             - \ref CRC_WDATA_COM, enable write data 1's complement 
+  *                             - \ref CRC_WDATA_RVS, enable write data bit order reverse
   * @param[in]  u32Seed         Seed value.
   * @param[in]  u32DataLen      CPU Write Data Length. Valid values are:
-  *                             - \ref CRC_CPU_WDATA_8
-  *                             - \ref CRC_CPU_WDATA_16
-  *                             - \ref CRC_CPU_WDATA_32
+  *                             - \ref CRC_CPU_WDATA_8, write data length is 8-bit
+  *                             - \ref CRC_CPU_WDATA_16, write data length is 16-bit
+  *                             - \ref CRC_CPU_WDATA_32, write data length is 32-bit
   *
   * @return     None
   *
@@ -48,6 +48,27 @@
 void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_t u32DataLen)
 {
     CRC->SEED = u32Seed;
+
+	switch(u32Mode)
+	{
+        case CRC_CCITT:
+            u32Mode = CRC_16;
+            CRC->POLYNOMIAL = 0x1021;
+            break;
+        case CRC_8:
+            CRC->POLYNOMIAL = 0x7;
+            break;
+        case CRC_16:
+            CRC->POLYNOMIAL = 0x8005;
+            break;
+        case CRC_32:
+            CRC->POLYNOMIAL = 0x04C11DB7;
+            break;
+		default:
+            CRC->POLYNOMIAL = 0x0ul;
+            break;
+	}
+
     CRC->CTL = u32Mode | u32Attribute | u32DataLen | CRC_CTL_CRCEN_Msk;
 
     /* Setting CRCRST bit will reload the initial seed value(CRC_SEED register) to CRC controller */
@@ -65,21 +86,28 @@ void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_
   */
 uint32_t CRC_GetChecksum(void)
 {
+    uint32_t u32Checksum = 0UL;
+
     switch(CRC->CTL & CRC_CTL_CRCMODE_Msk)
     {
         case CRC_CCITT:
         case CRC_16:
-            return (CRC->CHECKSUM & 0xFFFF);
+            u32Checksum = (CRC->CHECKSUM & 0xFFFFUL);
+            break;
 
         case CRC_32:
-            return (CRC->CHECKSUM);
+            u32Checksum = CRC->CHECKSUM;
+            break;
 
         case CRC_8:
-            return (CRC->CHECKSUM & 0xFF);
+            u32Checksum = (CRC->CHECKSUM & 0xFFUL);
+            break;
 
         default:
-            return 0;
+            break;
     }
+
+    return u32Checksum;
 }
 
 /*@}*/ /* end of group CRC_EXPORTED_FUNCTIONS */

@@ -145,6 +145,7 @@ extern void SystemInit(void);
 #include "llsi_reg.h"
 #include "spi_reg.h"
 #include "adc_reg.h"
+#include "pwm_reg.h"
 #include "bpwm_reg.h"
 #include "dac_reg.h"
 #include "pdma_reg.h"
@@ -250,7 +251,8 @@ extern void SystemInit(void);
 #define I2C0                ((I2C_T *) I2C0_BASE)                       /*!< I2C0 Configuration Struct                        */
 #define I2C                 I2C0
 
-#define ADC0                 ((ADC_T *) ADC0_BASE)                      /*!< ADC Configuration Struct                         */
+#define ADC0                ((ADC_T *) ADC0_BASE)                       /*!< ADC0 Configuration Struct                        */
+#define ADC                 ADC0                                        /*!< ADC Configuration Struct                         */
 
 #define CLK                 ((CLK_T *) CLK_BASE)                        /*!< System Clock Controller Configuration Struct     */
 
@@ -259,6 +261,9 @@ extern void SystemInit(void);
 #define NMI                 ((NMI_T *) NMI_BASE)                        /*!< Interrupt Source Controller Configuration Struct */
 
 #define FMC                 ((FMC_T *) FMC_BASE)                        /*!< Flash Memory Controller */
+
+#define PWM0                ((PWM_T *)PWM0_BASE)                        /*!< PWM0 Configuration Struct                        */
+#define PWM                 PWM0                                        /*!< PWM Configuration Struct                         */
 
 #define BPWM0               ((BPWM_T *) BPWM0_BASE)                     /*!< BPWM0 Configuration Struct                        */
 #define BPWM1               ((BPWM_T *) BPWM1_BASE)                     /*!< BPWM1 Configuration Struct                        */
@@ -385,6 +390,7 @@ typedef volatile unsigned short vu16;
 #include "fmc.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "pwm.h"
 #include "bpwm.h"
 #include "spi.h"
 #include "timer.h"

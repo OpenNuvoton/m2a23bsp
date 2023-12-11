@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     adc.h
  * @version  V3.00
- * @brief    ADC driver header file
+ * @brief    M2A23 series ADC driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __ADC_H__
 #define __ADC_H__

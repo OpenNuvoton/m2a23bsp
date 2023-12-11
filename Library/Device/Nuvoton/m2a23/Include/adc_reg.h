@@ -256,6 +256,9 @@ typedef struct
     __IO uint32_t ADTDCR;                /*!< [0x009c] ADC Trigger Delay Control Register                               */
     __I  uint32_t RESERVE1[24];
     __I  uint32_t ADPDMA;                /*!< [0x0100] ADC PDMA Current Transfer Data Register                          */
+    __IO uint32_t ADCR1;                 /*!< [0x0104] ADC Control Register 1                                           */
+    __IO uint32_t CALCTL ;               /*!< [0x0108] ADC Calibration Control Register                                 */
+    __IO uint32_t CALSR ;                /*!< [0x010C] ADC Calibration Status Register                                  */
 
 } ADC_T;
 
