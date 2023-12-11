@@ -150,6 +150,8 @@ uint32_t SPI_Open(SPI_T *spi,
                 return u32HCLKFreq;
         }
     }
+    
+    return 0;
 }
 
 /**

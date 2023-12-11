@@ -125,6 +125,7 @@ uint32_t PWM_ConfigOutputChannel(PWM_T *pwm, uint32_t u32ChannelNum, uint32_t u3
     {
         //clock source is from PCLK
         SystemCoreClockUpdate();
+//        u32PWMClockSrc = SystemCoreClock;
         if(pwm == PWM0)
         {
             u32PWMClockSrc = CLK_GetPCLK0Freq();

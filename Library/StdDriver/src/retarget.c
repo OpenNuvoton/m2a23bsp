@@ -28,8 +28,8 @@
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 #ifdef __MICROLIB
-FILE __stdout;
-FILE __stdin;
+//FILE __stdout;
+//FILE __stdin;
 
 void abort(void);
 

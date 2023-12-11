@@ -2266,6 +2266,8 @@ typedef struct
     __I  uint32_t PBUF4;                 /*!< [0x0314] PWM PERIOD4 Buffer                                               */
     __I  uint32_t RESERVE25[1];
     __I  uint32_t CMPBUF[6];             /*!< [0x031c] PWM CMPDAT0~5 Buffer                                             */
+    __I  uint32_t RESERVE26[13];
+    __I  uint32_t IFACNT[6];             /*!< [0x0368] PWM Interrupt Flag Accumulator Counter0~5                        */
 
 } PWM_T;
 
@@ -3035,6 +3037,9 @@ typedef struct
 #define PWM_ADCTS1_TRGEN5_Pos            (15)                                              /*!< PWM_T::ADCTS1: TRGEN5 Position         */
 #define PWM_ADCTS1_TRGEN5_Msk            (0x1ul << PWM_ADCTS1_TRGEN5_Pos)                  /*!< PWM_T::ADCTS1: TRGEN5 Mask             */
 
+#define PWM_EADCTS1_TRGEN5_Pos           (15)                                              /*!< PWM_T::EADCTS1: TRGEN5 Position        */
+#define PWM_EADCTS1_TRGEN5_Msk           (0x1ul << PWM_EADCTS1_TRGEN5_Pos)                 /*!< PWM_T::EADCTS1: TRGEN5 Mask            */
+
 #define PWM_SSCTL_SSEN0_Pos              (0)                                               /*!< PWM_T::SSCTL: SSEN0 Position           */
 #define PWM_SSCTL_SSEN0_Msk              (0x1ul << PWM_SSCTL_SSEN0_Pos)                    /*!< PWM_T::SSCTL: SSEN0 Mask               */
 
@@ -3073,9 +3078,15 @@ typedef struct
 
 #define PWM_STATUS_ADCTRG4_Pos           (20)                                              /*!< PWM_T::STATUS: ADCTRG4 Position        */
 #define PWM_STATUS_ADCTRG4_Msk           (0x1ul << PWM_STATUS_ADCTRG4_Pos)                 /*!< PWM_T::STATUS: ADCTRG4 Mask            */
+#define PWM_STATUS_EADCTRG4_Pos          (20)                                              /*!< PWM_T::STATUS: EADCTRG4 Position       */
+#define PWM_STATUS_EADCTRG4_Msk          (0x1ul << PWM_STATUS_EADCTRG4_Pos)                /*!< PWM_T::STATUS: EADCTRG4 Mask           */
+
+#define PWM_STATUS_EADCTRG5_Pos          (21)                                              /*!< PWM_T::STATUS: EADCTRG5 Position       */
+#define PWM_STATUS_EADCTRG5_Msk          (0x1ul << PWM_STATUS_EADCTRG5_Pos)                /*!< PWM_T::STATUS: EADCTRG5 Mask           */
 
 #define PWM_STATUS_ADCTRG5_Pos           (21)                                              /*!< PWM_T::STATUS: ADCTRG5 Position        */
 #define PWM_STATUS_ADCTRG5_Msk           (0x1ul << PWM_STATUS_ADCTRG5_Pos)                 /*!< PWM_T::STATUS: ADCTRG5 Mask            */
+
 
 #define PWM_IFA0_IFACNT_Pos              (0)                                               /*!< PWM_T::IFA0: IFACNT Position           */
 #define PWM_IFA0_IFACNT_Msk              (0xfful << PWM_IFA0_IFACNT_Pos)                   /*!< PWM_T::IFA0: IFACNT Mask               */
@@ -3571,6 +3582,15 @@ typedef struct
 
 #define PWM_CMPBUF5_CMPBUF_Pos           (0)                                               /*!< PWM_T::CMPBUF5: CMPBUF Position        */
 #define PWM_CMPBUF5_CMPBUF_Msk           (0xfffful << PWM_CMPBUF5_CMPBUF_Pos)              /*!< PWM_T::CMPBUF5: CMPBUF Mask            */
+
+#define PWM_IFACNT0_ACUCNT_Pos           (0)                                               /*!< PWM_T::IFACNT0: ACUCNT Position        */
+#define PWM_IFACNT0_ACUCNT_Msk           (0xfffful << PWM_IFACNT0_ACUCNT_Pos)              /*!< PWM_T::IFACNT0: ACUCNT Mask            */
+
+#define PWM_IFACNT2_ACUCNT_Pos           (0)                                               /*!< PWM_T::IFACNT2: ACUCNT Position        */
+#define PWM_IFACNT2_ACUCNT_Msk           (0xfffful << PWM_IFACNT2_ACUCNT_Pos)              /*!< PWM_T::IFACNT2: ACUCNT Mask            */
+
+#define PWM_IFACNT4_ACUCNT_Pos           (0)                                               /*!< PWM_T::IFACNT4: ACUCNT Position        */
+#define PWM_IFACNT4_ACUCNT_Msk           (0xfffful << PWM_IFACNT4_ACUCNT_Pos)              /*!< PWM_T::IFACNT4: ACUCNT Mask            */
 
 /**@}*/ /* PWM_CONST */
 /**@}*/ /* end of PWM register group */

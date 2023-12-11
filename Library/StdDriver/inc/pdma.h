@@ -26,7 +26,7 @@ extern "C"
 /** @addtogroup PDMA_EXPORTED_CONSTANTS PDMA Exported Constants
   @{
 */
-#define PDMA_CH_MAX    16UL   /*!< Specify Maximum Channels of PDMA  \hideinitializer */
+#define PDMA_CH_MAX         6UL   /*!< Specify Maximum Channels of PDMA  \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Operation Mode Constant Definitions                                                                    */
@@ -74,97 +74,40 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Peripheral Transfer Mode Constant Definitions                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define PDMA_MEM             0UL /*!<DMA Connect to Memory \hideinitializer */
-#define PDMA_USB_TX          2UL /*!<DMA Connect to USB_TX \hideinitializer */
-#define PDMA_USB_RX          3UL /*!<DMA Connect to USB_RX \hideinitializer */
-#define PDMA_UART0_TX        4UL /*!<DMA Connect to UART0_TX \hideinitializer */
-#define PDMA_UART0_RX        5UL /*!<DMA Connect to UART0_RX \hideinitializer */
-#define PDMA_UART1_TX        6UL /*!<DMA Connect to UART1_TX \hideinitializer */
-#define PDMA_UART1_RX        7UL /*!<DMA Connect to UART1_RX \hideinitializer */
-#define PDMA_UART2_TX        8UL /*!<DMA Connect to UART2_TX \hideinitializer */
-#define PDMA_UART2_RX        9UL /*!<DMA Connect to UART2_RX \hideinitializer */
-#define PDMA_UART3_TX       10UL /*!<DMA Connect to UART3_TX \hideinitializer */
-#define PDMA_UART3_RX       11UL /*!<DMA Connect to UART3_RX \hideinitializer */
-#define PDMA_UART4_TX       12UL /*!<DMA Connect to UART4_TX \hideinitializer */
-#define PDMA_UART4_RX       13UL /*!<DMA Connect to UART4_RX \hideinitializer */
-#define PDMA_UART5_TX       14UL /*!<DMA Connect to UART5_TX \hideinitializer */
-#define PDMA_UART5_RX       15UL /*!<DMA Connect to UART5_RX \hideinitializer */
-#define PDMA_USCI0_TX       16UL /*!<DMA Connect to USCI0_TX \hideinitializer */
-#define PDMA_USCI0_RX       17UL /*!<DMA Connect to USCI0_RX \hideinitializer */
-#define PDMA_USCI1_TX       18UL /*!<DMA Connect to USCI1_TX \hideinitializer */
-#define PDMA_USCI1_RX       19UL /*!<DMA Connect to USCI1_RX \hideinitializer */
-#define PDMA_QSPI0_TX       20UL /*!<DMA Connect to QSPI0_TX \hideinitializer */
-#define PDMA_QSPI0_RX       21UL /*!<DMA Connect to QSPI0_RX \hideinitializer */
-#define PDMA_SPI0_TX        22UL /*!<DMA Connect to SPI0_TX \hideinitializer */
-#define PDMA_SPI0_RX        23UL /*!<DMA Connect to SPI0_RX \hideinitializer */
-#define PDMA_SPI1_TX        24UL /*!<DMA Connect to SPI1_TX \hideinitializer */
-#define PDMA_SPI1_RX        25UL /*!<DMA Connect to SPI1_RX \hideinitializer */
-#define PDMA_SPI2_TX        26UL /*!<DMA Connect to SPI2_TX \hideinitializer */
-#define PDMA_SPI2_RX        27UL /*!<DMA Connect to SPI2_RX \hideinitializer */
-#define PDMA_SPI3_TX        28UL /*!<DMA Connect to SPI3_TX \hideinitializer */
-#define PDMA_SPI3_RX        29UL /*!<DMA Connect to SPI3_RX \hideinitializer */
-#define PDMA_ACMP0          30UL /*!<DMA Connect to ACMP0 \hideinitializer */
-#define PDMA_ACMP1          31UL /*!<DMA Connect to ACMP1 \hideinitializer */
-#define PDMA_EPWM0_P1_RX    32UL /*!<DMA Connect to EPWM0_P1_RX \hideinitializer */
-#define PDMA_EPWM0_P2_RX    33UL /*!<DMA Connect to EPWM0_P2_RX \hideinitializer */
-#define PDMA_EPWM0_P3_RX    34UL /*!<DMA Connect to EPWM0_P3_RX \hideinitializer */
-#define PDMA_EPWM1_P1_RX    35UL /*!<DMA Connect to EPWM1_P1_RX \hideinitializer */
-#define PDMA_EPWM1_P2_RX    36UL /*!<DMA Connect to EPWM1_P2_RX \hideinitializer */
-#define PDMA_EPWM1_P3_RX    37UL /*!<DMA Connect to EPWM1_P3_RX \hideinitializer */
-#define PDMA_I2C0_TX        38UL /*!<DMA Connect to I2C0_TX \hideinitializer */
-#define PDMA_I2C0_RX        39UL /*!<DMA Connect to I2C0_RX \hideinitializer */
-#define PDMA_I2C1_TX        40UL /*!<DMA Connect to I2C1_TX \hideinitializer */
-#define PDMA_I2C1_RX        41UL /*!<DMA Connect to I2C1_RX \hideinitializer */
-#define PDMA_I2C2_TX        42UL /*!<DMA Connect to I2C2_TX \hideinitializer */
-#define PDMA_I2C2_RX        43UL /*!<DMA Connect to I2C2_RX \hideinitializer */
-#define PDMA_I2C3_TX        44UL /*!<DMA Connect to I2C3_TX \hideinitializer */
-#define PDMA_I2C3_RX        45UL /*!<DMA Connect to I2C3_RX \hideinitializer */
-#define PDMA_TMR0           46UL /*!<DMA Connect to TMR0 \hideinitializer */
-#define PDMA_TMR1           47UL /*!<DMA Connect to TMR1 \hideinitializer */
-#define PDMA_TMR2           48UL /*!<DMA Connect to TMR2 \hideinitializer */
-#define PDMA_TMR3           49UL /*!<DMA Connect to TMR3 \hideinitializer */
-#define PDMA_DAC0_TX        50UL /*!<DMA Connect to DAC0_TX \hideinitializer */
-#define PDMA_DAC1_TX        51UL /*!<DMA Connect to DAC1_TX \hideinitializer */
-#define PDMA_EPWM0_CH0_TX   52UL /*!<DMA Connect to EPWM0_CH0_TX \hideinitializer */
-#define PDMA_EPWM0_CH1_TX   53UL /*!<DMA Connect to EPWM0_CH1_TX \hideinitializer */
-#define PDMA_EPWM0_CH2_TX   54UL /*!<DMA Connect to EPWM0_CH2_TX \hideinitializer */
-#define PDMA_EPWM0_CH3_TX   55UL /*!<DMA Connect to EPWM0_CH3_TX \hideinitializer */
-#define PDMA_EPWM0_CH4_TX   56UL /*!<DMA Connect to EPWM0_CH4_TX \hideinitializer */
-#define PDMA_EPWM0_CH5_TX   57UL /*!<DMA Connect to EPWM0_CH5_TX \hideinitializer */
-#define PDMA_EPWM1_CH0_TX   58UL /*!<DMA Connect to EPWM1_CH0_TX \hideinitializer */
-#define PDMA_EPWM1_CH1_TX   59UL /*!<DMA Connect to EPWM1_CH1_TX \hideinitializer */
-#define PDMA_EPWM1_CH2_TX   60UL /*!<DMA Connect to EPWM1_CH2_TX \hideinitializer */
-#define PDMA_EPWM1_CH3_TX   61UL /*!<DMA Connect to EPWM1_CH3_TX \hideinitializer */
-#define PDMA_EPWM1_CH4_TX   62UL /*!<DMA Connect to EPWM1_CH4_TX \hideinitializer */
-#define PDMA_EPWM1_CH5_TX   63UL /*!<DMA Connect to EPWM1_CH5_TX \hideinitializer */
-#define PDMA_EADC0_RX       64UL /*!<DMA Connect to EADC0_RX \hideinitializer */
-#define PDMA_EADC1_RX       65UL /*!<DMA Connect to EADC1_RX \hideinitializer */
-#define PDMA_UART6_TX       66UL /*!<DMA Connect to UART6_TX \hideinitializer */
-#define PDMA_UART6_RX       67UL /*!<DMA Connect to UART6_RX \hideinitializer */
-#define PDMA_UART7_TX       68UL /*!<DMA Connect to UART7_TX \hideinitializer */
-#define PDMA_UART7_RX       69UL /*!<DMA Connect to UART7_RX \hideinitializer */
-#define PDMA_PWM0_P1_RX     70UL /*!<DMA Connect to PWM0_P1_RX \hideinitializer */
-#define PDMA_PWM0_P2_RX     71UL /*!<DMA Connect to PWM0_P2_RX \hideinitializer */
-#define PDMA_PWM0_P3_RX     72UL /*!<DMA Connect to PWM0_P3_RX \hideinitializer */
-#define PDMA_PWM1_P1_RX     73UL /*!<DMA Connect to PWM1_P1_RX \hideinitializer */
-#define PDMA_PWM1_P2_RX     74UL /*!<DMA Connect to PWM1_P2_RX \hideinitializer */
-#define PDMA_PWM1_P3_RX     75UL /*!<DMA Connect to PWM1_P3_RX \hideinitializer */
-#define PDMA_PWM0_CH0_TX    76UL /*!<DMA Connect to PWM0_CH0_TX \hideinitializer */
-#define PDMA_PWM0_CH2_TX    77UL /*!<DMA Connect to PWM0_CH2_TX \hideinitializer */
-#define PDMA_PWM0_CH4_TX    78UL /*!<DMA Connect to PWM0_CH4_TX \hideinitializer */
-#define PDMA_PWM1_CH0_TX    79UL /*!<DMA Connect to PWM1_CH0_TX \hideinitializer */
-#define PDMA_PWM1_CH2_TX    80UL /*!<DMA Connect to PWM1_CH2_TX \hideinitializer */
-#define PDMA_PWM1_CH4_TX    81UL /*!<DMA Connect to PWM1_CH4_TX \hideinitializer */
-#define PDMA_EINT0          82UL /*!<DMA Connect to EINT0 \hideinitializer */
-#define PDMA_EINT1          83UL /*!<DMA Connect to EINT1 \hideinitializer */
-#define PDMA_EINT2          84UL /*!<DMA Connect to EINT2 \hideinitializer */
-#define PDMA_EINT3          85UL /*!<DMA Connect to EINT3 \hideinitializer */
-#define PDMA_EINT4          86UL /*!<DMA Connect to EINT4 \hideinitializer */
-#define PDMA_EINT5          87UL /*!<DMA Connect to EINT5 \hideinitializer */
-#define PDMA_EINT6          88UL /*!<DMA Connect to EINT6 \hideinitializer */
-#define PDMA_EINT7          89UL /*!<DMA Connect to EINT7 \hideinitializer */
-#define PDMA_ACMP2          90UL /*!<DMA Connect to ACMP2 \hideinitializer */
-/*---------------------------------------------------------------------------------------------------------*/
+#define PDMA_MEM                   0UL /*!<PDMA channel request source select to MEM */
+#define PDMA_UART0_TX              1UL /*!<PDMA channel request source select to UART0_TX */
+#define PDMA_UART0_RX              2UL /*!<PDMA channel request source select to UART0_RX */
+#define PDMA_UART1_TX              3UL /*!<PDMA channel request source select to UART1_TX */
+#define PDMA_UART1_RX              4UL /*!<PDMA channel request source select to UART1_RX */
+#define PDMA_USCI0_TX              5UL /*!<PDMA channel request source select to USCI0_TX */
+#define PDMA_USCI0_RX              6UL /*!<PDMA channel request source select to USCI0_RX */
+#define PDMA_USCI1_TX              7UL /*!<PDMA channel request source select to USCI1_TX */
+#define PDMA_USCI1_RX              8UL /*!<PDMA channel request source select to USCI1_RX */
+#define PDMA_SPI0_TX               9UL /*!<PDMA channel request source select to SPI0_TX */
+#define PDMA_SPI0_RX              10UL /*!<PDMA channel request source select to SPI0_RX */
+#define PDMA_I2C0_TX              11UL /*!<PDMA channel request source select to I2C0_TX */
+#define PDMA_I2C0_RX              12UL /*!<PDMA channel request source select to I2C0_RX */
+#define PDMA_TMR0                 13UL /*!<PDMA channel request source select to TMR0 */
+#define PDMA_TMR1                 14UL /*!<PDMA channel request source select to TMR1 */
+#define PDMA_TMR2                 15UL /*!<PDMA channel request source select to TMR2 */
+#define PDMA_TMR3                 16UL /*!<PDMA channel request source select to TMR3 */
+#define PDMA_ADC0_RX              17UL /*!<PDMA channel request source select to ADC0_RX */
+#define PDMA_ACMP0                18UL /*!<PDMA channel request source select to ACMP0 */
+#define PDMA_ACMP1                19UL /*!<PDMA channel request source select to ACMP1 */
+#define PDMA_PWM0_P1_RX           20UL /*!<PDMA channel request source select to PWM0_P1_RX */
+#define PDMA_PWM0_P2_RX           21UL /*!<PDMA channel request source select to PWM0_P2_RX */
+#define PDMA_PWM0_P3_RX           22UL /*!<PDMA channel request source select to PWM0_P3_RX */
+#define PDMA_PWM0_CH0_TX          23UL /*!<PDMA channel request source select to PWM0_CH0_TX */
+#define PDMA_PWM0_CH2_TX          24UL /*!<PDMA channel request source select to PWM0_CH2_TX */
+#define PDMA_PWM0_CH4_TX          25UL /*!<PDMA channel request source select to PWM0_CH4_TX */
+#define PDMA_EINT0                26UL /*!<PDMA channel request source select to EINT0 */
+#define PDMA_EINT1                27UL /*!<PDMA channel request source select to EINT1 */
+#define PDMA_EINT2                28UL /*!<PDMA channel request source select to EINT2 */
+#define PDMA_EINT3                29UL /*!<PDMA channel request source select to EINT3 */
+#define PDMA_EINT4                30UL /*!<PDMA channel request source select to EINT4 */
+#define PDMA_EINT5                31UL /*!<PDMA channel request source select to EINT5 */
+#define PDMA_LLSI0                32UL /*!<PDMA channel request source select to LLSI0 */
+#define PDMA_LLSI1                33UL /*!<PDMA channel request source select to LLSI1 *//*---------------------------------------------------------------------------------------------------------*/
 /*  Interrupt Type Constant Definitions                                                                    */
 /*---------------------------------------------------------------------------------------------------------*/
 #define PDMA_INT_TRANS_DONE 0x00000000UL            /*!<Transfer Done Interrupt  \hideinitializer */

@@ -46,14 +46,15 @@ extern "C"
 #define ACMP_CTL_INTPOL_RF           (0UL << ACMP_CTL_INTPOL_Pos)  /*!< ACMP_CTL setting for selecting rising edge and falling edge as interrupt condition. \hideinitializer */
 #define ACMP_CTL_INTPOL_R            (1UL << ACMP_CTL_INTPOL_Pos)  /*!< ACMP_CTL setting for selecting rising edge as interrupt condition. \hideinitializer */
 #define ACMP_CTL_INTPOL_F            (2UL << ACMP_CTL_INTPOL_Pos)  /*!< ACMP_CTL setting for selecting falling edge as interrupt condition. \hideinitializer */
-#define ACMP_CTL_POSSEL_P0           (0UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P0 pin as the source of ACMP V+. \hideinitializer */
-#define ACMP_CTL_POSSEL_P1           (1UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P1 pin as the source of ACMP V+. \hideinitializer */
-#define ACMP_CTL_POSSEL_P2           (2UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P2 pin as the source of ACMP V+. \hideinitializer */
-#define ACMP_CTL_POSSEL_P3           (3UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P3 pin as the source of ACMP V+. \hideinitializer */
-#define ACMP_CTL_NEGSEL_PIN          (0UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting the voltage of ACMP negative input pin as the source of ACMP V-. \hideinitializer */
-#define ACMP_CTL_NEGSEL_CRV          (1UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting internal comparator reference voltage as the source of ACMP V-. \hideinitializer */
+#define ACMP_CTL_POSSEL_DISABLE      (0UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for disable positive pin. \hideinitializer */
+#define ACMP_CTL_POSSEL_P0           (1UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P0 pin as the source of ACMP V+. \hideinitializer */
+#define ACMP_CTL_POSSEL_P1           (2UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P1 pin as the source of ACMP V+. \hideinitializer */
+#define ACMP_CTL_POSSEL_P2           (3UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P2 pin as the source of ACMP V+. \hideinitializer */
+#define ACMP_CTL_POSSEL_P3           (4UL << ACMP_CTL_POSSEL_Pos)  /*!< ACMP_CTL setting for selecting ACMPx_P3 pin as the source of ACMP V+. \hideinitializer */
+#define ACMP_CTL_NEGSEL_DISABLE      (0UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for disable ACMP negative input pin. \hideinitializer */
+#define ACMP_CTL_NEGSEL_PIN          (1UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting the voltage of ACMP negative input pin as the source of ACMP V-. \hideinitializer */
 #define ACMP_CTL_NEGSEL_VBG          (2UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting internal Band-gap voltage as the source of ACMP V-. \hideinitializer */
-#define ACMP_CTL_NEGSEL_DAC          (3UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting DAC output voltage as the source of ACMP V-. \hideinitializer */
+#define ACMP_CTL_NEGSEL_CRV          (3UL << ACMP_CTL_NEGSEL_Pos)  /*!< ACMP_CTL setting for selecting internal comparator reference voltage as the source of ACMP V-. \hideinitializer */
 #define ACMP_CTL_HYSTERESIS_30MV     (3UL << ACMP_CTL_HYSSEL_Pos)  /*!< ACMP_CTL setting for enabling the hysteresis function at 30mV. \hideinitializer */
 #define ACMP_CTL_HYSTERESIS_20MV     (2UL << ACMP_CTL_HYSSEL_Pos)  /*!< ACMP_CTL setting for enabling the hysteresis function at 20mV. \hideinitializer */
 #define ACMP_CTL_HYSTERESIS_10MV     (1UL << ACMP_CTL_HYSSEL_Pos)  /*!< ACMP_CTL setting for enabling the hysteresis function at 10mV. \hideinitializer */
@@ -62,8 +63,8 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /* ACMP_VREF constant definitions                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define ACMP_VREF_CRVSSEL_VDDA        (0UL << ACMP_VREF_CRV0SSEL_Pos)  /*!< ACMP_VREF setting for selecting analog supply voltage VDDA as the CRV0 source voltage \hideinitializer */
-#define ACMP_VREF_CRVSSEL_INTVREF     (1UL << ACMP_VREF_CRV0SSEL_Pos)  /*!< ACMP_VREF setting for selecting internal reference voltage as the CRV0 source voltage \hideinitializer */
+#define ACMP_VREF_CRVSSEL_VDDA        (0UL << ACMP_VREF_CRVSSEL_Pos)   /*!< ACMP_VREF setting for selecting analog supply voltage VDDA as the CRV0 source voltage \hideinitializer */
+#define ACMP_VREF_CRVSSEL_INTVREF     (1UL << ACMP_VREF_CRVSSEL_Pos)   /*!< ACMP_VREF setting for selecting internal reference voltage as the CRV0 source voltage \hideinitializer */
 #define ACMP_VREF_CRV0SSEL_VDDA       (0UL << ACMP_VREF_CRV0SSEL_Pos)  /*!< ACMP_VREF setting for selecting analog supply voltage VDDA as the CRV0 source voltage \hideinitializer */
 #define ACMP_VREF_CRV0SSEL_INTVREF    (1UL << ACMP_VREF_CRV0SSEL_Pos)  /*!< ACMP_VREF setting for selecting internal reference voltage as the CRV0 source voltage \hideinitializer */
 #define ACMP_VREF_CRV1SSEL_VDDA       (0UL << ACMP_VREF_CRV1SSEL_Pos)  /*!< ACMP_VREF setting for selecting analog supply voltage VDDA as the CRV1 source voltage \hideinitializer */
@@ -316,9 +317,8 @@ extern "C"
   * @details  When CRV is selected as ACMP negative input source, the CRV level is determined by CRVCTL (ACMP_VREF[3:0]).
   * \hideinitializer
   */
-#define ACMP_CRV_SEL(acmp, u32Level) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV0SEL_Msk) | ((u32Level)<<ACMP_VREF_CRV0SEL_Pos))
-#define ACMP_CRV0_SEL(acmp, u32Level) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV0SEL_Msk) | ((u32Level)<<ACMP_VREF_CRV0SEL_Pos))
-#define ACMP_CRV1_SEL(acmp, u32Level) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV1SEL_Msk) | ((u32Level)<<ACMP_VREF_CRV1SEL_Pos))
+#define ACMP_CRV_CTL(acmp, u32Level) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRVCTL_Msk) | ((u32Level)<<ACMP_VREF_CRVCTL_Pos))
+#define ACMP_CRV0_CTL(acmp, u32Level) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRVCTL_Msk) | ((u32Level)<<ACMP_VREF_CRVCTL_Pos))
 
 
 /**
@@ -328,8 +328,9 @@ extern "C"
   * @details  CRV must be enabled before using it.
   * \hideinitializer
   */
-#define ACMP_ENABLE_CRV0(acmp) ((acmp)->VREF |= ACMP_VREF_CRV0EN_Msk)
-#define ACMP_ENABLE_CRV1(acmp) ((acmp)->VREF |= ACMP_VREF_CRV1EN_Msk)
+#define ACMP_ENABLE_CRV(acmp) ((acmp)->VREF |= ACMP_VREF_CRVEN_Msk)
+#define ACMP_ENABLE_CRV0(acmp) ((acmp)->VREF |= ACMP_VREF_CRVEN_Msk)
+
 
 
   /**
@@ -339,8 +340,9 @@ extern "C"
     * @details  Disable CRV.
     * \hideinitializer
     */
-#define ACMP_DISABLE_CRV0(acmp) ((acmp)->VREF &= ~ACMP_VREF_CRV0EN_Msk)
-#define ACMP_DISABLE_CRV1(acmp) ((acmp)->VREF &= ~ACMP_VREF_CRV1EN_Msk)
+#define ACMP_DISABLE_CRV(acmp) ((acmp)->VREF &= ~ACMP_VREF_CRVEN_Msk)
+#define ACMP_DISABLE_CRV0(acmp) ((acmp)->VREF &= ~ACMP_VREF_CRVEN_Msk)
+
 
 /**
   * @brief This macro is used to select the source of CRV
@@ -354,9 +356,9 @@ extern "C"
   * @details The source of CRV can be VDDA or internal reference voltage. The internal reference voltage level is determined by SYS_VREFCTL register.
   * \hideinitializer
   */
-#define ACMP_SELECT_CRV_SRC(acmp, u32Src) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV0SSEL_Msk) | (u32Src))
-#define ACMP_SELECT_CRV0_SRC(acmp, u32Src) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV0SSEL_Msk) | (u32Src))
-#define ACMP_SELECT_CRV1_SRC(acmp, u32Src) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRV1SSEL_Msk) | (u32Src))
+#define ACMP_SELECT_CRV_SRC(acmp, u32Src) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRVSSEL_Msk) | (u32Src))
+#define ACMP_SELECT_CRV0_SRC(acmp, u32Src) ((acmp)->VREF = ((acmp)->VREF & ~ACMP_VREF_CRVSSEL_Msk) | (u32Src))
+
 
 /**
   * @brief This macro is used to select ACMP interrupt condition

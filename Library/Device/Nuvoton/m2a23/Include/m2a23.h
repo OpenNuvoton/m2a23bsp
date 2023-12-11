@@ -147,6 +147,7 @@ extern void SystemInit(void);
 #include "adc_reg.h"
 #include "pwm_reg.h"
 #include "bpwm_reg.h"
+#include "pwm_reg.h"
 #include "dac_reg.h"
 #include "pdma_reg.h"
 #include "timer_reg.h"
@@ -157,6 +158,7 @@ extern void SystemInit(void);
 #include "spdh_reg.h"
 #include "uuart_reg.h"
 #include "uspi_reg.h"
+#include "ui2c_reg.h"
 
 
 /******************************************************************************/
@@ -262,13 +264,12 @@ extern void SystemInit(void);
 
 #define FMC                 ((FMC_T *) FMC_BASE)                        /*!< Flash Memory Controller */
 
-#define PWM0                ((PWM_T *)PWM0_BASE)                        /*!< PWM0 Configuration Struct                        */
-#define PWM                 PWM0                                        /*!< PWM Configuration Struct                         */
-
 #define BPWM0               ((BPWM_T *) BPWM0_BASE)                     /*!< BPWM0 Configuration Struct                        */
 #define BPWM1               ((BPWM_T *) BPWM1_BASE)                     /*!< BPWM1 Configuration Struct                        */
 #define BPWM2               ((BPWM_T *) BPWM2_BASE)                     /*!< BPWM2 Configuration Struct                        */
 #define BPWM3               ((BPWM_T *) BPWM3_BASE)                     /*!< BPWM3 Configuration Struct                        */
+
+#define PWM0                ((PWM_T *) PWM0_BASE)                       /*!< PWM0 Configuration Struct                         */
 
 #define CRC                 ((CRC_T *) CRC_BASE)                        /*!< CRC Configuration Struct                          */
 
@@ -279,15 +280,14 @@ extern void SystemInit(void);
 #define LLSI1               ((LLSI_T *) LLSI1_BASE)                     /*!< LLSI1 Configuration Struct                        */
 
 #define ACMP01              ((ACMP_T *) ACMP01_BASE)                    /*!< ACMP01 Configuration Struct                       */
-#define ACMP23              ((ACMP_T *) ACMP23_BASE)                    /*!< ACMP23 Configuration Struct                       */
 
 #define DAC0                ((DAC_T *) DAC0_BASE)                       /*!< DAC0 Configuration Struct                         */
 #define DAC1                ((DAC_T *) DAC1_BASE)                       /*!< DAC1 Configuration Struct                         */
 #define DAC2                ((DAC_T *) DAC2_BASE)                       /*!< DAC2 Configuration Struct                         */
 #define DAC3                ((DAC_T *) DAC3_BASE)                       /*!< DAC3 Configuration Struct                         */
 
-#define I3CS0           	  ((I3CS_T *) I3CS0_BASE)                 	  /*!< I3CS0 Configuration Struct                        */
-#define I3CS1             	((I3CS_T *) I3CS1_BASE)                  	  /*!< I3CS1 Configuration Struct                        */
+#define I3CS0           	  ((I3CS_T *) I3CS0_BASE)                 	/*!< I3CS0 Configuration Struct                        */
+#define I3CS1             	((I3CS_T *) I3CS1_BASE)                  	/*!< I3CS1 Configuration Struct                        */
 
 #define SPDH                ((SPDH_T *) SPDH_BASE)                      /*!< SPDH Configuration Struct                         */
 
@@ -296,6 +296,9 @@ extern void SystemInit(void);
 
 #define USPI0               ((USPI_T *) USCI0_BASE)                     /*!< USPI0 Configuration Struct                       */
 #define USPI1               ((USPI_T *) USCI1_BASE)                     /*!< USPI1 Configuration Struct                       */
+
+#define UI2C0                ((UI2C_T *) USCI0_BASE)                    /*!< UI2C0 Configuration Struct                       */
+#define UI2C1                ((UI2C_T *) USCI1_BASE)                    /*!< UI2C1 Configuration Struct                       */
 
 /**@}*/ /* end of group PMODULE */
 
@@ -392,6 +395,7 @@ typedef volatile unsigned short vu16;
 #include "i2c.h"
 #include "pwm.h"
 #include "bpwm.h"
+#include "pwm.h"
 #include "spi.h"
 #include "timer.h"
 #include "wdt.h"
@@ -406,4 +410,5 @@ typedef volatile unsigned short vu16;
 #include "ts.h"
 #include "usci_uart.h"
 #include "usci_spi.h"
+#include "usci_i2c.h"
 #endif

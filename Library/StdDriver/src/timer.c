@@ -249,7 +249,7 @@ void TIMER_EnableEventCounter(TIMER_T *timer, uint32_t u32Edge)
 {
     timer->EXTCTL = (timer->EXTCTL & ~TIMER_EXTCTL_CNTPHASE_Msk) | u32Edge;
     timer->CTL |= TIMER_CTL_EXTCNTEN_Msk;
-    timer->CTL |= TIMER_CTL_RSTCNT_Msk; // clear CNT to 0
+    timer->CNT = 0; // clear CNT to 0
 }
 
 /**
@@ -355,14 +355,16 @@ void TIMER_DisableFreqCounter(TIMER_T *timer)
   *
   * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   * @param[in]  u32Src      Selects the interrupt source to trigger other modules. Could be:
-  *                         - \ref TIMER_TRGSEL_TIMEOUT_EVENT
-  *                         - \ref TIMER_TRGSEL_CAPTURE_EVENT
+  *                         - \ref TIMER_TRGCTL_TRGPDMA_Msk
+  *                         - \ref TIMER_TRGCTL_TRGADC_Msk
+  *                         - \ref TIMER_TRGCTL_TRGPWM_Msk
+  *                         - \ref TIMER_TRGCTL_TRGSSEL_Msk
   *
   * @return     None
   */
 void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
 {
-    timer->CTL = (timer->CTL & ~TIMER_CTL_TRGSSEL_Msk) | u32Src;
+    timer->TRGCTL |= u32Src;
 }
 
 /**
@@ -380,7 +382,7 @@ void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
   */
 void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
 {
-    timer->CTL = (timer->CTL & ~(TIMER_CTL_TRGBPWM01_Msk | TIMER_CTL_TRGBPWM23_Msk | TIMER_CTL_TRGADC_Msk | TIMER_CTL_TRGDAC_Msk | TIMER_CTL_TRGPDMA_Msk)) | (u32Mask);
+    timer->TRGCTL |= u32Mask;
 }
 
 /**
@@ -398,17 +400,17 @@ int32_t TIMER_ResetCounter(TIMER_T *timer)
 {
     volatile uint32_t reg = timer->CTL;
     uint32_t u32Delay;
-    
-    timer->CTL |= TIMER_CTL_RSTCNT_Msk;
+
+    timer->CNT = 0; // reset counter to 0
     /* Takes 2~3 ECLKs to reset timer counter */
     u32Delay = (SystemCoreClock / TIMER_GetModuleClock(timer)) * 3;
-    while(((timer->CTL&TIMER_CTL_RSTCNT_Msk) == TIMER_CTL_RSTCNT_Msk) && (--u32Delay))
+    while((timer->CNT) && (--u32Delay))
     {
         __NOP();
     }
-    
+
     timer->CTL = reg;
-    
+
     return u32Delay > 0 ? 0 : TIMER_TIMEOUT_ERR;
 }
 
