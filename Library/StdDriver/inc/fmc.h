@@ -35,6 +35,8 @@ extern "C"
 #define FMC_APROM_END           0x00040000UL    /*!< APROM end address           \hideinitializer */
 #define FMC_LDROM_BASE          0x00100000UL    /*!< LDROM base address          \hideinitializer */
 #define FMC_LDROM_END           0x00101000UL    /*!< LDROM end address           \hideinitializer */
+#define FMC_SPROM_BASE          0x00200000UL    /*!< SPROM base address          \hideinitializer */
+#define FMC_SPROM_END           0x00200800UL    /*!< SPROM end address           \hideinitializer */
 #define FMC_CONFIG_BASE         0x00300000UL    /*!< User Configuration address  \hideinitializer */
 #define FMC_USER_CONFIG_0       0x00300000UL    /*!< User Config 0 address       \hideinitializer */
 #define FMC_USER_CONFIG_1       0x00300004UL    /*!< User Config 1 address       \hideinitializer */
@@ -48,7 +50,8 @@ extern "C"
 
 #define FMC_APROM_SIZE          FMC_APROM_END   /*!< APROM Size                  \hideinitializer */
 #define FMC_BANK_SIZE           (FMC_APROM_SIZE/2UL) /*!< APROM Bank Size        \hideinitializer */
-#define FMC_LDROM_SIZE          0x2000UL        /*!< LDROM Size (4 Kbytes)       \hideinitializer */
+#define FMC_LDROM_SIZE          0x1000UL        /*!< LDROM Size (4 Kbytes)       \hideinitializer */
+#define FMC_SPROM_SIZE          0x800UL         /*!< SPROM Size (2 Kbytes)       \hideinitializer */
 #define FMC_APPROT_BLOCK_SIZE   0x2000UL        /*!< APROM APPROT size (8 Kbytes)  \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -118,6 +121,8 @@ extern "C"
 #define FMC_DISABLE_CFG_UPDATE()    (FMC->ISPCTL &= ~FMC_ISPCTL_CFGUEN_Msk)                   /*!< Disable User Config update \hideinitializer */
 #define FMC_ENABLE_LD_UPDATE()      (FMC->ISPCTL |=  FMC_ISPCTL_LDUEN_Msk)                    /*!< Enable LDROM update        \hideinitializer */
 #define FMC_DISABLE_LD_UPDATE()     (FMC->ISPCTL &= ~FMC_ISPCTL_LDUEN_Msk)                    /*!< Disable LDROM update       \hideinitializer */
+#define FMC_ENABLE_SP_UPDATE()      (FMC->ISPCTL |=  FMC_ISPCTL_SPUEN_Msk)                    /*!< Enable SPROM update        \hideinitializer */
+#define FMC_DISABLE_SP_UPDATE()     (FMC->ISPCTL &= ~FMC_ISPCTL_SPUEN_Msk)                    /*!< Disable SPROM update       \hideinitializer */
 #define FMC_DISABLE_ISP()           (FMC->ISPCTL &= ~FMC_ISPCTL_ISPEN_Msk)                    /*!< Disable ISP function       \hideinitializer */
 #define FMC_ENABLE_ISP()            (FMC->ISPCTL |=  FMC_ISPCTL_ISPEN_Msk)                    /*!< Enable ISP function        \hideinitializer */
 #define FMC_GET_FAIL_FLAG()         ((FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk) ? 1UL : 0UL)        /*!< Get ISP fail flag          \hideinitializer */
@@ -291,7 +296,7 @@ __STATIC_INLINE int32_t FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 
 void     FMC_Close(void);
 int32_t  FMC_Erase(uint32_t u32PageAddr);
-int32_t  FMC_Erase_Bank(uint32_t u32BankAddr);
+int32_t  FMC_EraseBank(uint32_t u32BankAddr);
 int32_t  FMC_GetBootSource(void);
 void     FMC_Open(void);
 uint32_t FMC_Read(uint32_t u32Addr);

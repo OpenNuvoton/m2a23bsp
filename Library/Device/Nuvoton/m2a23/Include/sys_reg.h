@@ -1438,9 +1438,13 @@ typedef struct
  * |        |          |0 = Power-down mode wake-up NMI source Disabled.
  * |        |          |1 = Power-down mode wake-up NMI source Enabled.
  * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[4]     |CLKFAIL   |Clock Fail Detected and IRC Auto Trim Interrupt NMI Source Enable (Write Protect)
- * |        |          |0 = Clock fail detected and IRC Auto Trim interrupt NMI source Disabled.
- * |        |          |1 = Clock fail detected and IRC Auto Trim interrupt NMI source Enabled.
+ * |[3]     |SRAMPERR  |SRAM Parity Check Error NMI Source Enable (Write Protect)
+ * |        |          |0 = SRAM parity check error NMI source Disabled.
+ * |        |          |1 = SRAM parity check error NMI source Enabled.
+ * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+ * |[4]     |CLKFAIL   |Clock Fail Detected NMI Source Enable (Write Protect)
+ * |        |          |0 = Clock fail detected interrupt NMI source Disabled.
+ * |        |          |1 = Clock fail detected interrupt NMI source Enabled.
  * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
  * |[8]     |EINT0     |External Interrupt From PA.3 or PB.5 Pin NMI Source Enable (Write Protect)
  * |        |          |0 = External interrupt from PA.3 or PB.5 pin NMI source Disabled.
@@ -1484,13 +1488,16 @@ typedef struct
  * |        |          |1 = BOD interrupt is asserted.
  * |[1]     |IRC_INT   |IRC TRIM Interrupt Flag (Read Only)
  * |        |          |0 = HIRC TRIM interrupt is deasserted.
- * |        |          |1 = HIRC TRIM interrupt is asserted. 
+ * |        |          |1 = HIRC TRIM interrupt is asserted.
  * |[2]     |PWRWU_INT |Power-down Mode Wake-up Interrupt Flag (Read Only)
  * |        |          |0 = Power-down mode wake-up interrupt is deasserted.
- * |        |          |1 = Power-down mode wake-up interrupt is asserted. 
- * |[4]     |CLKFAIL   |Clock Fail Detected or IRC Auto Trim Interrupt Flag (Read Only)
- * |        |          |0 = Clock fail detected or IRC Auto Trim interrupt is deasserted.
- * |        |          |1 = Clock fail detected or IRC Auto Trim interrupt is asserted. 
+ * |        |          |1 = Power-down mode wake-up interrupt is asserted.
+ * |[3]     |SRAMPERR  |SRAM Parity Check Error Interrupt Flag (Read Only)
+ * |        |          |0 = SRAM parity check error interrupt is deasserted.
+ * |        |          |1 = SRAM parity check error interrupt is asserted.
+ * |[4]     |CLKFAIL   |Clock Fail Detected Interrupt Flag (Read Only)
+ * |        |          |0 = Clock fail detected interrupt is deasserted.
+ * |        |          |1 = Clock fail detected interrupt is asserted.
  * |[8]     |EINT0     |External Interrupt From PA.6 or PB.5 Pin Interrupt Flag (Read Only)
  * |        |          |0 = External Interrupt from PA.6 or PB.5 interrupt is deasserted.
  * |        |          |1 = External Interrupt from PA.6 or PB.5 interrupt is asserted.
@@ -1535,6 +1542,9 @@ typedef struct
 #define NMI_NMIEN_PWRWUINT_Pos           (2)                                               /*!< NMI_T::NMIEN: PWRWUINT Position        */
 #define NMI_NMIEN_PWRWUINT_Msk           (0x1ul << NMI_NMIEN_PWRWUINT_Pos)                 /*!< NMI_T::NMIEN: PWRWUINT Mask            */
 
+#define NMI_NMIEN_SRAMPERR_Pos           (3)                                               /*!< NMI_T::NMIEN: SRAMPERR Position        */
+#define NMI_NMIEN_SRAMPERR_Msk           (0x1ul << NMI_NMIEN_SRAMPERR_Pos)                 /*!< NMI_T::NMIEN: SRAMPERR Mask            */
+
 #define NMI_NMIEN_CLKFAIL_Pos            (4)                                               /*!< NMI_T::NMIEN: CLKFAIL Position         */
 #define NMI_NMIEN_CLKFAIL_Msk            (0x1ul << NMI_NMIEN_CLKFAIL_Pos)                  /*!< NMI_T::NMIEN: CLKFAIL Mask             */
 
@@ -1566,10 +1576,13 @@ typedef struct
 #define NMI_NMISTS_BODOUT_Msk            (0x1ul << NMI_NMISTS_BODOUT_Pos)                  /*!< NMI_T::NMISTS: BODOUT Mask             */
 
 #define NMI_NMISTS_IRCINT_Pos            (1)                                               /*!< NMI_T::NMISTS: IRCINT Position         */
-#define NMI_NMISTS_IRCINT_Msk           (0x1ul << NMI_NMISTS_IRCINT_Pos)                   /*!< NMI_T::NMISTS: IRCINT Mask             */
- 
+#define NMI_NMISTS_IRCINT_Msk            (0x1ul << NMI_NMISTS_IRCINT_Pos)                  /*!< NMI_T::NMISTS: IRCINT Mask             */
+
 #define NMI_NMISTS_PWRWUINT_Pos          (2)                                               /*!< NMI_T::NMISTS: PWRWUINT Position       */
 #define NMI_NMISTS_PWRWUINT_Msk          (0x1ul << NMI_NMISTS_PWRWUINT_Pos)                /*!< NMI_T::NMISTS: PWRWUINT Mask           */
+
+#define NMI_NMISTS_SRAMRERR_Pos          (3)                                               /*!< NMI_T::NMISTS: SRAMRERR Position       */
+#define NMI_NMISTS_SRAMRERR_Msk          (0x1ul << NMI_NMISTS_SRAMRERR_Pos)                /*!< NMI_T::NMISTS: SRAMRERR Mask           */
 
 #define NMI_NMISTS_CLKFAIL_Pos           (4)                                               /*!< NMI_T::NMISTS: CLKFAIL Position        */
 #define NMI_NMISTS_CLKFAIL_Msk           (0x1ul << NMI_NMISTS_CLKFAIL_Pos)                 /*!< NMI_T::NMISTS: CLKFAIL Mask            */

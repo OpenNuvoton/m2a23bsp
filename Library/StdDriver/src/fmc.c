@@ -90,7 +90,7 @@ int32_t FMC_Erase(uint32_t u32PageAddr)
   * @note     Global error code g_FMC_i32ErrCode
   *           -1  Erase failed or erase time-out
   */
-int32_t FMC_Erase_Bank(uint32_t u32BankAddr)
+int32_t FMC_EraseBank(uint32_t u32BankAddr)
 {
     int32_t  ret = 0;
     int32_t i32TimeOutCnt;
@@ -524,7 +524,7 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
         return -1;
 
     if ((FMC_Read(FMC_CONFIG_BASE) != 0xFFFFFFFF) || (FMC_Read(FMC_CONFIG_BASE+4) != 0xFFFFFFFF) ||
-            (FMC_Read(FMC_CONFIG_BASE+8) != 0xFFFF5A5A))
+            (FMC_Read(FMC_CONFIG_BASE+8) != 0xFFFFFF5A))
     {
         FMC_DISABLE_CFG_UPDATE();
         return -1;

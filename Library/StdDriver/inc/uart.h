@@ -39,13 +39,11 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 #define UART_FIFO_RFITL_1BYTE      (0x0 << UART_FIFO_RFITL_Pos)   /*!< UART_FIFO setting to set RX FIFO Trigger Level to 1 byte */
 #define UART_FIFO_RFITL_4BYTES     (0x1 << UART_FIFO_RFITL_Pos)   /*!< UART_FIFO setting to set RX FIFO Trigger Level to 4 bytes */
-#define UART_FIFO_RFITL_8BYTES     (0x2 << UART_FIFO_RFITL_Pos)   /*!< UART_FIFO setting to set RX FIFO Trigger Level to 8 bytes */
-#define UART_FIFO_RFITL_14BYTES    (0x3 << UART_FIFO_RFITL_Pos)   /*!< UART_FIFO setting to set RX FIFO Trigger Level to 14 bytes */
+#define UART_FIFO_RFITL_6BYTES     (0x2 << UART_FIFO_RFITL_Pos)   /*!< UART_FIFO setting to set RX FIFO Trigger Level to 6 bytes */
 
 #define UART_FIFO_RTSTRGLV_1BYTE      (0x0 << UART_FIFO_RTSTRGLV_Pos)  /*!< UART_FIFO setting to set RTS Trigger Level to 1 byte */
 #define UART_FIFO_RTSTRGLV_4BYTES     (0x1 << UART_FIFO_RTSTRGLV_Pos)  /*!< UART_FIFO setting to set RTS Trigger Level to 4 bytes */
-#define UART_FIFO_RTSTRGLV_8BYTES     (0x2 << UART_FIFO_RTSTRGLV_Pos)  /*!< UART_FIFO setting to set RTS Trigger Level to 8 bytes */
-#define UART_FIFO_RTSTRGLV_14BYTES    (0x3 << UART_FIFO_RTSTRGLV_Pos)  /*!< UART_FIFO setting to set RTS Trigger Level to 14 bytes */
+#define UART_FIFO_RTSTRGLV_6BYTES     (0x2 << UART_FIFO_RTSTRGLV_Pos)  /*!< UART_FIFO setting to set RTS Trigger Level to 6 bytes */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* UART_LINE constants definitions                                                                         */
