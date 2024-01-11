@@ -392,7 +392,7 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 {
     uint32_t u32sel = 0, u32div = 0;
-    uint32_t u32SelTbl[3] = {0x0, 0x4, 0x8};
+    uint32_t u32SelTbl[4] = {0x0, 0x4, 0x8, 0xC};
     uint32_t u32DivTbl[2] = {0x0, 0x4};
 
     if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk)
