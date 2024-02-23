@@ -102,7 +102,6 @@ __vector_table
     DCD     Default_Handler             ; Reserved
     DCD     USCI0_IRQHandler            ; USCI0
     DCD     USCI1_IRQHandler            ; USCI1
-    DCD     CRC_IRQHandler              ; CRC
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -171,6 +170,8 @@ HardFault_Handler\
     PUBWEAK  CANFD11_IRQHandler
     PUBWEAK  CANFD20_IRQHandler
     PUBWEAK  CANFD21_IRQHandler
+    PUBWEAK  USCI0_IRQHandler
+    PUBWEAK  USCI1_IRQHandler
 
     SECTION .text:CODE:REORDER:NOROOT(2)
 
@@ -224,7 +225,6 @@ CANFD20_IRQHandler
 CANFD21_IRQHandler
 USCI0_IRQHandler
 USCI1_IRQHandler
-CRC_IRQHandler
 Default_Handler
     B Default_Handler
 

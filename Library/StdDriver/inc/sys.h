@@ -4,7 +4,7 @@
  * @brief    M2A23 series System Manager (SYS) driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __SYS_H__
 #define __SYS_H__
@@ -31,10 +31,11 @@ extern "C"
 /*  Module Reset Control Resister constant definitions.                                                    */
 /*---------------------------------------------------------------------------------------------------------*/
 #define PDMA_RST    ((0x0<<24)|SYS_IPRST0_PDMARST_Pos)      /*!< PDMA reset is one of the SYS_ResetModule parameter */
+#define PDMA0_RST   PDMA_RST                                /*!< PDMA0 reset is one of the SYS_ResetModule parameter */
 #define CRC_RST     ((0x0<<24)|SYS_IPRST0_CRCRST_Pos)       /*!< CRC reset is one of the SYS_ResetModule parameter */
-#define CANFD0_RST  ((0UL<<24) | SYS_IPRST0_CANFD0RST_Pos)  /*!< CANFD0 reset is one of the SYS_ResetModule parameter */
-#define CANFD1_RST  ((0UL<<24) | SYS_IPRST0_CANFD1RST_Pos)  /*!< CANFD1 reset is one of the SYS_ResetModule parameter */
-#define CANFD2_RST  ((0UL<<24) | SYS_IPRST0_CANFD2RST_Pos)  /*!< CANFD2 reset is one of the SYS_ResetModule parameter */
+#define CANFD0_RST  ((0UL<<24)|SYS_IPRST0_CANFD0RST_Pos)    /*!< CANFD0 reset is one of the SYS_ResetModule parameter */
+#define CANFD1_RST  ((0UL<<24)|SYS_IPRST0_CANFD1RST_Pos)    /*!< CANFD1 reset is one of the SYS_ResetModule parameter */
+#define CANFD2_RST  ((0UL<<24)|SYS_IPRST0_CANFD2RST_Pos)    /*!< CANFD2 reset is one of the SYS_ResetModule parameter */
 
 #define GPIO_RST    ((0x4<<24)|SYS_IPRST1_GPIORST_Pos)      /*!< GPIO reset is one of the SYS_ResetModule parameter */
 #define TMR0_RST    ((0x4<<24)|SYS_IPRST1_TMR0RST_Pos)      /*!< TMR0 reset is one of the SYS_ResetModule parameter */
@@ -47,6 +48,7 @@ extern "C"
 #define UART0_RST   ((0x4<<24)|SYS_IPRST1_UART0RST_Pos)     /*!< UART0 reset is one of the SYS_ResetModule parameter */
 #define UART1_RST   ((0x4<<24)|SYS_IPRST1_UART1RST_Pos)     /*!< UART1 reset is one of the SYS_ResetModule parameter */
 #define ADC_RST     ((0x4<<24)|SYS_IPRST1_ADCRST_Pos)       /*!< ADC reset is one of the SYS_ResetModule parameter */
+#define ADC0_RST    ADC_RST                                 /*!< ADC0 reset is one of the SYS_ResetModule parameter */
 #define ACMP01_RST  ((0x4<<24)|SYS_IPRST1_ACMP01RST_Pos)    /*!< ACMP01 reset is one of the SYS_ResetModule parameter */
 
 #define PWM0_RST    ((0x8<<24)|SYS_IPRST2_PWM0RST_Pos)      /*!< PWM0 reset is one of the SYS_ResetModule parameter */
@@ -242,7 +244,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.0 MFP */
 #define SYS_GPB_MFPL_PB0MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for GPIO        */
-#define SYS_GPB_MFPL_PB0MFP_EADC0_CH0    (0x01UL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for EADC0_CH0   */
+#define SYS_GPB_MFPL_PB0MFP_ADC0_CH0     (0x01UL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for ADC0_CH0    */
 #define SYS_GPB_MFPL_PB0MFP_USCI0_CTL0   (0x08UL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for USCI0_CTL0  */
 #define SYS_GPB_MFPL_PB0MFP_CANFD0_RXD   (0x09UL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for CANFD0_RXD  */
 #define SYS_GPB_MFPL_PB0MFP_PWM0_CH5     (0x0bUL<<SYS_GPB_MFPL_PB0MFP_Pos) /*!< GPB_MFPL PB0 setting for PWM0_CH5    */
@@ -251,7 +253,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.1 MFP */
 #define SYS_GPB_MFPL_PB1MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for GPIO        */
-#define SYS_GPB_MFPL_PB1MFP_EADC0_CH1    (0x01UL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for EADC0_CH1   */
+#define SYS_GPB_MFPL_PB1MFP_ADC0_CH1     (0x01UL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for ADC0_CH1    */
 #define SYS_GPB_MFPL_PB1MFP_USCI1_CLK    (0x08UL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for USCI1_CLK   */
 #define SYS_GPB_MFPL_PB1MFP_CANFD0_TXD   (0x09UL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for CANFD0_TXD  */
 #define SYS_GPB_MFPL_PB1MFP_CANFD0_TXH   (0x0aUL<<SYS_GPB_MFPL_PB1MFP_Pos) /*!< GPB_MFPL PB1 setting for CANFD0_TXH  */
@@ -260,7 +262,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.2 MFP */
 #define SYS_GPB_MFPL_PB2MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for GPIO        */
-#define SYS_GPB_MFPL_PB2MFP_EADC0_CH2    (0x01UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for EADC0_CH2   */
+#define SYS_GPB_MFPL_PB2MFP_ADC0_CH2     (0x01UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for ADC0_CH2    */
 #define SYS_GPB_MFPL_PB2MFP_ACMP0_P1     (0x01UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for ACMP0_P1    */
 #define SYS_GPB_MFPL_PB2MFP_UART1_RXD    (0x02UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for UART1_RXD   */
 #define SYS_GPB_MFPL_PB2MFP_I2C0_SMBSUS  (0x06UL<<SYS_GPB_MFPL_PB2MFP_Pos) /*!< GPB_MFPL PB2 setting for I2C0_SMBSUS */
@@ -272,7 +274,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.3 MFP */
 #define SYS_GPB_MFPL_PB3MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for GPIO        */
-#define SYS_GPB_MFPL_PB3MFP_EADC0_CH3    (0x01UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for EADC0_CH3   */
+#define SYS_GPB_MFPL_PB3MFP_ADC0_CH3     (0x01UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for ADC0_CH3    */
 #define SYS_GPB_MFPL_PB3MFP_ACMP0_N      (0x01UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for ACMP0_N     */
 #define SYS_GPB_MFPL_PB3MFP_UART1_TXD    (0x02UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for UART1_TXD   */
 #define SYS_GPB_MFPL_PB3MFP_I2C0_SMBAL   (0x06UL<<SYS_GPB_MFPL_PB3MFP_Pos) /*!< GPB_MFPL PB3 setting for I2C0_SMBAL  */
@@ -286,7 +288,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.4 MFP */
 #define SYS_GPB_MFPL_PB4MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for GPIO        */
-#define SYS_GPB_MFPL_PB4MFP_EADC0_CH4    (0x01UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for EADC0_CH4   */
+#define SYS_GPB_MFPL_PB4MFP_ADC0_CH4     (0x01UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for ADC0_CH4    */
 #define SYS_GPB_MFPL_PB4MFP_ACMP1_P1     (0x01UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for ACMP1_P1    */
 #define SYS_GPB_MFPL_PB4MFP_I2C0_SDA     (0x06UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for I2C0_SDA    */
 #define SYS_GPB_MFPL_PB4MFP_USCI1_CTL1   (0x08UL<<SYS_GPB_MFPL_PB4MFP_Pos) /*!< GPB_MFPL PB4 setting for USCI1_CTL1  */
@@ -297,7 +299,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.5 MFP */
 #define SYS_GPB_MFPL_PB5MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for GPIO        */
-#define SYS_GPB_MFPL_PB5MFP_EADC0_CH5    (0x01UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for EADC0_CH5   */
+#define SYS_GPB_MFPL_PB5MFP_ADC0_CH5     (0x01UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for ADC0_CH5    */
 #define SYS_GPB_MFPL_PB5MFP_ACMP1_N      (0x01UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for ACMP1_N     */
 #define SYS_GPB_MFPL_PB5MFP_I2C0_SCL     (0x06UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for I2C0_SCL    */
 #define SYS_GPB_MFPL_PB5MFP_USCI1_CTL0   (0x08UL<<SYS_GPB_MFPL_PB5MFP_Pos) /*!< GPB_MFPL PB5 setting for USCI1_CTL0  */
@@ -309,7 +311,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.6 MFP */
 #define SYS_GPB_MFPL_PB6MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for GPIO        */
-#define SYS_GPB_MFPL_PB6MFP_EADC0_CH6    (0x01UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for EADC0_CH6   */
+#define SYS_GPB_MFPL_PB6MFP_ADC0_CH6     (0x01UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for ADC0_CH6    */
 #define SYS_GPB_MFPL_PB6MFP_UART1_RXD    (0x03UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for UART1_RXD   */
 #define SYS_GPB_MFPL_PB6MFP_USCI1_DAT1   (0x08UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for USCI1_DAT1  */
 #define SYS_GPB_MFPL_PB6MFP_CANFD1_RXD   (0x09UL<<SYS_GPB_MFPL_PB6MFP_Pos) /*!< GPB_MFPL PB6 setting for CANFD1_RXD  */
@@ -319,7 +321,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.7 MFP */
 #define SYS_GPB_MFPL_PB7MFP_GPIO         (0x00UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for GPIO        */
-#define SYS_GPB_MFPL_PB7MFP_EADC0_CH7    (0x01UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for EADC0_CH7   */
+#define SYS_GPB_MFPL_PB7MFP_ADC0_CH7     (0x01UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for ADC0_CH7    */
 #define SYS_GPB_MFPL_PB7MFP_UART1_TXD    (0x03UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for UART1_TXD   */
 #define SYS_GPB_MFPL_PB7MFP_USCI1_DAT0   (0x08UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for USCI1_DAT0  */
 #define SYS_GPB_MFPL_PB7MFP_CANFD1_TXD   (0x09UL<<SYS_GPB_MFPL_PB7MFP_Pos) /*!< GPB_MFPL PB7 setting for CANFD1_TXD  */
@@ -329,7 +331,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.8 MFP */
 #define SYS_GPB_MFPH_PB8MFP_GPIO         (0x00UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for GPIO        */
-#define SYS_GPB_MFPH_PB8MFP_EADC0_CH8    (0x01UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for EADC0_CH8   */
+#define SYS_GPB_MFPH_PB8MFP_ADC0_CH8     (0x01UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for ADC0_CH8    */
 #define SYS_GPB_MFPH_PB8MFP_UART0_RXD    (0x02UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for UART0_RXD   */
 #define SYS_GPB_MFPH_PB8MFP_UART1_nRTS   (0x03UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for UART1_nRTS  */
 #define SYS_GPB_MFPH_PB8MFP_USCI1_CLK    (0x08UL<<SYS_GPB_MFPH_PB8MFP_Pos) /*!< GPB_MFPH PB8 setting for USCI1_CLK   */
@@ -338,7 +340,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.9 MFP */
 #define SYS_GPB_MFPH_PB9MFP_GPIO         (0x00UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for GPIO        */
-#define SYS_GPB_MFPH_PB9MFP_EADC0_CH9    (0x01UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for EADC0_CH9   */
+#define SYS_GPB_MFPH_PB9MFP_ADC0_CH9     (0x01UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for ADC0_CH9    */
 #define SYS_GPB_MFPH_PB9MFP_UART0_TXD    (0x02UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for UART0_TXD   */
 #define SYS_GPB_MFPH_PB9MFP_UART1_nCTS   (0x03UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for UART1_nCTS  */
 #define SYS_GPB_MFPH_PB9MFP_USCI1_CTL1   (0x08UL<<SYS_GPB_MFPH_PB9MFP_Pos) /*!< GPB_MFPH PB9 setting for USCI1_CTL1  */
@@ -347,7 +349,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.10 MFP */
 #define SYS_GPB_MFPH_PB10MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for GPIO       */
-#define SYS_GPB_MFPH_PB10MFP_EADC0_CH10  (0x01UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for EADC0_CH10 */
+#define SYS_GPB_MFPH_PB10MFP_ADC0_CH10   (0x01UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for ADC0_CH10  */
 #define SYS_GPB_MFPH_PB10MFP_UART0_nRTS  (0x02UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for UART0_nRTS */
 #define SYS_GPB_MFPH_PB10MFP_USCI1_CTL0  (0x08UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for USCI1_CTL0 */
 #define SYS_GPB_MFPH_PB10MFP_CANFD0_RXD  (0x09UL<<SYS_GPB_MFPH_PB10MFP_Pos)/*!< GPB_MFPH PB10 setting for CANFD0_RXD */
@@ -355,14 +357,14 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.11 MFP */
 #define SYS_GPB_MFPH_PB11MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for GPIO       */
-#define SYS_GPB_MFPH_PB11MFP_EADC0_CH11  (0x01UL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for EADC0_CH11 */
+#define SYS_GPB_MFPH_PB11MFP_ADC0_CH11   (0x01UL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for ADC0_CH11  */
 #define SYS_GPB_MFPH_PB11MFP_UART0_nCTS  (0x02UL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for UART0_nCTS */
 #define SYS_GPB_MFPH_PB11MFP_CANFD0_TXD  (0x09UL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for CANFD0_TXD */
 #define SYS_GPB_MFPH_PB11MFP_CANFD0_TXH  (0x0aUL<<SYS_GPB_MFPH_PB11MFP_Pos)/*!< GPB_MFPH PB11 setting for CANFD0_TXH */
 
 /* PB.12 MFP */
 #define SYS_GPB_MFPH_PB12MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for GPIO       */
-#define SYS_GPB_MFPH_PB12MFP_EADC0_CH12  (0x01UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for EADC0_CH12 */
+#define SYS_GPB_MFPH_PB12MFP_ADC0_CH12   (0x01UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for ADC0_CH12  */
 #define SYS_GPB_MFPH_PB12MFP_ACMP0_P2    (0x01UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for ACMP0_P2   */
 #define SYS_GPB_MFPH_PB12MFP_ACMP1_P2    (0x01UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for ACMP1_P2   */
 #define SYS_GPB_MFPH_PB12MFP_UART0_RXD   (0x02UL<<SYS_GPB_MFPH_PB12MFP_Pos)/*!< GPB_MFPH PB12 setting for UART0_RXD  */
@@ -374,7 +376,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.13 MFP */
 #define SYS_GPB_MFPH_PB13MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for GPIO       */
-#define SYS_GPB_MFPH_PB13MFP_EADC0_CH13  (0x01UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for EADC0_CH13 */
+#define SYS_GPB_MFPH_PB13MFP_ADC0_CH13   (0x01UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for ADC0_CH13  */
 #define SYS_GPB_MFPH_PB13MFP_ACMP0_P3    (0x01UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for ACMP0_P3   */
 #define SYS_GPB_MFPH_PB13MFP_ACMP1_P3    (0x01UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for ACMP1_P3   */
 #define SYS_GPB_MFPH_PB13MFP_UART0_TXD   (0x02UL<<SYS_GPB_MFPH_PB13MFP_Pos)/*!< GPB_MFPH PB13 setting for UART0_TXD  */
@@ -387,7 +389,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.14 MFP */
 #define SYS_GPB_MFPH_PB14MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for GPIO       */
-#define SYS_GPB_MFPH_PB14MFP_EADC0_CH14  (0x01UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for EADC0_CH14 */
+#define SYS_GPB_MFPH_PB14MFP_ADC0_CH14   (0x01UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for ADC0_CH14  */
 #define SYS_GPB_MFPH_PB14MFP_UART0_nRTS  (0x02UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for UART0_nRTS */
 #define SYS_GPB_MFPH_PB14MFP_SPI0_CLK    (0x04UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for SPI0_CLK   */
 #define SYS_GPB_MFPH_PB14MFP_LLSI1_OUT   (0x07UL<<SYS_GPB_MFPH_PB14MFP_Pos)/*!< GPB_MFPH PB14 setting for LLSI1_OUT  */
@@ -399,7 +401,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 
 /* PB.15 MFP */
 #define SYS_GPB_MFPH_PB15MFP_GPIO        (0x00UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for GPIO       */
-#define SYS_GPB_MFPH_PB15MFP_EADC0_CH15  (0x01UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for EADC0_CH15 */
+#define SYS_GPB_MFPH_PB15MFP_ADC0_CH15   (0x01UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for ADC0_CH15  */
 #define SYS_GPB_MFPH_PB15MFP_UART0_nCTS  (0x02UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for UART0_nCTS */
 #define SYS_GPB_MFPH_PB15MFP_SPI0_SS     (0x04UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for SPI0_SS    */
 #define SYS_GPB_MFPH_PB15MFP_LLSI0_OUT   (0x07UL<<SYS_GPB_MFPH_PB15MFP_Pos)/*!< GPB_MFPH PB15 setting for LLSI0_OUT  */
@@ -421,7 +423,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 #define SYS_GPC_MFPL_PC1MFP_CANFD2_TXD   (0x09UL<<SYS_GPC_MFPL_PC1MFP_Pos) /*!< GPC_MFPL PC1 setting for CANFD2_TXD  */
 #define SYS_GPC_MFPL_PC1MFP_CANFD2_TXH   (0x0aUL<<SYS_GPC_MFPL_PC1MFP_Pos) /*!< GPC_MFPL PC1 setting for CANFD2_TXH  */
 #define SYS_GPC_MFPL_PC1MFP_ACMP0_O      (0x0dUL<<SYS_GPC_MFPL_PC1MFP_Pos) /*!< GPC_MFPL PC1 setting for ACMP0_O     */
-#define SYS_GPC_MFPL_PC1MFP_EADC0_ST     (0x0fUL<<SYS_GPC_MFPL_PC1MFP_Pos) /*!< GPC_MFPL PC1 setting for EADC0_ST    */
+#define SYS_GPC_MFPL_PC1MFP_ADC0_ST      (0x0fUL<<SYS_GPC_MFPL_PC1MFP_Pos) /*!< GPC_MFPL PC1 setting for ADC0_ST     */
 
 /* PC.2 MFP */
 #define SYS_GPC_MFPL_PC2MFP_GPIO         (0x00UL<<SYS_GPC_MFPL_PC2MFP_Pos) /*!< GPC_MFPL PC2 setting for GPIO        */
@@ -538,7 +540,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 #define SYS_GPF_MFPL_PF5MFP_LLSI0_OUT    (0x07UL<<SYS_GPF_MFPL_PF5MFP_Pos) /*!< GPF_MFPL PF5 setting for LLSI0_OUT   */
 #define SYS_GPF_MFPL_PF5MFP_PWM0_CH0     (0x0bUL<<SYS_GPF_MFPL_PF5MFP_Pos) /*!< GPF_MFPL PF5 setting for PWM0_CH0    */
 #define SYS_GPF_MFPL_PF5MFP_BPWM0_CH4    (0x0cUL<<SYS_GPF_MFPL_PF5MFP_Pos) /*!< GPF_MFPL PF5 setting for BPWM0_CH4   */
-#define SYS_GPF_MFPL_PF5MFP_EADC0_ST     (0x0fUL<<SYS_GPF_MFPL_PF5MFP_Pos) /*!< GPF_MFPL PF5 setting for EADC0_ST    */
+#define SYS_GPF_MFPL_PF5MFP_ADC0_ST      (0x0fUL<<SYS_GPF_MFPL_PF5MFP_Pos) /*!< GPF_MFPL PF5 setting for ADC0_ST     */
 
 /* PF.6 MFP */
 #define SYS_GPF_MFPL_PF6MFP_GPIO         (0x00UL<<SYS_GPF_MFPL_PF6MFP_Pos) /*!< GPF_MFPL PF6 setting for GPIO        */
@@ -665,24 +667,24 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 #define CLKO_PF14                SYS_GPF_MFPH_PF14MFP_CLKO            /*!< GPF_MFPH PF14 setting for CLKO*/
 #define CLKO_PA3                 SYS_GPA_MFPL_PA3MFP_CLKO             /*!< GPA_MFPL PA3 setting for CLKO*/
 #define CLKO_PF15                SYS_GPF_MFPH_PF15MFP_CLKO            /*!< GPF_MFPH PF15 setting for CLKO*/
-#define EADC0_CH0_PB0            SYS_GPB_MFPL_PB0MFP_EADC0_CH0        /*!< GPB_MFPL PB0 setting for EADC0_CH0*/
-#define EADC0_CH1_PB1            SYS_GPB_MFPL_PB1MFP_EADC0_CH1        /*!< GPB_MFPL PB1 setting for EADC0_CH1*/
-#define EADC0_CH10_PB10          SYS_GPB_MFPH_PB10MFP_EADC0_CH10      /*!< GPB_MFPH PB10 setting for EADC0_CH10*/
-#define EADC0_CH11_PB11          SYS_GPB_MFPH_PB11MFP_EADC0_CH11      /*!< GPB_MFPH PB11 setting for EADC0_CH11*/
-#define EADC0_CH12_PB12          SYS_GPB_MFPH_PB12MFP_EADC0_CH12      /*!< GPB_MFPH PB12 setting for EADC0_CH12*/
-#define EADC0_CH13_PB13          SYS_GPB_MFPH_PB13MFP_EADC0_CH13      /*!< GPB_MFPH PB13 setting for EADC0_CH13*/
-#define EADC0_CH14_PB14          SYS_GPB_MFPH_PB14MFP_EADC0_CH14      /*!< GPB_MFPH PB14 setting for EADC0_CH14*/
-#define EADC0_CH15_PB15          SYS_GPB_MFPH_PB15MFP_EADC0_CH15      /*!< GPB_MFPH PB15 setting for EADC0_CH15*/
-#define EADC0_CH2_PB2            SYS_GPB_MFPL_PB2MFP_EADC0_CH2        /*!< GPB_MFPL PB2 setting for EADC0_CH2*/
-#define EADC0_CH3_PB3            SYS_GPB_MFPL_PB3MFP_EADC0_CH3        /*!< GPB_MFPL PB3 setting for EADC0_CH3*/
-#define EADC0_CH4_PB4            SYS_GPB_MFPL_PB4MFP_EADC0_CH4        /*!< GPB_MFPL PB4 setting for EADC0_CH4*/
-#define EADC0_CH5_PB5            SYS_GPB_MFPL_PB5MFP_EADC0_CH5        /*!< GPB_MFPL PB5 setting for EADC0_CH5*/
-#define EADC0_CH6_PB6            SYS_GPB_MFPL_PB6MFP_EADC0_CH6        /*!< GPB_MFPL PB6 setting for EADC0_CH6*/
-#define EADC0_CH7_PB7            SYS_GPB_MFPL_PB7MFP_EADC0_CH7        /*!< GPB_MFPL PB7 setting for EADC0_CH7*/
-#define EADC0_CH8_PB8            SYS_GPB_MFPH_PB8MFP_EADC0_CH8        /*!< GPB_MFPH PB8 setting for EADC0_CH8*/
-#define EADC0_CH9_PB9            SYS_GPB_MFPH_PB9MFP_EADC0_CH9        /*!< GPB_MFPH PB9 setting for EADC0_CH9*/
-#define EADC0_ST_PC1             SYS_GPC_MFPL_PC1MFP_EADC0_ST         /*!< GPC_MFPL PC1 setting for EADC0_ST*/
-#define EADC0_ST_PF5             SYS_GPF_MFPL_PF5MFP_EADC0_ST         /*!< GPF_MFPL PF5 setting for EADC0_ST*/
+#define ADC0_CH0_PB0             SYS_GPB_MFPL_PB0MFP_ADC0_CH0         /*!< GPB_MFPL PB0 setting for ADC0_CH0*/
+#define ADC0_CH1_PB1             SYS_GPB_MFPL_PB1MFP_ADC0_CH1         /*!< GPB_MFPL PB1 setting for ADC0_CH1*/
+#define ADC0_CH10_PB10           SYS_GPB_MFPH_PB10MFP_ADC0_CH10       /*!< GPB_MFPH PB10 setting for ADC0_CH10*/
+#define ADC0_CH11_PB11           SYS_GPB_MFPH_PB11MFP_ADC0_CH11       /*!< GPB_MFPH PB11 setting for ADC0_CH11*/
+#define ADC0_CH12_PB12           SYS_GPB_MFPH_PB12MFP_ADC0_CH12       /*!< GPB_MFPH PB12 setting for ADC0_CH12*/
+#define ADC0_CH13_PB13           SYS_GPB_MFPH_PB13MFP_ADC0_CH13       /*!< GPB_MFPH PB13 setting for ADC0_CH13*/
+#define ADC0_CH14_PB14           SYS_GPB_MFPH_PB14MFP_ADC0_CH14       /*!< GPB_MFPH PB14 setting for ADC0_CH14*/
+#define ADC0_CH15_PB15           SYS_GPB_MFPH_PB15MFP_ADC0_CH15       /*!< GPB_MFPH PB15 setting for ADC0_CH15*/
+#define ADC0_CH2_PB2             SYS_GPB_MFPL_PB2MFP_ADC0_CH2         /*!< GPB_MFPL PB2 setting for ADC0_CH2*/
+#define ADC0_CH3_PB3             SYS_GPB_MFPL_PB3MFP_ADC0_CH3         /*!< GPB_MFPL PB3 setting for ADC0_CH3*/
+#define ADC0_CH4_PB4             SYS_GPB_MFPL_PB4MFP_ADC0_CH4         /*!< GPB_MFPL PB4 setting for ADC0_CH4*/
+#define ADC0_CH5_PB5             SYS_GPB_MFPL_PB5MFP_ADC0_CH5         /*!< GPB_MFPL PB5 setting for ADC0_CH5*/
+#define ADC0_CH6_PB6             SYS_GPB_MFPL_PB6MFP_ADC0_CH6         /*!< GPB_MFPL PB6 setting for ADC0_CH6*/
+#define ADC0_CH7_PB7             SYS_GPB_MFPL_PB7MFP_ADC0_CH7         /*!< GPB_MFPL PB7 setting for ADC0_CH7*/
+#define ADC0_CH8_PB8             SYS_GPB_MFPH_PB8MFP_ADC0_CH8         /*!< GPB_MFPH PB8 setting for ADC0_CH8*/
+#define ADC0_CH9_PB9             SYS_GPB_MFPH_PB9MFP_ADC0_CH9         /*!< GPB_MFPH PB9 setting for ADC0_CH9*/
+#define ADC0_ST_PC1              SYS_GPC_MFPL_PC1MFP_ADC0_ST          /*!< GPC_MFPL PC1 setting for ADC0_ST*/
+#define ADC0_ST_PF5              SYS_GPF_MFPL_PF5MFP_ADC0_ST          /*!< GPF_MFPL PF5 setting for ADC0_ST*/
 #define I2C0_SCL_PB13            SYS_GPB_MFPH_PB13MFP_I2C0_SCL        /*!< GPB_MFPH PB13 setting for I2C0_SCL*/
 #define I2C0_SCL_PB5             SYS_GPB_MFPL_PB5MFP_I2C0_SCL         /*!< GPB_MFPL PB5 setting for I2C0_SCL*/
 #define I2C0_SCL_PA5             SYS_GPA_MFPL_PA5MFP_I2C0_SCL         /*!< GPA_MFPL PA5 setting for I2C0_SCL*/
@@ -961,24 +963,24 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 #define CLKO_PF14_Msk           SYS_GPF_MFPH_PF14MFP_Msk       /*!< CLKO            PF14     MFP Mask */
 #define CLKO_PA3_Msk            SYS_GPA_MFPL_PA3MFP_Msk        /*!< CLKO            PA3      MFP Mask */
 #define CLKO_PF15_Msk           SYS_GPF_MFPH_PF15MFP_Msk       /*!< CLKO            PF15     MFP Mask */
-#define EADC0_CH0_PB0_Msk       SYS_GPB_MFPL_PB0MFP_Msk        /*!< EADC0_CH0       PB0      MFP Mask */
-#define EADC0_CH1_PB1_Msk       SYS_GPB_MFPL_PB1MFP_Msk        /*!< EADC0_CH1       PB1      MFP Mask */
-#define EADC0_CH10_PB10_Msk     SYS_GPB_MFPH_PB10MFP_Msk       /*!< EADC0_CH10      PB10     MFP Mask */
-#define EADC0_CH11_PB11_Msk     SYS_GPB_MFPH_PB11MFP_Msk       /*!< EADC0_CH11      PB11     MFP Mask */
-#define EADC0_CH12_PB12_Msk     SYS_GPB_MFPH_PB12MFP_Msk       /*!< EADC0_CH12      PB12     MFP Mask */
-#define EADC0_CH13_PB13_Msk     SYS_GPB_MFPH_PB13MFP_Msk       /*!< EADC0_CH13      PB13     MFP Mask */
-#define EADC0_CH14_PB14_Msk     SYS_GPB_MFPH_PB14MFP_Msk       /*!< EADC0_CH14      PB14     MFP Mask */
-#define EADC0_CH15_PB15_Msk     SYS_GPB_MFPH_PB15MFP_Msk       /*!< EADC0_CH15      PB15     MFP Mask */
-#define EADC0_CH2_PB2_Msk       SYS_GPB_MFPL_PB2MFP_Msk        /*!< EADC0_CH2       PB2      MFP Mask */
-#define EADC0_CH3_PB3_Msk       SYS_GPB_MFPL_PB3MFP_Msk        /*!< EADC0_CH3       PB3      MFP Mask */
-#define EADC0_CH4_PB4_Msk       SYS_GPB_MFPL_PB4MFP_Msk        /*!< EADC0_CH4       PB4      MFP Mask */
-#define EADC0_CH5_PB5_Msk       SYS_GPB_MFPL_PB5MFP_Msk        /*!< EADC0_CH5       PB5      MFP Mask */
-#define EADC0_CH6_PB6_Msk       SYS_GPB_MFPL_PB6MFP_Msk        /*!< EADC0_CH6       PB6      MFP Mask */
-#define EADC0_CH7_PB7_Msk       SYS_GPB_MFPL_PB7MFP_Msk        /*!< EADC0_CH7       PB7      MFP Mask */
-#define EADC0_CH8_PB8_Msk       SYS_GPB_MFPH_PB8MFP_Msk        /*!< EADC0_CH8       PB8      MFP Mask */
-#define EADC0_CH9_PB9_Msk       SYS_GPB_MFPH_PB9MFP_Msk        /*!< EADC0_CH9       PB9      MFP Mask */
-#define EADC0_ST_PC1_Msk        SYS_GPC_MFPL_PC1MFP_Msk        /*!< EADC0_ST        PC1      MFP Mask */
-#define EADC0_ST_PF5_Msk        SYS_GPF_MFPL_PF5MFP_Msk        /*!< EADC0_ST        PF5      MFP Mask */
+#define ADC0_CH0_PB0_Msk        SYS_GPB_MFPL_PB0MFP_Msk        /*!< ADC0_CH0        PB0      MFP Mask */
+#define ADC0_CH1_PB1_Msk        SYS_GPB_MFPL_PB1MFP_Msk        /*!< ADC0_CH1        PB1      MFP Mask */
+#define ADC0_CH10_PB10_Msk      SYS_GPB_MFPH_PB10MFP_Msk       /*!< ADC0_CH10       PB10     MFP Mask */
+#define ADC0_CH11_PB11_Msk      SYS_GPB_MFPH_PB11MFP_Msk       /*!< ADC0_CH11       PB11     MFP Mask */
+#define ADC0_CH12_PB12_Msk      SYS_GPB_MFPH_PB12MFP_Msk       /*!< ADC0_CH12       PB12     MFP Mask */
+#define ADC0_CH13_PB13_Msk      SYS_GPB_MFPH_PB13MFP_Msk       /*!< ADC0_CH13       PB13     MFP Mask */
+#define ADC0_CH14_PB14_Msk      SYS_GPB_MFPH_PB14MFP_Msk       /*!< ADC0_CH14       PB14     MFP Mask */
+#define ADC0_CH15_PB15_Msk      SYS_GPB_MFPH_PB15MFP_Msk       /*!< ADC0_CH15       PB15     MFP Mask */
+#define ADC0_CH2_PB2_Msk        SYS_GPB_MFPL_PB2MFP_Msk        /*!< ADC0_CH2        PB2      MFP Mask */
+#define ADC0_CH3_PB3_Msk        SYS_GPB_MFPL_PB3MFP_Msk        /*!< ADC0_CH3        PB3      MFP Mask */
+#define ADC0_CH4_PB4_Msk        SYS_GPB_MFPL_PB4MFP_Msk        /*!< ADC0_CH4        PB4      MFP Mask */
+#define ADC0_CH5_PB5_Msk        SYS_GPB_MFPL_PB5MFP_Msk        /*!< ADC0_CH5        PB5      MFP Mask */
+#define ADC0_CH6_PB6_Msk        SYS_GPB_MFPL_PB6MFP_Msk        /*!< ADC0_CH6        PB6      MFP Mask */
+#define ADC0_CH7_PB7_Msk        SYS_GPB_MFPL_PB7MFP_Msk        /*!< ADC0_CH7        PB7      MFP Mask */
+#define ADC0_CH8_PB8_Msk        SYS_GPB_MFPH_PB8MFP_Msk        /*!< ADC0_CH8        PB8      MFP Mask */
+#define ADC0_CH9_PB9_Msk        SYS_GPB_MFPH_PB9MFP_Msk        /*!< ADC0_CH9        PB9      MFP Mask */
+#define ADC0_ST_PC1_Msk         SYS_GPC_MFPL_PC1MFP_Msk        /*!< ADC0_ST         PC1      MFP Mask */
+#define ADC0_ST_PF5_Msk         SYS_GPF_MFPL_PF5MFP_Msk        /*!< ADC0_ST         PF5      MFP Mask */
 #define I2C0_SCL_PB13_Msk       SYS_GPB_MFPH_PB13MFP_Msk       /*!< I2C0_SCL        PB13     MFP Mask */
 #define I2C0_SCL_PB5_Msk        SYS_GPB_MFPL_PB5MFP_Msk        /*!< I2C0_SCL        PB5      MFP Mask */
 #define I2C0_SCL_PA5_Msk        SYS_GPA_MFPL_PA5MFP_Msk        /*!< I2C0_SCL        PA5      MFP Mask */
@@ -1265,24 +1267,24 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
 #define SET_CLKO_PF14()          SYS->GPF_MFPH = (SYS->GPF_MFPH & (~CLKO_PF14_Msk)) | CLKO_PF14                  /*!< Set PF14 function to CLKO            */
 #define SET_CLKO_PA3()           SYS->GPA_MFPL = (SYS->GPA_MFPL & (~CLKO_PA3_Msk)) | CLKO_PA3                    /*!< Set PA3 function to CLKO             */
 #define SET_CLKO_PF15()          SYS->GPF_MFPH = (SYS->GPF_MFPH & (~CLKO_PF15_Msk)) | CLKO_PF15                  /*!< Set PF15 function to CLKO            */
-#define SET_EADC0_CH0_PB0()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH0_PB0_Msk)) | EADC0_CH0_PB0          /*!< Set PB0 function to EADC0_CH0        */
-#define SET_EADC0_CH1_PB1()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH1_PB1_Msk)) | EADC0_CH1_PB1          /*!< Set PB1 function to EADC0_CH1        */
-#define SET_EADC0_CH10_PB10()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH10_PB10_Msk)) | EADC0_CH10_PB10      /*!< Set PB10 function to EADC0_CH10      */
-#define SET_EADC0_CH11_PB11()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH11_PB11_Msk)) | EADC0_CH11_PB11      /*!< Set PB11 function to EADC0_CH11      */
-#define SET_EADC0_CH12_PB12()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH12_PB12_Msk)) | EADC0_CH12_PB12      /*!< Set PB12 function to EADC0_CH12      */
-#define SET_EADC0_CH13_PB13()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH13_PB13_Msk)) | EADC0_CH13_PB13      /*!< Set PB13 function to EADC0_CH13      */
-#define SET_EADC0_CH14_PB14()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH14_PB14_Msk)) | EADC0_CH14_PB14      /*!< Set PB14 function to EADC0_CH14      */
-#define SET_EADC0_CH15_PB15()    SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH15_PB15_Msk)) | EADC0_CH15_PB15      /*!< Set PB15 function to EADC0_CH15      */
-#define SET_EADC0_CH2_PB2()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH2_PB2_Msk)) | EADC0_CH2_PB2          /*!< Set PB2 function to EADC0_CH2        */
-#define SET_EADC0_CH3_PB3()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH3_PB3_Msk)) | EADC0_CH3_PB3          /*!< Set PB3 function to EADC0_CH3        */
-#define SET_EADC0_CH4_PB4()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH4_PB4_Msk)) | EADC0_CH4_PB4          /*!< Set PB4 function to EADC0_CH4        */
-#define SET_EADC0_CH5_PB5()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH5_PB5_Msk)) | EADC0_CH5_PB5          /*!< Set PB5 function to EADC0_CH5        */
-#define SET_EADC0_CH6_PB6()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH6_PB6_Msk)) | EADC0_CH6_PB6          /*!< Set PB6 function to EADC0_CH6        */
-#define SET_EADC0_CH7_PB7()      SYS->GPB_MFPL = (SYS->GPB_MFPL & (~EADC0_CH7_PB7_Msk)) | EADC0_CH7_PB7          /*!< Set PB7 function to EADC0_CH7        */
-#define SET_EADC0_CH8_PB8()      SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH8_PB8_Msk)) | EADC0_CH8_PB8          /*!< Set PB8 function to EADC0_CH8        */
-#define SET_EADC0_CH9_PB9()      SYS->GPB_MFPH = (SYS->GPB_MFPH & (~EADC0_CH9_PB9_Msk)) | EADC0_CH9_PB9          /*!< Set PB9 function to EADC0_CH9        */
-#define SET_EADC0_ST_PC1()       SYS->GPC_MFPL = (SYS->GPC_MFPL & (~EADC0_ST_PC1_Msk)) | EADC0_ST_PC1            /*!< Set PC1 function to EADC0_ST         */
-#define SET_EADC0_ST_PF5()       SYS->GPF_MFPL = (SYS->GPF_MFPL & (~EADC0_ST_PF5_Msk)) | EADC0_ST_PF5            /*!< Set PF5 function to EADC0_ST         */
+#define SET_ADC0_CH0_PB0()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH0_PB0_Msk)) | ADC0_CH0_PB0            /*!< Set PB0 function to ADC0_CH0         */
+#define SET_ADC0_CH1_PB1()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH1_PB1_Msk)) | ADC0_CH1_PB1            /*!< Set PB1 function to ADC0_CH1         */
+#define SET_ADC0_CH10_PB10()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH10_PB10_Msk)) | ADC0_CH10_PB10        /*!< Set PB10 function to ADC0_CH10       */
+#define SET_ADC0_CH11_PB11()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH11_PB11_Msk)) | ADC0_CH11_PB11        /*!< Set PB11 function to ADC0_CH11       */
+#define SET_ADC0_CH12_PB12()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH12_PB12_Msk)) | ADC0_CH12_PB12        /*!< Set PB12 function to ADC0_CH12       */
+#define SET_ADC0_CH13_PB13()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH13_PB13_Msk)) | ADC0_CH13_PB13        /*!< Set PB13 function to ADC0_CH13       */
+#define SET_ADC0_CH14_PB14()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH14_PB14_Msk)) | ADC0_CH14_PB14        /*!< Set PB14 function to ADC0_CH14       */
+#define SET_ADC0_CH15_PB15()     SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH15_PB15_Msk)) | ADC0_CH15_PB15        /*!< Set PB15 function to ADC0_CH15       */
+#define SET_ADC0_CH2_PB2()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH2_PB2_Msk)) | ADC0_CH2_PB2            /*!< Set PB2 function to ADC0_CH2         */
+#define SET_ADC0_CH3_PB3()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH3_PB3_Msk)) | ADC0_CH3_PB3            /*!< Set PB3 function to ADC0_CH3         */
+#define SET_ADC0_CH4_PB4()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH4_PB4_Msk)) | ADC0_CH4_PB4            /*!< Set PB4 function to ADC0_CH4         */
+#define SET_ADC0_CH5_PB5()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH5_PB5_Msk)) | ADC0_CH5_PB5            /*!< Set PB5 function to ADC0_CH5         */
+#define SET_ADC0_CH6_PB6()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH6_PB6_Msk)) | ADC0_CH6_PB6            /*!< Set PB6 function to ADC0_CH6         */
+#define SET_ADC0_CH7_PB7()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~ADC0_CH7_PB7_Msk)) | ADC0_CH7_PB7            /*!< Set PB7 function to ADC0_CH7         */
+#define SET_ADC0_CH8_PB8()       SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH8_PB8_Msk)) | ADC0_CH8_PB8            /*!< Set PB8 function to ADC0_CH8         */
+#define SET_ADC0_CH9_PB9()       SYS->GPB_MFPH = (SYS->GPB_MFPH & (~ADC0_CH9_PB9_Msk)) | ADC0_CH9_PB9            /*!< Set PB9 function to ADC0_CH9         */
+#define SET_ADC0_ST_PC1()        SYS->GPC_MFPL = (SYS->GPC_MFPL & (~ADC0_ST_PC1_Msk)) | ADC0_ST_PC1              /*!< Set PC1 function to ADC0_ST          */
+#define SET_ADC0_ST_PF5()        SYS->GPF_MFPL = (SYS->GPF_MFPL & (~ADC0_ST_PF5_Msk)) | ADC0_ST_PF5              /*!< Set PF5 function to ADC0_ST          */
 #define SET_I2C0_SCL_PB13()      SYS->GPB_MFPH = (SYS->GPB_MFPH & (~I2C0_SCL_PB13_Msk)) | I2C0_SCL_PB13          /*!< Set PB13 function to I2C0_SCL        */
 #define SET_I2C0_SCL_PB5()       SYS->GPB_MFPL = (SYS->GPB_MFPL & (~I2C0_SCL_PB5_Msk)) | I2C0_SCL_PB5            /*!< Set PB5 function to I2C0_SCL         */
 #define SET_I2C0_SCL_PA5()       SYS->GPA_MFPL = (SYS->GPA_MFPL & (~I2C0_SCL_PA5_Msk)) | I2C0_SCL_PA5            /*!< Set PA5 function to I2C0_SCL         */
@@ -1654,7 +1656,7 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
   * @retval     >=1 Previous reset source is from system reset
   * @details    This macro get previous reset source is from system reset.
   */
-#define SYS_IS_SYSTEM_RST()             (SYS->RSTSTS & SYS_RSTSTS_MCURF_Msk)
+#define SYS_IS_SYSTEM_RST()             (SYS->RSTSTS & SYS_RSTSTS_SYSRF_Msk)
 
 /**
   * @brief      Get reset source is from window watch dog reset
@@ -1688,18 +1690,26 @@ Example: If user want to set PA.0 as UART0_RXD and PA.1 as UART0_TXD in initial 
   * @param      None
   * @return     None
   * @details    This macro disable Power-on Reset function.
+  *             SYS_PORCTL disable digital logic POR.
+  *             SYS_PORDISAN disable analog part POR.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_DISABLE_POR()               (SYS->PORCTL = 0x5AA5)
+#define SYS_DISABLE_POR() \
+            (SYS->PORCTL = 0x5AA5); \
+            (SYS->PORDISAN = 0x5AA5);
 
 /**
   * @brief      Enable Power-on Reset function
   * @param      None
   * @return     None
   * @details    This macro enable Power-on Reset function.
+  *             SYS_PORCTL enable digital logic POR.
+  *             SYS_PORDISAN enable analog part POR.
   *             The register write-protection function should be disabled before using this macro.
   */
-#define SYS_ENABLE_POR()                (SYS->PORCTL = 0)
+#define SYS_ENABLE_POR() \
+            (SYS->PORCTL = 0); \
+            (SYS->PORDISAN = 0);
 
 /**
   * @brief      Clear reset source flag

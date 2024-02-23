@@ -4,7 +4,7 @@
  * @brief    M2A23 series Clock Controller (CLK) driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include "NuMicro.h"
 /** @addtogroup Standard_Driver Standard Driver
@@ -36,12 +36,12 @@ void CLK_DisableCKO(void)
   * @brief      This function enable clock divider output module clock,
   *             enable clock divider output function and set frequency selection.
   * @param[in]  u32ClkSrc is frequency divider function clock source. Including :
-  *             - \ref CLK_CLKSEL2_CLKOSEL_HXT
-  *             - \ref CLK_CLKSEL2_CLKOSEL_LXT
-  *             - \ref CLK_CLKSEL2_CLKOSEL_HCLK
-  *             - \ref CLK_CLKSEL2_CLKOSEL_LIRC
-  *             - \ref CLK_CLKSEL2_CLKOSEL_PLL_DIV2
-  *             - \ref CLK_CLKSEL2_CLKOSEL_HIRC
+  *             - \ref CLK_CLKSEL1_CLKOSEL_HXT
+  *             - \ref CLK_CLKSEL1_CLKOSEL_LXT
+  *             - \ref CLK_CLKSEL1_CLKOSEL_HCLK
+  *             - \ref CLK_CLKSEL1_CLKOSEL_LIRC
+  *             - \ref CLK_CLKSEL1_CLKOSEL_PLL_DIV2
+  *             - \ref CLK_CLKSEL1_CLKOSEL_HIRC
   * @param[in]  u32ClkDiv is divider output frequency selection. It could be 0~15.
   * @param[in]  u32ClkDivBy1En is clock divided by one enabled.
   * @return     None
@@ -261,7 +261,7 @@ uint32_t CLK_SetCoreClock(uint32_t u32Hclk)
   * @param[in]  u32ClkSrc is HCLK clock source. Including :
   *             - \ref CLK_CLKSEL0_HCLKSEL_HXT
   *             - \ref CLK_CLKSEL0_HCLKSEL_LXT
-  *             - \ref CLK_CLKSEL0_HCLKSEL_PLL
+  *             - \ref CLK_CLKSEL0_HCLKSEL_PLL_DIV2
   *             - \ref CLK_CLKSEL0_HCLKSEL_LIRC
   *             - \ref CLK_CLKSEL0_HCLKSEL_HIRC
   * @param[in]  u32ClkDiv is HCLK clock divider. Including :
@@ -295,17 +295,21 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
     SystemCoreClockUpdate();
 
     /* Switch Frequency Optimization Mode to suitable value base on HCLK */
-    if (SystemCoreClock <= FREQ_12MHZ)
-    {
-        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (1);
-    }
-    else if (SystemCoreClock <= FREQ_24MHZ)
+    if (SystemCoreClock <= FREQ_29MHZ)
     {
         FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (2);
     }
-    else if (SystemCoreClock <= FREQ_48MHZ)
+    else if (SystemCoreClock <= FREQ_43MHZ)
     {
         FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (3);
+    }
+    else if (SystemCoreClock <= FREQ_58MHZ)
+    {
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (4);
+    }
+    else /* SystemCoreClock <= FREQ_72MHZ */
+    {
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (5);
     }
 
     /* Disable HIRC if HIRC is disabled before switching HCLK source */
@@ -392,8 +396,8 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv)
 {
     uint32_t u32sel = 0, u32div = 0;
-    uint32_t u32SelTbl[4] = {0x0, 0x4, 0x8, 0xC};
-    uint32_t u32DivTbl[2] = {0x0, 0x4};
+    uint32_t u32SelTbl[4] = {0x0, 0x4, 0x8, 0xC}; /* CLK_CLKSEL0~3 */
+    uint32_t u32DivTbl[2] = {0x0, 0x4};           /* CLK_CLKDIV0~1 */
 
     if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk)
     {
@@ -504,7 +508,7 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   */
 void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
 {
-    uint32_t u32ClkTbl[3] = {0x0, 0x4, 0x8};
+    uint32_t u32ClkTbl[3] = {0x0, 0x4, 0x8}; /* CLK_AHBCLK, CLK_APBCLK0~1 */
 
     *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (u32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  |= 1 << MODULE_IP_EN_Pos(u32ModuleIdx);
 }
@@ -552,7 +556,7 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   */
 void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
 {
-    uint32_t u32ClkTbl[3] = {0x0, 0x4, 0x8};
+    uint32_t u32ClkTbl[3] = {0x0, 0x4, 0x8}; /* CLK_AHBCLK, CLK_APBCLK0~1 */
 
     *(volatile uint32_t *)((uint32_t)&CLK->AHBCLK + (u32ClkTbl[MODULE_APBCLK(u32ModuleIdx)]))  &= ~(1 << MODULE_IP_EN_Pos(u32ModuleIdx));
 }
@@ -825,7 +829,7 @@ void CLK_DisableSysTick(void)
 uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
 {
     uint32_t u32TmpVal = 0UL, u32TmpAddr = 0UL;
-    uint32_t au32SelTbl[3] = {0x0, 0x4, 0x8};
+    uint32_t au32SelTbl[4] = {0x0, 0x4, 0x8, 0xC}; /* CLK_CLKSEL0~3 */
 
     if(MODULE_CLKSEL_Msk(u32ModuleIdx) != MODULE_NoMsk)
     {
@@ -853,7 +857,7 @@ uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
 uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
 {
     uint32_t u32TmpVal = 0UL, u32TmpAddr = 0UL;
-    uint32_t au32DivTbl[2] = {0x0, 0x4};
+    uint32_t au32DivTbl[2] = {0x0, 0x4}; /* CLK_CLKDIV0~1 */
 
     if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk)
     {

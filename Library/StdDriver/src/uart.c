@@ -4,7 +4,7 @@
  * @brief    M2A23 series UART Interface Controller (UART) driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -42,7 +42,7 @@ void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag)
 {
     if(u32InterruptFlag & UART_INTSTS_SWBEINT_Msk)  /* Clear Single-wire Bit Error Detect Interrupt */
     {
-        uart->FIFOSTS = UART_INTSTS_SWBEIF_Msk;
+        uart->INTSTS = UART_INTSTS_SWBEIF_Msk;
     }
 
     if(u32InterruptFlag & UART_INTSTS_RLSINT_Msk)   /* Clear Receive Line Status Interrupt */
@@ -62,6 +62,7 @@ void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag)
 
     if(u32InterruptFlag & UART_INTSTS_WKINT_Msk)    /* Clear Wake-up Interrupt */
     {
+        uart->LINWKCTL = UART_LINWKCTL_LINWKF_Msk;
         uart->WKSTS = UART_WKSTS_CTSWKF_Msk  | UART_WKSTS_DATWKF_Msk  |
                       UART_WKSTS_RFRTWKF_Msk |UART_WKSTS_RS485WKF_Msk |
                       UART_WKSTS_TOUTWKF_Msk;
@@ -71,6 +72,7 @@ void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag)
     {
         uart->INTSTS = UART_INTSTS_LINIF_Msk;
         uart->LINSTS = UART_LINSTS_BITEF_Msk    | UART_LINSTS_BRKDETF_Msk  |
+                       UART_LINSTS_RTOUTF_Msk   |
                        UART_LINSTS_SLVSYNCF_Msk | UART_LINSTS_SLVIDPEF_Msk |
                        UART_LINSTS_SLVHEF_Msk   | UART_LINSTS_SLVHDETF_Msk ;
     }

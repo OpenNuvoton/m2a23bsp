@@ -4,10 +4,12 @@
  * @brief    Flash Memory Controller Driver Header File
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __FMC_H__
 #define __FMC_H__
+
+#include "NuMicro.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -45,7 +47,7 @@ extern "C"
 #define FMC_USER_CONFIG_10      0x00300028UL    /*!< User Config 10 address      \hideinitializer */
 
 #define FMC_FLASH_PAGE_SIZE     0x800UL         /*!< Flash Page Size (2 Kbytes)  \hideinitializer */
-#define FMC_PAGE_ADDR_MASK      0xFFFFF900UL    /*!< Flash page address mask     \hideinitializer */
+#define FMC_PAGE_ADDR_MASK      0xFFFFF800UL    /*!< Flash page address mask     \hideinitializer */
 #define FMC_MULTI_WORD_PROG_LEN 256             /*!< The maximum length of a multi-word program.  */
 
 #define FMC_APROM_SIZE          FMC_APROM_END   /*!< APROM Size                  \hideinitializer */
@@ -87,10 +89,10 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  FTCTL constant definitions                                                                             */
 /*---------------------------------------------------------------------------------------------------------*/
-#define FMC_FTCTL_OPTIMIZE_72MHZ    (0x00UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 72Mhz */
-#define FMC_FTCTL_OPTIMIZE_12MHZ    (0x01UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 12Mhz */
-#define FMC_FTCTL_OPTIMIZE_24MHZ    (0x02UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 24Mhz */
-#define FMC_FTCTL_OPTIMIZE_48MHZ    (0x03UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 48Mhz */
+#define FMC_FTCTL_OPTIMIZE_29MHZ    (0x02UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 29Mhz */
+#define FMC_FTCTL_OPTIMIZE_43MHZ    (0x03UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 43Mhz */
+#define FMC_FTCTL_OPTIMIZE_58MHZ    (0x04UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 58Mhz */
+#define FMC_FTCTL_OPTIMIZE_72MHZ    (0x05UL<<FMC_FTCTL_FOM_Pos)     /*!< Frequency Optimize Mode <= 72Mhz */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* FMC Time-out Handler Constant Definitions                                                               */
@@ -127,8 +129,10 @@ extern "C"
 #define FMC_ENABLE_ISP()            (FMC->ISPCTL |=  FMC_ISPCTL_ISPEN_Msk)                    /*!< Enable ISP function        \hideinitializer */
 #define FMC_GET_FAIL_FLAG()         ((FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk) ? 1UL : 0UL)        /*!< Get ISP fail flag          \hideinitializer */
 #define FMC_CLR_FAIL_FLAG()         (FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk)                     /*!< Clear ISP fail flag        \hideinitializer */
-#define FMC_ENABLE_APPROT(u8Block)  (FMC->APPROT |= (1ul << u8Block))                         /*!< Enable APPROT Block        \hideinitializer */
-#define FMC_DISABLE_APPROT(u8Block) (FMC->APPROT &= ~(1ul << u8Block))                        /*!< Disable APPROT Block       \hideinitializer */
+#define FMC_ENABLE_APPROT(u8Block)  (FMC->APWPROT0 |= (1ul << u8Block))                       /*!< Enable APPROT Block        \hideinitializer */
+#define FMC_DISABLE_APPROT(u8Block) (FMC->APWPROT0 &= ~(1ul << u8Block))                      /*!< Disable APPROT Block       \hideinitializer */
+
+
 /*@}*/ /* end of group FMC_EXPORTED_MACROS */
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -145,7 +149,6 @@ extern int32_t  g_FMC_i32ErrCode;
 /*---------------------------------------------------------------------------------------------------------*/
 
 __STATIC_INLINE uint32_t FMC_ReadCID(void);
-__STATIC_INLINE uint32_t FMC_ReadPID(void);
 __STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index);
 __STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index);
 __STATIC_INLINE int32_t FMC_SetVectorPageAddr(uint32_t u32PageAddr);
@@ -195,6 +198,36 @@ __STATIC_INLINE uint32_t FMC_ReadCID(void)
 }
 
 /**
+  * @brief    Read device ID
+  * @param    None
+  * @return   The device ID (32-bit). 0xFFFFFFFF means read failed.
+  * @details  This function is used to read device ID.
+  *
+  * @note     Global error code g_FMC_i32ErrCode
+  *           -1  Read time-out
+  */
+__STATIC_INLINE uint32_t FMC_ReadDID(void)
+{
+    int32_t i32TimeOutCnt = FMC_TIMEOUT_READ;
+
+    g_FMC_i32ErrCode = 0;
+
+    FMC->ISPCMD = FMC_ISPCMD_READ_DID;          /* Set ISP Command Code */
+    FMC->ISPADDR = 0x00u;                       /* Must keep 0x0 when read DID */
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;         /* Trigger to start ISP procedure */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)   /* Waiting for ISP Done */
+    {
+        if( i32TimeOutCnt-- <= 0)
+        {
+            g_FMC_i32ErrCode = -1;
+            return 0xFFFFFFFF;
+        }
+    }
+
+    return FMC->ISPDAT;
+}
+
+/**
  * @brief       Read Unique ID
  * @param[in]   u8Index  UID index. 0 = UID[31:0], 1 = UID[63:32], 2 = UID[95:64]
  * @return      The 32-bit unique ID data of specified UID index. 0xFFFFFFFF means read failed.
@@ -228,8 +261,8 @@ __STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
 /**
   * @brief      To read UCID
   * @param[in]  u32Index    Index of the UCID to read. u32Index must be 0, 1, 2, or 3.
-  * @return     The UCID of specified index
-  * @details    This function is used to read unique chip ID (UCID). 0xFFFFFFFF means read failed.
+  * @return     The UCID of specified index. 0xFFFFFFFF means read failed.
+  * @details    This function is used to read unique chip ID (UCID).
   *
   * @note       Global error code g_FMC_i32ErrCode
   *             -1  Read time-out
@@ -296,7 +329,8 @@ __STATIC_INLINE int32_t FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 
 void     FMC_Close(void);
 int32_t  FMC_Erase(uint32_t u32PageAddr);
-int32_t  FMC_EraseBank(uint32_t u32BankAddr);
+int32_t  FMC_Erase_SPROM(void);
+int32_t  FMC_Erase_Bank(uint32_t u32BankAddr);
 int32_t  FMC_GetBootSource(void);
 void     FMC_Open(void);
 uint32_t FMC_Read(uint32_t u32Addr);
@@ -312,6 +346,7 @@ uint32_t FMC_GetChkSum(uint32_t u32addr, uint32_t u32count);
 uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count);
 int32_t  FMC_RemapBank(uint32_t u32Bank);
 void     FMC_EnableFreqOptimizeMode(uint32_t u32Mode);
+void     FMC_DisableFreqOptimizeMode(void);
 
 /*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
 

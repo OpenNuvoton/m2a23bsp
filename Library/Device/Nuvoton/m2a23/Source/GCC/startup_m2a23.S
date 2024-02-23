@@ -70,6 +70,8 @@ __Vectors:
     .long   RAMPE_IRQHandler
     .long   CKFAIL_IRQHandler
     .long   ISP_IRQHandler
+    .long   Default_Handler
+    .long   Default_Handler
     .long   WDT_IRQHandler
     .long   WWDT_IRQHandler
     .long   EINT0_IRQHandler
@@ -82,7 +84,9 @@ __Vectors:
     .long   GPB_IRQHandler
     .long   GPC_IRQHandler
     .long   GPD_IRQHandler
+    .long   Default_Handler
     .long   GPF_IRQHandler
+    .long   Default_Handler
     .long   SPI0_IRQHandler
     .long   BRAKE0_IRQHandler
     .long   PWM0P0_IRQHandler
@@ -110,12 +114,13 @@ __Vectors:
     .long   CANFD00_IRQHandler
     .long   CANFD01_IRQHandler
     .long   CANFD10_IRQHandler
-    .long   CANFD10_IRQHandler
+    .long   CANFD11_IRQHandler
     .long   CANFD20_IRQHandler
     .long   CANFD21_IRQHandler
+    .long   Default_Handler
+    .long   Default_Handler
     .long   USCI0_IRQHandler
     .long   USCI1_IRQHandler
-    .long   CRC_IRQHandler
 
     .size   __Vectors, . - __Vectors
 
@@ -368,7 +373,8 @@ Default_Handler:
     def_irq_handler CANFD11_IRQHandler
     def_irq_handler CANFD20_IRQHandler
     def_irq_handler CANFD21_IRQHandler
-    def_irq_handler CRC_IRQHandler
+    def_irq_handler USCI0_IRQHandler
+    def_irq_handler USCI1_IRQHandler
 
 
     /* ;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0) */

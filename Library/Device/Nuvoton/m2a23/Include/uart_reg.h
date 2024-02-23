@@ -4,7 +4,7 @@
  * @brief    UART register definition header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __UART_REG_H__
 #define __UART_REG_H__
@@ -209,7 +209,7 @@ typedef struct
      * |        |          |1 = Received data signal inverted Enabled.
      * |        |          |Note 1: Before setting this bit, TXRXDIS (UART_FUNCSEL[3]) should be set then waited for TXRXACT (UART_FIFOSTS[31]) is cleared.
      * |        |          |When the configuration is done, cleared TXRXDIS (UART_FUNCSEL[3]) to activate UART controller.
-     * |        |          |Note 2: This bit is valid when FUNCSEL (UART_FUNCSEL[1:0]) is select UART, LIN or RS485 function.
+     * |        |          |Note 2: This bit is valid when FUNCSEL (UART_FUNCSEL[2:0]) is select UART, LIN or RS485 function.
      * @var UART_T::MODEM
      * Offset: 0x10  UART Modem Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -389,7 +389,8 @@ typedef struct
      * |        |          |If RXTOIEN (UART_INTEN [4]) is enabled, the RX time-out interrupt will be generated.
      * |        |          |0 = No RX time-out interrupt flag is generated.
      * |        |          |1 = RX time-out interrupt flag is generated.
-     * |        |          |Note: This bit is read only and user can read UART_DAT (RX is in active) to clear it.
+     * |        |          |Note 1: This bit can be cleared by writing ??to it.
+     * |        |          |Note 2: If BITOMEN (UART_TOUT[31]) is reset to 0, user can read UART_DAT (RX is in active) to clear this bit.
      * |[5]     |BUFERRIF  |Buffer Error Interrupt Flag (Read Only)
      * |        |          |This bit is set when the TX FIFO or RX FIFO overflows (TXOVIF (UART_FIFOSTS[24]) or RXOVIF (UART_FIFOSTS[0]) is set).
      * |        |          |When BUFERRIF (UART_INTSTS[5]) is set, the transfer is not correct.
@@ -398,10 +399,10 @@ typedef struct
      * |        |          |1 = Buffer error interrupt flag is generated.
      * |        |          |Note: This bit is cleared if both of RXOVIF(UART_FIFOSTS[0]) and TXOVIF(UART_FIFOSTS[24]) are cleared to 0 by writing 1 to RXOVIF(UART_FIFOSTS[0]) and TXOVIF(UART_FIFOSTS[24]).
      * |[6]     |WKIF      |UART Wake-up Interrupt Flag (Read Only)
-     * |        |          |This bit is set when TOUTWKF (UART_WKSTS[4]), RS485WKF (UART_WKSTS[3]), RFRTWKF (UART_WKSTS[2]), DATWKF (UART_WKSTS[1]) or CTSWKF(UART_WKSTS[0]) is set to 1.
+     * |        |          |This bit is set when LINWKF (UART_LINWKCTL[29]), TOUTWKF (UART_WKSTS[4]), RS485WKF (UART_WKSTS[3]), RFRTWKF (UART_WKSTS[2]), DATWKF (UART_WKSTS[1]) or CTSWKF(UART_WKSTS[0]) is set to 1.
      * |        |          |0 = No UART wake-up interrupt flag is generated.
      * |        |          |1 = UART wake-up interrupt flag is generated.
-     * |        |          |Note: This bit is cleared if all of TOUTWKF, RS485WKF, RFRTWKF, DATWKF and CTSWKF are cleared to 0 by writing 1 to the corresponding interrupt flag.
+     * |        |          |Note: This bit is cleared if all of LINWKF, TOUTWKF, RS485WKF, RFRTWKF, DATWKF and CTSWKF are cleared to 0 by writing 1 to the corresponding interrupt flag.
      * |[7]     |LINIF     |LIN Bus Interrupt Flag
      * |        |          |This bit is set when one of these bits is set:
      * |        |          |LIN slave header detect (SLVHDETF (UART_LINSTS[0])),
@@ -412,8 +413,8 @@ typedef struct
      * |        |          |LIN break detect (BRKDETF (UART_LINSTS[8])),
      * |        |          |and bit error detect (BITEF (UART_LINSTS[9])).
      * |        |          |If LINIEN (UART_INTEN[8]) is enabled, the LIN interrupt will be generated.
-     * |        |          |0 = None of SLVHDETF, SLVHEF, SLVIDPEF, SLVHTOF, RTOUTF, BITEF, and BRKDETF is generated.
-     * |        |          |1 = At least one of SLVHDETF, SLVHEF, SLVIDPEF, SLVHTOF, RTOUTF, BITEF, and BRKDETF is generated.
+     * |        |          |0 = No LIN bus interrupt flag is generated.
+     * |        |          |1 = LIN bus interrupt flag is generated.
      * |        |          |Note: This bit is cleared when SLVHDETF, SLVHEF, SLVIDPEF, SLVHTOF, RTOUTF, BRKDETF, and BITEF all are cleared and software writing 1 to LINIF (UART_INTSTS[7]).
      * |[8]     |RDAINT    |Receive Data Available Interrupt Indicator (Read Only)
      * |        |          |This bit is set if RDAIEN (UART_INTEN[0]) and RDAIF (UART_INTSTS[0]) are both set to 1.
@@ -528,6 +529,15 @@ typedef struct
      * |[15:8]  |DLY       |TX Delay Time Value
      * |        |          |This field is used to programming the transfer delay time between the last stop bit and next start bit.
      * |        |          |The unit is bit time.
+     * |[31]    |BITOMEN   |Bus Idle Time-out Mode Enable Bit
+     * |        |          |If BITOMEN (UART_TOUT[31]) is enabled, the reset conditions of the time-out counter and RXTOIF (UART_INTSTS[4]) will be changed to detect the bus idle.
+     * |        |          |When BITOMEN (UART_TOUT[31]) is disabled, the time-out counter and RXTOIF (UART_INTSTS[4]) maintain reset value whenever the RX FIFO is empty.
+     * |        |          |In addition, Any RX FIFO activities, such as a new incoming data or user reading data, will clear RXTOIF (UART_INTSTS[4]) and reset RX time-out counter.
+     * |        |          |On the other hand, when BITOMEN (UART_TOUT[31]) is enabled, the RX FIFO empty state will not reset the time-out counter and RXTOIF (UART_INTSTS[4]), and RX FIFO activities, such as a new incoming data or user reading data, will not clear RXTOIF (UART_INTSTS[4]).
+     * |        |          |However, the time-out counter needs to receive a first incoming data before it can start counting.
+     * |        |          |After receiving the first incoming data, the time-out counter will count even if the RX FIFO is empty.
+     * |        |          |0 = Bus idle time-out mode Disabled.
+     * |        |          |1 = Bus idle time-out mode Enabled.
      * @var UART_T::BAUD
      * Offset: 0x24  UART Baud Rate Divider Register
      * ---------------------------------------------------------------------------------------------------
@@ -536,6 +546,11 @@ typedef struct
      * |[15:0]  |BRD       |Baud Rate Divider
      * |        |          |The field indicates the baud rate divider.
      * |        |          |This filed is used in baud rate calculation.
+     * |[23:16] |BRFD      |Baud Rate Fractional Divider
+     * |        |          |This field is the fractional part of the baud rate divisor.
+     * |        |          |When BRFDEN (UART_BAUD[30]) is set, the Baud Rate Equation goes to UART_CLK / ((BRD+2) + (BRFD/256)).
+     * |        |          |For instance, if BRD = 0x8 and BRFD = 0x40, the baud rate would be UART_CLK / 10.25. In practical, this represent 1 bit = 10 clocks, and for every 4 bits, the bit length becomes 11 clocks.
+     * |        |          |As another example, if BRD = 0x8 and BRFD = 0x20, the baud rate would be UART_CLK / 10.125, which means 1 bit = 10 clocks, and for every 8 bits, the bit length becomes 11 clocks.
      * |[27:24] |EDIVM1    |Extra Divider for BAUD Rate Mode 1
      * |        |          |This field is used for baud rate calculation in mode 1 and has no effect for baud rate calculation in mode 0 and mode 2.
      * |[28]    |BAUDM0    |BAUD Rate Mode Selection Bit 0
@@ -666,6 +681,7 @@ typedef struct
      * |        |          |1 = LIN automatic resynchronization Enabled.
      * |        |          |Note 1: This bit only valid in LIN slave mode (SLVEN (UART_LINCTL[0]) = 1).
      * |        |          |Note 2: When operation in Automatic Resynchronization mode, the baud rate setting must be mode2 (BAUDM1 (UART_BAUD [29]) and BAUDM0 (UART_BAUD [28]) must be 1).
+     * |        |          |Note 3: The minimum detection range of the target BRD (UART_BAUD[15:0]) is 0x30.
      * |[3]     |SLVDUEN   |LIN Slave Divider Update Method Enable Bit
      * |        |          |0 = UART_BAUD updated is written by software (if no automatic resynchronization update occurs at the same time).
      * |        |          |1 = UART_BAUD is updated at the next received character. User must set the bit before checksum reception.
@@ -887,6 +903,37 @@ typedef struct
      * |        |          |These bits field indicate how many clock cycles selected by UART_CLK do the UART controller delay the RS485 transceiver state trancing when the state trancing of RS485 transceiver is from TX to RX state.
      * |        |          |These bits field have no effect when the state trancing of RS485 transceiver is from RX to TX state.
      * |        |          |Note: It is valid only when RS485AUD (UART_ALTCTL[10]) is set.
+     * @var UART_T::LINRTOUT
+     * Offset: 0x50  UART LIN Response Time-out Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[23:0]  |LINRTOIC  |LIN Response Time-out Comparator
+     * |        |          |The time-out counter resets and starts counting (the counting clock = UART_CLK) whenever LIN master sends a header or LIN slave detects a header.
+     * |        |          |Once the content of time-out counter is equal to or bigger than that of time-out comparator (LINRTOIC (UART_LINRTOUT[23:0])), a LIN response time-out (RTOUTF (UART_LINSTS[5])) is generated if RTOUTEN (UART_LINCTL[5]) enabled.
+     * @var UART_T::LINWKCTL
+     * Offset: 0x54  UART LIN Wake-up Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[23:0]  |LINWKCTL  |LIN Send Wake-up Signal Length Counter
+     * |        |          |When SENDLINW (UART_LINWKCTL[24]) is enabled, the UART will send LIN wake-up signal for LINWKC (UART_LINWKCTL[23:0]) period (the counting clock = UART_CLK).
+     * |        |          |LINWKC (UART_LINWKCTL[23:0]) should be set to a value between 250 us to 5 ms according to UART_CLK rate.
+     * |[24]    |SENDLINW  |LIN Send Wake-up Enable Bit
+     * |        |          |0 = Send LIN Wake-up Disabled.
+     * |        |          |1 = Send LIN Wake-up Enabled.
+     * |        |          |Note: When this bit is set, the UART will send LIN wake-up automatically.
+     * |        |          |When LIN wake-up transfer operation finished, this bit will be cleared automatically.
+     * |[28]    |LINWKEN   |LIN Wake-up Enable Bit
+     * |        |          |0 = LIN wake-up system function Disabled.
+     * |        |          |1 = LIN wake-up system function Enabled.
+     * |        |          |Note: When the system is in Power-down mode, LIN wake-up event will wake up system from Power-down mode.
+     * |[29]    |LINWKF    |LIN Wake-up Flag
+     * |        |          |This bit is set if chip wake-up from power-down state by LIN wake-up.
+     * |        |          |0 = Chip stays in power-down state.
+     * |        |          |1 = Chip wake-up from power-down state by LIN wake-up.
+     * |        |          |Note 1: If LINWKEN (UART_LINWKCTL[28]) is enabled, the LIN wake-up event will cause this bit set to ??
+     * |        |          |Note 2: This bit can be cleared by writing '1' to it.
      */
 
 
@@ -910,6 +957,9 @@ typedef struct
     __IO uint32_t WKSTS;                 /*!< [0x0044] UART Wake-up Status Register                                     */
     __IO uint32_t DWKCOMP;               /*!< [0x0048] UART Incoming Data Wake-up Compensation Register                 */
     __IO uint32_t RS485DD;               /*!< [0x004C] UART RS485 Transceiver Deactivate Delay Register                 */
+    __IO uint32_t LINRTOUT;              /*!< [0x0050] UART LIN Response TimeOut Register                               */
+    __IO uint32_t LINWKCTL;              /*!< [0x005C] UART LIN Wake-up Control Register                                */
+
 
 } UART_T;
 

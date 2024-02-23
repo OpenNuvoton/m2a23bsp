@@ -4,7 +4,7 @@
  * @brief    FMC register definition header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __FMC_REG_H__
 #define __FMC_REG_H__
@@ -93,7 +93,7 @@ typedef struct
      * |[31:0]  |ISPDAT    |ISP Data
      * |        |          |Write data to this register before ISP program operation.
      * |        |          |Read data from this register after ISP read operation.
-     * |        |          |When ISPFF (FMC_ISPCTL[6]) is 1, ISPDAT = 0xffff_ffff.
+     * |        |          |When ISPFF is 1 in ISP read operation, ISPDAT will be written to 0xFFFF_FFFF.
      * |        |          |For run CRC32 Checksum Calculation command, ISPDAT is the memory size (byte) and 512 bytes alignment.
      * |        |          |For ISP Read Checksum command, ISPDAT is the checksum result.
      * |        |          |If ISPDAT = 0x0000_0000, it means that (1) the checksum calculation is in progress, or (2) the memory range for checksum calculation is incorrect.
@@ -147,9 +147,10 @@ typedef struct
      * |[6:4]   |FOM       |Frequency Optimization Mode (Write Protect)
      * |        |          |Flash access timing is adjustable to optimize the Flash access cycles in different system working frequency.
      * |        |          |000 = Frequency is less than or equal to 72 MHz.
-     * |        |          |001 = Frequency is less than or equal to 12 MHz.
-     * |        |          |010 = Frequency is less than or equal to 24 MHz.
-     * |        |          |011 = Frequency is less than or equal to 48 MHz.
+     * |        |          |010 = Frequency is less than or equal to 29 MHz.
+     * |        |          |011 = Frequency is less than or equal to 43 MHz.
+     * |        |          |100 = Frequency is less than or equal to 58 MHz.
+     * |        |          |101 = Frequency is less than or equal to 72 MHz.
      * |        |          |Others = Reserved.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[9]     |CACHEINV  |Flash Cache Invalidation (Write Protect)
@@ -165,7 +166,7 @@ typedef struct
      * |[0]     |ISPBUSY   |ISP Busy Flag (Read Only)
      * |        |          |0 = ISP operation is finished.
      * |        |          |1 = ISP is progressed.
-     * |[2:1]    |CBS      |Chip Boot Selection (Read Only)
+     * |[2:1]   |CBS       |Chip Boot Selection (Read Only)
      * |        |          |This bit is initiated with the CBS (CONFIG0[7:6]) after any reset is happened except CPU reset or system reset is happened.
      * |        |          |00 = LDROM with IAP mode.
      * |        |          |01 = LDROM without IAP mode.
@@ -197,9 +198,8 @@ typedef struct
      * |        |          |0 = ISP Not Finished.
      * |        |          |1 = ISP done or ISPFF set.
      * |[29:9]  |VECMAP    |Vector Page Mapping Address (Read Only)
-     * |        |          |All access to 0x0000_0000~0x0000_01FF is remapped to the Flash memory or SRAM address {VECMAP[20:0], 9'h000} ~ {VECMAP[20:0], 9'1FF}, except SPROM.
+     * |        |          |All access to 0x0000_0000~0x0000_01FF is remapped to the Flash memory address {VECMAP[20:0], 9'h000} ~ {VECMAP[20:0], 9'1FF}, except SPROM.
      * |        |          |VECMAP [20:19] = 00 system vector address is mapped to Flash memory.
-     * |        |          |VECMAP [20:19] = 10 system vector address is mapped to SRAM memory.
      * |        |          |VECMAP [18:12] should be 0.
      * |[30]    |FBS       |Flash Bank Select Indicator (Read Only)
      * |        |          |This bit indicates which APROM address model is selected to boot.
@@ -216,6 +216,7 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[31:0]  |ISPDAT0   |ISP Data 0
      * |        |          |This register is the first 32-bit data for 32-bit/64-bit/multi-word programming, and it is also the mirror of FMC_ISPDAT, both registers keep the same data.
+     * |        |          |When ISPFF is 1 in ISP read operation, ISPDAT0 will be written to 0xFFFF_FFFF.
      * @var FMC_T::MPDAT1
      * Offset: 0x84  ISP Data1 Register
      * ---------------------------------------------------------------------------------------------------
@@ -223,6 +224,7 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[31:0]  |ISPDAT1   |ISP Data 1
      * |        |          |This register is the second 32-bit data for 64-bit/multi-word programming.
+     * |        |          |When ISPFF is 1 in ISP read operation, ISPDAT0 will be written to 0xFFFF_FFFF.
      * @var FMC_T::MPDAT2
      * Offset: 0x88  ISP Data2 Register
      * ---------------------------------------------------------------------------------------------------
@@ -238,7 +240,7 @@ typedef struct
      * |[31:0]  |ISPDAT3   |ISP Data 3
      * |        |          |This register is the fourth 32-bit data for multi-word programming.
      * @var FMC_T::MPSTS
-     * Offset: 0xC0  ISP Multi-Program Status Register
+     * Offset: 0xC0  ISP Multi-word Program Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -278,7 +280,7 @@ typedef struct
      * |        |          |0 = FMC_MPDAT3 register is empty, or program to flash complete.
      * |        |          |1 = FMC_MPDAT3 register has been written, and not program to flash complete.
      * @var FMC_T::MPADDR
-     * Offset: 0xC4  ISP Multi-program Address Register
+     * Offset: 0xC4  ISP Multi-word Program Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -329,8 +331,8 @@ typedef struct
     /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE2[12];
     /// @endcond //HIDDEN_SYMBOLS
-    __I  uint32_t MPSTS;                 /*!< [0x00c0] ISP Multi-program Status Register                                */
-    __I  uint32_t MPADDR;                /*!< [0x00c4] ISP Multi-program Address Register                               */
+    __I  uint32_t MPSTS;                 /*!< [0x00c0] ISP Multi-word Program Status Register                           */
+    __I  uint32_t MPADDR;                /*!< [0x00c4] ISP Multi-word Program Address Register                          */
     /// @cond HIDDEN_SYMBOLS
     __I  uint32_t RESERVE3[18];
     /// @endcond //HIDDEN_SYMBOLS
@@ -385,8 +387,8 @@ typedef struct
 #define FMC_DFBA_DFBA_Pos                (0)                                               /*!< FMC_T::DFBA: DFBA Position             */
 #define FMC_DFBA_DFBA_Msk                (0xfffffffful << FMC_DFBA_DFBA_Pos)               /*!< FMC_T::DFBA: DFBA Mask                 */
 
-#define FMC_FTCTL_FOM_Pos                (7)                                               /*!< FMC_T::FTCTL: FOM Position             */
-#define FMC_FTCTL_FOM_Msk                (0x6ul << FMC_FTCTL_FOM_Pos)                      /*!< FMC_T::FTCTL: FOM Mask                 */
+#define FMC_FTCTL_FOM_Pos                (4)                                               /*!< FMC_T::FTCTL: FOM Position             */
+#define FMC_FTCTL_FOM_Msk                (0x7ul << FMC_FTCTL_FOM_Pos)                      /*!< FMC_T::FTCTL: FOM Mask                 */
 
 #define FMC_FTCTL_CACHEINV_Pos           (9)                                               /*!< FMC_T::FTCTL: CACHEINV Position        */
 #define FMC_FTCTL_CACHEINV_Msk           (0x1ul << FMC_FTCTL_CACHEINV_Pos)                 /*!< FMC_T::FTCTL: CACHEINV Mask            */
@@ -550,8 +552,8 @@ typedef struct
 #define FMC_APWPROT0_APPROEN31_Pos       (31)                                              /*!< FMC_T::APWPROT0: APPROEN31 Position    */
 #define FMC_APWPROT0_APPROEN31_Msk       (0x1ul << FMC_APWPROT0_APPROEN31_Pos)             /*!< FMC_T::APWPROT0: APPROEN31 Mask        */
 
-#define FMC_APWPKEEP_APWPKEEP0_Pos       (31)                                              /*!< FMC_T::APWPKEEP: APWPKEEP0 Position    */
-#define FMC_APWPKEEP_APWPKEEP0_Msk       (0x1ul << FMC_APWPKEEP_APWPKEEP0_Pos)             /*!< FMC_T::APWPKEEP: APWPKEEP0 Mask        */
+#define FMC_APWPKEEP_APWPKEEP0_Pos       (0)                                               /*!< FMC_T::APWPKEEP: APWPKEEP0 Position    */
+#define FMC_APWPKEEP_APWPKEEP0_Msk       (0xfffful << FMC_APWPKEEP_APWPKEEP0_Pos)          /*!< FMC_T::APWPKEEP: APWPKEEP0 Mask        */
 
 /**@}*/ /* FMC_CONST */
 /**@}*/ /* end of FMC register group */

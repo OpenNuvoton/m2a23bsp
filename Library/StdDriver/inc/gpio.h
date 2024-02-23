@@ -4,7 +4,7 @@
  * @brief    M2A23 series General Purpose I/O (GPIO) driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __GPIO_H__
 #define __GPIO_H__
@@ -345,7 +345,7 @@ extern "C"
   * @return      None
   * @details     Set the I/O pins edge detection circuit always active after reset for specified port.
   */
-#define GPIO_SET_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL |= GPIO_DBCTL_ICLKON_Msk)
+#define GPIO_SET_DEBOUNCE_ICLKON(port)  ((port)->DBCTL |= GPIO_DBCTL_ICLKON_Msk)
 
 /**
   * @brief       Clear GPIO Interrupt Clock on bit
@@ -353,7 +353,7 @@ extern "C"
   * @return      None
   * @details     Set edge detection circuit active only if I/O pin edge interrupt enabled for specified port.
   */
-#define GPIO_CLR_DEBOUNCE_ICLKON(port)  (GPIO->DBCTL &= ~(GPIO_DBCTL_ICLKON_Msk))
+#define GPIO_CLR_DEBOUNCE_ICLKON(port)  ((port)->DBCTL &= ~(GPIO_DBCTL_ICLKON_Msk))
 
 /**
  * @brief       Get GPIO Port IN Data

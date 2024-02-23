@@ -4,7 +4,7 @@
  * @brief    M2A23 Series System Setting Header File
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __SYSTEM_M2A23_H__
 #define __SYSTEM_M2A23_H__

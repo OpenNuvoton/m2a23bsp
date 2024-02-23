@@ -4,7 +4,7 @@
  * @brief    FMC driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
@@ -81,16 +81,58 @@ int32_t FMC_Erase(uint32_t u32PageAddr)
 
 
 /**
-  * @brief Execute FMC_ISPCMD_BANK_ERASE command to erase a flash block.
-  * @param[in]  u32BankAddr Base address of the flash bank to be erased.
-  * @return ISP page erase success or not.
+  * @brief Execute FMC_ISPCMD_PAGE_ERASE command to erase SPROM.
+  * @return   SPROM page erase success or not.
   * @retval   0  Success
   * @retval   -1  Erase failed
   *
   * @note     Global error code g_FMC_i32ErrCode
   *           -1  Erase failed or erase time-out
   */
-int32_t FMC_EraseBank(uint32_t u32BankAddr)
+int32_t FMC_Erase_SPROM(void)
+{
+    int32_t  ret = 0;
+    int32_t i32TimeOutCnt;
+
+    g_FMC_i32ErrCode = 0;
+
+    FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
+    FMC->ISPADDR = FMC_SPROM_BASE;
+    FMC->ISPDAT = 0x0055AA03UL;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+
+    i32TimeOutCnt = FMC_TIMEOUT_ERASE;
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)
+    {
+        if( i32TimeOutCnt-- <= 0)
+        {
+            g_FMC_i32ErrCode = -1;
+            ret = -1;
+            break;
+        }
+    }
+
+    if (FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk)
+    {
+        FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
+        g_FMC_i32ErrCode = -1;
+        ret = -1;
+    }
+
+    return ret;
+}
+
+/**
+  * @brief Execute FMC_ISPCMD_BANK_ERASE command to erase a flash block.
+  * @param[in]  u32BankAddr Base address of the flash bank to be erased.
+  * @return     ISP bank erase success or not.
+  * @retval      0  Success
+  * @retval     -1  Erase failed
+  *
+  * @note     Global error code g_FMC_i32ErrCode
+  *           -1  Erase failed or erase time-out
+  */
+int32_t FMC_Erase_Bank(uint32_t u32BankAddr)
 {
     int32_t  ret = 0;
     int32_t i32TimeOutCnt;
@@ -133,12 +175,12 @@ int32_t FMC_EraseBank(uint32_t u32BankAddr)
   */
 int32_t FMC_GetBootSource (void)
 {
-    if (FMC->ISPSTS & FMC_ISPSTS_CBS_Msk)
+    if (FMC->ISPCTL & FMC_ISPCTL_BS_Msk)
     {
-        return 0;
+        return 1;
     }
 
-    return 1;
+    return 0;
 }
 
 
@@ -189,7 +231,7 @@ uint32_t FMC_Read(uint32_t u32Addr)
   * @param[in]  u32addr   Address of the flash location to be read.
   *             It must be a double-word aligned address.
   * @param[out] u32data0  Place holder of word 0 read from flash address u32addr.
-  * @param[out] u32data1  Place holder of word 0 read from flash address u32addr+4.
+  * @param[out] u32data1  Place holder of word 1 read from flash address u32addr+4.
   * @return   0   Success
   * @return   -1  Failed
   *
@@ -249,8 +291,8 @@ uint32_t FMC_ReadDataFlashBaseAddr(void)
   *                FMC_ISPCTL_BS_LDROM: Boot from LDROM
   * @return    None
   * @details   This function is used to switch APROM boot or LDROM boot. User need to call
-  *            FMC_SetBootSource to select boot source first, then use CPU reset or
-  *            System Reset Request to reset system.
+  *            FMC_SetBootSource to select boot source first, then use CPU reset or System Reset Request to reset system.
+  *            When use this function, the chip booting selection CBS[0](CONFIG0[6]) must be set.
   */
 void FMC_SetBootSource(int32_t i32BootSrc)
 {
@@ -518,15 +560,20 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
 {
     int   i;
 
+    g_FMC_i32ErrCode = 0;
+
     FMC_ENABLE_CFG_UPDATE();
 
     if (FMC_Erase(FMC_CONFIG_BASE) != 0)
+    {
+        g_FMC_i32ErrCode = -1;
         return -1;
-
+    }
     if ((FMC_Read(FMC_CONFIG_BASE) != 0xFFFFFFFF) || (FMC_Read(FMC_CONFIG_BASE+4) != 0xFFFFFFFF) ||
             (FMC_Read(FMC_CONFIG_BASE+8) != 0xFFFFFF5A))
     {
         FMC_DISABLE_CFG_UPDATE();
+        g_FMC_i32ErrCode = -1;
         return -1;
     }
 
@@ -541,18 +588,21 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
         if (FMC_Write(FMC_CONFIG_BASE+i*4UL, u32Config[i]) != 0)
         {
             FMC_DISABLE_CFG_UPDATE();
+            g_FMC_i32ErrCode = -1;
             return -1;
         }
 
         if (FMC_Read(FMC_CONFIG_BASE+i*4UL) != u32Config[i])
         {
             FMC_DISABLE_CFG_UPDATE();
+            g_FMC_i32ErrCode = -1;
             return -1;
         }
 
         if (g_FMC_i32ErrCode != 0)
         {
             FMC_DISABLE_CFG_UPDATE();
+            g_FMC_i32ErrCode = -1;
             return -1;
         }
     }
@@ -748,9 +798,9 @@ int32_t FMC_RemapBank(uint32_t u32Bank)
  * @brief      Enable Flash Access Frequency Optimization Mode
  *
  * @param[in]  u32Mode   Optimize flash access cycle mode
- *             - \ref FMC_FTCTL_OPTIMIZE_12MHZ
- *             - \ref FMC_FTCTL_OPTIMIZE_24MHZ
- *             - \ref FMC_FTCTL_OPTIMIZE_48MHZ
+ *             - \ref FMC_FTCTL_OPTIMIZE_29MHZ
+ *             - \ref FMC_FTCTL_OPTIMIZE_43MHZ
+ *             - \ref FMC_FTCTL_OPTIMIZE_58MHZ
  *             - \ref FMC_FTCTL_OPTIMIZE_72MHZ
  *
  * @return     None
@@ -764,6 +814,24 @@ void FMC_EnableFreqOptimizeMode(uint32_t u32Mode)
 {
     FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (u32Mode);
 }
+
+/**
+ * @brief      Disable Flash Access Frequency  Optimization Mode
+ *
+ * @param      None
+ *
+ * @return     None
+ *
+ * @details    This function will clear FOM bit fields of FTCTL register to disable flash access frequency optimization mode.
+ *
+ * @note       The flash optimization mode (FOM) bits are write protect.
+ *
+ */
+void FMC_DisableFreqOptimizeMode(void)
+{
+    FMC->FTCTL &= ~FMC_FTCTL_FOM_Msk;
+}
+
 
 
 /*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */

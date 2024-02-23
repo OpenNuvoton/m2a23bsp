@@ -81,10 +81,10 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /* UART_FUNCSEL constants definitions                                                                      */
 /*---------------------------------------------------------------------------------------------------------*/
-#define UART_FUNCSEL_UART  (0x0 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set UART Function  (Default) */
+#define UART_FUNCSEL_UART  (0x0ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set UART Function  (Default) */
 #define UART_FUNCSEL_LIN   (0x1ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set LIN Function             \hideinitializer */
-#define UART_FUNCSEL_IrDA  (0x2 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set IrDA Function            */
-#define UART_FUNCSEL_RS485 (0x3 << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set RS485 Function           */
+#define UART_FUNCSEL_IrDA  (0x2ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set IrDA Function            */
+#define UART_FUNCSEL_RS485 (0x3ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set RS485 Function           */
 #define UART_FUNCSEL_SINGLE_WIRE (0x4ul << UART_FUNCSEL_FUNCSEL_Pos) /*!< UART_FUNCSEL setting to set Single Wire Function    */
 
 
@@ -301,8 +301,8 @@ extern "C"
  *    @param[in]    uart        The pointer of the specified UART module
  *    @param[in]    u32eIntSel  Interrupt type select
  *                              - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
- *                              - \ref UART_INTEN_ABRIEN_Msk     : Single-wire Bit Error Detection Interrupt
- *                              - \ref UART_INTEN_SWBEIEN_Msk    : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_ABRIEN_Msk     : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_SWBEIEN_Msk    : Single-wire Bit Error Detection Interrupt
  *                              - \ref UART_INTEN_LINIEN_Msk     : Lin Bus Interrupt
  *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up Interrupt
  *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error Interrupt
@@ -325,8 +325,8 @@ extern "C"
  *    @param[in]    uart        The pointer of the specified UART module
  *    @param[in]    u32eIntSel  Interrupt type select
  *                              - \ref UART_INTEN_TXENDIEN_Msk   : Transmitter Empty Interrupt
- *                              - \ref UART_INTEN_ABRIEN_Msk     : Single-wire Bit Error Detection Interrupt
- *                              - \ref UART_INTEN_SWBEIEN_Msk    : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_ABRIEN_Msk     : Auto-baud Rate Interrupt
+ *                              - \ref UART_INTEN_SWBEIEN_Msk    : Single-wire Bit Error Detection Interrupt
  *                              - \ref UART_INTEN_LINIEN_Msk     : Lin Bus Interrupt
  *                              - \ref UART_INTEN_WKIEN_Msk      : Wake-up Interrupt
  *                              - \ref UART_INTEN_BUFERRIEN_Msk  : Buffer Error Interrupt
