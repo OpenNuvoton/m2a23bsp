@@ -9,7 +9,7 @@
 #include "NuMicro.h"
 
 
-static uint8_t u8ChSelect[PDMA_CH_MAX];
+//static uint8_t u8ChSelect[PDMA_CH_MAX];
 
 /** @addtogroup Standard_Driver Standard Driver
   @{

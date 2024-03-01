@@ -35,6 +35,7 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 #define FMC_APROM_BASE          0x00000000UL    /*!< APROM base address          \hideinitializer */
 #define FMC_APROM_END           0x00040000UL    /*!< APROM end address           \hideinitializer */
+#define FMC_APROM_BANK0_END     (FMC_APROM_END/2UL)  /*!< APROM bank0 end address     \hideinitializer */
 #define FMC_LDROM_BASE          0x00100000UL    /*!< LDROM base address          \hideinitializer */
 #define FMC_LDROM_END           0x00101000UL    /*!< LDROM end address           \hideinitializer */
 #define FMC_SPROM_BASE          0x00200000UL    /*!< SPROM base address          \hideinitializer */
@@ -171,7 +172,7 @@ __STATIC_INLINE uint32_t FMC_GetVECMAP(void)
   * @brief    Read company ID
   * @param    None
   * @return   The company ID (32-bit). 0xFFFFFFFF means read failed.
-  * @details  The company ID of Nuvoton is fixed to be 0x530000DA
+  * @details  The company ID of Nuvoton is fixed to be 0x000000DA
   *
   * @note     Global error code g_FMC_i32ErrCode
   *           -1  Read time-out

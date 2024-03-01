@@ -107,6 +107,7 @@ __Vectors:
     .long   PDMA0_IRQHandler
     .long   Default_Handler
     .long   ADC0_IRQHandler
+    .long   Default_Handler
     .long   ACMP01_IRQHandler
     .long   BPWM0_IRQHandler
     .long   LLSI0_IRQHandler

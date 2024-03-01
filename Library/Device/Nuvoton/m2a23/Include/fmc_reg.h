@@ -146,11 +146,11 @@ typedef struct
      * | :----: | :----:   | :---- |
      * |[6:4]   |FOM       |Frequency Optimization Mode (Write Protect)
      * |        |          |Flash access timing is adjustable to optimize the Flash access cycles in different system working frequency.
-     * |        |          |000 = Frequency is less than or equal to 72 MHz.
-     * |        |          |010 = Frequency is less than or equal to 29 MHz.
-     * |        |          |011 = Frequency is less than or equal to 43 MHz.
-     * |        |          |100 = Frequency is less than or equal to 58 MHz.
-     * |        |          |101 = Frequency is less than or equal to 72 MHz.
+     * |        |          |000 = Frequency is less than or equal to 72 MHz (7 cycles).
+     * |        |          |010 = Frequency is less than or equal to 29 MHz (2 cycles).
+     * |        |          |011 = Frequency is less than or equal to 43 MHz (3 cycles).
+     * |        |          |100 = Frequency is less than or equal to 58 MHz (4 cycles).
+     * |        |          |101 = Frequency is less than or equal to 72 MHz (5 cycles).
      * |        |          |Others = Reserved.
      * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
      * |[9]     |CACHEINV  |Flash Cache Invalidation (Write Protect)
