@@ -4,7 +4,7 @@
  * @brief    SPI register definition header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __SPI_REG_H__
 #define __SPI_REG_H__

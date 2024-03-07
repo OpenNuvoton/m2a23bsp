@@ -159,6 +159,7 @@ extern void SystemInit(void);
 #include "uuart_reg.h"
 #include "uspi_reg.h"
 #include "ui2c_reg.h"
+#include "canfd_reg.h"
 
 
 /******************************************************************************/
@@ -300,6 +301,10 @@ extern void SystemInit(void);
 #define UI2C0                ((UI2C_T *) USCI0_BASE)                    /*!< UI2C0 Configuration Struct                       */
 #define UI2C1                ((UI2C_T *) USCI1_BASE)                    /*!< UI2C1 Configuration Struct                       */
 
+#define CANFD0              ((CANFD_T *) CANFD0_BASE)                   /*!< CANFD0 Configuration Struct                      */
+#define CANFD1              ((CANFD_T *) CANFD1_BASE)                   /*!< CANFD1 Configuration Struct                      */
+#define CANFD2              ((CANFD_T *) CANFD2_BASE)                   /*!< CANFD2 Configuration Struct                      */
+
 /**@}*/ /* end of group PMODULE */
 
 
@@ -411,4 +416,5 @@ typedef volatile unsigned short vu16;
 #include "usci_uart.h"
 #include "usci_spi.h"
 #include "usci_i2c.h"
+#include "canfd.h"
 #endif

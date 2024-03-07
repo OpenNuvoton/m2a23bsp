@@ -4,7 +4,7 @@
  * @brief    M2A23 series SPI driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -46,7 +46,7 @@ uint32_t SPI_Open(SPI_T *spi,
                   uint32_t u32DataWidth,
                   uint32_t u32BusClock)
 {
-    uint32_t u32ClkSrc = 0, u32Div, u32HCLKFreq;
+    uint32_t u32ClkSrc = 0, u32Div, u32HCLKFreq, u32RetValue = 0;
 
     if(u32DataWidth == 32)
         u32DataWidth = 0;
@@ -77,24 +77,17 @@ uint32_t SPI_Open(SPI_T *spi,
             else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PLL_DIV2)
                 u32ClkSrc = (CLK_GetPLLClockFreq() >> 1); /* Clock source is PLL/2 */
             else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PCLK1)
-            {
-                /* Clock source is PCLK0 */
-                //if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2)
-                //    u32ClkSrc = (u32HCLKFreq / 2);
-                //else
-                    u32ClkSrc = u32HCLKFreq;
-            }
+                u32ClkSrc = CLK_GetPCLK1Freq(); /* Clock source is PCLK1 */
             else
                 u32ClkSrc = __HIRC; /* Clock source is HIRC */
         }
-
 
         if(u32BusClock >= u32HCLKFreq)
         {
             /* Set DIVIDER = 0 */
             spi->CLKDIV = 0;
             /* Return master peripheral clock rate */
-            return u32ClkSrc;
+            u32RetValue = u32ClkSrc;
         }
         else if(u32BusClock >= u32ClkSrc)
         {
@@ -108,7 +101,7 @@ uint32_t SPI_Open(SPI_T *spi,
             /* Set DIVIDER to the maximum value 0x1FF. f_spi = f_spi_clk_src / (DIVIDER + 1) */
             spi->CLKDIV |= SPI_CLKDIV_DIVIDER_Msk;
             /* Return master peripheral clock rate */
-            return (u32ClkSrc / (0x1FF + 1));
+            u32RetValue = (u32ClkSrc / (0x1FF + 1));
         }
         else
         {
@@ -118,13 +111,13 @@ uint32_t SPI_Open(SPI_T *spi,
                 u32Div = 0x1FF;
                 spi->CLKDIV |= SPI_CLKDIV_DIVIDER_Msk;
                 /* Return master peripheral clock rate */
-                return (u32ClkSrc / (0x1FF + 1));
+                u32RetValue = (u32ClkSrc / (0x1FF + 1));
             }
             else
             {
                 spi->CLKDIV = (spi->CLKDIV & (~SPI_CLKDIV_DIVIDER_Msk)) | (u32Div << SPI_CLKDIV_DIVIDER_Pos);
                 /* Return master peripheral clock rate */
-                return (u32ClkSrc / (u32Div + 1));
+                u32RetValue = (u32ClkSrc / (u32Div + 1));
             }
         }
     }
@@ -144,14 +137,11 @@ uint32_t SPI_Open(SPI_T *spi,
         {
             CLK->CLKSEL2 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_SPI0SEL_Msk)) | CLK_CLKSEL2_SPI0SEL_PCLK1;
             /* Return slave peripheral clock rate */
-            //if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2)
-            //    return (u32HCLKFreq / 2);
-            //else
-                return u32HCLKFreq;
+            u32RetValue = CLK_GetPCLK1Freq();
         }
     }
-    
-    return 0;
+
+    return u32RetValue;
 }
 
 /**
@@ -253,17 +243,10 @@ uint32_t SPI_SetBusClock(SPI_T *spi, uint32_t u32BusClock)
         else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PLL_DIV2)
             u32ClkSrc = (CLK_GetPLLClockFreq() >> 1); /* Clock source is PLL/2 */
         else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PCLK1)
-        {
-            /* Clock source is PCLK0 */
-            //if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2)
-            //    u32ClkSrc = (u32HCLKFreq / 2);
-            //else
-                u32ClkSrc = u32HCLKFreq;
-        }
+            u32ClkSrc = CLK_GetPCLK1Freq(); /* Clock source is PCLK1 */
         else
             u32ClkSrc = __HIRC; /* Clock source is HIRC */
     }
-
 
     if(u32BusClock >= u32HCLKFreq)
     {
@@ -345,16 +328,11 @@ uint32_t SPI_GetBusClock(SPI_T *spi)
         else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PLL_DIV2)
             u32ClkSrc = (CLK_GetPLLClockFreq() >> 1); /* Clock source is PLL/2 */
         else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PCLK1)
-        {
-            /* Clock source is PCLK0 */
-            //if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2)
-            //    u32ClkSrc = (u32HCLKFreq / 2);
-            //else
-                u32ClkSrc = u32HCLKFreq;
-        }
+            u32ClkSrc = CLK_GetPCLK1Freq(); /* Clock source is PCLK1 */
         else
             u32ClkSrc = __HIRC; /* Clock source is HIRC */
     }
+
     /* Return SPI bus clock rate */
     return (u32ClkSrc / (u32Div + 1));
 }
@@ -669,29 +647,16 @@ uint32_t SPI_GetStatus2(SPI_T *spi, uint32_t u32Mask)
 {
     uint32_t u32TmpStatus;
     uint32_t u32Number = 0U;
-    uint32_t u32Freq, u32HCLKFreq;
 
-    if(spi == SPI0)
+    u32TmpStatus = spi->STATUS2;
+
+    /* Check effective bit number of uncompleted RX data status */
+    if(u32Mask & SPI_SLVBENUM_MASK)
     {
-        if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_HXT)
-            u32Freq = __HXT; /* Clock source is HXT */
-        else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PLL_DIV2)
-            u32Freq = (CLK_GetPLLClockFreq() >> 1); /* Clock source is PLL/2 */
-        else if((CLK->CLKSEL2 & CLK_CLKSEL2_SPI0SEL_Msk) == CLK_CLKSEL2_SPI0SEL_PCLK1)
-        {
-            /* Get system clock frequency */
-            u32HCLKFreq = CLK_GetHCLKFreq();
-            /* Clock source is PCLK0 */
-            //if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0SEL_HCLK_DIV2)
-            //    u32Freq = (u32HCLKFreq / 2);
-            //else
-                u32Freq = u32HCLKFreq;
-        }
-        else
-            u32Freq = __HIRC; /* Clock source is HIRC */
+        u32Number = (u32TmpStatus & SPI_STATUS2_SLVBENUM_Msk) >> SPI_STATUS2_SLVBENUM_Pos;
     }
 
-    return u32Freq;
+    return u32Number;
 }
 
 /*@}*/ /* end of group SPI_EXPORTED_FUNCTIONS */

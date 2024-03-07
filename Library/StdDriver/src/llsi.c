@@ -4,7 +4,7 @@
  * @brief    M2A23 series LLSI driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -47,7 +47,7 @@ static volatile uint32_t g_u32DIVIDER, g_u32PERIOD, g_u32T0H, g_u32T1H, g_u32RST
   *          For example, if the LLSI source clock rate is 12 MHz and the target LLSI bus clock rate is 7 MHz, the
   *          actual LLSI clock rate will be 6 MHz.
   * @note If u32BusClock = 0, DIVIDER setting will be set to the maximum value.
-  * @note If u32BusClock >= system clock frequency, DIVIDER will be set to 0.
+  * @note If u32BusClock >= PCLK clock frequency, DIVIDER will be set to 0.
   */
 void LLSI_Open(LLSI_T *llsi,
                uint32_t u32LLSIMode,
@@ -60,18 +60,20 @@ void LLSI_Open(LLSI_T *llsi,
                uint32_t u32PCNT,
                uint32_t u32IDOS)
 {
-    uint32_t u32ClkSrc = 0, u32HCLKFreq, u32Div, u32Period, u32T0H, u32T1H, u32ResetPeriod;
+    uint32_t u32PCLKFreq = 0, u32Div, u32Period, u32T0H, u32T1H, u32ResetPeriod;
 
-    /* Get system clock frequency */
-    u32HCLKFreq = CLK_GetHCLKFreq();
-    u32ClkSrc = u32HCLKFreq;
+    /* Get PCLK clock frequency */
+    if(llsi == LLSI0)
+        u32PCLKFreq = CLK_GetPCLK0Freq();
+    else if(llsi == LLSI1)
+        u32PCLKFreq = CLK_GetPCLK1Freq();
 
     /* Default setting: software mode, RGB format, idle ouput low. */
     llsi->CTL = (u32LLSIMode) | (u32OutputFormat);
     llsi->PCNT = u32PCNT;
     llsi->OCTL = u32IDOS;
 
-    if(u32BusClock >= u32HCLKFreq)
+    if(u32BusClock >= u32PCLKFreq)
     {
         /* Set DIVIDER = 0 */
         u32Div = 0;
@@ -85,7 +87,7 @@ void LLSI_Open(LLSI_T *llsi,
     }
     else
     {
-        u32Div = (((u32ClkSrc * 10) / u32BusClock + 5) / 10) - 1; /* Round to the nearest integer */
+        u32Div = (((u32PCLKFreq * 10) / u32BusClock + 5) / 10) - 1; /* Round to the nearest integer */
         if(u32Div > 0xFF)
         {
             u32Div = 0xFF;
@@ -97,7 +99,7 @@ void LLSI_Open(LLSI_T *llsi,
         }
     }
 
-    u32Period = ((u32ClkSrc * 10) / 1000000 * u32TransferTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
+    u32Period = ((u32PCLKFreq * 10) / 1000000 * u32TransferTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
     if(u32Period > 0xFF)
     {
         u32Period = 0xFF;
@@ -108,7 +110,7 @@ void LLSI_Open(LLSI_T *llsi,
         llsi->PERIOD = (llsi->PERIOD & (~LLSI_PERIOD_PERIOD_Msk)) | (u32Period << LLSI_PERIOD_PERIOD_Pos);
     }
 
-    u32T0H = ((u32ClkSrc * 10) / 1000000 * u32T0HTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
+    u32T0H = ((u32PCLKFreq * 10) / 1000000 * u32T0HTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
     if(u32T0H > 0xFF)
     {
         u32T0H = 0xFF;
@@ -119,7 +121,7 @@ void LLSI_Open(LLSI_T *llsi,
         llsi->DUTY = (llsi->DUTY & (~LLSI_DUTY_T0H_Msk)) | (u32T0H << LLSI_DUTY_T0H_Pos);
     }
 
-    u32T1H = ((u32ClkSrc * 10) / 1000000 * u32T1HTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
+    u32T1H = ((u32PCLKFreq * 10) / 1000000 * u32T1HTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
     if(u32T1H > 0xFF)
     {
         u32T1H = 0xFF;
@@ -130,7 +132,7 @@ void LLSI_Open(LLSI_T *llsi,
         llsi->DUTY = (llsi->DUTY & (~LLSI_DUTY_T1H_Msk)) | (u32T1H << LLSI_DUTY_T1H_Pos);
     }
 
-    u32ResetPeriod = ((u32ClkSrc * 10) / 1000000 * u32ResetTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
+    u32ResetPeriod = ((u32PCLKFreq * 10) / 1000000 * u32ResetTimeNsec / 1000 / (u32Div + 1) + 5) / 10; /* Round to the nearest integer */
     if(u32ResetPeriod > 0xFFFF)
     {
         u32ResetPeriod = 0xFFFF;
@@ -181,10 +183,13 @@ void LLSI_Close(LLSI_T *llsi)
   */
 void LLSI_GetTimeInfo(LLSI_T *llsi, S_LLSI_TIME_INFO_T *sPt)
 {
-    uint32_t u32ClkSrc = 0, u32Tmp;
+    uint32_t u32PCLKFreq = 0, u32Tmp;
 
-    /* Get system clock frequency */
-    u32ClkSrc = CLK_GetHCLKFreq();
+    /* Get PCLK clock frequency */
+    if(llsi == LLSI0)
+        u32PCLKFreq = CLK_GetPCLK0Freq();
+    else if(llsi == LLSI1)
+        u32PCLKFreq = CLK_GetPCLK1Freq();
 
     /* Get time data */
     g_u32DIVIDER = (llsi->CLKDIV & LLSI_CLKDIV_DIVIDER_Msk) >> LLSI_CLKDIV_DIVIDER_Pos;
@@ -194,9 +199,9 @@ void LLSI_GetTimeInfo(LLSI_T *llsi, S_LLSI_TIME_INFO_T *sPt)
     g_u32RSTPERIOD = (llsi->RSTPERIOD & LLSI_RSTPERIOD_RSTPERIOD_Msk) >> LLSI_RSTPERIOD_RSTPERIOD_Pos;
 
     /* Compute LLSI time information */
-    sPt->u32BusClock = u32ClkSrc / (g_u32DIVIDER + 1);
+    sPt->u32BusClock = u32PCLKFreq / (g_u32DIVIDER + 1);
 
-    u32Tmp = u32ClkSrc / 1000;
+    u32Tmp = u32PCLKFreq / 1000;
     sPt->u32TransferTimeNsec = g_u32PERIOD * 1000000 / u32Tmp * (g_u32DIVIDER + 1);
     sPt->u32T0HTimeNsec =  g_u32T0H * 1000000 / u32Tmp * (g_u32DIVIDER + 1);
     sPt->u32T1HTimeNsec =  g_u32T1H * 1000000 / u32Tmp * (g_u32DIVIDER + 1);
