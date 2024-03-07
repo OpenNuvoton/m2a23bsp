@@ -7,8 +7,8 @@
  * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
-
 #include <stdio.h>
+#include <string.h>
 #include "NuMicro.h"
 
 #if defined (__ICCARM__)
@@ -71,11 +71,13 @@ void __aeabi_assert(const char* expr, const char* file, int line)
 __asm("  .global __ARM_use_no_argv\n");
 //__asm("  .global __use_no_semihosting\n");
 
+
 /* IO device file handles. */
 #define FH_STDIN    0x8001
 #define FH_STDOUT   0x8002
 #define FH_STDERR   0x8003
 
+__attribute__((weak))
 int32_t _sys_open (const char *name, int openmode)
 {
   (void)openmode;
@@ -96,7 +98,9 @@ int32_t _sys_open (const char *name, int openmode)
     }
     return (-1);
   }
+  return 0;
 }
+
 
 void _sys_exit(int return_code)__attribute__((noreturn));
 void _sys_exit(int return_code)
