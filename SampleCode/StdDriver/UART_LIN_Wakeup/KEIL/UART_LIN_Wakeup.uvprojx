@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>UART_LIN</TargetName>
+      <TargetName>UART_LIN_Wakeup</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>UART_LIN</OutputName>
+          <OutputName>UART_LIN_Wakeup</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

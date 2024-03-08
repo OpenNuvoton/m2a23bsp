@@ -103,8 +103,9 @@ typedef enum IRQn
  * ==========================================================================
  */
 
-/* Configuration of the Cortex-M0 Processor and Core Peripherals */
+/* Configuration of the Cortex-M23 Processor and Core Peripherals */
 #define __MPU_PRESENT           0       /*!< armikcmu does not provide a MPU present or not       */
+#define __VTOR_PRESENT          1       /*!< VTOR present                                         */
 #define __NVIC_PRIO_BITS        2       /*!< armikcmu Supports 2 Bits for the Priority Levels     */
 #define __Vendor_SysTickConfig  0       /*!< Set to 1 if different SysTick Config is used         */
 

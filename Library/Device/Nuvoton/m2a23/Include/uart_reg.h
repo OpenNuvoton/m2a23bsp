@@ -562,6 +562,10 @@ typedef struct
      * |        |          |UART provides three baud rate calculation modes.
      * |        |          |This bit combines with BAUDM0 (UART_BAUD[28]) to select baud rate calculation mode.
      * |        |          |Note: In IrDA mode must be operated in mode 0.
+     * |[30]    |BRFDEN    |Baud Rate Fractional Divider Enable Bit
+     * |        |          |0 = Baud Rate Fractional Divider Disabled.
+     * |        |          |1 = Baud Rate Fractional Divider Enabled.
+     * |        |          |Note: This bit has effect only at baud rate mode 2 (BAUDM1 (UART_BAUD[29]) and BAUDM0 (UART_BAUD[28]) must be 1).
      * @var UART_T::IRDA
      * Offset: 0x28  UART IrDA Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -1230,6 +1234,9 @@ typedef struct
 #define UART_BAUD_BRD_Pos                (0)                                               /*!< UART_T::BAUD: BRD Position             */
 #define UART_BAUD_BRD_Msk                (0xfffful << UART_BAUD_BRD_Pos)                   /*!< UART_T::BAUD: BRD Mask                 */
 
+#define UART_BAUD_BRFD_Pos               (16)                                              /*!< UART_T::BAUD: BRFD Position            */
+#define UART_BAUD_BRFD_Msk               (0xfful << UART_BAUD_BRFD_Pos)                    /*!< UART_T::BAUD: BRFD Mask                */
+
 #define UART_BAUD_EDIVM1_Pos             (24)                                              /*!< UART_T::BAUD: EDIVM1 Position          */
 #define UART_BAUD_EDIVM1_Msk             (0xful << UART_BAUD_EDIVM1_Pos)                   /*!< UART_T::BAUD: EDIVM1 Mask              */
 
@@ -1238,6 +1245,9 @@ typedef struct
 
 #define UART_BAUD_BAUDM1_Pos             (29)                                              /*!< UART_T::BAUD: BAUDM1 Position          */
 #define UART_BAUD_BAUDM1_Msk             (0x1ul << UART_BAUD_BAUDM1_Pos)                   /*!< UART_T::BAUD: BAUDM1 Mask              */
+
+#define UART_BAUD_BRFDEN_Pos             (30)                                              /*!< UART_T::BAUD: BRFDEN Position          */
+#define UART_BAUD_BRFDEN_Msk             (0x1ul << UART_BAUD_BRFDEN_Pos)                   /*!< UART_T::BAUD: BRFDEN Mask              */
 
 #define UART_IRDA_TXEN_Pos               (1)                                               /*!< UART_T::IRDA: TXEN Position            */
 #define UART_IRDA_TXEN_Msk               (0x1ul << UART_IRDA_TXEN_Pos)                     /*!< UART_T::IRDA: TXEN Mask                */

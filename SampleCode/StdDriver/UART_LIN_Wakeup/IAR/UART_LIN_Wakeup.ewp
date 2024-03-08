@@ -655,7 +655,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>UART_LIN.bin</state>
+                    <state>UART_LIN_Wakeup.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -710,7 +710,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>UART_LIN.out</state>
+                    <state>UART_LIN_Wakeup.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>

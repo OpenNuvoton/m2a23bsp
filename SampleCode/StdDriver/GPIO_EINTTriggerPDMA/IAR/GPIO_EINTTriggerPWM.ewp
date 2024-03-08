@@ -224,7 +224,7 @@
                 </option>
                 <option>
                     <name>CCDefines</name>
-                    <state>DEBUG_PORT=UART1</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -655,7 +655,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>UART_LIN.bin</state>
+                    <state>GPIO_EINTTriggerPWM.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -710,7 +710,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>UART_LIN.out</state>
+                    <state>GPIO_EINTTriggerPWM.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -1007,7 +1007,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>UART_IrDA_import_lib.o</state>
+                    <state>GPIO_EINTTriggerPWM_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
