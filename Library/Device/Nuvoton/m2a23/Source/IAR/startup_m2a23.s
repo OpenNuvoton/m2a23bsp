@@ -4,7 +4,7 @@
 ; * @brief    M2A23 Series Startup Source File for IAR Platform
 ; *
 ; * @copyright SPDX-License-Identifier: Apache-2.0
-; * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
+; * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 ; ******************************************************************************/
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -24,7 +24,7 @@
     PUBLIC  __Vectors
 
     DATA
-__Vectors    
+__Vectors
 __vector_table
     DCD     sfe(CSTACK)
     DCD     Reset_Handler
@@ -127,6 +127,7 @@ HardFault_Handler\
         BLX     R3
         BX      R0
 
+    PUBWEAK  SysTick_Handler
     PUBWEAK  BOD_IRQHandler
     PUBWEAK  IRC_IRQHandler
     PUBWEAK  PWRWU_IRQHandler
@@ -251,12 +252,12 @@ SH_DoCommand
 SH_HardFault                ; Captured by HardFault
     MOVS   R0,#0            ; Set return value to 0
     BX     lr               ; Return
-    
-    
+
+
     PUBLIC    __PC
-__PC          
+__PC
         MOV     r0, lr
         BLX     lr
-            
+
     END
 
