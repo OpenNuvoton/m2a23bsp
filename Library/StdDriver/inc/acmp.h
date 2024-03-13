@@ -4,7 +4,7 @@
  * @brief    ACMP Driver Header File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __ACMP_H__
 #define __ACMP_H__
@@ -111,7 +111,6 @@ extern "C"
   *                  - \ref ACMP_CTL_NEGSEL_PIN
   *                  - \ref ACMP_CTL_NEGSEL_CRV
   *                  - \ref ACMP_CTL_NEGSEL_VBG
-  *                  - \ref ACMP_CTL_NEGSEL_DAC
   * @return None
   * @details This macro will set NEGSEL (ACMP_CTL[5:4]) to determine the source of negative input.
   * \hideinitializer

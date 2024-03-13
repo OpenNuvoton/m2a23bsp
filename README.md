@@ -39,9 +39,6 @@ This BSP folder
 - ISP<br>
 	Sample codes for In-System-Programming.
 
-- RegBased<br>
-	The sample codes which access control registers directly.
-
 - Semihost<br>
 	Show how to print and get character through IDE console window.
 

@@ -4,7 +4,7 @@
  * @brief    Analog Comparator(ACMP) driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -32,12 +32,9 @@
   *                  - \ref ACMP_CTL_NEGSEL_PIN
   *                  - \ref ACMP_CTL_NEGSEL_CRV
   *                  - \ref ACMP_CTL_NEGSEL_VBG
-  *                  - \ref ACMP_CTL_NEGSEL_DAC
   * @param[in]  u32HysSel The hysteresis function option. Including:
+  *                  - \ref ACMP_CTL_HYSTERESIS_0MV
   *                  - \ref ACMP_CTL_HYSTERESIS_30MV
-  *                  - \ref ACMP_CTL_HYSTERESIS_20MV
-  *                  - \ref ACMP_CTL_HYSTERESIS_10MV
-  *                  - \ref ACMP_CTL_HYSTERESIS_DISABLE
   *
   * @return     None
   *

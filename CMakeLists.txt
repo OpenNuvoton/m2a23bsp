@@ -47,6 +47,9 @@ add_subdirectory(${BSP_DIR}/Library/Device/Nuvoton/m2a23/Source)
 
 # Build sample code
 add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_CompareDAC)
+add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_CompareVBG)
+add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_Wakeup)
+add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_WindowComapre)
 
 
 
