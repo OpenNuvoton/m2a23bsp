@@ -199,16 +199,6 @@ void CAN_Init(void)
 
     /* CAN FD0 Run to Normal mode  */
     CANFD_RunToNormal(CANFD0, TRUE);
-
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*                                    Fini CAN FD0                                                         */
-/*---------------------------------------------------------------------------------------------------------*/
-void CANFD_Fini(void)
-{
-    NVIC_DisableIRQ(CANFD00_IRQn);
-    CANFD_Close(CANFD0);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -221,16 +211,17 @@ int main(void)
 
     /* Init System, IP clock and multi-function I/O */
     if(SYS_Init() < 0)
-        goto lexit;
+        goto _APROM;
 
     /* Enable FMC ISP AP CFG function & clear ISPFF */
     FMC->ISPCTL |= FMC_ISPCTL_ISPEN_Msk | FMC_ISPCTL_APUEN_Msk | FMC_ISPCTL_CFGUEN_Msk | FMC_ISPCTL_ISPFF_Msk;
 
+    SCB->VTOR = FMC_LDROM_BASE;
     /* Init CAN port */
     CAN_Init();
 
     SysTick->LOAD = 300000 * CyclesPerUs;
-    SysTick->VAL   = (0x00);
+    SysTick->VAL  = (0x00);
     SysTick->CTRL = SysTick->CTRL | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
     while(1)
@@ -242,7 +233,7 @@ int main(void)
 
         if(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)
         {
-            goto lexit;
+            goto _APROM;
         }
     }
 
@@ -282,10 +273,10 @@ int main(void)
         }
     }
 
-lexit:
-
-    /* CAN FD interface finalization */
-    CANFD_Fini();
+_APROM:
+    /* Reset system and boot from APROM */
+    FMC_SetVectorPageAddr(FMC_APROM_BASE);
+    NVIC_SystemReset();
 
     /* Trap the CPU */
     while(1);

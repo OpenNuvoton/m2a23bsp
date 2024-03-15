@@ -70,9 +70,9 @@ void CANFD20_IRQHandler(void)
 void CANFD_TEST_HANDLE(void)
 {
     printf("IR =0x%08X \n", g_pCanfd->IR);
-    /*Clear the Interrupt flag */
+    /* Clear the Interrupt flag */
     CANFD_ClearStatusFlag(g_pCanfd, CANFD_IR_TOO_Msk | CANFD_IR_RF0N_Msk);
-    /*Receive the Rx FIFO0 buffer */
+    /* Receive the Rx FIFO0 buffer */
     CANFD_ReadRxFifoMsg(g_pCanfd, 0, &g_sRxMsgFrame);
     g_u8RxFIFO0CompleteFlag = 1;
 }
@@ -292,8 +292,10 @@ int32_t main(void)
     UART0_Init();
 
     printf("\n CANFD%d CAN Mode Loopback example\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
+
     /* CAN Loopback Test */
     CANFD_CAN_Loopback();
+
     printf("\n CANFD%d CAN Mode Loopback Test Done\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
 
     while(1) {}

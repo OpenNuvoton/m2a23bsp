@@ -6,7 +6,6 @@
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
-
 #include "NuMicro.h"
 #include "string.h"
 
@@ -14,149 +13,149 @@
  * Definitions
  ******************************************************************************/
 
-/* Minimum number of time quanta in a bit. */
+/* Minimum number of time quanta in a bit */
 #define MIN_TIME_QUANTA    9ul
-/* Maximum number of time quanta in a bit. */
+/* Maximum number of time quanta in a bit */
 #define MAX_TIME_QUANTA    20ul
 /* Number of receive FIFOs (1 - 2) */
 #define CANFD_NUM_RX_FIFOS  2ul
 
-/*CANFD max nominal bit rate*/
+/* CANFD max nominal bit rate */
 #define MAX_NOMINAL_BAUDRATE (1000000UL)
 
-/* Tx Event FIFO Element ESI(Error State Indicator)  */
+/* Tx Event FIFO Element ESI(Error State Indicator) */
 #define TX_FIFO_E0_EVENT_ESI_Pos   (31)
 #define TX_FIFO_E0_EVENT_ESI_Msk   (0x1ul << TX_FIFO_E0_EVENT_ESI_Pos)
 
-/* Tx Event FIFO Element XTD(Extended Identifier)    */
+/* Tx Event FIFO Element XTD(Extended Identifier) */
 #define TX_FIFO_E0_EVENT_XTD_Pos   (30)
 #define TX_FIFO_E0_EVENT_XTD_Msk   (0x1ul << TX_FIFO_E0_EVENT_XTD_Pos)
 
-/* Tx Event FIFO Element RTR(Remote Transmission Request)    */
+/* Tx Event FIFO Element RTR(Remote Transmission Request) */
 #define TX_FIFO_E0_EVENT_RTR_Pos   (29)
 #define TX_FIFO_E0_EVENT_RTR_Msk   (0x1ul << TX_FIFO_E0_EVENT_RTR_Pos)
 
-/* Tx Event FIFO Element ID(Identifier)    */
+/* Tx Event FIFO Element ID(Identifier) */
 #define TX_FIFO_E0_EVENT_ID_Pos    (0)
 #define TX_FIFO_E0_EVENT_ID_Msk    (0x1FFFFFFFul << TX_FIFO_E0_EVENT_ID_Pos)
 
-/* Tx Event FIFO Element MM(Message Marker)    */
+/* Tx Event FIFO Element MM(Message Marker) */
 #define TX_FIFO_E1_EVENT_MM_Pos    (24)
 #define TX_FIFO_E1_EVENT_MM_Msk    (0xFFul << TX_FIFO_E1_EVENT_MM_Pos)
 
-/* Tx Event FIFO Element ET(Event Type)    */
+/* Tx Event FIFO Element ET(Event Type) */
 #define TX_FIFO_E1_EVENT_ET_Pos    (22)
 #define TX_FIFO_E1_EVENT_ET_Msk    (0x3ul << TX_FIFO_E1_EVENT_ET_Pos)
 
-/* Tx Event FIFO Element FDF(FD Format)    */
+/* Tx Event FIFO Element FDF(FD Format) */
 #define TX_FIFO_E1_EVENT_FDF_Pos    (21)
 #define TX_FIFO_E1_EVENT_FDF_Msk    (0x1ul << TX_FIFO_E1_EVENT_FDF_Pos)
 
-/* Tx Event FIFO Element BRS(Bit Rate Switch)    */
+/* Tx Event FIFO Element BRS(Bit Rate Switch) */
 #define TX_FIFO_E1_EVENT_BRS_Pos    (20)
 #define TX_FIFO_E1_EVENT_BRS_Msk    (0x1ul << TX_FIFO_E1_EVENT_BRS_Pos)
 
-/* Tx Event FIFO Element DLC(Data Length Code)    */
+/* Tx Event FIFO Element DLC(Data Length Code) */
 #define TX_FIFO_E1_EVENT_DLC_Pos    (16)
 #define TX_FIFO_E1_EVENT_DLC_Msk    (0xFul << TX_FIFO_E1_EVENT_DLC_Pos)
 
-/* Tx Event FIFO Element TXTS(Tx Timestamp)    */
+/* Tx Event FIFO Element TXTS(Tx Timestamp) */
 #define TX_FIFO_E1A_EVENT_TXTS_Pos  (0)
 #define TX_FIFO_E1A_EVENT_TXTS_Msk  (0xFFFFul << TX_FIFO_E1A_EVENT_TXTS_Pos)
 
-/* Tx Event FIFO Element MM(Message Marker)    */
+/* Tx Event FIFO Element MM(Message Marker) */
 #define TX_FIFO_E1B_EVENT_MM_Pos    (8)
 #define TX_FIFO_E1B_EVENT_MM_Msk    (0xFFul << TX_FIFO_E1B_EVENT_MM_Pos)
 
-/* Tx Event FIFO Element TSC(Timestamp Captured)    */
+/* Tx Event FIFO Element TSC(Timestamp Captured) */
 #define TX_FIFO_E1B_EVENT_TSC_Pos   (4)
 #define TX_FIFO_E1B_EVENT_TSC_Msk   (0x1ul << TX_FIFO_E1B_EVENT_TSC_Pos)
 
-/* Tx Event FIFO Element TSC(Timestamp Captured)    */
+/* Tx Event FIFO Element TSC(Timestamp Captured) */
 #define TX_FIFO_E1B_EVENT_TXTS_Pos   (0)
 #define TX_FIFO_E1B_EVENT_TXTS_Msk   (0xFul << TX_FIFO_E1B_EVENT_TSC_Pos)
 
-/* Rx Buffer and FIFO Element ESI2(Error State Indicator)    */
+/* Rx Buffer and FIFO Element ESI2(Error State Indicator) */
 #define RX_BUFFER_AND_FIFO_R0_ELEM_ESI_Pos  (31)
 #define RX_BUFFER_AND_FIFO_R0_ELEM_ESI_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R0_ELEM_ESI_Pos)
 
-/* Rx Buffer and FIFO Element XTD(Extended Identifier)    */
+/* Rx Buffer and FIFO Element XTD(Extended Identifier) */
 #define RX_BUFFER_AND_FIFO_R0_ELEM_XTD_Pos  (30)
 #define RX_BUFFER_AND_FIFO_R0_ELEM_XTD_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R0_ELEM_XTD_Pos)
 
-/* Rx Buffer and FIFO Element RTR(Remote Transmission Request)    */
+/* Rx Buffer and FIFO Element RTR(Remote Transmission Request) */
 #define RX_BUFFER_AND_FIFO_R0_ELEM_RTR_Pos  (29)
 #define RX_BUFFER_AND_FIFO_R0_ELEM_RTR_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R0_ELEM_RTR_Pos)
 
-/* Rx Buffer and FIFO Element ID(Identifier)    */
+/* Rx Buffer and FIFO Element ID(Identifier) */
 #define RX_BUFFER_AND_FIFO_R0_ELEM_ID_Pos  (0)
 #define RX_BUFFER_AND_FIFO_R0_ELEM_ID_Msk  (0x1FFFFFFFul << RX_BUFFER_AND_FIFO_R0_ELEM_ID_Pos)
 
-/* Rx Buffer and FIFO Element ANMF(Accepted Non-matching Frame)    */
+/* Rx Buffer and FIFO Element ANMF(Accepted Non-matching Frame) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_ANMF_Pos  (31)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_ANMF_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R1_ELEM_ANMF_Pos)
 
-/* Rx Buffer and FIFO Element FIDX(Filter Index)    */
+/* Rx Buffer and FIFO Element FIDX(Filter Index) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_FIDX_Pos  (24)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_FIDX_Msk  (0x7Ful << RX_BUFFER_AND_FIFO_R1_ELEM_FIDX_Pos)
 
-/* Rx Buffer and FIFO Element FDF(FD Format)    */
+/* Rx Buffer and FIFO Element FDF(FD Format) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_FDF_Pos  (21)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_FDF_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R1_ELEM_FDF_Pos)
 
-/* Rx Buffer and FIFO Element BRS(Bit Rate Swit)    */
+/* Rx Buffer and FIFO Element BRS(Bit Rate Swit) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_BSR_Pos  (20)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_BSR_Msk  (0x1ul << RX_BUFFER_AND_FIFO_R1_ELEM_BSR_Pos)
 
-/* Rx Buffer and FIFO Element DLC(Bit Rate Swit)    */
+/* Rx Buffer and FIFO Element DLC(Bit Rate Swit) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_DLC_Pos  (16)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_DLC_Msk  (0xFul << RX_BUFFER_AND_FIFO_R1_ELEM_DLC_Pos)
 
-/* Rx Buffer and FIFO Element RXTS(Rx Timestamp)    */
+/* Rx Buffer and FIFO Element RXTS(Rx Timestamp) */
 #define RX_BUFFER_AND_FIFO_R1_ELEM_RXTS_Pos  (0)
 #define RX_BUFFER_AND_FIFO_R1_ELEM_RXTS_Msk  (0xFFFFul << RX_BUFFER_AND_FIFO_R1_ELEM_RXTS_Pos)
 
-/* Tx Buffer Element ESI(Error State Indicator)    */
+/* Tx Buffer Element ESI(Error State Indicator) */
 #define TX_BUFFER_T0_ELEM_ESI_Pos  (31)
 #define TX_BUFFER_T0_ELEM_ESI_Msk  (0x1ul << TX_BUFFER_T0_ELEM_ESI_Pos)
 
-/* Tx Buffer Element XTD(Extended Identifier)    */
+/* Tx Buffer Element XTD(Extended Identifier) */
 #define TX_BUFFER_T0_ELEM_XTD_Pos  (30)
-#define TX_BUFFER_T0_ELEM_XTD_Msk (0x1ul << TX_BUFFER_T0_ELEM_XTD_Pos)
+#define TX_BUFFER_T0_ELEM_XTD_Msk  (0x1ul << TX_BUFFER_T0_ELEM_XTD_Pos)
 
-/* Tx Buffer RTR(Remote Transmission Request)    */
+/* Tx Buffer RTR(Remote Transmission Request) */
 #define TX_BUFFER_T0_ELEM_RTR_Pos  (29)
 #define TX_BUFFER_T0_ELEM_RTR_Msk  (0x1ul << TX_BUFFER_T0_ELEM_RTR_Pos)
 
-/* Tx Buffer Element ID(Identifier)    */
+/* Tx Buffer Element ID(Identifier) */
 #define TX_BUFFER_T0_ELEM_ID_Pos  (0)
 #define TX_BUFFER_T0_ELEM_ID_Msk  (0x1FFFFFFFul << TX_BUFFER_T0_ELEM_ID_Pos)
 
-/* Tx Buffer Element MM(Message Marker)    */
+/* Tx Buffer Element MM(Message Marker) */
 #define TX_BUFFER_T1_ELEM_MM1_Pos  (24)
 #define TX_BUFFER_T1_ELEM_MM1_Msk  (0xFFul << TX_BUFFER_T1_ELEM_MM1_Pos)
 
-/* Tx Buffer Element EFC(Event FIFO Control)    */
+/* Tx Buffer Element EFC(Event FIFO Control) */
 #define TX_BUFFER_T1_ELEM_EFC_Pos  (23)
 #define TX_BUFFER_T1_ELEM_EFC_Msk  (0xFFul << TX_BUFFER_T1_ELEM_EFC_Pos)
 
-/* Tx Buffer Element TSCE(Time Stamp Capture Enable for TSU)    */
+/* Tx Buffer Element TSCE(Time Stamp Capture Enable for TSU) */
 #define TX_BUFFER_T1_ELEM_TSCE_Pos  (22)
 #define TX_BUFFER_T1_ELEM_TSCE_Msk  (0x1ul << TX_BUFFER_T1_ELEM_TSCE_Pos)
 
-/* Tx Buffer Element FDF(FD Format)    */
+/* Tx Buffer Element FDF(FD Format) */
 #define TX_BUFFER_T1_ELEM_FDF_Pos  (21)
 #define TX_BUFFER_T1_ELEM_FDF_Msk  (0x1ul << TX_BUFFER_T1_ELEM_FDF_Pos)
 
-/* Tx Buffer Element BRS(Bit Rate Swit)    */
+/* Tx Buffer Element BRS(Bit Rate Swit) */
 #define TX_BUFFER_T1_ELEM_BSR_Pos  (20)
 #define TX_BUFFER_T1_ELEM_BSR_Msk  (0x1ul << TX_BUFFER_T1_ELEM_BSR_Pos)
 
-/* Tx Buffer Element DLC(Bit Rate Swit)    */
+/* Tx Buffer Element DLC(Bit Rate Swit) */
 #define TX_BUFFER_T1_ELEM_DLC_Pos  (16)
 #define TX_BUFFER_T1_ELEM_DLC_Msk  (0xFul << TX_BUFFER_T1_ELEM_DLC_Pos)
 
-/* Tx Buffer Element MM(Message Marker)    */
+/* Tx Buffer Element MM(Message Marker) */
 #define TX_BUFFER_T1_ELEM_MM0_Pos  (8)
 #define TX_BUFFER_T1_ELEM_MM0_Msk  (0xFFul << TX_BUFFER_T1_ELEM_MM0_Pos)
 
@@ -248,19 +247,19 @@ static void CANFD_CalculateRamAddress(CANFD_RAM_PART_T *psConfigAddr, CANFD_ELEM
 /**
  * @brief       Get the default configuration structure.
  *
- * @param[in]   psConfig       Pointer to CAN FD configuration structure.
- * @param[in]   u8OpMode       Setting the CAN FD Operating mode.
+ * @param[in]   psConfig  Pointer to CAN FD configuration structure.
+ * @param[in]   u8OpMode  Setting the CAN FD Operating mode.
  *
  * @return      None.
  *
  * @details     This function initializes the CAN FD configure structure to default value.
  *              The default value are:
- *              sNormBitRate.u32BitRate   = 500000bps;
- *              u32DataBaudRate     = 0(CAN mode) or 1000000(CAN FD mode);
- *              u32MRamSize         = 1024 bytes (256 words);
- *              bEnableLoopBack     = FALSE;
- *              bBitRateSwitch      = FALSE(CAN Mode) or TRUE(CAN FD Mode);
- *              bFDEn               = FALSE(CAN Mode) or TRUE(CAN FD Mode);
+ *              sNormBitRate.u32BitRate = 500000bps;
+ *              u32DataBaudRate         = 0(CAN mode) or 1000000(CAN FD mode);
+ *              u32MRamSize             = 1024 bytes (256 words);
+ *              bEnableLoopBack         = FALSE;
+ *              bBitRateSwitch          = FALSE(CAN Mode) or TRUE(CAN FD Mode);
+ *              bFDEn                   = FALSE(CAN Mode) or TRUE(CAN FD Mode);
 */
 void CANFD_GetDefaultConfig(CANFD_FD_T *psConfig, uint8_t u8OpMode)
 {
@@ -310,7 +309,7 @@ void CANFD_GetDefaultConfig(CANFD_FD_T *psConfig, uint8_t u8OpMode)
  *
  * @param[in]   u8NumberOfBytes  Number of bytes in a message.
  *
- * @return      Data Length Code.
+ * @return      Data length code.
  *
  * @details     Converts number of bytes in a message into a Data Length Code.
  */
@@ -330,7 +329,7 @@ static uint8_t CANFD_EncodeDLC(uint8_t u8NumberOfBytes)
 /**
  * @brief       Decode the Data Length Code.
  *
- * @param[in]   u8Dlc   Data Length Code.
+ * @param[in]   u8Dlc  Data Length Code.
  *
  * @return      Number of bytes in a message.
  *
@@ -352,8 +351,8 @@ static uint8_t CANFD_DecodeDLC(uint8_t u8Dlc)
 /**
  * @brief       Sets the CAN FD protocol timing characteristic.
  *
- * @param[in]   psCanfd     The pointer of the specified CANFD module.
- * @param[in]   psConfig    Pointer to the timing configuration structure.
+ * @param[in]   psCanfd   The pointer of the specified CANFD module.
+ * @param[in]   psConfig  Pointer to the timing configuration structure.
  *
  * @return      None.
  *
@@ -384,17 +383,17 @@ static void CANFD_SetTimingConfig(CANFD_T *psCanfd, const CANFD_TIMEING_CONFIG_T
         return;
     }
 
-    /* configuration change enable */
+    /* Configuration change enable */
     psCanfd->CCCR |= CANFD_CCCR_CCE_Msk;
 
-    /* nominal bit rate */
+    /* Nominal bit rate */
     psCanfd->NBTP = (((psConfig->u8NominalRJumpwidth & 0x7F) - 1) << 25) +
                     (((psConfig->u16NominalPrescaler & 0x1FF) - 1) << 16) +
                     ((((psConfig->u8NominalPhaseSeg1 + psConfig->u8NominalPropSeg) & 0xFF) - 1) << 8) +
                     (((psConfig->u8NominalPhaseSeg2 & 0x7F) - 1) << 0);
 
 
-    /* canfd->DBTP */
+    /* Canfd->DBTP */
     if(psCanfd->CCCR & CANFD_CCCR_FDOE_Msk)
     {
         psCanfd->DBTP = (((psConfig->u8DataPrescaler & 0x1F) - 1) << 16) +
@@ -412,7 +411,7 @@ static void CANFD_SetTimingConfig(CANFD_T *psCanfd, const CANFD_TIMEING_CONFIG_T
  * @param[in]   u32DataBaudRate     The data speed in bps.
  * @param[in]   u32Ntq              Number of nominal time quanta per bit.
  * @param[in]   u32Dtq              Number of data time quanta per bit.
- * @param[in]   psConfig            Passed is a configuration structure, on return the configuration is stored in the structure
+ * @param[in]   psConfig            Passed is a configuration structure, on return the configuration is stored in the structure.
  *
  * @return      None.
  *
@@ -423,35 +422,35 @@ static void CANFD_GetSegments(uint32_t u32NominalBaudRate, uint32_t u32DataBaudR
     float ideal_sp;
     int int32P1;
 
-    /* get ideal sample point */
+    /* Get ideal sample point */
     if(u32NominalBaudRate >= 1000000)     ideal_sp = 0.750;
     else if(u32NominalBaudRate >= 800000) ideal_sp = 0.800;
     else                                   ideal_sp = 0.875;
 
-    /* distribute time quanta */
+    /* Distribute time quanta */
     int32P1 = (int)(u32Ntq * ideal_sp);
-    /* can controller doesn't separate prop seg and phase seg 1 */
+    /* Can controller doesn't separate prop seg and phase seg 1 */
     psConfig->u8NominalPropSeg = 0;
-    /* subtract one TQ for sync seg */
+    /* Subtract one TQ for sync seg */
     psConfig->u8NominalPhaseSeg1 = int32P1 - 1;
     psConfig->u8NominalPhaseSeg2 = u32Ntq - int32P1;
     /* sjw is 20% of total TQ, rounded to nearest int */
     psConfig->u8NominalRJumpwidth = (u32Ntq + (5 - 1)) / 5;
 
 
-    /* if using baud rate switching then distribute time quanta for data rate */
+    /* If using baud rate switching then distribute time quanta for data rate */
     if(u32Dtq > 0)
     {
-        /* get ideal sample point */
+        /* Get ideal sample point */
         if(u32DataBaudRate >= 1000000)     ideal_sp = 0.750;
         else if(u32DataBaudRate >= 800000) ideal_sp = 0.800;
         else                             ideal_sp = 0.875;
 
-        /* distribute time quanta */
+        /* Distribute time quanta */
         int32P1 = (int)(u32Dtq * ideal_sp);
-        /* can controller doesn't separate prop seg and phase seg 1 */
+        /* Can controller doesn't separate prop seg and phase seg 1 */
         psConfig->u8DataPropSeg = 0;
-        /* subtract one TQ for sync seg */
+        /* Subtract one TQ for sync seg */
         psConfig->u8DataPhaseSeg1 = int32P1 - 1;
         psConfig->u8DataPhaseSeg2 = u32Dtq - int32P1;
         /* sjw is 20% of total TQ, rounded to nearest int */
@@ -473,9 +472,10 @@ static void CANFD_GetSegments(uint32_t u32NominalBaudRate, uint32_t u32DataBaudR
  * @param[in]   u32NominalBaudRate  The nominal speed in bps.
  * @param[in]   u32DataBaudRate     The data speed in bps. Zero to disable baudrate switching.
  * @param[in]   u32SourceClock_Hz   CAN FD Protocol Engine clock source frequency in Hz.
- * @param[in]   psConfig            Passed is a configuration structure, on return the configuration is stored in the structure
+ * @param[in]   psConfig            Passed is a configuration structure, on return the configuration is stored in the structure.
  *
- * @return      true if timing configuration found, false if failed to find configuration.
+ * @return      1  If timing configuration found.
+ * @return      0  If failed to find configuration.
  *
  * @details     Calculates the CAN controller timing values for specific baudrates.
  */
@@ -488,7 +488,7 @@ static uint32_t CANFD_CalculateTimingValues(CANFD_T *psCanfd, uint32_t u32Nomina
     int i32Dclk2;
     int i32Dtq;
 
-    /* observe baud rate maximums */
+    /* Observe baud rate maximums */
     if(u32NominalBaudRate > MAX_NOMINAL_BAUDRATE) u32NominalBaudRate = MAX_NOMINAL_BAUDRATE;
 
     for(i32Ntq = MAX_TIME_QUANTA; i32Ntq >= MIN_TIME_QUANTA; i32Ntq--)
@@ -506,11 +506,11 @@ static uint32_t CANFD_CalculateTimingValues(CANFD_T *psCanfd, uint32_t u32Nomina
                 /* FD Operation? */
                 if(psCanfd->CCCR & CANFD_CCCR_FDOE_Msk)
                 {
-                    /* Exception case: Let u32DataBaudRate is same with u32NominalBaudRate. */
+                    /* Exception case: Let u32DataBaudRate is same with u32NominalBaudRate */
                     if(u32DataBaudRate == 0)
                         u32DataBaudRate = u32NominalBaudRate;
 
-                    /* if baudrates are the same and the solution for nominal will work for
+                    /* If baudrates are the same and the solution for nominal will work for
                        data, then use the nominal settings for both */
                     if((u32DataBaudRate == u32NominalBaudRate) && (psConfig->u16NominalPrescaler <= 0x20))
                     {
@@ -520,7 +520,7 @@ static uint32_t CANFD_CalculateTimingValues(CANFD_T *psCanfd, uint32_t u32Nomina
                         return TRUE;
                     }
 
-                    /* calculate data settings */
+                    /* Calculate data settings */
                     for(i32Dtq = MAX_TIME_QUANTA; i32Dtq >= MIN_TIME_QUANTA; i32Dtq--)
                     {
                         i32Dclk = u32DataBaudRate * i32Dtq;
@@ -546,7 +546,7 @@ static uint32_t CANFD_CalculateTimingValues(CANFD_T *psCanfd, uint32_t u32Nomina
         }
     }
 
-    /* failed to find solution */
+    /* Failed to find solution */
     return FALSE;
 }
 
@@ -555,7 +555,7 @@ static uint32_t CANFD_CalculateTimingValues(CANFD_T *psCanfd, uint32_t u32Nomina
  * @brief       Config message ram and Set bit-time.
  *
  * @param[in]   psCanfd     The pointer to CAN FD module base address.
- * @param[in]   psCanfdStr  message ram setting and bit-time setting
+ * @param[in]   psCanfdStr  message ram setting and bit-time setting.
  *
  * @return      None.
  *
@@ -591,12 +591,12 @@ void CANFD_Open(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
         return;
     }
 
-    /* configuration change enable */
+    /* Configuration change enable */
     psCanfd->CCCR |= CANFD_CCCR_CCE_Msk;
 
     if(psCanfdStr->sBtConfig.bBitRateSwitch)
     {
-        /* enable FD and baud-rate switching */
+        /* Enable FD and baud-rate switching */
         psCanfd->CCCR |= CANFD_CCCR_BRSE_Msk;
     }
 
@@ -611,7 +611,7 @@ void CANFD_Open(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
     /* Clear the Rx Fifo1 element setting */
     psCanfd->RXF1C = 0;
 
-    /* calculate and apply timing */
+    /* Calculate and apply timing */
     if(CANFD_CalculateTimingValues(psCanfd, psCanfdStr->sBtConfig.sNormBitRate.u32BitRate, psCanfdStr->sBtConfig.sDataBitRate.u32BitRate,
                                    SystemCoreClock, &psCanfdStr->sBtConfig.sConfigBitTing))
     {
@@ -663,7 +663,7 @@ void CANFD_Open(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
 /**
  * @brief       Close the CAN FD Bus.
  *
- * @param[in]   psCanfd   The pointer to CANFD module base address.
+ * @param[in]   psCanfd  The pointer to CANFD module base address.
  *
  * @return      None.
  *
@@ -689,8 +689,8 @@ void CANFD_Close(CANFD_T *psCanfd)
 /**
  * @brief       Get the element's address when read transmit buffer.
  *
- * @param[in]   psCanfd      The pointer of the specified CAN FD module.
- * @param[in]   u32Idx       The number of the transmit buffer element
+ * @param[in]   psCanfd  The pointer of the specified CAN FD module.
+ * @param[in]   u32Idx   The number of the transmit buffer element.
  *
  * @return      Address of the element in transmit buffer.
  *
@@ -717,42 +717,43 @@ static uint32_t CANFD_GetTxBufferElementAddress(CANFD_T *psCanfd, uint32_t u32Id
 /**
  * @brief       Enables CAN FD interrupts according to provided mask .
  *
- * @param[in]   psCanfd          The pointer of the specified CAN FD module.
- * @param[in]   u32IntLine0      The Interrupt Line 0 type select.
- * @param[in]   u32IntLine1      The Interrupt Line 1 type select.
- *                              - \ref CANFD_IE_ARAE_Msk     : Access to Reserved Address Interrupt
- *                              - \ref CANFD_IE_PEDE_Msk     : Protocol Error in Data Phase Interrupt
- *                              - \ref CANFD_IE_PEAE_Msk     : Protocol Error in Arbitration Phase Interrupt
- *                              - \ref CANFD_IE_WDIE_Msk     : Watchdog Interrupt
- *                              - \ref CANFD_IE_BOE_Msk      : Bus_Off Status Interrupt
- *                              - \ref CANFD_IE_EWE_Msk      : Warning Status Interrupt
- *                              - \ref CANFD_IE_EPE_Msk      : Error Passive Interrupt
- *                              - \ref CANFD_IE_ELOE_Msk     : Error Logging Overflow Interrupt
- *                              - \ref CANFD_IE_BEUE_Msk     : Bit Error Uncorrected Interrupt
- *                              - \ref CANFD_IE_BECE_Msk     : Bit Error Corrected Interrupt
- *                              - \ref CANFD_IE_DRXE_Msk     : Message stored to Dedicated Rx Buffer Interrupt
- *                              - \ref CANFD_IE_TOOE_Msk     : Timeout Occurred Interrupt
- *                              - \ref CANFD_IE_MRAFE_Msk    : Message RAM Access Failure Interrupt
- *                              - \ref CANFD_IE_TSWE_Msk     : Timestamp Wraparound Interrupt
- *                              - \ref CANFD_IE_TEFLE_Msk    : Tx Event FIFO Event Lost Interrupt
- *                              - \ref CANFD_IE_TEFFE_Msk    : Tx Event FIFO Full Interrupt
- *                              - \ref CANFD_IE_TEFWE_Msk    : Tx Event FIFO Watermark Reached Interrupt
- *                              - \ref CANFD_IE_TEFNE_Msk    : Tx Event FIFO New Entry Interrupt
- *                              - \ref CANFD_IE_TFEE_Msk     : Tx FIFO Empty Interrupt
- *                              - \ref CANFD_IE_TCFE_Msk     : Transmission Cancellation Finished Interrupt
- *                              - \ref CANFD_IE_TCE_Msk      : Transmission Completed Interrupt
- *                              - \ref CANFD_IE_HPME_Msk     : High Priority Message Interrupt
- *                              - \ref CANFD_IE_RF1LE_Msk    : Rx FIFO 1 Message Lost Interrupt
- *                              - \ref CANFD_IE_RF1FE_Msk    : Rx FIFO 1 Full Interrupt
- *                              - \ref CANFD_IE_RF1WE_Msk    : Rx FIFO 1 Watermark Reached Interrupt
- *                              - \ref CANFD_IE_RF1NE_Msk    : Rx FIFO 1 New Message Interrupt
- *                              - \ref CANFD_IE_RF0LE_Msk    : Rx FIFO 0 Message Lost Interrupt
- *                              - \ref CANFD_IE_RF0FE_Msk    : Rx FIFO 0 Full Interrupt
- *                              - \ref CANFD_IE_RF0WE_Msk    : Rx FIFO 0 Watermark Reached Interrupt
- *                              - \ref CANFD_IE_RF0NE_Msk    : Rx FIFO 0 New Message Interrupt
+ * @param[in]   psCanfd      The pointer of the specified CAN FD module.
+ * @param[in]   u32IntLine0  The Interrupt Line 0 type select.
+ * @param[in]   u32IntLine1  The Interrupt Line 1 type select.
+ *                           - \ref CANFD_IE_ARAE_Msk  : Access to Reserved Address Interrupt
+ *                           - \ref CANFD_IE_PEDE_Msk  : Protocol Error in Data Phase Interrupt
+ *                           - \ref CANFD_IE_PEAE_Msk  : Protocol Error in Arbitration Phase Interrupt
+ *                           - \ref CANFD_IE_WDIE_Msk  : Watchdog Interrupt
+ *                           - \ref CANFD_IE_BOE_Msk   : Bus_Off Status Interrupt
+ *                           - \ref CANFD_IE_EWE_Msk   : Warning Status Interrupt
+ *                           - \ref CANFD_IE_EPE_Msk   : Error Passive Interrupt
+ *                           - \ref CANFD_IE_ELOE_Msk  : Error Logging Overflow Interrupt
+ *                           - \ref CANFD_IE_BEUE_Msk  : Bit Error Uncorrected Interrupt
+ *                           - \ref CANFD_IE_BECE_Msk  : Bit Error Corrected Interrupt
+ *                           - \ref CANFD_IE_DRXE_Msk  : Message stored to Dedicated Rx Buffer Interrupt
+ *                           - \ref CANFD_IE_TOOE_Msk  : Timeout Occurred Interrupt
+ *                           - \ref CANFD_IE_MRAFE_Msk : Message RAM Access Failure Interrupt
+ *                           - \ref CANFD_IE_TSWE_Msk  : Timestamp Wraparound Interrupt
+ *                           - \ref CANFD_IE_TEFLE_Msk : Tx Event FIFO Event Lost Interrupt
+ *                           - \ref CANFD_IE_TEFFE_Msk : Tx Event FIFO Full Interrupt
+ *                           - \ref CANFD_IE_TEFWE_Msk : Tx Event FIFO Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_TEFNE_Msk : Tx Event FIFO New Entry Interrupt
+ *                           - \ref CANFD_IE_TFEE_Msk  : Tx FIFO Empty Interrupt
+ *                           - \ref CANFD_IE_TCFE_Msk  : Transmission Cancellation Finished Interrupt
+ *                           - \ref CANFD_IE_TCE_Msk   : Transmission Completed Interrupt
+ *                           - \ref CANFD_IE_HPME_Msk  : High Priority Message Interrupt
+ *                           - \ref CANFD_IE_RF1LE_Msk : Rx FIFO 1 Message Lost Interrupt
+ *                           - \ref CANFD_IE_RF1FE_Msk : Rx FIFO 1 Full Interrupt
+ *                           - \ref CANFD_IE_RF1WE_Msk : Rx FIFO 1 Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_RF1NE_Msk : Rx FIFO 1 New Message Interrupt
+ *                           - \ref CANFD_IE_RF0LE_Msk : Rx FIFO 0 Message Lost Interrupt
+ *                           - \ref CANFD_IE_RF0FE_Msk : Rx FIFO 0 Full Interrupt
+ *                           - \ref CANFD_IE_RF0WE_Msk : Rx FIFO 0 Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_RF0NE_Msk : Rx FIFO 0 New Message Interrupt
  *
- * @param[in]   u32TXBTIE        Enable Tx Buffer Transmission 0-31 Interrupt.
- * @param[in]   u32TXBCIE        Enable Tx Buffer Cancellation Finished 0-31 Interrupt.
+ * @param[in]   u32TXBTIE    Enable Tx Buffer Transmission 0-31 Interrupt.
+ * @param[in]   u32TXBCIE    Enable Tx Buffer Cancellation Finished 0-31 Interrupt.
+ *
  * @return      None.
  *
  * @details     This macro enable specified CAN FD interrupt.
@@ -787,42 +788,43 @@ void CANFD_EnableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLine
 /**
  * @brief       Disables CAN FD interrupts according to provided mask .
  *
- * @param[in]   psCanfd          The pointer of the specified CAN FD module.
- * @param[in]   u32IntLine0      The Interrupt Line 0 type select.
- * @param[in]   u32IntLine1      The Interrupt Line 1 type select.
- *                              - \ref CANFD_IE_ARAE_Msk     : Access to Reserved Address Interrupt
- *                              - \ref CANFD_IE_PEDE_Msk     : Protocol Error in Data Phase Interrupt
- *                              - \ref CANFD_IE_PEAE_Msk     : Protocol Error in Arbitration Phase Interrupt
- *                              - \ref CANFD_IE_WDIE_Msk     : Watchdog Interrupt
- *                              - \ref CANFD_IE_BOE_Msk      : Bus_Off Status Interrupt
- *                              - \ref CANFD_IE_EWE_Msk      : Warning Status Interrupt
- *                              - \ref CANFD_IE_EPE_Msk      : Error Passive Interrupt
- *                              - \ref CANFD_IE_ELOE_Msk     : Error Logging Overflow Interrupt
- *                              - \ref CANFD_IE_BEUE_Msk     : Bit Error Uncorrected Interrupt
- *                              - \ref CANFD_IE_BECE_Msk     : Bit Error Corrected Interrupt
- *                              - \ref CANFD_IE_DRXE_Msk     : Message stored to Dedicated Rx Buffer Interrupt
- *                              - \ref CANFD_IE_TOOE_Msk     : Timeout Occurred Interrupt
- *                              - \ref CANFD_IE_MRAFE_Msk    : Message RAM Access Failure Interrupt
- *                              - \ref CANFD_IE_TSWE_Msk     : Timestamp Wraparound Interrupt
- *                              - \ref CANFD_IE_TEFLE_Msk    : Tx Event FIFO Event Lost Interrupt
- *                              - \ref CANFD_IE_TEFFE_Msk    : Tx Event FIFO Full Interrupt
- *                              - \ref CANFD_IE_TEFWE_Msk    : Tx Event FIFO Watermark Reached Interrupt
- *                              - \ref CANFD_IE_TEFNE_Msk    : Tx Event FIFO New Entry Interrupt
- *                              - \ref CANFD_IE_TFEE_Msk     : Tx FIFO Empty Interrupt
- *                              - \ref CANFD_IE_TCFE_Msk     : Transmission Cancellation Finished Interrupt
- *                              - \ref CANFD_IE_TCE_Msk      : Transmission Completed Interrupt
- *                              - \ref CANFD_IE_HPME_Msk     : High Priority Message Interrupt
- *                              - \ref CANFD_IE_RF1LE_Msk    : Rx FIFO 1 Message Lost Interrupt
- *                              - \ref CANFD_IE_RF1FE_Msk    : Rx FIFO 1 Full Interrupt
- *                              - \ref CANFD_IE_RF1WE_Msk    : Rx FIFO 1 Watermark Reached Interrupt
- *                              - \ref CANFD_IE_RF1NE_Msk    : Rx FIFO 1 New Message Interrupt
- *                              - \ref CANFD_IE_RF0LE_Msk    : Rx FIFO 0 Message Lost Interrupt
- *                              - \ref CANFD_IE_RF0FE_Msk    : Rx FIFO 0 Full Interrupt
- *                              - \ref CANFD_IE_RF0WE_Msk    : Rx FIFO 0 Watermark Reached Interrupt
- *                              - \ref CANFD_IE_RF0NE_Msk    : Rx FIFO 0 New Message Interrupt
+ * @param[in]   psCanfd      The pointer of the specified CAN FD module.
+ * @param[in]   u32IntLine0  The Interrupt Line 0 type select.
+ * @param[in]   u32IntLine1  The Interrupt Line 1 type select.
+ *                           - \ref CANFD_IE_ARAE_Msk  : Access to Reserved Address Interrupt
+ *                           - \ref CANFD_IE_PEDE_Msk  : Protocol Error in Data Phase Interrupt
+ *                           - \ref CANFD_IE_PEAE_Msk  : Protocol Error in Arbitration Phase Interrupt
+ *                           - \ref CANFD_IE_WDIE_Msk  : Watchdog Interrupt
+ *                           - \ref CANFD_IE_BOE_Msk   : Bus_Off Status Interrupt
+ *                           - \ref CANFD_IE_EWE_Msk   : Warning Status Interrupt
+ *                           - \ref CANFD_IE_EPE_Msk   : Error Passive Interrupt
+ *                           - \ref CANFD_IE_ELOE_Msk  : Error Logging Overflow Interrupt
+ *                           - \ref CANFD_IE_BEUE_Msk  : Bit Error Uncorrected Interrupt
+ *                           - \ref CANFD_IE_BECE_Msk  : Bit Error Corrected Interrupt
+ *                           - \ref CANFD_IE_DRXE_Msk  : Message stored to Dedicated Rx Buffer Interrupt
+ *                           - \ref CANFD_IE_TOOE_Msk  : Timeout Occurred Interrupt
+ *                           - \ref CANFD_IE_MRAFE_Msk : Message RAM Access Failure Interrupt
+ *                           - \ref CANFD_IE_TSWE_Msk  : Timestamp Wraparound Interrupt
+ *                           - \ref CANFD_IE_TEFLE_Msk : Tx Event FIFO Event Lost Interrupt
+ *                           - \ref CANFD_IE_TEFFE_Msk : Tx Event FIFO Full Interrupt
+ *                           - \ref CANFD_IE_TEFWE_Msk : Tx Event FIFO Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_TEFNE_Msk : Tx Event FIFO New Entry Interrupt
+ *                           - \ref CANFD_IE_TFEE_Msk  : Tx FIFO Empty Interrupt
+ *                           - \ref CANFD_IE_TCFE_Msk  : Transmission Cancellation Finished Interrupt
+ *                           - \ref CANFD_IE_TCE_Msk   : Transmission Completed Interrupt
+ *                           - \ref CANFD_IE_HPME_Msk  : High Priority Message Interrupt
+ *                           - \ref CANFD_IE_RF1LE_Msk : Rx FIFO 1 Message Lost Interrupt
+ *                           - \ref CANFD_IE_RF1FE_Msk : Rx FIFO 1 Full Interrupt
+ *                           - \ref CANFD_IE_RF1WE_Msk : Rx FIFO 1 Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_RF1NE_Msk : Rx FIFO 1 New Message Interrupt
+ *                           - \ref CANFD_IE_RF0LE_Msk : Rx FIFO 0 Message Lost Interrupt
+ *                           - \ref CANFD_IE_RF0FE_Msk : Rx FIFO 0 Full Interrupt
+ *                           - \ref CANFD_IE_RF0WE_Msk : Rx FIFO 0 Watermark Reached Interrupt
+ *                           - \ref CANFD_IE_RF0NE_Msk : Rx FIFO 0 New Message Interrupt
  *
- * @param[in]   u32TXBTIE        Disable Tx Buffer Transmission 0-31 Interrupt.
- * @param[in]   u32TXBCIE        Disable Tx Buffer Cancellation Finished 0-31 Interrupt.
+ * @param[in]   u32TXBTIE    Disable Tx Buffer Transmission 0-31 Interrupt.
+ * @param[in]   u32TXBCIE    Disable Tx Buffer Cancellation Finished 0-31 Interrupt.
+ *
  * @return      None.
  *
  * @details     This macro disable specified CAN FD interrupt.
@@ -854,14 +856,14 @@ void CANFD_DisableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLin
 
 
 /**
- * @brief       Copy Tx Message to  TX buffer and Request transmission.
+ * @brief       Copy Tx Message to TX buffer and Request transmission.
  *
- * @param[in]   psCanfd         The pointer to CAN FD module base address.
- * @param[in]   u32TxBufIdx     The Message Buffer index.
- * @param[in]   psTxMsg         Message to be copied.
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   u32TxBufIdx  The Message Buffer index.
+ * @param[in]   psTxMsg      Message to be copied.
  *
- * @return      number of tx requests set: 0= Tx Message Buffer is currently in use.
- *                                         1= Write Tx Message Buffer Successfully.
+ * @return      Number of tx requests set: 0 Tx Message Buffer is currently in use.
+ *                                         1 Write Tx Message Buffer Successfully.
  *
  * @details     Copy Tx Message to FIFO/Queue TX buffer and Request transmission.
  */
@@ -870,12 +872,12 @@ uint32_t CANFD_TransmitTxMsg(CANFD_T *psCanfd, uint32_t u32TxBufIdx, CANFD_FD_MS
     uint32_t u32Success = 0;
     uint32_t u32TimeOutCnt = CANFD_TIMEOUT;
 
-    /* write the message to the message buffer */
+    /* Write the message to the message buffer */
     u32Success = CANFD_TransmitDMsg(psCanfd, u32TxBufIdx, psTxMsg);
 
     if(u32Success == 1)
     {
-        /* wait for completion */
+        /* Wait for completion */
         while(!(psCanfd->TXBRP & (1UL << u32TxBufIdx)))
         {
             if(--u32TimeOutCnt == 0)
@@ -894,9 +896,9 @@ uint32_t CANFD_TransmitTxMsg(CANFD_T *psCanfd, uint32_t u32TxBufIdx, CANFD_FD_MS
 /**
  * @brief       Writes a Tx Message to Transmit Message Buffer.
  *
- * @param[in]   psCanfd        The pointer of the specified CAN FD module.
- * @param[in]   u32TxBufIdx    The Message Buffer index.
- * @param[in]   psTxMsg        Pointer to CAN FD message frame to be sent.
+ * @param[in]   psCanfd      The pointer of the specified CAN FD module.
+ * @param[in]   u32TxBufIdx  The Message Buffer index.
+ * @param[in]   psTxMsg      Pointer to CAN FD message frame to be sent.
  *
  * @return      1  Write Tx Message Buffer Successfully.
  *              0  Tx Message Buffer is currently in use.
@@ -913,7 +915,7 @@ uint32_t CANFD_TransmitDMsg(CANFD_T *psCanfd, uint32_t u32TxBufIdx, CANFD_FD_MSG
 
     if(u32TxBufIdx >= CANFD_MAX_TX_BUF_ELEMS) return 0;
 
-    /* transmission is pending in this message buffer */
+    /* Transmission is pending in this message buffer */
     if((psCanfd->TXBRP) & (1UL << u32TxBufIdx)) return 0;
 
     /* Get the TX Buffer Start Address in the RAM */
@@ -977,13 +979,13 @@ void CANFD_SetGFC(CANFD_T *psCanfd, E_CANFD_ACC_NON_MATCH_FRM eNMStdFrm, E_CANFD
 /**
  * @brief       Rx FIFO Configuration for RX_FIFO_0 and RX_FIFO_1.
  *
- * @param[in]   psCanfd          The pointer to CAN FD module base address.
- * @param[in]   u32RxFifoNum     0: RX FIFO_0, 1: RX_FIFO_1.
- * @param[in]   psRamConfig      Rx FIFO Size in number of configuration ram address.
- * @param[in]   psElemSize       Rx FIFO Size in number of Rx FIFO elements (element number (max. = 64)).
- * @param[in]   u32FifoWM        Watermark in number of Rx FIFO elements
- * @param[in]   eFifoSize        Maximum data field size that should be stored in this Rx FIFO
- *                               (configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD)
+ * @param[in]   psCanfd       The pointer to CAN FD module base address.
+ * @param[in]   u32RxFifoNum  0: RX FIFO_0, 1: RX_FIFO_1.
+ * @param[in]   psRamConfig   Rx FIFO Size in number of configuration ram address.
+ * @param[in]   psElemSize    Rx FIFO Size in number of Rx FIFO elements (element number (max. = 64)).
+ * @param[in]   u32FifoWM     Watermark in number of Rx FIFO elements.
+ * @param[in]   eFifoSize     Maximum data field size that should be stored in this Rx FIFO.
+ *                            (configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD).
  *
  * @return      None.
  *
@@ -994,13 +996,13 @@ void CANFD_InitRxFifo(CANFD_T *psCanfd, uint32_t u32RxFifoNum, CANFD_RAM_PART_T 
     uint32_t u32Address;
     uint32_t u32Size;
 
-    /* ignore if index is too high */
+    /* Ignore if index is too high */
     if(u32RxFifoNum > CANFD_NUM_RX_FIFOS)return;
 
-    /* ignore if index is too high */
+    /* Ignore if index is too high */
     if(psElemSize-> u32RxFifo0 > CANFD_MAX_RX_FIFO0_ELEMS) return;
 
-    /* ignore if index is too high */
+    /* Ignore if index is too high */
     if(psElemSize-> u32RxFifo1 > CANFD_MAX_RX_FIFO1_ELEMS) return;
 
     switch(u32RxFifoNum)
@@ -1008,7 +1010,7 @@ void CANFD_InitRxFifo(CANFD_T *psCanfd, uint32_t u32RxFifoNum, CANFD_RAM_PART_T 
         case 0:
             if(psElemSize-> u32RxFifo0)
             {
-                /* set size of Rx FIFO 0, set offset, blocking mode */
+                /* Set size of Rx FIFO 0, set offset, blocking mode */
                 psCanfd->RXF0C = (psRamConfig->u32RXF0C_F0SA) | (psElemSize->u32RxFifo0 << CANFD_RXF0C_F0S_Pos)
                                  | (u32FifoWM << CANFD_RXF0C_F0WM_Pos);
                 psCanfd->RXESC = (psCanfd->RXESC & (~CANFD_RXESC_F0DS_Msk)) | (eFifoSize << CANFD_RXESC_F0DS_Pos);
@@ -1039,7 +1041,7 @@ void CANFD_InitRxFifo(CANFD_T *psCanfd, uint32_t u32RxFifoNum, CANFD_RAM_PART_T 
         case 1:
             if(psElemSize-> u32RxFifo1)
             {
-                /* set size of Rx FIFO 1, set offset, blocking mode */
+                /* Set size of Rx FIFO 1, set offset, blocking mode */
                 psCanfd->RXF1C = (psRamConfig->u32RXF1C_F1SA) | (psElemSize->u32RxFifo1 << CANFD_RXF1C_F1S_Pos)
                                  | (u32FifoWM << CANFD_RXF1C_F1WM_Pos);
                 psCanfd->RXESC = (psCanfd->RXESC & (~CANFD_RXESC_F1DS_Msk)) | (eFifoSize << CANFD_RXESC_F1DS_Pos);
@@ -1074,11 +1076,11 @@ void CANFD_InitRxFifo(CANFD_T *psCanfd, uint32_t u32RxFifoNum, CANFD_RAM_PART_T 
 /**
  * @brief       Function configures the data structures used by a dedicated Rx Buffer.
  *
- * @param[in]   psCanfd          The pointer to CAN FD module base address.
- * @param[in]   psRamConfig      Tx buffer configuration ram address.
- * @param[in]   psElemSize       Tx buffer configuration element size.
- * @param[in]   eTxBufSize       Maximum data field size that should be stored in a dedicated Tx Buffer
- *                              (configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD)largest data field allowed in CAN FD)
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   psRamConfig  Tx buffer configuration ram address.
+ * @param[in]   psElemSize   Tx buffer configuration element size.
+ * @param[in]   eTxBufSize   Maximum data field size that should be stored in a dedicated Tx Buffer.
+ *                           (Configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD).
  *
  * @return      None.
  *
@@ -1118,11 +1120,11 @@ void CANFD_InitTxDBuf(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD_ELE
 /**
  * @brief       Function configures the data structures used by a dedicated Rx Buffer.
  *
- * @param[in]   psCanfd          The pointer to CAN FD module base address.
- * @param[in]   psRamConfig      Rx buffer configuration ram address.
- * @param[in]   psElemSize       Rx buffer configuration element size.
- * @param[in]   eRxBufSize       Maximum data field size that should be stored in a dedicated Rx Buffer
- *                              (configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD)largest data field allowed in CAN FD)
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   psRamConfig  Rx buffer configuration ram address.
+ * @param[in]   psElemSize   Rx buffer configuration element size.
+ * @param[in]   eRxBufSize   Maximum data field size that should be stored in a dedicated Rx Buffer.
+ *                           (Configure BYTE64 if you are unsure, as this is the largest data field allowed in CAN FD).
  *
  * @return      None.
  *
@@ -1161,9 +1163,9 @@ void CANFD_InitRxDBuf(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD_ELE
 /**
  * @brief       Configures the register SIDFC for the 11-bit Standard Message ID Filter elements.
  *
- * @param[in]   psCanfd           The pointer to CAN FD module base address.
- * @param[in]   psRamConfig       Standard ID filter configuration ram address
- * @param[in]   psElemSize        Standard ID filter configuration element size
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   psRamConfig  Standard ID filter configuration ram address.
+ * @param[in]   psElemSize   Standard ID filter configuration element size.
  *
  * @return      None.
  *
@@ -1187,9 +1189,9 @@ void CANFD_ConfigSIDFC(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD_EL
 /**
  * @brief       Configures the register XIDFC for the 29-bit Extended Message ID Filter elements.
  *
- * @param[in]   psCanfd           The pointer to CAN FD module base address.
- * @param[in]   psRamConfig       Extended ID filter configuration ram address
- * @param[in]   psElemSize        Extended ID filter configuration element size
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   psRamConfig  Extended ID filter configuration ram address.
+ * @param[in]   psElemSize   Extended ID filter configuration element size.
  *
  * @return      None.
  *
@@ -1213,9 +1215,9 @@ void CANFD_ConfigXIDFC(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD_EL
 /**
  * @brief       Writes a 11-bit Standard ID filter element in the Message RAM.
  *
- * @param[in]   psCanfd          The pointer to CAN FD module base address.
- * @param[in]   u32FltrIdx       Index at which the filter element should be written in the '11-bit Filter' section of Message RAM
- * @param[in]   u32Filter        Rx Individual filter value.
+ * @param[in]   psCanfd     The pointer to CAN FD module base address.
+ * @param[in]   u32FltrIdx  Index at which the filter element should be written in the '11-bit Filter' section of Message RAM.
+ * @param[in]   u32Filter   Rx Individual filter value.
  *
  * @return      None.
  *
@@ -1225,7 +1227,7 @@ void CANFD_SetSIDFltr(CANFD_T *psCanfd, uint32_t u32FltrIdx, uint32_t u32Filter)
 {
     CANFD_STD_FILTER_T *psFilter;
 
-    /* ignore if index is too high */
+    /* Ignore if index is too high */
     if(u32FltrIdx >= CANFD_MAX_11_BIT_FTR_ELEMS) return;
 
     /* Get the Filter List Configuration Address in the RAM */
@@ -1240,10 +1242,10 @@ void CANFD_SetSIDFltr(CANFD_T *psCanfd, uint32_t u32FltrIdx, uint32_t u32Filter)
  * @brief       Writes a 29-bit extended id filter element in the Message RAM.
  *              Size of an Extended Id filter element is 2 words. So 2 words are written into the Message RAM for each filter element
  *
- * @param[in]   psCanfd         The pointer to CAN FD module base address.
- * @param[in]   u32FltrIdx      Index at which the filter element should be written in the '29-bit Filter' section of Message RAM.
- * @param[in]   u32FilterLow    Rx Individual filter low value.
- * @param[in]   u32FilterHigh   Rx Individual filter high value.
+ * @param[in]   psCanfd        The pointer to CAN FD module base address.
+ * @param[in]   u32FltrIdx     Index at which the filter element should be written in the '29-bit Filter' section of Message RAM.
+ * @param[in]   u32FilterLow   Rx Individual filter low value.
+ * @param[in]   u32FilterHigh  Rx Individual filter high value.
  *
  * @return      None.
  *
@@ -1253,7 +1255,7 @@ void CANFD_SetXIDFltr(CANFD_T *psCanfd, uint32_t u32FltrIdx, uint32_t u32FilterL
 {
     CANFD_EXT_FILTER_T *psFilter;
 
-    /* ignore if index is too high */
+    /* Ignore if index is too high */
     if(u32FltrIdx >= CANFD_MAX_29_BIT_FTR_ELEMS) return;
 
     /* Get the Filter List Configuration Address on RAM */
@@ -1268,12 +1270,12 @@ void CANFD_SetXIDFltr(CANFD_T *psCanfd, uint32_t u32FltrIdx, uint32_t u32FilterL
 /**
  * @brief       Reads a CAN FD Message from Receive Message Buffer.
  *
- * @param[in]   psCanfd     The pointer of the specified CAN FD module.
- * @param[in]   u8MbIdx     The CANFD Message Buffer index.
- * @param[in]   psMsgBuf    Pointer to CAN FD message frame structure for reception.
+ * @param[in]   psCanfd   The pointer of the specified CAN FD module.
+ * @param[in]   u8MbIdx   The CANFD Message Buffer index.
+ * @param[in]   psMsgBuf  Pointer to CAN FD message frame structure for reception.
  *
- * @return       1:Rx Message Buffer is full and has been read successfully.
- *               0:Rx Message Buffer is empty.
+ * @return      1  Rx Message Buffer is full and has been read successfully.
+ *              0  Rx Message Buffer is empty.
  *
  * @details     This function reads a CAN message from a specified Receive Message Buffer.
  *              The function fills a receive CAN message frame structure with just received data
@@ -1292,16 +1294,16 @@ uint32_t CANFD_ReadRxBufMsg(CANFD_T *psCanfd, uint8_t u8MbIdx, CANFD_FD_MSG_T *p
         else
             newData = (psCanfd->NDAT2 >> (u8MbIdx - 32)) & 1;
 
-        /* new message is waiting to be read */
+        /* New message is waiting to be read */
         if(newData)
         {
-            /* get memory location of rx buffer */
+            /* Get memory location of rx buffer */
             psRxBuffer = (CANFD_BUF_T *)(CANFD_SRAM_BASE_ADDR(psCanfd) + (psCanfd->RXBC & 0xFFFF) + (u8MbIdx * sizeof(CANFD_BUF_T)));
 
             /* read the message */
             CANFD_CopyDBufToMsgBuf(psRxBuffer, psMsgBuf);
 
-            /* clear 'new data' flag */
+            /* Clear 'new data' flag */
             if(u8MbIdx < 32)
                 psCanfd->NDAT1 |= (1UL << u8MbIdx);
             else
@@ -1318,13 +1320,13 @@ uint32_t CANFD_ReadRxBufMsg(CANFD_T *psCanfd, uint8_t u8MbIdx, CANFD_FD_MSG_T *p
 /**
  * @brief       Reads a CAN FD Message from Rx FIFO.
  *
- * @param[in]   psCanfd     The pointer of the specified CANFD module.
- * @param[in]   u8FifoIdx   Number of the FIFO, 0 or 1.
- * @param[in]   psMsgBuf    Pointer to CANFD message frame structure for reception.
+ * @param[in]   psCanfd    The pointer of the specified CANFD module.
+ * @param[in]   u8FifoIdx  Number of the FIFO, 0 or 1.
+ * @param[in]   psMsgBuf   Pointer to CANFD message frame structure for reception.
  *
- * @return      1           Read Message from Rx FIFO successfully.
- *              2           Rx FIFO is already overflowed and has been read successfully
- *              0           Rx FIFO is not enabled.
+ * @return      1  Read Message from Rx FIFO successfully.
+ *              2  Rx FIFO is already overflowed and has been read successfully.
+ *              0  Rx FIFO is not enabled.
  *
  * @details     This function reads a CAN message from the CANFD build-in Rx FIFO.
  */
@@ -1337,7 +1339,7 @@ uint32_t CANFD_ReadRxFifoMsg(CANFD_T *psCanfd, uint8_t u8FifoIdx, CANFD_FD_MSG_T
     __IO uint32_t *pRXFC, *pRXFA;
     uint8_t msgLostBit;
 
-    /* check for valid FIFO number */
+    /* Check for valid FIFO number */
     if(u8FifoIdx < CANFD_NUM_RX_FIFOS)
     {
         if(u8FifoIdx == 0)
@@ -1355,7 +1357,7 @@ uint32_t CANFD_ReadRxFifoMsg(CANFD_T *psCanfd, uint8_t u8FifoIdx, CANFD_FD_MSG_T
             msgLostBit = 7;
         }
 
-        /* if FIFO is not empty */
+        /* If FIFO is not empty */
         if((*pRXFS & 0x7F) > 0)
         {
             GetIndex = (uint8_t)((*pRXFS >> 8) & 0x3F);
@@ -1363,13 +1365,13 @@ uint32_t CANFD_ReadRxFifoMsg(CANFD_T *psCanfd, uint8_t u8FifoIdx, CANFD_FD_MSG_T
 
             CANFD_CopyRxFifoToMsgBuf(pRxBuffer, psMsgBuf);
 
-            /* we got the message */
+            /* We got the message */
             *pRXFA = GetIndex;
 
-            /* check for overflow */
+            /* Check for overflow */
             if(*pRXFS & CANFD_RXFS_RFL)
             {
-                /* clear overflow flag */
+                /* Clear overflow flag */
                 psCanfd->IR = (1UL << msgLostBit);
                 u32Success = 2;
             }
@@ -1387,8 +1389,8 @@ uint32_t CANFD_ReadRxFifoMsg(CANFD_T *psCanfd, uint8_t u8FifoIdx, CANFD_FD_MSG_T
 /**
  * @brief       Copies a message from a dedicated Rx buffer into a message buffer.
  *
- * @param[in]   psRxBuf         Buffer to read from.
- * @param[in]   psMsgBuf        Location to store read message.
+ * @param[in]   psRxBuf   Buffer to read from.
+ * @param[in]   psMsgBuf  Location to store read message.
  *
  * @return      None.
  *
@@ -1403,13 +1405,13 @@ void CANFD_CopyDBufToMsgBuf(CANFD_BUF_T *psRxBuf, CANFD_FD_MSG_T *psMsgBuf)
     else
         psMsgBuf->bErrStaInd = FALSE;
 
-    /* if 29-bit ID */
+    /* If 29-bit ID */
     if(psRxBuf->u32Id & RX_BUFFER_AND_FIFO_R0_ELEM_XTD_Msk)
     {
         psMsgBuf->u32Id = (psRxBuf->u32Id & RX_BUFFER_AND_FIFO_R0_ELEM_ID_Msk);
         psMsgBuf->eIdType = eCANFD_XID;
     }
-    /* if 11-bit ID */
+    /* If 11-bit ID */
     else
     {
         psMsgBuf->u32Id = (psRxBuf->u32Id  >> 18) & 0x7FF;
@@ -1444,8 +1446,8 @@ void CANFD_CopyDBufToMsgBuf(CANFD_BUF_T *psRxBuf, CANFD_FD_MSG_T *psMsgBuf)
 /**
  * @brief       Get Rx FIFO water level.
  *
- * @param[in]   psCanfd         The pointer to CANFD module base address.
- * @param[in]   u32RxFifoNum    0: RX FIFO_0, 1: RX_FIFO_1
+ * @param[in]   psCanfd       The pointer to CANFD module base address.
+ * @param[in]   u32RxFifoNum  0  RX FIFO_0, 1  RX_FIFO_1
  *
  * @return      Rx FIFO water level.
  *
@@ -1467,16 +1469,16 @@ uint32_t CANFD_GetRxFifoWaterLvl(CANFD_T *psCanfd, uint32_t u32RxFifoNum)
 /**
  * @brief       Copies messages from FIFO into a message buffert.
  *
- * @param[in]   psRxBuf         Buffer to read from.
- * @param[in]   psMsgBuf        Location to store read message.
+ * @param[in]   psRxBuf   Buffer to read from.
+ * @param[in]   psMsgBuf  Location to store read message.
  *
  * @return      None.
  *
- * @details      Copies messages from FIFO into a message buffert.
+ * @details     Copies messages from FIFO into a message buffert.
  */
 void CANFD_CopyRxFifoToMsgBuf(CANFD_BUF_T *psRxBuf, CANFD_FD_MSG_T *psMsgBuf)
 {
-    /*Copies a message from a dedicated Rx FIFO into a message buffer*/
+    /* Copies a message from a dedicated Rx FIFO into a message buffer */
     CANFD_CopyDBufToMsgBuf(psRxBuf, psMsgBuf);
 }
 
@@ -1484,8 +1486,8 @@ void CANFD_CopyRxFifoToMsgBuf(CANFD_BUF_T *psRxBuf, CANFD_FD_MSG_T *psMsgBuf)
 /**
  * @brief       Cancel a Tx buffer transmission request.
  *
- * @param[in]   psCanfd         The pointer to CANFD module base address.
- * @param[in]   u32TxBufIdx     Tx buffer index number
+ * @param[in]   psCanfd      The pointer to CANFD module base address.
+ * @param[in]   u32TxBufIdx  Tx buffer index number.
  *
  * @return      None.
  *
@@ -1500,11 +1502,11 @@ void CANFD_TxBufCancelReq(CANFD_T *psCanfd, uint32_t u32TxBufIdx)
 /**
  * @brief       Checks if a Tx buffer cancellation request has been finished or not.
  *
- * @param[in]   psCanfd         The pointer to CAN FD module base address.
- * @param[in]   u32TxBufIdx     Tx buffer index number
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   u32TxBufIdx  Tx buffer index number.
  *
- * @return      0: cancellation finished.
- *              1: cancellation fail
+ * @return      0  Cancellation finished.
+ *              1  Cancellation fail.
  *
  * @details     Checks if a Tx buffer cancellation request has been finished or not.
  */
@@ -1518,11 +1520,11 @@ uint32_t CANFD_IsTxBufCancelFin(CANFD_T *psCanfd, uint32_t u32TxBufIdx)
 /**
  * @brief       Checks if a Tx buffer transmission has occurred or not.
  *
- * @param[in]   psCanfd         The pointer to CAN FD module base address.
- * @param[in]   u32TxBufIdx     Tx buffer index number
+ * @param[in]   psCanfd      The pointer to CAN FD module base address.
+ * @param[in]   u32TxBufIdx  Tx buffer index number.
  *
- * @return     0: No transmission occurred.
- *             1: Transmission occurred
+ * @return      0  No transmission occurred.
+ *              1  Transmission occurred.
  *
  * @details     Checks if a Tx buffer transmission has occurred or not.
  */
@@ -1546,7 +1548,7 @@ uint32_t CANFD_IsTxBufTransmitOccur(CANFD_T *psCanfd, uint32_t u32TxBufIdx)
  */
 void CANFD_InitTxEvntFifo(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD_ELEM_SIZE_T *psElemSize, uint32_t u32FifoWaterLvl)
 {
-    /* Set TX Event FIFO element size,watermark,start address. */
+    /* Set TX Event FIFO element size,watermark,start address */
     psCanfd->TXEFC = (u32FifoWaterLvl << CANFD_TXEFC_EFWN_Pos) | (psElemSize->u32TxEventFifo << CANFD_TXEFC_EFS_Pos)
                      | (psRamConfig->u32TXEFC_EFSA & CANFD_TXEFC_EFSA_Msk);
 }
@@ -1555,7 +1557,7 @@ void CANFD_InitTxEvntFifo(CANFD_T *psCanfd, CANFD_RAM_PART_T *psRamConfig, CANFD
 /**
  * @brief       Get Tx event fifo water level
  *
- * @param[in]   psCanfd       The pointer to CANFD module base address.
+ * @param[in]   psCanfd  The pointer to CANFD module base address.
  *
  * @return      Tx event fifo water level.
  *
@@ -1568,15 +1570,15 @@ uint32_t CANFD_GetTxEvntFifoWaterLvl(CANFD_T *psCanfd)
 
 
 /**
- * @brief        Copy Event Elements from TX Event FIFO to user buffer
+ * @brief       Copy Event Elements from TX Event FIFO to user buffer
  *
- * @param[in]   psCanfd          The pointer to CAN FD module base address.
- * @param[in]   u32TxEvntNum     Tx Event FIFO number
- * @param[in]   psTxEvntElem     Tx Event Message struct
+ * @param[in]   psCanfd       The pointer to CAN FD module base address.
+ * @param[in]   u32TxEvntNum  Tx Event FIFO number.
+ * @param[in]   psTxEvntElem  Tx Event Message struct.
  *
  * @return      None.
  *
- * @details     Copy all Event Elements from TX Event FIFO to the Software Event List .
+ * @details     Copy all Event Elements from TX Event FIFO to the Software Event List.
  */
 void CANFD_CopyTxEvntFifoToUsrBuf(CANFD_T *psCanfd, uint32_t u32TxEvntNum, CANFD_TX_EVNT_ELEM_T *psTxEvntElem)
 {
@@ -1589,19 +1591,18 @@ void CANFD_CopyTxEvntFifoToUsrBuf(CANFD_T *psCanfd, uint32_t u32TxEvntNum, CANFD
     if((pu32TxEvnt[0] & TX_FIFO_E0_EVENT_ESI_Msk) > 0)
         psTxEvntElem->bErrStaInd = TRUE; //Transmitting node is error passive
     else
-        psTxEvntElem->bErrStaInd = FALSE;//Transmitting node is error active
+        psTxEvntElem->bErrStaInd = FALSE; //Transmitting node is error active
 
     /* Get the Tx FIFO Identifier type and Identifier */
-
     if((pu32TxEvnt[0] & TX_FIFO_E0_EVENT_XTD_Msk) > 0)
     {
         psTxEvntElem-> eIdType = eCANFD_XID;
-        psTxEvntElem->u32Id = (pu32TxEvnt[0] & TX_FIFO_E0_EVENT_ID_Msk);// Extended ID
+        psTxEvntElem->u32Id = (pu32TxEvnt[0] & TX_FIFO_E0_EVENT_ID_Msk); // Extended ID
     }
     else
     {
         psTxEvntElem-> eIdType = eCANFD_SID;
-        psTxEvntElem->u32Id = (pu32TxEvnt[0] & TX_FIFO_E0_EVENT_ID_Msk) >> 18;// Standard ID
+        psTxEvntElem->u32Id = (pu32TxEvnt[0] & TX_FIFO_E0_EVENT_ID_Msk) >> 18; // Standard ID
     }
 
     /* Get the Frame type */
@@ -1637,34 +1638,34 @@ void CANFD_CopyTxEvntFifoToUsrBuf(CANFD_T *psCanfd, uint32_t u32TxEvntNum, CANFD
  *
  * @param[in]   psCanfd         The pointer of the specified CAN FD module.
  * @param[in]   u32IntTypeFlag  Interrupt Type Flag, should be
- *                              - \ref CANFD_IR_ARA_Msk     : Access to Reserved Address interrupt Indicator
- *                              - \ref CANFD_IR_PED_Msk     : Protocol Error in Data Phase interrupt Indicator
- *                              - \ref CANFD_IR_PEA_Msk     : Protocol Error in Arbitration Phase interrupt Indicator
- *                              - \ref CANFD_IR_WDI_Msk     : Watchdog interrupt Indicator
- *                              - \ref CANFD_IR_BO_Msk      : Bus_Off Status interrupt Indicator
- *                              - \ref CANFD_IR_EW_Msk      : Warning Status interrupt Indicator
- *                              - \ref CANFD_IR_EP_Msk      : Error Passive interrupt Indicator
- *                              - \ref CANFD_IR_ELO_Msk     : Error Logging Overflow interrupt Indicator
- *                              - \ref CANFD_IR_DRX_Msk     : Message stored to Dedicated Rx Buffer interrupt Indicator
- *                              - \ref CANFD_IR_TOO_Msk     : Timeout Occurred interrupt Indicator
- *                              - \ref CANFD_IR_MRAF_Msk    : Message RAM Access Failure interrupt Indicator
- *                              - \ref CANFD_IR_TSW_Msk     : Timestamp Wraparound interrupt Indicator
- *                              - \ref CANFD_IR_TEFL_Msk    : Tx Event FIFO Event Lost interrupt Indicator
- *                              - \ref CANFD_IR_TEFF_Msk    : Tx Event FIFO Full Indicator
- *                              - \ref CANFD_IR_TEFW_Msk    : Tx Event FIFO Watermark Reached Interrupt Indicator
- *                              - \ref CANFD_IR_TEFN_Msk    : Tx Event FIFO New Entry Interrupt Indicator
- *                              - \ref CANFD_IR_TFE_Msk     : Tx FIFO Empty Interrupt Indicator
- *                              - \ref CANFD_IR_TCF_Msk     : Transmission Cancellation Finished Interrupt Indicator
- *                              - \ref CANFD_IR_TC_Msk      : Transmission Completed interrupt Indicator
- *                              - \ref CANFD_IR_HPM_Msk     : High Priority Message Interrupt Indicator
- *                              - \ref CANFD_IR_RF1L_Msk    : Rx FIFO 1 Message Lost Interrupt Indicator
- *                              - \ref CANFD_IR_RF1F_Msk    : Rx FIFO 1 Full Interrupt Indicator
- *                              - \ref CANFD_IR_RF1W_Msk    : Rx FIFO 1 Watermark Reached Interrupt Indicator
- *                              - \ref CANFD_IR_RF1N_Msk    : Rx FIFO 1 New Message Interrupt Indicator
- *                              - \ref CANFD_IR_RF0L_Msk    : Rx FIFO 0 Message Lost Interrupt Indicator
- *                              - \ref CANFD_IR_RF0F_Msk    : Rx FIFO 0 Full Interrupt Indicator
- *                              - \ref CANFD_IR_RF0W_Msk    : Rx FIFO 0 Watermark Reached Interrupt Indicator
- *                              - \ref CANFD_IR_RF0N_Msk    : Rx FIFO 0 New Message Interrupt Indicator
+ *                              - \ref CANFD_IR_ARA_Msk  : Access to Reserved Address interrupt Indicator
+ *                              - \ref CANFD_IR_PED_Msk  : Protocol Error in Data Phase interrupt Indicator
+ *                              - \ref CANFD_IR_PEA_Msk  : Protocol Error in Arbitration Phase interrupt Indicator
+ *                              - \ref CANFD_IR_WDI_Msk  : Watchdog interrupt Indicator
+ *                              - \ref CANFD_IR_BO_Msk   : Bus_Off Status interrupt Indicator
+ *                              - \ref CANFD_IR_EW_Msk   : Warning Status interrupt Indicator
+ *                              - \ref CANFD_IR_EP_Msk   : Error Passive interrupt Indicator
+ *                              - \ref CANFD_IR_ELO_Msk  : Error Logging Overflow interrupt Indicator
+ *                              - \ref CANFD_IR_DRX_Msk  : Message stored to Dedicated Rx Buffer interrupt Indicator
+ *                              - \ref CANFD_IR_TOO_Msk  : Timeout Occurred interrupt Indicator
+ *                              - \ref CANFD_IR_MRAF_Msk : Message RAM Access Failure interrupt Indicator
+ *                              - \ref CANFD_IR_TSW_Msk  : Timestamp Wraparound interrupt Indicator
+ *                              - \ref CANFD_IR_TEFL_Msk : Tx Event FIFO Event Lost interrupt Indicator
+ *                              - \ref CANFD_IR_TEFF_Msk : Tx Event FIFO Full Indicator
+ *                              - \ref CANFD_IR_TEFW_Msk : Tx Event FIFO Watermark Reached Interrupt Indicator
+ *                              - \ref CANFD_IR_TEFN_Msk : Tx Event FIFO New Entry Interrupt Indicator
+ *                              - \ref CANFD_IR_TFE_Msk  : Tx FIFO Empty Interrupt Indicator
+ *                              - \ref CANFD_IR_TCF_Msk  : Transmission Cancellation Finished Interrupt Indicator
+ *                              - \ref CANFD_IR_TC_Msk   : Transmission Completed interrupt Indicator
+ *                              - \ref CANFD_IR_HPM_Msk  : High Priority Message Interrupt Indicator
+ *                              - \ref CANFD_IR_RF1L_Msk : Rx FIFO 1 Message Lost Interrupt Indicator
+ *                              - \ref CANFD_IR_RF1F_Msk : Rx FIFO 1 Full Interrupt Indicator
+ *                              - \ref CANFD_IR_RF1W_Msk : Rx FIFO 1 Watermark Reached Interrupt Indicator
+ *                              - \ref CANFD_IR_RF1N_Msk : Rx FIFO 1 New Message Interrupt Indicator
+ *                              - \ref CANFD_IR_RF0L_Msk : Rx FIFO 0 Message Lost Interrupt Indicator
+ *                              - \ref CANFD_IR_RF0F_Msk : Rx FIFO 0 Full Interrupt Indicator
+ *                              - \ref CANFD_IR_RF0W_Msk : Rx FIFO 0 Watermark Reached Interrupt Indicator
+ *                              - \ref CANFD_IR_RF0N_Msk : Rx FIFO 0 New Message Interrupt Indicator
  *
  * @return      None.
  *
@@ -1681,34 +1682,34 @@ uint32_t CANFD_GetStatusFlag(CANFD_T *psCanfd, uint32_t u32IntTypeFlag)
  *
  * @param[in]   psCanfd           The pointer of the specified CANFD module.
  * @param[in]   u32InterruptFlag  The specified interrupt of CAN FD module
- *                               - \ref CANFD_IR_ARA_Msk     : Access to Reserved Address interrupt Indicator
- *                               - \ref CANFD_IR_PED_Msk     : Protocol Error in Data Phase interrupt Indicator
- *                               - \ref CANFD_IR_PEA_Msk     : Protocol Error in Arbitration Phase interrupt Indicator
- *                               - \ref CANFD_IR_WDI_Msk     : Watchdog interrupt Indicator
- *                               - \ref CANFD_IR_BO_Msk      : Bus_Off Status interrupt Indicator
- *                               - \ref CANFD_IR_EW_Msk      : Warning Status interrupt Indicator
- *                               - \ref CANFD_IR_EP_Msk      : Error Passive interrupt Indicator
- *                               - \ref CANFD_IR_ELO_Msk     : Error Logging Overflow interrupt Indicator
- *                               - \ref CANFD_IR_DRX_Msk     : Message stored to Dedicated Rx Buffer interrupt Indicator
- *                               - \ref CANFD_IR_TOO_Msk     : Timeout Occurred interrupt Indicator
- *                               - \ref CANFD_IR_MRAF_Msk    : Message RAM Access Failure interrupt Indicator
- *                               - \ref CANFD_IR_TSW_Msk     : Timestamp Wraparound interrupt Indicator
- *                               - \ref CANFD_IR_TEFL_Msk    : Tx Event FIFO Event Lost interrupt Indicator
- *                               - \ref CANFD_IR_TEFF_Msk    : Tx Event FIFO Full Indicator
- *                               - \ref CANFD_IR_TEFW_Msk    : Tx Event FIFO Watermark Reached Interrupt Indicator
- *                               - \ref CANFD_IR_TEFN_Msk    : Tx Event FIFO New Entry Interrupt Indicator
- *                               - \ref CANFD_IR_TFE_Msk     : Tx FIFO Empty Interrupt Indicator
- *                               - \ref CANFD_IR_TCF_Msk     : Transmission Cancellation Finished Interrupt Indicator
- *                               - \ref CANFD_IR_TC_Msk      : Transmission Completed interrupt Indicator
- *                               - \ref CANFD_IR_HPM_Msk     : High Priority Message Interrupt Indicator
- *                               - \ref CANFD_IR_RF1L_Msk    : Rx FIFO 1 Message Lost Interrupt Indicator
- *                               - \ref CANFD_IR_RF1F_Msk    : Rx FIFO 1 Full Interrupt Indicator
- *                               - \ref CANFD_IR_RF1W_Msk    : Rx FIFO 1 Watermark Reached Interrupt Indicator
- *                               - \ref CANFD_IR_RF1N_Msk    : Rx FIFO 1 New Message Interrupt Indicator
- *                               - \ref CANFD_IR_RF0L_Msk    : Rx FIFO 0 Message Lost Interrupt Indicator
- *                               - \ref CANFD_IR_RF0F_Msk    : Rx FIFO 0 Full Interrupt Indicator
- *                               - \ref CANFD_IR_RF0W_Msk    : Rx FIFO 0 Watermark Reached Interrupt Indicator
- *                               - \ref CANFD_IR_RF0N_Msk    : Rx FIFO 0 New Message Interrupt Indicator
+ *                                - \ref CANFD_IR_ARA_Msk  : Access to Reserved Address interrupt Indicator
+ *                                - \ref CANFD_IR_PED_Msk  : Protocol Error in Data Phase interrupt Indicator
+ *                                - \ref CANFD_IR_PEA_Msk  : Protocol Error in Arbitration Phase interrupt Indicator
+ *                                - \ref CANFD_IR_WDI_Msk  : Watchdog interrupt Indicator
+ *                                - \ref CANFD_IR_BO_Msk   : Bus_Off Status interrupt Indicator
+ *                                - \ref CANFD_IR_EW_Msk   : Warning Status interrupt Indicator
+ *                                - \ref CANFD_IR_EP_Msk   : Error Passive interrupt Indicator
+ *                                - \ref CANFD_IR_ELO_Msk  : Error Logging Overflow interrupt Indicator
+ *                                - \ref CANFD_IR_DRX_Msk  : Message stored to Dedicated Rx Buffer interrupt Indicator
+ *                                - \ref CANFD_IR_TOO_Msk  : Timeout Occurred interrupt Indicator
+ *                                - \ref CANFD_IR_MRAF_Msk : Message RAM Access Failure interrupt Indicator
+ *                                - \ref CANFD_IR_TSW_Msk  : Timestamp Wraparound interrupt Indicator
+ *                                - \ref CANFD_IR_TEFL_Msk : Tx Event FIFO Event Lost interrupt Indicator
+ *                                - \ref CANFD_IR_TEFF_Msk : Tx Event FIFO Full Indicator
+ *                                - \ref CANFD_IR_TEFW_Msk : Tx Event FIFO Watermark Reached Interrupt Indicator
+ *                                - \ref CANFD_IR_TEFN_Msk : Tx Event FIFO New Entry Interrupt Indicator
+ *                                - \ref CANFD_IR_TFE_Msk  : Tx FIFO Empty Interrupt Indicator
+ *                                - \ref CANFD_IR_TCF_Msk  : Transmission Cancellation Finished Interrupt Indicator
+ *                                - \ref CANFD_IR_TC_Msk   : Transmission Completed interrupt Indicator
+ *                                - \ref CANFD_IR_HPM_Msk  : High Priority Message Interrupt Indicator
+ *                                - \ref CANFD_IR_RF1L_Msk : Rx FIFO 1 Message Lost Interrupt Indicator
+ *                                - \ref CANFD_IR_RF1F_Msk : Rx FIFO 1 Full Interrupt Indicator
+ *                                - \ref CANFD_IR_RF1W_Msk : Rx FIFO 1 Watermark Reached Interrupt Indicator
+ *                                - \ref CANFD_IR_RF1N_Msk : Rx FIFO 1 New Message Interrupt Indicator
+ *                                - \ref CANFD_IR_RF0L_Msk : Rx FIFO 0 Message Lost Interrupt Indicator
+ *                                - \ref CANFD_IR_RF0F_Msk : Rx FIFO 0 Full Interrupt Indicator
+ *                                - \ref CANFD_IR_RF0W_Msk : Rx FIFO 0 Watermark Reached Interrupt Indicator
+ *                                - \ref CANFD_IR_RF0N_Msk : Rx FIFO 0 New Message Interrupt Indicator
  *
  * @return      None.
  *
@@ -1716,7 +1717,7 @@ uint32_t CANFD_GetStatusFlag(CANFD_T *psCanfd, uint32_t u32IntTypeFlag)
  */
 void CANFD_ClearStatusFlag(CANFD_T *psCanfd, uint32_t u32InterruptFlag)
 {
-    /* Write 1 to clear status flag. */
+    /* Write 1 to clear status flag */
     psCanfd->IR |= u32InterruptFlag;
 }
 
@@ -1724,9 +1725,9 @@ void CANFD_ClearStatusFlag(CANFD_T *psCanfd, uint32_t u32InterruptFlag)
 /**
  * @brief       Gets the CAN FD Bus Error Counter value.
  *
- * @param[in]   psCanfd        The pointer of the specified CAN FD module.
- * @param[in]   pu8TxErrBuf    TxErrBuf Buffer to store Tx Error Counter value.
- * @param[in]   pu8RxErrBuf    RxErrBuf Buffer to store Rx Error Counter value.
+ * @param[in]   psCanfd      The pointer of the specified CAN FD module.
+ * @param[in]   pu8TxErrBuf  TxErrBuf Buffer to store Tx Error Counter value.
+ * @param[in]   pu8RxErrBuf  RxErrBuf Buffer to store Rx Error Counter value.
  *
  * @return      None.
  *
@@ -1750,11 +1751,11 @@ void CANFD_GetBusErrCount(CANFD_T *psCanfd, uint8_t *pu8TxErrBuf, uint8_t *pu8Rx
 /**
  * @brief       CAN FD Run to the Normal Operation.
  *
- * @param[in]   psCanfd        The pointer of the specified CAN FD module.
- * @param[in]   u8Enable       TxErrBuf Buffer to store Tx Error Counter value.
+ * @param[in]   psCanfd   The pointer of the specified CAN FD module.
+ * @param[in]   u8Enable  TxErrBuf Buffer to store Tx Error Counter value.
  *
- * @retval      CANFD_OK          CANFD operation OK.
- * @retval      CANFD_ERR_TIMEOUT CANFD operation abort due to timeout error.
+ * @return      CANFD_OK           CANFD operation OK.
+ * @return      CANFD_ERR_TIMEOUT  CANFD operation abort due to timeout error.
  *
  * @details     This function gets the CAN FD Bus Error Counter value for both Tx and Rx direction.
  *              These values may be needed in the upper layer error handling.
@@ -1765,7 +1766,7 @@ int32_t CANFD_RunToNormal(CANFD_T *psCanfd, uint8_t u8Enable)
 
     if(u8Enable)
     {
-        /* start operation */
+        /* Start operation */
         psCanfd->CCCR &= ~(CANFD_CCCR_CCE_Msk | CANFD_CCCR_INIT_Msk);
 
         while(psCanfd->CCCR & CANFD_CCCR_INIT_Msk)
@@ -1775,7 +1776,7 @@ int32_t CANFD_RunToNormal(CANFD_T *psCanfd, uint8_t u8Enable)
     }
     else
     {
-        /* init mode */
+        /* Init mode */
         psCanfd->CCCR |= CANFD_CCCR_INIT_Msk;
 
         while(!(psCanfd->CCCR & CANFD_CCCR_INIT_Msk))
@@ -1786,8 +1787,6 @@ int32_t CANFD_RunToNormal(CANFD_T *psCanfd, uint8_t u8Enable)
 
     return CANFD_OK;
 }
-
-
 
 /*@}*/ /* end of group CANFD_EXPORTED_FUNCTIONS */
 

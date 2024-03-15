@@ -267,7 +267,7 @@ void CAN_TxRxTest(void)
     {
         printf("Start to CAN Bus Receiver :\n");
 
-        /* Receive  6 messages with different ID and data size */
+        /* Receive 6 messages with different ID and data size */
         do
         {
             /* Check for any received messages on CAN message buffer 0 */

@@ -19,10 +19,10 @@
 /******************************************************************************/
 
 /** @addtogroup REGISTER Control Register
-   @{
+
+  @{
+
 */
-
-
 
 
 /*---------------------- Controller Area Network with Flexible DataRate -------------------------*/
@@ -1059,77 +1059,39 @@ typedef struct
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[2:0]   |TXHS      |CAN TxH Signal Type
-     * |        |          |Based on CAN_Tx siganl, the CAN_TxH will follow below table to change.
-     * |        |          |TXHS[2:0]
-     * |        |          |CAN_Tx   Logical 0
-     * |        |          |CAN_Tx   Logical 1
-     * |        |          |CAN_TxH RTL design
-     * |        |          |000
-     * |        |          |CAN_TxH   output low
-     * |        |          |CAN_TxH   output high
-     * |        |          |OE = 1
-     * |        |          |Output = CAN_Tx
-     * |        |          |001
-     * |        |          |CAN_TxH   output high
-     * |        |          |CAN_TxH   output low
-     * |        |          |OE = 1
-     * |        |          |Output = ~CAN_Tx
-     * |        |          |010
-     * |        |          |CAN_TxH   output low
-     * |        |          |CAN_TxH   floating
-     * |        |          |OE = ~ CAN_Tx
-     * |        |          |Output = 0
-     * |        |          |011
-     * |        |          |CAN_TxH   floating
-     * |        |          |CAN_TxH   output low
-     * |        |          |OE = CAN_Tx
-     * |        |          |Output = 0
-     * |        |          |100
-     * |        |          |CAN_TxH   output high
-     * |        |          |CAN_TxH   floating
-     * |        |          |OE = ~ CAN_Tx
-     * |        |          |Output = 1
-     * |        |          |101
-     * |        |          |CAN_TxH   floating
-     * |        |          |CAN_TxH   output high
-     * |        |          |OE = CAN_Tx
-     * |        |          |Output = 1
+     * |        |          |Based on CAN_Tx signal, the CAN_TxH will follow below table to change.
+     * |        |          |----------------------------------------------------|
+     * |        |          |TXHS[2:0] |CAN_Tx Logical 0    |CAN_Tx Logical 1    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |000       |CAN_TxH output low  |CAN_TxH output high |
+     * |        |          |----------------------------------------------------|
+     * |        |          |001       |CAN_TxH output high |CAN_TxH output low  |
+     * |        |          |----------------------------------------------------|
+     * |        |          |010       |CAN_TxH output low  |CAN_TxH floating    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |011       |CAN_TxH floating    |CAN_TxH output low  |
+     * |        |          |----------------------------------------------------|
+     * |        |          |100       |CAN_TxH output high |CAN_TxH floating    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |101       |CAN_TxH floating    |CAN_TxH output high |
+     * |        |          |----------------------------------------------------|
      * |[6:4]   |TXLS      |CAN TxL Signal Type
-     * |        |          |Based on CAN_Tx siganl, the CAN_TxL will follow below table to change.
-     * |        |          |TXLS[2:0]
-     * |        |          |CAN_Tx   Logical 0
-     * |        |          |CAN_Tx   Logical 1
-     * |        |          |CAN_TxL RTL design
-     * |        |          |000
-     * |        |          |CAN_TxL   output low
-     * |        |          |CAN_TxL   output high
-     * |        |          |OE = 1
-     * |        |          |Output = CAN_Tx
-     * |        |          |001
-     * |        |          |CAN_TxL   output high
-     * |        |          |CAN_TxL   output low
-     * |        |          |OE = 1
-     * |        |          |Output = ~CAN_Tx
-     * |        |          |010
-     * |        |          |CAN_TxL   output low
-     * |        |          |CAN_TxL   floating
-     * |        |          |OE = ~ CAN_Tx
-     * |        |          |Output = 0
-     * |        |          |011
-     * |        |          |CAN_TxL   floating
-     * |        |          |CAN_TxL   output low
-     * |        |          |OE = CAN_Tx
-     * |        |          |Output = 0
-     * |        |          |100
-     * |        |          |CAN_TxL   output high
-     * |        |          |CAN_TxL   floating
-     * |        |          |OE = ~ CAN_Tx
-     * |        |          |Output = 1
-     * |        |          |101
-     * |        |          |CAN_TxL   floating
-     * |        |          |CAN_TxL   output high
-     * |        |          |OE = CAN_Tx
-     * |        |          |Output = 1
+     * |        |          |Based on CAN_Tx signal, the CAN_TxL will follow below table to change.
+     * |        |          |----------------------------------------------------|
+     * |        |          |TXLS[2:0] |CAN_Tx Logical 0    |CAN_Tx Logical 1    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |000       |CAN_TxL output low  |CAN_TxL output high |
+     * |        |          |----------------------------------------------------|
+     * |        |          |001       |CAN_TxL output high |CAN_TxL output low  |
+     * |        |          |----------------------------------------------------|
+     * |        |          |010       |CAN_TxL output low  |CAN_TxL floating    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |011       |CAN_TxL floating    |CAN_TxL output low  |
+     * |        |          |----------------------------------------------------|
+     * |        |          |100       |CAN_TxL output high |CAN_TxL floating    |
+     * |        |          |----------------------------------------------------|
+     * |        |          |101       |CAN_TxL floating    |CAN_TxL output high |
+     * |        |          |----------------------------------------------------|
      * |[9:8]   |RXSS      |CAN Rx Signal Selection
      * |        |          |00 = from CAN_Rx pin
      * |        |          |01 = from ACMP0 output

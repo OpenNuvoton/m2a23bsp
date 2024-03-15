@@ -2,7 +2,7 @@
  * @file     main.c
  * @version  V3.00
  * @brief    Implement SPI Master loop back transfer. This sample code needs to
- *           connect MISO_0 pin and MOSI_0 pin together. It will compare the
+ *           connect MISO pin and MOSI pin together. It will compare the
  *           received data with transmitted data.
  *
  * @copyright SPDX-License-Identifier: Apache-2.0

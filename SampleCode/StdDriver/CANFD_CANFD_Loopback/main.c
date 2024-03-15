@@ -298,8 +298,10 @@ int32_t main(void)
     UART0_Init();
 
     printf("\n CANFD%d FD Mode Loopback example\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
+
     /* CAN FD Loopback Test */
     CANFD_CANFD_Loopback();
+
     printf("\n CANFD%d FD Mode Loopback Test Done\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
 
     while(1) {}

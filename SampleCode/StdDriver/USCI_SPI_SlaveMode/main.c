@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file     main.c
- * @version  V1.00
+ * @version  V3.00
  * @brief    Configure USCI_SPI1 as Slave mode and demonstrate how to communicate with an off-chip SPI Master device.
  *           This sample code needs to work with USCI_SPI_MasterMode sample code.
  *
