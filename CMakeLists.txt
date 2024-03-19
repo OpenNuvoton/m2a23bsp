@@ -34,28 +34,59 @@ set(CMAKE_EXECUTABLE_SUFFIX ".axf")
 
 project(m2a23bsp)
 
+function(create_project PRJ)
+    add_executable(${PRJ} ${ARGN})
+    target_link_libraries(${PRJ} system_startup standard_driver)
+
+    target_link_options(${PRJ}
+        PUBLIC
+        --cpu=Cortex-M23
+        --library_type=microlib
+        --ro-base 0x00000000
+        --rw-base 0x20000000
+        --entry Reset_Handler
+        --first __Vectors
+        --strict
+        --map
+        --datacompressor=off
+        --info=inline
+        --entry Reset_Handler
+        --summary_stderr
+        --info totals
+        --map
+        --load_addr_map_info
+        --xref
+        --callgraph
+        --symbols
+    )
+
+    add_custom_command(TARGET ${PRJ} POST_BUILD
+        COMMAND ${ARM_FROMELF} --bin --output ${PRJ}.bin ${PRJ}.elf
+        VERBATIM
+    )
+endfunction()
+
+
+
 set(BSP_DIR  ${CMAKE_CURRENT_LIST_DIR})
 
 include_directories(${TOOLCHAIN_PATH}/include)
 include_directories(${BSP_DIR}/Library/CMSIS/Include)
 include_directories(${BSP_DIR}/Library/Device/Nuvoton/m2a23/Include)
 include_directories(${BSP_DIR}/Library/StdDriver/inc)
+include_directories(${BSP_DIR}/Library/NuMaker/common)
 
-# Build library 
+# Build library
 add_subdirectory(${BSP_DIR}/Library/StdDriver/src)
 add_subdirectory(${BSP_DIR}/Library/Device/Nuvoton/m2a23/Source)
+add_subdirectory(${BSP_DIR}/Library/NuMaker/xmodem)
+
 
 # Build sample code
-#add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_CompareDAC)
-#add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_CompareVBG)
-#add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_Wakeup)
-#add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/ACMP_WindowComapre)
-
-add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/PDMA_BasicMode)
-add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/PDMA_ScatterGather)
-add_subdirectory(${BSP_DIR}/SampleCode/StdDriver/PDMA_ScatterGather_PingPongBuffer)
-
-
+add_subdirectory(${BSP_DIR}/SampleCode/Hard_Fault_Sample)
+add_subdirectory(${BSP_DIR}/SampleCode/Template)
+add_subdirectory(${BSP_DIR}/SampleCode/ISP)
+add_subdirectory(${BSP_DIR}/SampleCode/StdDriver)
 
 
 
