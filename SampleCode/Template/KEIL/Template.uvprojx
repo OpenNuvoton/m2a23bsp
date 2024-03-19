@@ -10,20 +10,20 @@
       <TargetName>Template</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>M2A23SD4AE</Device>
+          <Device>M2A23SG5AC</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicro_DFP.1.3.18</PackID>
+          <PackID>Nuvoton.NuMicro_DFP.1.3.24</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
-          <Cpu>IRAM(0x20000000,0x5000) IROM(0x00000000,0x10000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
+          <Cpu>IRAM(0x20000000,0x6000) IROM(0x00000000,0x40000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0M2A23_AP_64 -FS00 -FL010000 -FP0($$Device:M2A23SD4AE$Flash\M2A23_AP_64.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0M2A23_AP_256 -FS00 -FL040000 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:M2A23SD4AE$Device\M2A23\Include\M2A23.h</RegisterFile>
+          <RegisterFile>$$Device:M2A23SG5AC$Device\M2A23\Include\M2A23.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:M2A23SD4AE$SVD\Nuvoton\M2A23AE.svd</SFDFile>
+          <SFDFile>$$Device:M2A23SG5AC$SVD\Nuvoton\M2A23.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -247,12 +247,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x5000</Size>
+                <Size>0x6000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -277,7 +277,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x40000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -302,7 +302,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x5000</Size>
+                <Size>0x6000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>

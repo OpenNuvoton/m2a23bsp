@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>NUC1263SD4AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicro_DFP.1.3.23</PackID>
+          <PackID>Nuvoton.NuMicro_DFP.1.3.24</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
           <Cpu>IRAM(0x20000000,0x5000) IROM(0x00000000,0x10000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\Library\Device\Nuvoton\m2a23\Include;..\..\..\..\..\Library\CMSIS\Include;..\..\..\..\..\Library\StdDriver\inc;..\..\common\inc;..\..\..\..\..\Library\NuMaker\common</IncludePath>
+              <IncludePath>..\..\..\..\..\Library\Device\Nuvoton\m2a23\Include;..\..\..\..\..\Library\CMSIS\Include;..\..\..\..\..\Library\StdDriver\inc;..\..\common\inc;..\..\..\..\..\Library\NuMaker\xmodem</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -437,7 +437,7 @@
             <File>
               <FileName>xmodem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Library\NuMaker\common\xmodem.c</FilePath>
+              <FilePath>..\..\..\..\..\Library\NuMaker\xmodem\xmodem.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -453,7 +453,7 @@
         <TargetCommonOption>
           <Device>NUC1263SD4AE</Device>
           <Vendor>Nuvoton</Vendor>
-          <PackID>Nuvoton.NuMicro_DFP.1.3.23</PackID>
+          <PackID>Nuvoton.NuMicro_DFP.1.3.24</PackID>
           <PackURL>https://github.com/OpenNuvoton/cmsis-packs/raw/master/Nuvoton_DFP/</PackURL>
           <Cpu>IRAM(0x20000000,0x5000) IROM(0x00000000,0x10000) CPUTYPE("Cortex-M23") CLOCK(12000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -777,7 +777,7 @@
               <MiscControls></MiscControls>
               <Define>NewApp</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\Library\Device\Nuvoton\m2a23\Include;..\..\..\..\..\Library\CMSIS\Include;..\..\..\..\..\Library\StdDriver\inc;..\..\common\inc;..\..\..\..\..\Library\NuMaker\common</IncludePath>
+              <IncludePath>..\..\..\..\..\Library\Device\Nuvoton\m2a23\Include;..\..\..\..\..\Library\CMSIS\Include;..\..\..\..\..\Library\StdDriver\inc;..\..\common\inc;..\..\..\..\..\Library\NuMaker\xmodem</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -790,7 +790,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <ClangAsOpt>4</ClangAsOpt>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -874,7 +874,7 @@
             <File>
               <FileName>xmodem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Library\NuMaker\common\xmodem.c</FilePath>
+              <FilePath>..\..\..\..\..\Library\NuMaker\xmodem\xmodem.c</FilePath>
             </File>
           </Files>
         </Group>

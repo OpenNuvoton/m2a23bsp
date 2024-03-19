@@ -1,336 +1,303 @@
-;/**************************************************************************//**
-; * @file     startup_m2a23.s
-; * @version  V3.00
-; * @brief    M2A23 Series Startup Source File
-; *
-; * @copyright SPDX-License-Identifier: Apache-2.0
-; * @copyright Copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
-; ******************************************************************************/
+/**************************************************************************//**
+ * @file     startup_m2a23.s
+ * @version  V3.00
+ * @brief    M2A23 Series Startup Source File
+ *
+ * @copyright SPDX-License-Identifier: Apache-2.0
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
+ ******************************************************************************/
+
+    .section STACK
+    .align 3
+    .global __initial_sp
+#ifndef Stack_Size
+    .equ    Stack_Size, 0x00000400
+#endif
+Stack_Mem:
+    .space   Stack_Size
+__initial_sp:
 
 
-;/*
-;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
-;*/
-; <h> Stack Configuration
-;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
+    .section HEAP
+    .align  3
+    .global Heap_Mem
+    .global __heap_base
+    .global __heap_limit
+#ifdef Heap_Size
+    .equ    Heap_Size, 0x00000100
+#endif
+__heap_base:
+Heap_Mem:
+    .space  Heap_Size
+__heap_limit:
 
-    IF :LNOT: :DEF: Stack_Size
-Stack_Size      EQU     0x00000400
-    ENDIF
-
-                AREA    STACK, NOINIT, READWRITE, ALIGN=3
-Stack_Mem       SPACE   Stack_Size
-__initial_sp
-
-
-; <h> Heap Configuration
-;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
-
-    IF :LNOT: :DEF: Heap_Size
-Heap_Size       EQU     0x00000000
-    ENDIF
-
-                AREA    HEAP, NOINIT, READWRITE, ALIGN=3
-__heap_base
-Heap_Mem        SPACE   Heap_Size
-__heap_limit
+    .eabi_attribute Tag_ABI_align_preserved, 1
+    .thumb
 
 
-                PRESERVE8
-                THUMB
+// ; Vector Table Mapped to Address 0 at Reset
+    .section RESET, "ax"
+    .global     __Vectors
+    .global     __Vectors_End
+    .global     __Vectors_Size
+
+__Vectors:
+    .word     __initial_sp              //; Top of Stack
+    .word     Reset_Handler             //; Reset Handler
+    .word     NMI_Handler               //; NMI Handler
+    .word     HardFault_Handler         //; Hard Fault Handler
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     SVC_Handler               //; SVCall Handler
+    .word     0                         //; Reserved
+    .word     0                         //; Reserved
+    .word     PendSV_Handler            //; PendSV Handler
+    .word     SysTick_Handler           //; SysTick Handler
+
+    //; External Interrupts
+
+    .word     BOD_IRQHandler
+    .word     IRC_IRQHandler
+    .word     PWRWU_IRQHandler
+    .word     RAMPE_IRQHandler
+    .word     CKFAIL_IRQHandler
+    .word     ISP_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     WDT_IRQHandler
+    .word     WWDT_IRQHandler
+    .word     EINT0_IRQHandler
+    .word     EINT1_IRQHandler
+    .word     EINT2_IRQHandler
+    .word     EINT3_IRQHandler
+    .word     EINT4_IRQHandler
+    .word     EINT5_IRQHandler
+    .word     GPA_IRQHandler
+    .word     GPB_IRQHandler
+    .word     GPC_IRQHandler
+    .word     GPD_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     GPF_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     SPI0_IRQHandler
+    .word     BRAKE0_IRQHandler
+    .word     PWM0P0_IRQHandler
+    .word     PWM0P1_IRQHandler
+    .word     PWM0P2_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     TMR0_IRQHandler
+    .word     TMR1_IRQHandler
+    .word     TMR2_IRQHandler
+    .word     TMR3_IRQHandler
+    .word     UART0_IRQHandler
+    .word     UART1_IRQHandler
+    .word     I2C0_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     PDMA0_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     ADC0_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     ACMP01_IRQHandler
+    .word     BPWM0_IRQHandler
+    .word     LLSI0_IRQHandler
+    .word     LLSI1_IRQHandler
+    .word     CANFD00_IRQHandler
+    .word     CANFD01_IRQHandler
+    .word     CANFD10_IRQHandler
+    .word     CANFD11_IRQHandler
+    .word     CANFD20_IRQHandler
+    .word     CANFD21_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     DEFAULT_IRQHandler
+    .word     USCI0_IRQHandler
+    .word     USCI1_IRQHandler
+
+__Vectors_End:
+    .equ    __Vectors_Size, __Vectors_End - __Vectors
+
+    .section .text, "ax"
+
+// ; Reset Handler
+    .global Reset_Handler
+    .global  SystemInit
+    .global  __main
+    .type   Reset_Handler, "function"
+Reset_Handler:
+        LDR     R0, =SystemInit
+        BLX     R0
+        LDR     R0, =__main
+        BX      R0
 
 
-; Vector Table Mapped to Address 0 at Reset
-                AREA    RESET, DATA, READONLY
-                EXPORT  __Vectors
-                EXPORT  __Vectors_End
-                EXPORT  __Vectors_Size
+// ; Dummy Exception Handlers (infinite loops which can be modified)
+    .weak   NMI_Handler
+    .type   NMI_Handler, "function"
+NMI_Handler:
+        B       .
 
-__Vectors       DCD     __initial_sp              ; Top of Stack
-                DCD     Reset_Handler             ; Reset Handler
-                DCD     NMI_Handler               ; NMI Handler
-                DCD     HardFault_Handler         ; Hard Fault Handler
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall Handler
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     PendSV_Handler            ; PendSV Handler
-                DCD     SysTick_Handler           ; SysTick Handler
+    .weak   HardFault_Handler
+    .type   HardFault_Handler, "function"
 
-                ; External Interrupts
+HardFault_Handler:
+        MOV     R0, LR
+        MRS     R1, MSP
+        MRS     R2, PSP
+        LDR     R3, =ProcessHardFault
+        BLX     R3
+        BX      R0
 
-                DCD     BOD_IRQHandler
-                DCD     IRC_IRQHandler
-                DCD     PWRWU_IRQHandler
-                DCD     RAMPE_IRQHandler
-                DCD     CKFAIL_IRQHandler
-                DCD     ISP_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     WDT_IRQHandler
-                DCD     WWDT_IRQHandler
-                DCD     EINT0_IRQHandler
-                DCD     EINT1_IRQHandler
-                DCD     EINT2_IRQHandler
-                DCD     EINT3_IRQHandler
-                DCD     EINT4_IRQHandler
-                DCD     EINT5_IRQHandler
-                DCD     GPA_IRQHandler
-                DCD     GPB_IRQHandler
-                DCD     GPC_IRQHandler
-                DCD     GPD_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     GPF_IRQHandler
-                DCD     DEFAULT_IRQHandler                    
-                DCD     SPI0_IRQHandler
-                DCD     BRAKE0_IRQHandler
-                DCD     PWM0P0_IRQHandler
-                DCD     PWM0P1_IRQHandler
-                DCD     PWM0P2_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     TMR0_IRQHandler
-                DCD     TMR1_IRQHandler
-                DCD     TMR2_IRQHandler
-                DCD     TMR3_IRQHandler
-                DCD     UART0_IRQHandler
-                DCD     UART1_IRQHandler
-                DCD     I2C0_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     PDMA0_IRQHandler
-                DCD     DEFAULT_IRQHandler                    
-                DCD     ADC0_IRQHandler
-                DCD     DEFAULT_IRQHandler                    
-                DCD     ACMP01_IRQHandler
-                DCD     BPWM0_IRQHandler
-                DCD     LLSI0_IRQHandler
-                DCD     LLSI1_IRQHandler
-                DCD     CANFD00_IRQHandler
-                DCD     CANFD01_IRQHandler
-                DCD     CANFD10_IRQHandler
-                DCD     CANFD11_IRQHandler
-                DCD     CANFD20_IRQHandler
-                DCD     CANFD21_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     DEFAULT_IRQHandler
-                DCD     USCI0_IRQHandler
-                DCD     USCI1_IRQHandler
+    .weak   SVC_Handler, "function"
+SVC_Handler:
+        B       .
 
-__Vectors_End
+    .weak   PendSV_Handler, "function"
+PendSV_Handler:
+        B       .
 
-__Vectors_Size  EQU     __Vectors_End - __Vectors
-
-                AREA    |.text|, CODE, READONLY
+    .weak   SysTick_Handler, "function"
+SysTick_Handler:
+        B       .
 
 
-; Reset Handler
+    .weak	BOD_IRQHandler,"function"
+    .weak	IRC_IRQHandler,"function"
+    .weak	PWRWU_IRQHandler,"function"
+    .weak	RAMPE_IRQHandler,"function"
+    .weak	CKFAIL_IRQHandler,"function"
+    .weak	ISP_IRQHandler,"function"
+    .weak	WDT_IRQHandler,"function"
+    .weak	WWDT_IRQHandler,"function"
+    .weak	EINT0_IRQHandler,"function"
+    .weak	EINT1_IRQHandler,"function"
+    .weak	EINT2_IRQHandler,"function"
+    .weak	EINT3_IRQHandler,"function"
+    .weak	EINT4_IRQHandler,"function"
+    .weak	EINT5_IRQHandler,"function"
+    .weak	GPA_IRQHandler,"function"
+    .weak	GPB_IRQHandler,"function"
+    .weak	GPC_IRQHandler,"function"
+    .weak	GPD_IRQHandler,"function"
+    .weak	GPF_IRQHandler,"function"
+    .weak	SPI0_IRQHandler,"function"
+    .weak	BRAKE0_IRQHandler,"function"
+    .weak	PWM0P0_IRQHandler,"function"
+    .weak	PWM0P1_IRQHandler,"function"
+    .weak	PWM0P2_IRQHandler,"function"
+    .weak	TMR0_IRQHandler,"function"
+    .weak	TMR1_IRQHandler,"function"
+    .weak	TMR2_IRQHandler,"function"
+    .weak	TMR3_IRQHandler,"function"
+    .weak	UART0_IRQHandler,"function"
+    .weak	UART1_IRQHandler,"function"
+    .weak	I2C0_IRQHandler,"function"
+    .weak	PDMA0_IRQHandler,"function"
+    .weak	ADC0_IRQHandler,"function"
+    .weak	ACMP01_IRQHandler,"function"
+    .weak	BPWM0_IRQHandler,"function"
+    .weak	LLSI0_IRQHandler,"function"
+    .weak	LLSI1_IRQHandler,"function"
+    .weak	CANFD00_IRQHandler,"function"
+    .weak	CANFD01_IRQHandler,"function"
+    .weak	CANFD10_IRQHandler,"function"
+    .weak	CANFD11_IRQHandler,"function"
+    .weak	CANFD20_IRQHandler,"function"
+    .weak	CANFD21_IRQHandler,"function"
+    .weak	USCI0_IRQHandler,"function"
+    .weak	USCI1_IRQHandler,"function"
+    .weak	DEFAULT_IRQHandler,"function"
+Default_Handler:
+BOD_IRQHandler:
+IRC_IRQHandler:
+PWRWU_IRQHandler:
+RAMPE_IRQHandler:
+CKFAIL_IRQHandler:
+ISP_IRQHandler:
+WDT_IRQHandler:
+WWDT_IRQHandler:
+EINT0_IRQHandler:
+EINT1_IRQHandler:
+EINT2_IRQHandler:
+EINT3_IRQHandler:
+EINT4_IRQHandler:
+EINT5_IRQHandler:
+GPA_IRQHandler:
+GPB_IRQHandler:
+GPC_IRQHandler:
+GPD_IRQHandler:
+GPF_IRQHandler:
+SPI0_IRQHandler:
+BRAKE0_IRQHandler:
+PWM0P0_IRQHandler:
+PWM0P1_IRQHandler:
+PWM0P2_IRQHandler:
+TMR0_IRQHandler:
+TMR1_IRQHandler:
+TMR2_IRQHandler:
+TMR3_IRQHandler:
+UART0_IRQHandler:
+UART1_IRQHandler:
+I2C0_IRQHandler:
+PDMA0_IRQHandler:
+ADC0_IRQHandler:
+ACMP01_IRQHandler:
+BPWM0_IRQHandler:
+LLSI0_IRQHandler:
+LLSI1_IRQHandler:
+CANFD00_IRQHandler:
+CANFD01_IRQHandler:
+CANFD10_IRQHandler:
+CANFD11_IRQHandler:
+CANFD20_IRQHandler:
+CANFD21_IRQHandler:
+USCI0_IRQHandler:
+USCI1_IRQHandler:
+DEFAULT_IRQHandler:
+        B       .
 
-Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]
-                IMPORT  SystemInit
-                IMPORT  __main
-					
-
-                LDR     R0, =SystemInit
-                BLX     R0
-                LDR     R0, =__main
-                BX      R0
-                ENDP
-
-
-; Dummy Exception Handlers (infinite loops which can be modified)
-
-NMI_Handler     PROC
-                EXPORT  NMI_Handler               [WEAK]
-                B       .
-                ENDP
-HardFault_Handler\
-                PROC
-                IMPORT  ProcessHardFault
-                EXPORT  HardFault_Handler         [WEAK]
-                MOV     R0, LR                 
-                MRS     R1, MSP                
-                MRS     R2, PSP                
-                LDR     R3, =ProcessHardFault 
-                BLX     R3                     
-                BX      R0                     
-                ENDP
-ProcessHardFaultx\
-                PROC
-                EXPORT  ProcessHardFaultx          [WEAK]
-                B       .
-                ENDP
-SVC_Handler     PROC
-                EXPORT  SVC_Handler               [WEAK]
-                B       .
-                ENDP
-PendSV_Handler  PROC
-                EXPORT  PendSV_Handler            [WEAK]
-                B       .
-                ENDP
-SysTick_Handler PROC
-                EXPORT  SysTick_Handler           [WEAK]
-                B       .
-                ENDP
-
-Default_Handler PROC
-
-                EXPORT  BOD_IRQHandler            [WEAK]
-                EXPORT  IRC_IRQHandler            [WEAK]
-                EXPORT  PWRWU_IRQHandler          [WEAK]
-                EXPORT  RAMPE_IRQHandler          [WEAK]
-                EXPORT  CKFAIL_IRQHandler         [WEAK]
-                EXPORT  ISP_IRQHandler            [WEAK]
-                EXPORT  WDT_IRQHandler            [WEAK]
-                EXPORT  WWDT_IRQHandler           [WEAK]
-                EXPORT  EINT0_IRQHandler          [WEAK]
-                EXPORT  EINT1_IRQHandler          [WEAK]
-                EXPORT  EINT2_IRQHandler          [WEAK]
-                EXPORT  EINT3_IRQHandler          [WEAK]
-                EXPORT  EINT4_IRQHandler          [WEAK]
-                EXPORT  EINT5_IRQHandler          [WEAK]
-                EXPORT  GPA_IRQHandler            [WEAK]
-                EXPORT  GPB_IRQHandler            [WEAK]
-                EXPORT  GPC_IRQHandler            [WEAK]
-                EXPORT  GPD_IRQHandler            [WEAK]
-                EXPORT  GPF_IRQHandler            [WEAK]
-                EXPORT  SPI0_IRQHandler           [WEAK]
-                EXPORT  BRAKE0_IRQHandler         [WEAK]
-                EXPORT  PWM0P0_IRQHandler         [WEAK]
-                EXPORT  PWM0P1_IRQHandler         [WEAK]
-                EXPORT  PWM0P2_IRQHandler         [WEAK]
-                EXPORT  TMR0_IRQHandler           [WEAK]
-                EXPORT  TMR1_IRQHandler           [WEAK]
-                EXPORT  TMR2_IRQHandler           [WEAK]
-                EXPORT  TMR3_IRQHandler           [WEAK]
-                EXPORT  UART0_IRQHandler          [WEAK]
-                EXPORT  UART1_IRQHandler          [WEAK]
-                EXPORT  I2C0_IRQHandler           [WEAK]
-                EXPORT  PDMA0_IRQHandler          [WEAK]
-                EXPORT  ADC0_IRQHandler           [WEAK]
-                EXPORT  ACMP01_IRQHandler         [WEAK]
-                EXPORT  BPWM0_IRQHandler          [WEAK]
-                EXPORT  LLSI0_IRQHandler          [WEAK]
-                EXPORT  LLSI1_IRQHandler          [WEAK]
-                EXPORT  CANFD00_IRQHandler        [WEAK]
-                EXPORT  CANFD01_IRQHandler        [WEAK]
-                EXPORT  CANFD10_IRQHandler        [WEAK]
-                EXPORT  CANFD11_IRQHandler        [WEAK]
-                EXPORT  CANFD20_IRQHandler        [WEAK]
-                EXPORT  CANFD21_IRQHandler        [WEAK]
-                EXPORT  USCI0_IRQHandler          [WEAK]
-                EXPORT  USCI1_IRQHandler          [WEAK]
-                EXPORT  DEFAULT_IRQHandler        [WEAK]
-
-BOD_IRQHandler
-IRC_IRQHandler
-PWRWU_IRQHandler
-RAMPE_IRQHandler
-CKFAIL_IRQHandler
-ISP_IRQHandler
-WDT_IRQHandler
-WWDT_IRQHandler
-EINT0_IRQHandler
-EINT1_IRQHandler
-EINT2_IRQHandler
-EINT3_IRQHandler
-EINT4_IRQHandler
-EINT5_IRQHandler
-GPA_IRQHandler
-GPB_IRQHandler
-GPC_IRQHandler
-GPD_IRQHandler
-GPF_IRQHandler
-SPI0_IRQHandler
-BRAKE0_IRQHandler
-PWM0P0_IRQHandler
-PWM0P1_IRQHandler
-PWM0P2_IRQHandler
-TMR0_IRQHandler
-TMR1_IRQHandler
-TMR2_IRQHandler
-TMR3_IRQHandler
-UART0_IRQHandler
-UART1_IRQHandler
-I2C0_IRQHandler
-PDMA0_IRQHandler
-ADC0_IRQHandler
-ACMP01_IRQHandler
-BPWM0_IRQHandler
-LLSI0_IRQHandler
-LLSI1_IRQHandler
-CANFD00_IRQHandler
-CANFD01_IRQHandler
-CANFD10_IRQHandler
-CANFD11_IRQHandler
-CANFD20_IRQHandler
-CANFD21_IRQHandler
-USCI0_IRQHandler
-USCI1_IRQHandler
-DEFAULT_IRQHandler
-                B       .
-                ENDP
-
-                ALIGN
+    .align 2
 
 
-; User Initial Stack & Heap
+// ; User Initial Stack & Heap
 
-                IF      :DEF:__MICROLIB
-
-                EXPORT  __initial_sp
-                EXPORT  __heap_base
-                EXPORT  __heap_limit
-
-                ELSE
-
-                IMPORT  __use_two_region_memory
-                EXPORT  __user_initial_stackheap
-
-__user_initial_stackheap PROC
+#ifdef __MICROLIB
+    .global __initial_sp
+    .global __heap_base
+    .global __heap_limit
+#else
+    .global __user_initial_stackheap
+    .type   __user_initial_stackheap, "function"
+__user_initial_stackheap:
                 LDR     R0, = Heap_Mem
                 LDR     R1, = (Stack_Mem + Stack_Size)
                 LDR     R2, = (Heap_Mem +  Heap_Size)
                 LDR     R3, = Stack_Mem
                 BX      LR
-                ENDP
+    .align 2
+#endif
 
-
-                ALIGN
-
-                ENDIF
-
-;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
-SH_DoCommand    PROC
-    
-                EXPORT      SH_DoCommand
-                IMPORT      SH_Return
-                    
-                BKPT   0xAB                ; Wait ICE or HardFault
+// ;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
+    .global     SH_DoCommand
+    .global     SH_Return
+    .type       SH_DoCommand, "function"
+SH_DoCommand:
+                BKPT   0xAB                // ; Wait ICE or HardFault
                 LDR    R3, =SH_Return 
                 MOV    R4, lr          
-                BLX    R3                  ; Call SH_Return. The return value is in R0
-                BX     R4                  ; Return value = R0
-                
-                ENDP
+                BLX    R3                  // ; Call SH_Return. The return value is in R0
+                BX     R4                  // ; Return value = R0
 
-__PC            PROC
-                EXPORT      __PC
-                
+    .align 2
+
+    .global     __PC
+    .type       __PC, "function"
+__PC:
                 MOV     r0, lr
                 BLX     lr
-                ALIGN
-                    
-                ENDP
-                    
-                END
