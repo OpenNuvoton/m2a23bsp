@@ -119,13 +119,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>Nu_Link</Key>
-          <Name></Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Key>Nu_Link</Key>
+          <Name></Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -256,7 +256,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>19</nTsel>
+        <nTsel>7</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -267,13 +267,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Bin\Nu_Link.dll</pMon>
+        <pMon>NULink\Nu_Link.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 ) -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -409,7 +409,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>19</nTsel>
+        <nTsel>7</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -420,13 +420,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Bin\Nu_Link.dll</pMon>
+        <pMon>NULink\Nu_Link.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -557,7 +557,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>19</nTsel>
+        <nTsel>7</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -568,13 +568,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Bin\Nu_Link.dll</pMon>
+        <pMon>NULink\Nu_Link.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 ) -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -710,7 +710,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>19</nTsel>
+        <nTsel>13</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -721,13 +721,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Bin\Nu_Link.dll</pMon>
+        <pMon>BIN\UL2V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 ) -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -833,7 +833,7 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>1</tvExp>
+        <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
@@ -863,7 +863,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>19</nTsel>
+        <nTsel>7</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -874,13 +874,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Bin\Nu_Link.dll</pMon>
+        <pMon>NULink\Nu_Link.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 ) -FN1 -FC2800 -FD20000000 -FF0NUC1263_AP_64 -FL010000 -FS00 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM)</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -968,7 +968,7 @@
 
   <Group>
     <GroupName>User</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

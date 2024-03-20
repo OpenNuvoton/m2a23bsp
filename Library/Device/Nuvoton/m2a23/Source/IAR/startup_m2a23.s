@@ -68,6 +68,7 @@ __vector_table
     DCD     Default_Handler             ; Reserved
     DCD     GPF_IRQHandler              ; GPIO Port F
     DCD     Default_Handler             ; Reserved
+    DCD     SPI0_IRQHandler             ; SPI0
     DCD     BRAKE0_IRQHandler           ; PWM0 brake
     DCD     PWM0P0_IRQHandler           ; PWM0 pair 0
     DCD     PWM0P1_IRQHandler           ; PWM0 pair 1

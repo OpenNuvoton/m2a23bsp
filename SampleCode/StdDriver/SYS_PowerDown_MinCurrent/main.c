@@ -268,7 +268,7 @@ int32_t main(void)
     printf("|  6. Wait for PB.3 falling-edge interrupt event to wake-up the MCU |\n");
     printf("+-------------------------------------------------------------------+\n\n");
 
-    /* Set function pin to GPIO mode except UART pin to print message */
+    /* Set function pin to GPIO mode except UART pin to print message, and ICE pin to download code. */
     SYS->GPA_MFPL = 0;
     SYS->GPA_MFPH = 0;
     SYS->GPB_MFPL = 0;
@@ -277,7 +277,7 @@ int32_t main(void)
     SYS->GPC_MFPH = 0;
     SYS->GPD_MFPL = 0;
     SYS->GPD_MFPH = 0;
-    SYS->GPF_MFPL = 0;
+    SYS->GPF_MFPL = ( ICE_DAT_PF0 | ICE_CLK_PF1 );
 
     /* Configure all GPIO as Quasi-bidirectional Mode. They are default output high. */
     GPIO_SetMode(PA, GPIO_P0_TO_P15, GPIO_MODE_QUASI);

@@ -94,6 +94,7 @@ int32_t main(void)
             printf("Once SPROM is locked, it will become unreadable and can only "
                    "be unlocked by erase SPROM page.\n"
                    "Are you sure to lock SPROM? (y/n)");
+            fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
             chr = getchar();
             if ((chr == 'y') || (chr == 'Y'))
             {
@@ -122,6 +123,7 @@ int32_t main(void)
             printf("Please note that this sample have a sub-routine running on SPROM.\n");
             printf("If SPROM was erased, branch to SPROM will cause a program fault.\n");
             printf("Are you sure to erase SPROM? (y/n)");
+            fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
             chr = getchar();
             if ((chr == 'y') || (chr == 'Y'))
             {

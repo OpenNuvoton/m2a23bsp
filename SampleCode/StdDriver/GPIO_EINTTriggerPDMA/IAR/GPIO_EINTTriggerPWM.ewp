@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -774,7 +774,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\generic_cortex.icf</state>
+                    <state>$TOOLKIT_DIR$\config\linker\Nuvoton\M2A23.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1074,6 +1074,9 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\gpio.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\pdma.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>

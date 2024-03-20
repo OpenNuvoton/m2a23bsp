@@ -119,13 +119,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>Nu_Link</Key>
-          <Name></Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 ) -FN1 -FC1000 -FD20000000 -FF0M2A23_AP_256 -FL040000 -FS00 -FP0($$Device:M2A23SG5AC$Flash\M2A23_AP_256.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0NUC1263_AP_64 -FS00 -FL010000 -FP0($$Device:NUC1263SD4AE$Flash\NUC1263_AP_64.FLM))</Name>
+          <Key>Nu_Link</Key>
+          <Name></Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>

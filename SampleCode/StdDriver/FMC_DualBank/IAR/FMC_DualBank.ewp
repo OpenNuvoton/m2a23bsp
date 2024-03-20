@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>FPU2</name>
