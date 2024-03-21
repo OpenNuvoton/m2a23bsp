@@ -655,7 +655,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>GPIO_EINTTriggerPWM.bin</state>
+                    <state>GPIO_EINTTriggerPDMA.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -710,7 +710,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>GPIO_EINTTriggerPWM.out</state>
+                    <state>GPIO_EINTTriggerPDMA.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
