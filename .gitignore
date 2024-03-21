@@ -1,6 +1,7 @@
 #For IAR
 Release/
 settings/
+List/
 
 #For KEIL
 obj/
@@ -27,3 +28,6 @@ build/
 *.uvgui.*
 *.uvguix.*
 *.xml
+*.txt
+all.eww
+all.uvmpw
