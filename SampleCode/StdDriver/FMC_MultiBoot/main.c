@@ -81,7 +81,7 @@ int32_t main(void)
 
         To use this sample code, please:
         1. Build all targets and download to device individually.
-           For Keil and IAR project, the targets are:
+           For Keil project, the targets are:
                FMC_MultiBoot, RO=0x0
                FMC_Boot0, RO=0x2000
                FMC_Boot1, RO=0x4000
