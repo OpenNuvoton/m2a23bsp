@@ -84,8 +84,8 @@ add_subdirectory(${BSP_DIR}/Library/NuMaker/xmodem)
 
 
 # Build sample code
-add_subdirectory(${BSP_DIR}/SampleCode/Hard_Fault_Sample)
-add_subdirectory(${BSP_DIR}/SampleCode/Template)
+create_project(Hard_Fault_Sample ${BSP_DIR}/SampleCode/Hard_Fault_Sample/main.c)
+create_project(Template ${BSP_DIR}/SampleCode/Template/main.c)
 add_subdirectory(${BSP_DIR}/SampleCode/ISP)
 add_subdirectory(${BSP_DIR}/SampleCode/StdDriver)
 
