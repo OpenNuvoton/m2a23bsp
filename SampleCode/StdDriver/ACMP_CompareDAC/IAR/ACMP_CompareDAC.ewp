@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>NUC1263AE series	Nuvoton NUC1263AE series</state>
+                    <state>M2A23 series	Nuvoton M2A23 series</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1061,10 +1061,10 @@
     <group>
         <name>CMSIS</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M2A23\Source\IAR\startup_m2a23.s</name>
+            <name>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\m2a23\Source\IAR\startup_m2a23.s</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M2A23\Source\system_m2a23.c</name>
+            <name>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\m2a23\Source\system_m2a23.c</name>
         </file>
     </group>
     <group>

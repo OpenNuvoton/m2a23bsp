@@ -8,6 +8,11 @@ obj/
 lst/
 Objects/
 Listings/
+RTE/
+tmp/
+.clangd
+*.yml
+*.cprj
 
 #For others
 out/
