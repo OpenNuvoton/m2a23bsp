@@ -1,7 +1,7 @@
 create_project(ACMP_CompareDAC ${CMAKE_CURRENT_LIST_DIR}/ACMP_CompareDAC/main.c)
 create_project(ACMP_CompareVBG ${CMAKE_CURRENT_LIST_DIR}/ACMP_CompareVBG/main.c)
 create_project(ACMP_Wakeup ${CMAKE_CURRENT_LIST_DIR}/ACMP_Wakeup/main.c)
-create_project(ACMP_WindowComapre ${CMAKE_CURRENT_LIST_DIR}/ACMP_WindowComapre/main.c)
+create_project(ACMP_WindowCompare ${CMAKE_CURRENT_LIST_DIR}/ACMP_WindowCompare/main.c)
 create_project(CANFD_CANFD_Loopback ${CMAKE_CURRENT_LIST_DIR}/CANFD_CANFD_Loopback/main.c)
 create_project(CANFD_CANFD_TxRx ${CMAKE_CURRENT_LIST_DIR}/CANFD_CANFD_TxRx/main.c)
 create_project(CANFD_CANFD_TxRxINT ${CMAKE_CURRENT_LIST_DIR}/CANFD_CANFD_TxRxINT/main.c)
