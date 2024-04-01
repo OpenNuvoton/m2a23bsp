@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     crc.h
  * @version  V3.00
- * @brief    M2A23 series Cyclic Redundancy Check(CRC) driver header file
+ * @brief    Cyclic Redundancy Check(CRC) driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __CRC_H__
 #define __CRC_H__
@@ -108,6 +108,7 @@ extern "C"
   * \hideinitializer
   */
 #define CRC_SET_POLYNOMIAL(u32Polynomial)   (CRC->POLYNOMIAL = (u32Polynomial))
+
 
 void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_t u32DataLen);
 uint32_t CRC_GetChecksum(void);

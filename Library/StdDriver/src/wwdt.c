@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     wwdt.c
  * @version  V3.00
- * @brief    M2A23 series Window Watchdog Timer (WWDT) driver source file
+ * @brief    Window Watchdog Timer(WWDT) driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
- ******************************************************************************/
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include "NuMicro.h"
 
 
@@ -22,9 +22,9 @@
 */
 
 /**
-  * @brief      Open WWDT function to start counting
+  * @brief      Open WWDT and start counting
   *
-  * @param[in]  u32PreScale     Prescale period for the WWDT counter period. Valid values are:
+  * @param[in]  u32PreScale     Pre-scale setting of WWDT counter. Valid values are:
   *                             - \ref WWDT_PRESCALER_1
   *                             - \ref WWDT_PRESCALER_2
   *                             - \ref WWDT_PRESCALER_4
@@ -41,12 +41,12 @@
   *                             - \ref WWDT_PRESCALER_1024
   *                             - \ref WWDT_PRESCALER_1536
   *                             - \ref WWDT_PRESCALER_2048
-  * @param[in]  u32CmpValue     Setting the window compared value. Valid values are between 0x1 to 0x3F.
-  * @param[in]  u32EnableInt    Enable WWDT interrupt function. Valid values are TRUE and FALSE.
+  * @param[in]  u32CmpValue     Setting the window compared value. Valid values are between 0x0 to 0x3F.
+  * @param[in]  u32EnableInt    Enable WWDT time-out interrupt function. Valid values are TRUE and FALSE.
   *
   * @return     None
   *
-  * @details    This function make WWDT module start counting with different counter period and compared window value.
+  * @details    This function makes WWDT module start counting with different counter period by pre-scale setting and compared window value.
   * @note       Application can call this function only once after boot up.
   */
 void WWDT_Open(uint32_t u32PreScale,
@@ -55,12 +55,12 @@ void WWDT_Open(uint32_t u32PreScale,
 {
     WWDT->CTL = u32PreScale |
                 (u32CmpValue << WWDT_CTL_CMPDAT_Pos) |
-                ((u32EnableInt == TRUE) ? WWDT_CTL_INTEN_Msk : 0) |
+                ((u32EnableInt == (uint32_t)TRUE) ? WWDT_CTL_INTEN_Msk : 0UL) |
                 WWDT_CTL_WWDTEN_Msk;
 }
 
-/*@}*/ /* end of group WWDT_EXPORTED_FUNCTIONS */
+/**@}*/ /* end of group WWDT_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group WWDT_Driver */
+/**@}*/ /* end of group WWDT_Driver */
 
-/*@}*/ /* end of group Standard_Driver */
+/**@}*/ /* end of group Standard_Driver */

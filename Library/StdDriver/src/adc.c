@@ -4,7 +4,7 @@
  * @brief    M2A23 series ADC driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include "NuMicro.h"
 
@@ -15,6 +15,8 @@
 /** @addtogroup ADC_Driver ADC Driver
   @{
 */
+
+int32_t g_ADC_i32ErrCode = 0;		/*!< ADC global error code */
 
 /** @addtogroup ADC_EXPORTED_FUNCTIONS ADC Exported Functions
   @{
@@ -33,8 +35,9 @@
   *                       - \ref ADC_ADCR_ADMD_CONTINUOUS           :Continuous scan mode.
   * @param[in] u32ChMask Channel enable bit. Each bit corresponds to a input channel. Bit 0 is channel 0, bit 1 is channel 1..., bit 7 is channel 7.
   * @return  None
-  * @note NUC1263 series MCU ADC can only convert 1 channel at a time. If more than 1 channels are enabled, only channel
-  *       with smallest number will be convert.
+  * @note M2A23 series MCU ADC can only convert 1 channel at a time. \n
+	*				If more than 1 channels are enabled, only channel with smallest number will be converted at single and burst mode, \n
+	*	      and others channels will be converted in the sequence from the smallest number channel to the largest number channel at single-cycle scan and continuous scan mode.
   * @note This API does not turn on ADC power nor does trigger ADC conversion
   */
 void ADC_Open(ADC_T *adc,
@@ -75,8 +78,8 @@ void ADC_Open(ADC_T *adc,
   */
 void ADC_Close(ADC_T *adc)
 {    
-    SYS->IPRST1 |= SYS_IPRST1_ADCRST_Msk;
-    SYS->IPRST1 &= ~SYS_IPRST1_ADCRST_Msk;
+    SYS->IPRST1 |= SYS_IPRST1_ADC0RST_Msk;
+    SYS->IPRST1 &= ~SYS_IPRST1_ADC0RST_Msk;
     
     SYS->IVSCTL &= ~(SYS_IVSCTL_VTEMPEN_Msk | SYS_IVSCTL_AVDDDIVEN_Msk);
 
@@ -88,19 +91,25 @@ void ADC_Close(ADC_T *adc)
   * @param[in] adc The pointer of the specified ADC module
   * @param[in] u32Source Decides the hardware trigger source. Valid values are:
   *                       - \ref ADC_ADCR_TRGS_STADC            :A/D conversion is started by external STADC pin.
-  *                       - \ref ADC_ADCR_TRGS_TIMER            :A/D conversion is started by Timer.
-  *                       - \ref ADC_ADCR_TRGS_BPWM              :A/D conversion is started by BPWM.
-  * @param[in] u32Param While ADC trigger by BPWM, this parameter is used to set the delay between BPWM
-  *                     trigger and ADC conversion. Valid values are from 0 ~ 0xFF, and actual delay
-  *                     time is (4 * u32Param * HCLK). While ADC trigger by external pin, this parameter
-  *                     is used to set trigger condition. While ADC trigger by Timer, this parameter
-  *                     is u non-used. Valid values are:
-  *                      - \ref ADC_ADCR_TRGCOND_LOW_LEVEL     :STADC Low level active
-  *                      - \ref ADC_ADCR_TRGCOND_HIGH_LEVEL    :STADC High level active
-  *                      - \ref ADC_ADCR_TRGCOND_FALLING_EDGE  :STADC Falling edge active
-  *                      - \ref ADC_ADCR_TRGCOND_RISING_EDGE   :STADC Rising edge active
+  *                       - \ref ADC_ADCR_TRGS_TIMER0           :A/D conversion is started by Timer0 overflow pulse trigger.
+  *                       - \ref ADC_ADCR_TRGS_TIMER1           :A/D conversion is started by Timer1 overflow pulse trigger.
+  *                       - \ref ADC_ADCR_TRGS_TIMER2           :A/D conversion is started by Timer2 overflow pulse trigger.
+  *                       - \ref ADC_ADCR_TRGS_TIMER3           :A/D conversion is started by Timer3 overflow pulse trigger.
+  *                       - \ref ADC_ADCR_TRGS_PWM              :A/D conversion is started by PWM trigger.
+  *                       - \ref ADC_ADCR_TRGS_BPWM             :A/D conversion is started by BPWM trigger.
+  *                       - \ref ADC_ADCR_TRGS_ACMP0          	:A/D conversion is started by ACMP0 trigger.
+  *                       - \ref ADC_ADCR_TRGS_ACMP1           	:A/D conversion is started by ACMP1 trigger.
+  * @param[in] u32Param While ADC trigger by PWM/BPWM, this parameter is used to set the delay between PWM/BPWM \n
+  *                     trigger and ADC conversion. Valid values are from 0 ~ 0xFF, and actual delay time is (4 * u32Param * HCLK). \n
+	*											While ADC trigger by external STADC pin, this parameter \n
+  *                     is used to set trigger condition. While ADC trigger by Timer, this parameter \n
+  *                     is u non-used. Valid values are: \n
+  *                      - \ref ADC_ADCR_TRGCOND_LOW_LEVEL     :STADC Low level active \n
+  *                      - \ref ADC_ADCR_TRGCOND_HIGH_LEVEL    :STADC High level active \n
+  *                      - \ref ADC_ADCR_TRGCOND_FALLING_EDGE  :STADC Falling edge active \n
+  *                      - \ref ADC_ADCR_TRGCOND_RISING_EDGE   :STADC Rising edge active \n
   * @return None
-  * @note Software should disable TRGEN(ADC_ADCR[8]) and ADST(ADC_ADCR[11]) before change TRGS(ADC_ADCR[5:4]).
+  * @note Software should disable ADST(ADC_ADCR[11]) before change TRGS(ADC_ADCR[15:12]).
   */
 void ADC_EnableHWTrigger(ADC_T *adc,
                          uint32_t u32Source,
@@ -108,17 +117,26 @@ void ADC_EnableHWTrigger(ADC_T *adc,
 {
     if(u32Source == ADC_ADCR_TRGS_STADC)
     {
-        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk | ADC_ADCR_TRGEN_Msk)) | (u32Source) | (u32Param) | ADC_ADCR_TRGEN_Msk;
+        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk)) | (u32Source) | (u32Param);
     }
-    else if(u32Source == ADC_ADCR_TRGS_TIMER)
+    else if((u32Source == ADC_ADCR_TRGS_TIMER0) || (u32Source == ADC_ADCR_TRGS_TIMER1) || (u32Source == ADC_ADCR_TRGS_TIMER2) || (u32Source == ADC_ADCR_TRGS_TIMER3))
     {
-        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk | ADC_ADCR_TRGEN_Msk)) | (u32Source) | ADC_ADCR_TRGEN_Msk;
+        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk)) | (u32Source);
     }
-    else
+    else if((u32Source == ADC_ADCR_TRGS_PWM) || (u32Source == ADC_ADCR_TRGS_BPWM))
     {
         (adc)->ADTDCR = ((adc)->ADTDCR & ~ADC_ADTDCR_PTDT_Msk) | (u32Param);
-        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk | ADC_ADCR_TRGEN_Msk)) | (u32Source) | ADC_ADCR_TRGEN_Msk;
+        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk)) | (u32Source);
     }
+    else if((u32Source == ADC_ADCR_TRGS_ACMP0) || (u32Source == ADC_ADCR_TRGS_ACMP1))
+    {
+        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk)) | (u32Source);
+    }
+	else
+	{
+        (adc)->ADCR = ((adc)->ADCR & ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk));
+	}
+		
     return;
 }
 
@@ -129,7 +147,8 @@ void ADC_EnableHWTrigger(ADC_T *adc,
   */
 void ADC_DisableHWTrigger(ADC_T *adc)
 {
-    (adc)->ADCR &= ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk | ADC_ADCR_TRGEN_Msk);
+    (adc)->ADCR &= ~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGCOND_Msk);
+	
     return;
 }
 
@@ -179,6 +198,20 @@ void ADC_DisableInt(ADC_T *adc, uint32_t u32Mask)
     return;
 }
 
+/**
+  * @brief Set ADC extend sample time.
+  * @param[in] adc The pointer of the specified ADC module.
+  * @param[in] u32ModuleNum Decides the sample module number, not used in M2A23.
+  * @param[in] u32ExtendSampleTime Decides the extend sampling time, the range is from 0~255 ADC clock. Valid value are from 0 to 0xFF. \n
+  * 															 Extended Sampling Time = (u32ExtendSampleTime+1) x ADC_CLK period.
+  * @return None
+  * @details When A/D converting at high conversion rate, the sampling time of analog input voltage may not enough if input channel loading is heavy,
+  *         user can extend A/D sampling time after trigger source is coming to get enough sampling time.
+  */
+void ADC_SetExtendSampleTime(ADC_T *adc, uint32_t u32ModuleNum, uint32_t u32ExtendSampleTime)
+{
+    (adc)->ADCR = (((adc)->ADCR & ~ADC_ADCR_EXTSMPT_Msk) | (u32ExtendSampleTime << ADC_ADCR_EXTSMPT_Pos));
+}
 
 
 /*@}*/ /* end of group ADC_EXPORTED_FUNCTIONS */

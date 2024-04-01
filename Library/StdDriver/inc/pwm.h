@@ -4,7 +4,7 @@
  * @brief    M2A23 series PWM driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __PWM_H__
 #define __PWM_H__
@@ -58,10 +58,8 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Synchronous Start Function Control Constant Definitions                                                */
 /*---------------------------------------------------------------------------------------------------------*/
-#define PWM_SSCTL_SSRC_EPWM0                     (0UL<<PWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from EPWM0 */
-#define PWM_SSCTL_SSRC_EPWM1                     (1UL<<PWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from EPWM1 */
-#define PWM_SSCTL_SSRC_PWM0                      (2UL<<PWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from PWM0 */
-#define PWM_SSCTL_SSRC_PWM1                      (31UL<<PWM_SSCTL_SSRC_Pos)   /*!< Synchronous start source comes from PWM1 */
+#define PWM_SSCTL_SSRC_PWM0                     (0UL<<PWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from PWM0 */
+#define PWM_SSCTL_SSRC_BPWM0               			(2UL<<PWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from BPWM0 */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Trigger Source Select Constant Definitions                                                             */
@@ -71,17 +69,8 @@ extern "C"
 #define PWM_TRIGGER_ADC_EVEN_ZERO_OR_PERIOD_POINT           (2UL)     /*!< PWM trigger ADC while counter of even channel matches zero or period point */
 #define PWM_TRIGGER_ADC_EVEN_COMPARE_UP_COUNT_POINT         (3UL)     /*!< PWM trigger ADC while counter of even channel matches up count to comparator point */
 #define PWM_TRIGGER_ADC_EVEN_COMPARE_DOWN_COUNT_POINT       (4UL)     /*!< PWM trigger ADC while counter of even channel matches down count to comparator point */
-#define PWM_TRIGGER_ADC_ODD_ZERO_POINT                      (5UL)     /*!< PWM trigger ADC while counter of odd channel matches zero point */
-#define PWM_TRIGGER_ADC_ODD_PERIOD_POINT                    (6UL)     /*!< PWM trigger ADC while counter of odd channel matches period point */
-#define PWM_TRIGGER_ADC_ODD_ZERO_OR_PERIOD_POINT            (7UL)     /*!< PWM trigger ADC while counter of odd channel matches zero or period point */
 #define PWM_TRIGGER_ADC_ODD_COMPARE_UP_COUNT_POINT          (8UL)     /*!< PWM trigger ADC while counter of odd channel matches up count to comparator point */
 #define PWM_TRIGGER_ADC_ODD_COMPARE_DOWN_COUNT_POINT        (9UL)     /*!< PWM trigger ADC while counter of odd channel matches down count to comparator point */
-#define PWM_TRIGGER_ADC_CH_0_FREE_COMPARE_UP_COUNT_POINT    (10UL)    /*!< PWM trigger ADC while counter of channel 0 matches up count to free comparator point */
-#define PWM_TRIGGER_ADC_CH_0_FREE_COMPARE_DOWN_COUNT_POINT  (11UL)    /*!< PWM trigger ADC while counter of channel 0 matches down count to free comparator point */
-#define PWM_TRIGGER_ADC_CH_2_FREE_COMPARE_UP_COUNT_POINT    (12UL)    /*!< PWM trigger ADC while counter of channel 2 matches up count to free comparator point */
-#define PWM_TRIGGER_ADC_CH_2_FREE_COMPARE_DOWN_COUNT_POINT  (13UL)    /*!< PWM trigger ADC while counter of channel 2 matches down count to free comparator point */
-#define PWM_TRIGGER_ADC_CH_4_FREE_COMPARE_UP_COUNT_POINT    (14UL)    /*!< PWM trigger ADC while counter of channel 4 matches up count to free comparator point */
-#define PWM_TRIGGER_ADC_CH_4_FREE_COMPARE_DOWN_COUNT_POINT  (15UL)    /*!< PWM trigger ADC while counter of channel 4 matches down count to free comparator point */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Fail brake Control Constant Definitions                                                                */
@@ -93,6 +82,7 @@ extern "C"
 #define PWM_FB_EDGE_ADCRM                        (PWM_BRKCTL0_1_ADCEBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as edge-detect fault brake source */
 #define PWM_FB_EDGE_SYS_CSS                      (PWM_BRKCTL0_1_SYSEBEN_Msk | PWM_FAILBRK_CSSBRKEN_Msk)    /*!< System fail condition: clock security system detection as edge-detect fault brake source */
 #define PWM_FB_EDGE_SYS_BOD                      (PWM_BRKCTL0_1_SYSEBEN_Msk | PWM_FAILBRK_BODBRKEN_Msk)    /*!< System fail condition: brown-out detection as edge-detect fault brake source */
+#define PWM_FB_EDGE_SYS_RAM                      (PWM_BRKCTL0_1_SYSEBEN_Msk | PWM_FAILBRK_RAMBRKEN_Msk)    /*!< System fail condition: sram parity error detection as edge-detect fault brake source */
 #define PWM_FB_EDGE_SYS_COR                      (PWM_BRKCTL0_1_SYSEBEN_Msk | PWM_FAILBRK_CORBRKEN_Msk)    /*!< System fail condition: core lockup detection as edge-detect fault brake source */
 
 #define PWM_FB_LEVEL_ACMP0                       (PWM_BRKCTL0_1_CPO0LBEN_Msk)    /*!< Comparator 0 as level-detect fault brake source */
@@ -102,24 +92,11 @@ extern "C"
 #define PWM_FB_LEVEL_ADCRM                       (PWM_BRKCTL0_1_ADCLBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as level-detect fault brake source */
 #define PWM_FB_LEVEL_SYS_CSS                     (PWM_BRKCTL0_1_SYSLBEN_Msk | PWM_FAILBRK_CSSBRKEN_Msk)    /*!< System fail condition: clock security system detection as level-detect fault brake source */
 #define PWM_FB_LEVEL_SYS_BOD                     (PWM_BRKCTL0_1_SYSLBEN_Msk | PWM_FAILBRK_BODBRKEN_Msk)    /*!< System fail condition: brown-out detection as level-detect fault brake source */
+#define PWM_FB_LEVEL_SYS_RAM                     (PWM_BRKCTL0_1_SYSLBEN_Msk | PWM_FAILBRK_RAMBRKEN_Msk)    /*!< System fail condition: sram parity error as level-detect fault brake source */
 #define PWM_FB_LEVEL_SYS_COR                     (PWM_BRKCTL0_1_SYSLBEN_Msk | PWM_FAILBRK_CORBRKEN_Msk)    /*!< System fail condition: core lockup detection as level-detect fault brake source */
 
 #define PWM_FB_EDGE                              (0UL)    /*!< edge-detect fault brake */
 #define PWM_FB_LEVEL                             (8UL)    /*!< level-detect fault brake */
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Leading Edge Blanking Control Constant Definitions                                                     */
-/*---------------------------------------------------------------------------------------------------------*/
-#define PWM_LEBCTL_TRGTYPE_RISING              (0UL<<PWM_LEBCTL_TRGTYPE_Pos)    /*!< PWM Leading Edge Blanking Trigger Type Is Rising Edge \hideinitializer */
-#define PWM_LEBCTL_TRGTYPE_FALLING             (1UL<<PWM_LEBCTL_TRGTYPE_Pos)    /*!< PWM Leading Edge Blanking Trigger Type Is Falling Edge \hideinitializer */
-#define PWM_LEBCTL_TRGTYPE_RISING_OR_FALLING   (2UL<<PWM_LEBCTL_TRGTYPE_Pos)    /*!< PWM Leading Edge Blanking Trigger Type Is Rising or Falling Edge \hideinitializer */
-#define PWM_LEBCTL_SRCEN0                      (PWM_LEBCTL_SRCEN0_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH0 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN2                      (PWM_LEBCTL_SRCEN2_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH2 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN4                      (PWM_LEBCTL_SRCEN4_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH4 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN0_2                    (PWM_LEBCTL_SRCEN0_Msk|PWM_LEBCTL_SRCEN2_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH0 and PWMx_CH2 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN0_4                    (PWM_LEBCTL_SRCEN0_Msk|PWM_LEBCTL_SRCEN4_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH0 and PWMx_CH4 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN2_4                    (PWM_LEBCTL_SRCEN2_Msk|PWM_LEBCTL_SRCEN4_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH2 and PWMx_CH4 Enable \hideinitializer */
-#define PWM_LEBCTL_SRCEN0_2_4                  (PWM_LEBCTL_SRCEN0_Msk|PWM_LEBCTL_SRCEN2_Msk|PWM_LEBCTL_SRCEN4_Msk)    /*!< PWM Leading Edge Blanking Source From PWMx_CH0, PWMx_CH2 and PWMx_CH4 Enable \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Capture Control Constant Definitions                                                                   */
@@ -149,18 +126,7 @@ extern "C"
 /*  Load Mode Constant Definitions                                                                         */
 /*---------------------------------------------------------------------------------------------------------*/
 #define PWM_LOAD_MODE_IMMEDIATE                  (PWM_CTL0_IMMLDEN0_Msk)    /*!< PWM immediately load mode \hideinitializer */
-#define PWM_LOAD_MODE_WINDOW                     (PWM_CTL0_WINLDEN0_Msk)    /*!< PWM window load mode \hideinitializer */
 #define PWM_LOAD_MODE_CENTER                     (PWM_CTL0_CTRLD0_Msk)      /*!< PWM center load mode \hideinitializer */
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Synchronize Control Constant Definitions                                                               */
-/*---------------------------------------------------------------------------------------------------------*/
-#define PWM_SYNC_OUT_FROM_SYNCIN_SWSYNC          (0UL)    /*!< Synchronize source from SYNC_IN or SWSYNC  \hideinitializer */
-#define PWM_SYNC_OUT_FROM_COUNT_TO_ZERO          (1UL)    /*!< Synchronize source from counter equal to 0  \hideinitializer */
-#define PWM_SYNC_OUT_FROM_COUNT_TO_COMPARATOR    (2UL)    /*!< Synchronize source from counter equal to CMPDAT1, CMPDAT3, CMPDAT5 \hideinitializer */
-#define PWM_SYNC_OUT_DISABLE                     (3UL)    /*!< SYNC_OUT will not be generated \hideinitializer */
-#define PWM_PHS_DIR_DECREMENT                    (0UL)    /*!< PWM counter count decrement  \hideinitializer */
-#define PWM_PHS_DIR_INCREMENT                    (1UL)    /*!< PWM counter count increment  \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Noise Filter Clock Divide Select Constant Definitions                                                  */
@@ -182,7 +148,6 @@ extern "C"
 #define PWM_CLKSRC_TIMER1                        (2UL)    /*!< PWM Clock source selects to TIMER1 overflow \hideinitializer */
 #define PWM_CLKSRC_TIMER2                        (3UL)    /*!< PWM Clock source selects to TIMER2 overflow \hideinitializer */
 #define PWM_CLKSRC_TIMER3                        (4UL)    /*!< PWM Clock source selects to TIMER3 overflow \hideinitializer */
-//#define PWM_CLKSRC_TIMER3                        (4UL)    /*!< PWM Clock source selects to TIMER3 overflow \hideinitializer */
 
 
 /*@}*/ /* end of group PWM_EXPORTED_CONSTANTS */
@@ -211,31 +176,13 @@ extern "C"
 #define PWM_DISABLE_COMPLEMENTARY_MODE(pwm) ((pwm)->CTL1 = (pwm)->CTL1 & ~(0x7ul<<PWM_CTL1_OUTMODE0_Pos))
 
 /**
- * @brief This macro enable group mode
- * @param[in] pwm The pointer of the specified PWM module
- * @return None
- * @details This macro is used to enable group mode of PWM module.
- * \hideinitializer
- */
-#define PWM_ENABLE_GROUP_MODE(pwm) ((pwm)->CTL0 = (pwm)->CTL0 | PWM_CTL0_GROUPEN_Msk)
-
-/**
- * @brief This macro disable group mode
- * @param[in] pwm The pointer of the specified PWM module
- * @return None
- * @details This macro is used to disable group mode of PWM module.
- * \hideinitializer
- */
-#define PWM_DISABLE_GROUP_MODE(pwm) ((pwm)->CTL0 = (pwm)->CTL0 & ~PWM_CTL0_GROUPEN_Msk)
-
-/**
  * @brief Enable timer synchronous start counting function of specified channel(s)
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Bit 0 represents channel 0, bit 1 represents channel 1...
  * @param[in] u32SyncSrc Synchronous start source selection, valid values are:
  *              - \ref PWM_SSCTL_SSRC_PWM0
- *              - \ref PWM_SSCTL_SSRC_PWM1
+ *              - \ref PWM_SSCTL_SSRC_BPWM0
  * @return None
  * @details This macro is used to enable timer synchronous start counting function of specified channel(s).
  * \hideinitializer
@@ -366,18 +313,6 @@ extern "C"
 #define PWM_GET_CMR(pwm, u32ChannelNum) ((pwm)->CMPDAT[(u32ChannelNum)])
 
 /**
- * @brief This macro set the free trigger comparator of the selected channel
- * @param[in] pwm The pointer of the specified PWM module
- * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
- * @param[in] u32FTCMR Free trigger comparator of specified channel. Valid values are between 0~0xFFFF
- * @return None
- * @details This macro is used to set the free trigger comparator of specified channel.
- * @note This new setting will take effect on next PWM period.
- * \hideinitializer
- */
-#define PWM_SET_FTCMR(pwm, u32ChannelNum, u32FTCMR) (*(__IO uint32_t *) (&((pwm)->FTCMPDAT0_1) + ((u32ChannelNum) >> 1)) = (u32FTCMR))
-
-/**
  * @brief This macro set the period of the selected channel
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelNum PWM channel number. Valid values are between 0~5
@@ -420,28 +355,6 @@ extern "C"
                 (pwm)->CTL1 = (((pwm)->CTL1 & ~(3UL << (i << 1))) | ((u32AlignedType) << (i << 1))); \
         } \
     }while(0)
-
-/**
- * @brief Set load window of window loading mode for specified channel(s)
- * @param[in] pwm The pointer of the specified PWM module
- * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
- *                           Bit 0 represents channel 0, bit 1 represents channel 1...
- * @return None
- * @details This macro is used to set load window of window loading mode for specified channel(s).
- * \hideinitializer
- */
-#define PWM_SET_LOAD_WINDOW(pwm, u32ChannelMask) ((pwm)->LOAD |= (u32ChannelMask))
-
-/**
- * @brief Trigger synchronous event from specified channel(s)
- * @param[in] pwm The pointer of the specified PWM module
- * @param[in] u32ChannelNum PWM channel number. Valid values are 0, 2, 4
- *                           Bit 0 represents channel 0, bit 1 represents channel 2 and bit 2 represents channel 4
- * @return None
- * @details This macro is used to trigger synchronous event from specified channel(s).
- * \hideinitializer
- */
-#define PWM_TRIGGER_SYNC(pwm, u32ChannelNum) ((pwm)->SWSYNC |= (1 << ((u32ChannelNum) >> 1)))
 
 /**
  * @brief Clear counter of specified channel(s)
@@ -501,7 +414,7 @@ extern "C"
  * @param[in] pwm The pointer of the specified PWM module
  * @param[in] u32ChannelMask Combination of enabled channels. Each bit corresponds to a channel
  *                           Bit 0 represents channel 0, bit 1 represents channel 2 and bit 2 represents channel 4
- * @param[in] u32BrakeType Type of brake trigger. PWM_FB_EDGE of this macro is only supported in M45xD/M45xC.
+ * @param[in] u32BrakeType Type of brake trigger.
  *              - \ref PWM_FB_EDGE
  *              - \ref PWM_FB_LEVEL
  * @return None
@@ -518,7 +431,6 @@ extern "C"
  * @return None
  * @details This macro is used to set Dead zone clock source. Every two channels share the same setting.
  * @note The write-protection function should be disabled before using this function.
- * @note This function is only supported in M45xD/M45xC.
  * \hideinitializer
  */
 #define PWM_SET_DEADZONE_CLK_SRC(pwm, u32ChannelNum, u32AfterPrescaler) \

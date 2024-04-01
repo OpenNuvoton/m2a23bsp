@@ -23,7 +23,7 @@ __initial_sp:
     .global Heap_Mem
     .global __heap_base
     .global __heap_limit
-#ifdef Heap_Size
+#ifndef Heap_Size
     .equ    Heap_Size, 0x00000100
 #endif
 __heap_base:

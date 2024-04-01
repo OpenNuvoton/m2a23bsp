@@ -4,7 +4,7 @@
  * @brief    M2A23 series Timer Controller (Timer) driver source file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include "NuMicro.h"
 
@@ -187,6 +187,9 @@ void TIMER_Delay(TIMER_T *timer, uint32_t u32Usec)
   *                         - \ref TIMER_CAPTURE_EVENT_FALLING
   *                         - \ref TIMER_CAPTURE_EVENT_RISING
   *                         - \ref TIMER_CAPTURE_EVENT_FALLING_RISING
+  *                         - \ref TIMER_CAPTURE_EVENT_RISING_FALLING
+  *                         - \ref TIMER_CAPTURE_EVENT_GET_LOW_PERIOD
+  *                         - \ref TIMER_CAPTURE_EVENT_GET_HIGH_PERIOD
   *
   * @return     None
   *
@@ -279,7 +282,7 @@ void TIMER_DisableEventCounter(TIMER_T *timer)
 uint32_t TIMER_GetModuleClock(TIMER_T *timer)
 {
     uint32_t u32Src, u32Clk;
-    const uint32_t au32Clk[] = {__HXT, __LXT, 0, 0, 0, __LIRC, 0, (__HIRC>>1)};
+    const uint32_t au32Clk[] = {__HXT, __LXT, 0, 0, 0, __LIRC, 0, __HIRC};
 
     if(timer == TIMER0)
         u32Src = (CLK->CLKSEL1 & CLK_CLKSEL1_TMR0SEL_Msk) >> CLK_CLKSEL1_TMR0SEL_Pos;
@@ -313,8 +316,8 @@ uint32_t TIMER_GetModuleClock(TIMER_T *timer)
   * @brief      Enable the Timer Frequency Counter Function
   *
   * @param[in]  timer           The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
-  * @param[in]  u32DropCount    This parameter has no effect in NUC1262 series BSP.
-  * @param[in]  u32Timeout      This parameter has no effect in NUC1262 series BSP.
+  * @param[in]  u32DropCount    This parameter has no effect in M2A23 series BSP.
+  * @param[in]  u32Timeout      This parameter has no effect in M2A23 series BSP.
   * @param[in]  u32EnableInt    Enable interrupt assertion after capture complete or not. Valid values are TRUE and FALSE.
   *
   * @return     None
@@ -331,7 +334,7 @@ void TIMER_EnableFreqCounter(TIMER_T *timer, uint32_t u32DropCount, uint32_t u32
 
     t = (timer == TIMER0) ? TIMER1 : TIMER3;
 
-    t->CMP = 0xFFFFFF;
+    t->CMP = 0xFFFFFFul;
     t->EXTCTL = u32EnableInt ? TIMER_EXTCTL_CAPIEN_Msk : 0;
     timer->CTL = TIMER_CTL_INTRGEN_Msk | TIMER_CTL_CNTEN_Msk;
 
@@ -355,10 +358,8 @@ void TIMER_DisableFreqCounter(TIMER_T *timer)
   *
   * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   * @param[in]  u32Src      Selects the interrupt source to trigger other modules. Could be:
-  *                         - \ref TIMER_TRGCTL_TRGPDMA_Msk
-  *                         - \ref TIMER_TRGCTL_TRGADC_Msk
-  *                         - \ref TIMER_TRGCTL_TRGPWM_Msk
-  *                         - \ref TIMER_TRGCTL_TRGSSEL_Msk
+  *                         - \ref TIMER_TRGSRC_TIMEOUT_EVENT
+  *                         - \ref TIMER_TRGSRC_CAPTURE_EVENT
   *
   * @return     None
   */
@@ -372,10 +373,8 @@ void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src)
   *
   * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
   * @param[in]  u32Mask     The mask of modules (BPWM01, BPWM12, ADC, DAC and PDMA) trigger by timer. Is the combination of
-  *                         - \ref TIMER_TRG_TO_BPWM01
-  *                         - \ref TIMER_TRG_TO_BPWM23
+  *                         - \ref TIMER_TRG_TO_PWM
   *                         - \ref TIMER_TRG_TO_ADC
-  *                         - \ref TIMER_TRG_TO_DAC
   *                         - \ref TIMER_TRG_TO_PDMA
   *
   * @return     None
@@ -399,19 +398,60 @@ void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
 int32_t TIMER_ResetCounter(TIMER_T *timer)
 {
     volatile uint32_t reg = timer->CTL;
-    uint32_t u32Delay;
+    volatile uint32_t u32Delay;
 
     timer->CNT = 0; // reset counter to 0
     /* Takes 2~3 ECLKs to reset timer counter */
     u32Delay = (SystemCoreClock / TIMER_GetModuleClock(timer)) * 3;
-    while((timer->CNT) && (--u32Delay))
+    while(((timer->CNT & TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk) && (--u32Delay))
     {
         __NOP();
     }
 
     timer->CTL = reg;
 
-    return u32Delay > 0 ? 0 : TIMER_TIMEOUT_ERR;
+    return (u32Delay > 0) ? 0 : TIMER_ERR_TIMEOUT;
+}
+
+/**
+  * @brief      Enable Capture Input Noise Filter Function
+  *
+  * @param[in]  timer       		The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  *
+  * @param[in]  u32FilterCount  Noise filter counter. Valid values are between 0~7.
+  *
+  * @param[in]  u32ClkSrcSel    Noise filter counter clock source, could be one of following source
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_1
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_2
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_4
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_8
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_16
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_32
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_64
+  *                                 - \ref TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_128
+  *
+  * @return     None
+  *
+  * @details    This function is used to enable capture input noise filter function.
+  */
+void TIMER_EnableCaptureInputNoiseFilter(TIMER_T *timer, uint32_t u32FilterCount, uint32_t u32ClkSrcSel)
+{
+    timer->CAPNF = ( ((timer)->CAPNF & ~(TIMER_CAPNF_CAPNFEN_Msk | TIMER_CAPNF_CAPNFSEL_Msk | TIMER_CAPNF_CAPNFCNT_Msk))
+                     | (TIMER_CAPNF_CAPNFEN_Msk | (u32FilterCount << TIMER_CAPNF_CAPNFCNT_Pos) | (u32ClkSrcSel << TIMER_CAPNF_CAPNFSEL_Pos)) );
+}
+
+/**
+  * @brief      Disable Capture Input Noise Filter Function
+  *
+  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  *
+  * @return     None
+  *
+  * @details    This function is used to disable capture input noise filter function.
+  */
+void TIMER_DisableCaptureInputNoiseFilter(TIMER_T *timer)
+{
+    timer->CAPNF &= ~TIMER_CAPNF_CAPNFEN_Msk;
 }
 
 /*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */

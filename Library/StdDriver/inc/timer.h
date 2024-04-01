@@ -4,7 +4,7 @@
  * @brief    M2A23 series Timer Controller (Timer) driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __TIMER_H__
 #define __TIMER_H__
@@ -42,28 +42,51 @@ extern "C"
 #define TIMER_CAPTURE_FREE_COUNTING_MODE        (0UL << TIMER_EXTCTL_CAPFUNCS_Pos) /*!< Timer capture event to get timer counter value */
 #define TIMER_CAPTURE_COUNTER_RESET_MODE        (1UL << TIMER_EXTCTL_CAPFUNCS_Pos) /*!< Timer capture event to reset timer counter */
 
-#define TIMER_CAPTURE_EVENT_FALLING             (0UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Falling edge detection to trigger capture event */
-#define TIMER_CAPTURE_EVENT_RISING              (1UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Rising edge detection to trigger capture event */
-#define TIMER_CAPTURE_EVENT_FALLING_RISING      (2UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Both falling and rising edge detection to trigger capture event */
+#define TIMER_CAPTURE_EVENT_FALLING             (0UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Falling edge detection on TMx_EXT (x= 0~3) pin to trigger capture event */
+#define TIMER_CAPTURE_EVENT_RISING              (1UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Rising edge detection on TMx_EXT (x= 0~3) pin to trigger capture event */
+#define TIMER_CAPTURE_EVENT_FALLING_RISING      (2UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Both falling and rising edge detection on TMx_EXT (x= 0~3) pinto trigger capture event, and first event at falling edge */
+#define TIMER_CAPTURE_EVENT_RISING_FALLING      (3UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< Both rising and falling edge detection on TMx_EXT (x= 0~3) pin to trigger capture event, and first event at rising edge */
+#define TIMER_CAPTURE_EVENT_GET_LOW_PERIOD      (6UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< First capture event is at falling edge on TMx_EXT (x= 0~3) pin, follows are at at rising edge */
+#define TIMER_CAPTURE_EVENT_GET_HIGH_PERIOD     (7UL << TIMER_EXTCTL_CAPEDGE_Pos)  /*!< First capture event is at rising edge on TMx_EXT (x= 0~3) pin, follows are at at falling edge */
 
 #define TIMER_CAPTURE_SOURCE_FROM_PIN           (0UL << TIMER_CTL_CAPSRC_Pos)      /*!< The capture source is from TMx_EXT pin \hideinitializer */
-#define TIMER_CAPTURE_SOURCE_FROM_INTERNAL      (1UL << TIMER_CTL_CAPSRC_Pos)      /*!< The capture source is from internal ACMPx signal or clock source \hideinitializer */
+#define TIMER_CAPTURE_SOURCE_FROM_INTERNAL      (1UL << TIMER_CTL_CAPSRC_Pos)      /*!< The capture source is from internal ACMPx output signal or clock sources */
 
-#define TIMER_INTER_CAPTURE_SOURCE_ACMP0        (0UL << TIMER_EXTCTL_ICAPSEL_Pos) /*!< Capture source from internal ACMP0 output signal \hideinitializer */
-#define TIMER_INTER_CAPTURE_SOURCE_ACMP1        (1UL << TIMER_EXTCTL_ICAPSEL_Pos) /*!< Capture source from internal ACMP1 output signal \hideinitializer */
-#define TIMER_INTER_CAPTURE_SOURCE_ACMP2        (2UL << TIMER_EXTCTL_ICAPSEL_Pos) /*!< Capture source from internal ACMP2 output signal \hideinitializer */
-#define TIMER_INTER_CAPTURE_SOURCE_ACMP3        (3UL << TIMER_EXTCTL_ICAPSEL_Pos) /*!< Capture source from internal ACMP3 output signal \hideinitializer */
-#define TIMER_INTER_CAPTURE_SOURCE_LIRC         (5UL << TIMER_EXTCTL_ICAPSEL_Pos) /*!< Capture source from LIRC \hideinitializer */
+#define TIMER_INTER_CAPTURE_SOURCE_ACMP0        (0UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from internal ACMP0 output signal */
+#define TIMER_INTER_CAPTURE_SOURCE_ACMP1        (1UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from internal ACMP1 output signal */
+#define TIMER_INTER_CAPTURE_SOURCE_HXT          (2UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from HXT */
+#define TIMER_INTER_CAPTURE_SOURCE_LXT          (3UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from LXT */
+#define TIMER_INTER_CAPTURE_SOURCE_HIRC         (4UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from HIRC */
+#define TIMER_INTER_CAPTURE_SOURCE_LIRC         (5UL << TIMER_EXTCTL_INTERCAPSEL_Pos) /*!< Capture source from LIRC */
 
-#define TIMER_TRGSEL_TIMEOUT_EVENT              (0UL << TIMER_CTL_TRGSSEL_Pos)     /*!< Select internal trigger source from timer time-out event */
-#define TIMER_TRGSEL_CAPTURE_EVENT              (1UL << TIMER_CTL_TRGSSEL_Pos)     /*!< Select internal trigger source from timer capture event */
-#define TIMER_TRG_TO_BPWM01                     (TIMER_CTL_TRGBPWM01_Msk)          /*!< Each timer event as BPWM01 counter clock source */
-#define TIMER_TRG_TO_BPWM23                     (TIMER_CTL_TRGBPWM23_Msk)          /*!< Each timer event as BPWM23 counter clock source */
-#define TIMER_TRG_TO_ADC                        (TIMER_CTL_TRGADC_Msk)             /*!< Each timer event to start ADC conversion */
-#define TIMER_TRG_TO_DAC                        (TIMER_CTL_TRGDAC_Msk)             /*!< Each timer event to start DAC conversion. */
-#define TIMER_TRG_TO_PDMA                       (TIMER_CTL_TRGPDMA_Msk)            /*!< Each timer event to trigger PDMA transfer */
+#define TIMER_CAPTURE_SOURCE_DIV_1              (0UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 1 */
+#define TIMER_CAPTURE_SOURCE_DIV_2              (1UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 2 */
+#define TIMER_CAPTURE_SOURCE_DIV_4              (2UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 4 */
+#define TIMER_CAPTURE_SOURCE_DIV_8              (3UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 8 */
+#define TIMER_CAPTURE_SOURCE_DIV_16             (4UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 16 */
+#define TIMER_CAPTURE_SOURCE_DIV_32             (5UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 32 */
+#define TIMER_CAPTURE_SOURCE_DIV_64             (6UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 64 */
+#define TIMER_CAPTURE_SOURCE_DIV_128            (7UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 128 */
+#define TIMER_CAPTURE_SOURCE_DIV_256            (8UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 256 */
 
-#define TIMER_TIMEOUT_ERR                       (-1L)                             /*!< TIMER operation abort due to timeout error \hideinitializer */
+#define TIMER_TRGSRC_TIMEOUT_EVENT							(0UL << TIMER_TRGCTL_TRGSSEL_Pos) /*!< Select internal trigger source from timer time-out event */
+#define TIMER_TRGSRC_CAPTURE_EVENT              (1UL << TIMER_TRGCTL_TRGSSEL_Pos) /*!< Select internal trigger source from timer capture event */
+#define TIMER_TRG_TO_PWM												(TIMER_TRGCTL_TRGPWM_Msk)        	/*!< Each timer event as PWM/BPWM counter clock source */
+#define TIMER_TRG_TO_ADC												(TIMER_TRGCTL_TRGADC_Msk)     		/*!< Each timer event to start ADC conversion */
+#define TIMER_TRG_TO_PDMA												(TIMER_TRGCTL_TRGPDMA_Msk)     		/*!< Each timer event to trigger PDMA transfer */
+
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_1   (0UL)    /*!< Capture noise filter clock is PCLK divide by 1 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_2   (1UL)    /*!< Capture noise filter clock is PCLK divide by 2 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_4   (2UL)    /*!< Capture noise filter clock is PCLK divide by 4 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_8   (3UL)    /*!< Capture noise filter clock is PCLK divide by 8 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_16  (4UL)    /*!< Capture noise filter clock is PCLK divide by 16 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_32  (5UL)    /*!< Capture noise filter clock is PCLK divide by 32 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_64  (6UL)    /*!< Capture noise filter clock is PCLK divide by 64 */
+#define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_128 (7UL)    /*!< Capture noise filter clock is PCLK divide by 128 */
+
+#define TIMER_OK                                ( 0L)    /*!< TIMER operation OK */
+#define TIMER_ERR_FAIL                          (-1L)    /*!< TIMER operation failed */
+#define TIMER_ERR_TIMEOUT                       (-2L)    /*!< TIMER operation abort due to timeout error */
 
 /*@}*/ /* end of group TIMER_EXPORTED_CONSTANTS */
 
@@ -164,6 +187,7 @@ __STATIC_INLINE uint32_t TIMER_GetIntFlag(TIMER_T *timer);
 __STATIC_INLINE void TIMER_ClearIntFlag(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCaptureIntFlag(TIMER_T *timer);
 __STATIC_INLINE void TIMER_ClearCaptureIntFlag(TIMER_T *timer);
+__STATIC_INLINE uint32_t TIMER_GetCaptureIntOVFlag(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE void TIMER_ClearWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCaptureData(TIMER_T *timer);
@@ -181,7 +205,7 @@ __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer);
   */
 static __INLINE void TIMER_Start(TIMER_T *timer)
 {
-    timer->CTL |= TIMER_CTL_CNTEN_Msk;
+    (timer)->CTL |= TIMER_CTL_CNTEN_Msk;
 }
 
 /**
@@ -195,7 +219,7 @@ static __INLINE void TIMER_Start(TIMER_T *timer)
   */
 static __INLINE void TIMER_Stop(TIMER_T *timer)
 {
-    timer->CTL &= ~TIMER_CTL_CNTEN_Msk;
+    (timer)->CTL &= ~TIMER_CTL_CNTEN_Msk;
 }
 
 /**
@@ -211,7 +235,7 @@ static __INLINE void TIMER_Stop(TIMER_T *timer)
   */
 static __INLINE void TIMER_EnableWakeup(TIMER_T *timer)
 {
-    timer->CTL |= TIMER_CTL_WKEN_Msk;
+    (timer)->CTL |= TIMER_CTL_WKEN_Msk;
 }
 
 /**
@@ -225,7 +249,7 @@ static __INLINE void TIMER_EnableWakeup(TIMER_T *timer)
   */
 static __INLINE void TIMER_DisableWakeup(TIMER_T *timer)
 {
-    timer->CTL &= ~TIMER_CTL_WKEN_Msk;
+    (timer)->CTL &= ~TIMER_CTL_WKEN_Msk;
 }
 
 /**
@@ -239,7 +263,7 @@ static __INLINE void TIMER_DisableWakeup(TIMER_T *timer)
   */
 static __INLINE void TIMER_StartCapture(TIMER_T *timer)
 {
-    timer->EXTCTL |= TIMER_EXTCTL_CAPEN_Msk;
+    (timer)->EXTCTL |= TIMER_EXTCTL_CAPEN_Msk;
 }
 
 /**
@@ -253,7 +277,7 @@ static __INLINE void TIMER_StartCapture(TIMER_T *timer)
   */
 static __INLINE void TIMER_StopCapture(TIMER_T *timer)
 {
-    timer->EXTCTL &= ~TIMER_EXTCTL_CAPEN_Msk;
+    (timer)->EXTCTL &= ~TIMER_EXTCTL_CAPEN_Msk;
 }
 
 /**
@@ -267,7 +291,7 @@ static __INLINE void TIMER_StopCapture(TIMER_T *timer)
   */
 static __INLINE void TIMER_EnableCaptureDebounce(TIMER_T *timer)
 {
-    timer->EXTCTL |= TIMER_EXTCTL_CAPDBEN_Msk;
+    (timer)->EXTCTL |= TIMER_EXTCTL_CAPDBEN_Msk;
 }
 
 /**
@@ -281,7 +305,7 @@ static __INLINE void TIMER_EnableCaptureDebounce(TIMER_T *timer)
   */
 static __INLINE void TIMER_DisableCaptureDebounce(TIMER_T *timer)
 {
-    timer->EXTCTL &= ~TIMER_EXTCTL_CAPDBEN_Msk;
+    (timer)->EXTCTL &= ~TIMER_EXTCTL_CAPDBEN_Msk;
 }
 
 /**
@@ -295,7 +319,7 @@ static __INLINE void TIMER_DisableCaptureDebounce(TIMER_T *timer)
   */
 static __INLINE void TIMER_EnableEventCounterDebounce(TIMER_T *timer)
 {
-    timer->EXTCTL |= TIMER_EXTCTL_CNTDBEN_Msk;
+    (timer)->EXTCTL |= TIMER_EXTCTL_CNTDBEN_Msk;
 }
 
 /**
@@ -309,7 +333,7 @@ static __INLINE void TIMER_EnableEventCounterDebounce(TIMER_T *timer)
   */
 static __INLINE void TIMER_DisableEventCounterDebounce(TIMER_T *timer)
 {
-    timer->EXTCTL &= ~TIMER_EXTCTL_CNTDBEN_Msk;
+    (timer)->EXTCTL &= ~TIMER_EXTCTL_CNTDBEN_Msk;
 }
 
 /**
@@ -323,7 +347,7 @@ static __INLINE void TIMER_DisableEventCounterDebounce(TIMER_T *timer)
   */
 static __INLINE void TIMER_EnableInt(TIMER_T *timer)
 {
-    timer->CTL |= TIMER_CTL_INTEN_Msk;
+    (timer)->CTL |= TIMER_CTL_INTEN_Msk;
 }
 
 /**
@@ -337,7 +361,7 @@ static __INLINE void TIMER_EnableInt(TIMER_T *timer)
   */
 static __INLINE void TIMER_DisableInt(TIMER_T *timer)
 {
-    timer->CTL &= ~TIMER_CTL_INTEN_Msk;
+    (timer)->CTL &= ~TIMER_CTL_INTEN_Msk;
 }
 
 /**
@@ -351,7 +375,7 @@ static __INLINE void TIMER_DisableInt(TIMER_T *timer)
   */
 static __INLINE void TIMER_EnableCaptureInt(TIMER_T *timer)
 {
-    timer->EXTCTL |= TIMER_EXTCTL_CAPIEN_Msk;
+    (timer)->EXTCTL |= TIMER_EXTCTL_CAPIEN_Msk;
 }
 
 /**
@@ -365,7 +389,7 @@ static __INLINE void TIMER_EnableCaptureInt(TIMER_T *timer)
   */
 static __INLINE void TIMER_DisableCaptureInt(TIMER_T *timer)
 {
-    timer->EXTCTL &= ~TIMER_EXTCTL_CAPIEN_Msk;
+    (timer)->EXTCTL &= ~TIMER_EXTCTL_CAPIEN_Msk;
 }
 
 /**
@@ -380,7 +404,7 @@ static __INLINE void TIMER_DisableCaptureInt(TIMER_T *timer)
   */
 static __INLINE uint32_t TIMER_GetIntFlag(TIMER_T *timer)
 {
-    return ((timer->INTSTS & TIMER_INTSTS_TIF_Msk) ? 1 : 0);
+    return (((timer)->INTSTS & TIMER_INTSTS_TIF_Msk) ? 1 : 0);
 }
 
 /**
@@ -394,7 +418,7 @@ static __INLINE uint32_t TIMER_GetIntFlag(TIMER_T *timer)
   */
 static __INLINE void TIMER_ClearIntFlag(TIMER_T *timer)
 {
-    timer->INTSTS = TIMER_INTSTS_TIF_Msk;
+    (timer)->INTSTS = TIMER_INTSTS_TIF_Msk;
 }
 
 /**
@@ -409,7 +433,7 @@ static __INLINE void TIMER_ClearIntFlag(TIMER_T *timer)
   */
 static __INLINE uint32_t TIMER_GetCaptureIntFlag(TIMER_T *timer)
 {
-    return timer->EINTSTS;
+    return (((timer)->EINTSTS & TIMER_EINTSTS_CAPIF_Msk) ? 1 : 0);
 }
 
 /**
@@ -423,7 +447,24 @@ static __INLINE uint32_t TIMER_GetCaptureIntFlag(TIMER_T *timer)
   */
 static __INLINE void TIMER_ClearCaptureIntFlag(TIMER_T *timer)
 {
-    timer->EINTSTS = TIMER_EINTSTS_CAPIF_Msk;
+    (timer)->EINTSTS = TIMER_EINTSTS_CAPIF_Msk;
+}
+
+/**
+  * @brief      Get Timer Capture Interrupt Overrun Flag
+  *
+  * @param[in]  timer   The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  *
+  * @retval     0   Timer capture interrupt overrun did not occur
+  * @retval     1   Timer capture interrupt overrun occurred
+  *
+  * @details    This function indicates timer capture trigger interrupt overrun occurred or not.
+  * @note       This bit will be cleared automatically when user clear corresponding CAPIF.
+	* 
+  */
+static __INLINE uint32_t TIMER_GetCaptureIntOVFlag(TIMER_T *timer)
+{
+    return (((timer)->EINTSTS & TIMER_EINTSTS_CAPIFOV_Msk) ? 1 : 0);
 }
 
 /**
@@ -438,7 +479,7 @@ static __INLINE void TIMER_ClearCaptureIntFlag(TIMER_T *timer)
   */
 static __INLINE uint32_t TIMER_GetWakeupFlag(TIMER_T *timer)
 {
-    return (timer->INTSTS & TIMER_INTSTS_TWKF_Msk ? 1 : 0);
+    return ((timer)->INTSTS & TIMER_INTSTS_TWKF_Msk ? 1 : 0);
 }
 
 /**
@@ -452,7 +493,7 @@ static __INLINE uint32_t TIMER_GetWakeupFlag(TIMER_T *timer)
   */
 static __INLINE void TIMER_ClearWakeupFlag(TIMER_T *timer)
 {
-    timer->INTSTS = TIMER_INTSTS_TWKF_Msk;
+    (timer)->INTSTS = TIMER_INTSTS_TWKF_Msk;
 }
 
 /**
@@ -466,7 +507,7 @@ static __INLINE void TIMER_ClearWakeupFlag(TIMER_T *timer)
   */
 static __INLINE uint32_t TIMER_GetCaptureData(TIMER_T *timer)
 {
-    return timer->CAP;
+    return (timer)->CAP;
 }
 
 /**
@@ -480,7 +521,7 @@ static __INLINE uint32_t TIMER_GetCaptureData(TIMER_T *timer)
   */
 static __INLINE uint32_t TIMER_GetCounter(TIMER_T *timer)
 {
-    return timer->CNT;
+    return ((timer)->CNT & TIMER_CNT_CNT_Msk);
 }
 
 
@@ -498,6 +539,8 @@ void TIMER_DisableFreqCounter(TIMER_T *timer);
 void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src);
 void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask);
 int32_t TIMER_ResetCounter(TIMER_T *timer);
+void TIMER_EnableCaptureInputNoiseFilter(TIMER_T *timer, uint32_t u32FilterCount, uint32_t u32ClkSrcSel);
+void TIMER_DisableCaptureInputNoiseFilter(TIMER_T *timer);
 
 /*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
 

@@ -4,7 +4,7 @@
  * @brief    ADC register definition header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __ADC_REG_H__
 #define __ADC_REG_H__
@@ -245,8 +245,7 @@ typedef struct
      * |        |          |Current PDMA transfer data could be the content of ADC_ADDR0 ~ ADC_ADDR7 and ADC_ADDR29 ~ ADC_ADDR30 registers.
      */
 
-    __I  uint32_t ADDR[31];              /*!< [0x0000 ~ 0x0078] ADC Data Register 30                                    */
-    __I  uint32_t RESERVE0[1];
+    __I  uint32_t ADDR[32];              /*!< [0x0000 ~ 0x007C] ADC Data Register 0 ~ 31                                */
     __IO uint32_t ADCR;                  /*!< [0x0080] ADC Control Register                                             */
     __IO uint32_t ADCHER;                /*!< [0x0084] ADC Channel Enable Register                                      */
     __IO uint32_t ADCMPR[2];             /*!< [0x0088 ~ 0x008C] ADC Compare Register 0 & 1                              */
@@ -286,14 +285,8 @@ typedef struct
 #define ADC_ADCR_ADMD_Pos                (2)                                               /*!< ADC_T::ADCR: ADMD Position             */
 #define ADC_ADCR_ADMD_Msk                (0x3ul << ADC_ADCR_ADMD_Pos)                      /*!< ADC_T::ADCR: ADMD Mask                 */
 
-#define ADC_ADCR_TRGS_Pos                (4)                                               /*!< ADC_T::ADCR: TRGS Position             */
-#define ADC_ADCR_TRGS_Msk                (0x3ul << ADC_ADCR_TRGS_Pos)                      /*!< ADC_T::ADCR: TRGS Mask                 */
-
 #define ADC_ADCR_TRGCOND_Pos             (6)                                               /*!< ADC_T::ADCR: TRGCOND Position          */
 #define ADC_ADCR_TRGCOND_Msk             (0x3ul << ADC_ADCR_TRGCOND_Pos)                   /*!< ADC_T::ADCR: TRGCOND Mask              */
-
-#define ADC_ADCR_TRGEN_Pos               (8)                                               /*!< ADC_T::ADCR: TRGEN Position            */
-#define ADC_ADCR_TRGEN_Msk               (0x1ul << ADC_ADCR_TRGEN_Pos)                     /*!< ADC_T::ADCR: TRGEN Mask                */
 
 #define ADC_ADCR_PTEN_Pos                (9)                                               /*!< ADC_T::ADCR: PTEN Position             */
 #define ADC_ADCR_PTEN_Msk                (0x1ul << ADC_ADCR_PTEN_Pos)                      /*!< ADC_T::ADCR: PTEN Mask                 */
@@ -304,8 +297,11 @@ typedef struct
 #define ADC_ADCR_ADST_Pos                (11)                                              /*!< ADC_T::ADCR: ADST Position             */
 #define ADC_ADCR_ADST_Msk                (0x1ul << ADC_ADCR_ADST_Pos)                      /*!< ADC_T::ADCR: ADST Mask                 */
 
-#define ADC_ADCR_SMPTSEL_Pos             (16)                                              /*!< ADC_T::ADCR: SMPTSEL Position          */
-#define ADC_ADCR_SMPTSEL_Msk             (0x7ul << ADC_ADCR_SMPTSEL_Pos)                   /*!< ADC_T::ADCR: SMPTSEL Mask              */
+#define ADC_ADCR_TRGS_Pos                (12)                                              /*!< ADC_T::ADCR: TRGS Position             */
+#define ADC_ADCR_TRGS_Msk                (0xful << ADC_ADCR_TRGS_Pos)                      /*!< ADC_T::ADCR: TRGS Mask                 */
+
+#define ADC_ADCR_EXTSMPT_Pos             (16)                                              /*!< ADC_T::ADCR: EXTSMPT Position          */
+#define ADC_ADCR_EXTSMPT_Msk             (0xfful << ADC_ADCR_EXTSMPT_Pos)                  /*!< ADC_T::ADCR: EXTSMPT Mask              */
 
 #define ADC_ADCR_DMOF_Pos                (31)                                              /*!< ADC_T::ADCR: DMOF Position             */
 #define ADC_ADCR_DMOF_Msk                (0x1ul << ADC_ADCR_DMOF_Pos)                      /*!< ADC_T::ADCR: DMOF Mask                 */
@@ -366,6 +362,24 @@ typedef struct
 
 #define ADC_ADPDMA_CURDAT_Pos            (0)                                               /*!< ADC_T::ADPDMA: CURDAT Position         */
 #define ADC_ADPDMA_CURDAT_Msk            (0x3fffful << ADC_ADPDMA_CURDAT_Pos)              /*!< ADC_T::ADPDMA: CURDAT Mask             */
+
+#define ADC_ADCR1_PRECHEN_Pos            (0)                                               /*!< ADC_T::ADCR1: PRECHEN Position         */
+#define ADC_ADCR1_PRECHEN_Msk            (0x1ul << ADC_ADCR1_PRECHEN_Pos)              		 /*!< ADC_T::ADCR1: PRECHEN Mask             */
+
+#define ADC_ADCR1_DISCHEN_Pos            (1)                                               /*!< ADC_T::ADCR1: DISCHEN Position         */
+#define ADC_ADCR1_DISCHEN_Msk            (0x1ul << ADC_ADCR1_DISCHEN_Pos)              		 /*!< ADC_T::ADCR1: DISCHEN Mask             */
+
+#define ADC_ADCR1_FDETCHEN_Pos           (2)                                               /*!< ADC_T::ADCR1: FDETCHEN Position        */
+#define ADC_ADCR1_FDETCHEN_Msk           (0x1ul << ADC_ADCR1_FDETCHEN_Pos)          			 /*!< ADC_T::ADCR1: FDETCHEN Mask            */
+
+#define ADC_CALCTL_CAL_Pos           		 (0)                                               /*!< ADC_T::CALCTL: CAL Position        		 */
+#define ADC_CALCTL_CAL_Msk           		 (0x1ul << ADC_CALCTL_CAL_Pos)          			 		 /*!< ADC_T::CALCTL: CAL Mask            		 */
+
+#define ADC_CALCTL_CALIE_Pos           	 (1)                                               /*!< ADC_T::CALCTL: CALIE Position        	 */
+#define ADC_CALCTL_CALIE_Msk           	 (0x1ul << ADC_CALCTL_CALIE_Pos)          				 /*!< ADC_T::CALCTL: CALIE Mask          	   */
+
+#define ADC_CALSR_CALIF_Pos          		 (0)                                               /*!< ADC_T::CALSR: CALIF Position        	 */
+#define ADC_CALSR_CALIF_Msk           	 (0x1ul << ADC_CALSR_CALIF_Pos)          			 		 /*!< ADC_T::CALSR: CALIF Mask         			 */
 
 /**@}*/ /* ADC_CONST */
 /**@}*/ /* end of ADC register group */

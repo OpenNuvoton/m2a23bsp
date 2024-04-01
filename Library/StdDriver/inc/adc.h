@@ -4,7 +4,7 @@
  * @brief    M2A23 series ADC driver header file
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __ADC_H__
 #define __ADC_H__
@@ -29,40 +29,37 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  ADCR Constant Definitions                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
-#define ADC_ADCR_ADEN_CONVERTER_DISABLE   (0UL<<ADC_ADCR_ADEN_Pos)   /*!< ADC converter disable          */
-#define ADC_ADCR_ADEN_CONVERTER_ENABLE    (1UL<<ADC_ADCR_ADEN_Pos)   /*!< ADC converter enable           */
+#define ADC_ADCR_ADEN_CONVERTER_DISABLE   (0UL<<ADC_ADCR_ADEN_Pos)   /*!< ADC converter disable	*/
+#define ADC_ADCR_ADEN_CONVERTER_ENABLE    (1UL<<ADC_ADCR_ADEN_Pos)   /*!< ADC converter enable	*/
 
-#define ADC_ADCR_ADMD_SINGLE            (0UL<<ADC_ADCR_ADMD_Pos)     /*!< Single mode                */
-#define ADC_ADCR_ADMD_BURST             (1UL<<ADC_ADCR_ADMD_Pos)     /*!< Burst mode                 */
-#define ADC_ADCR_ADMD_SINGLE_CYCLE      (2UL<<ADC_ADCR_ADMD_Pos)     /*!< Single cycle scan mode     */
-#define ADC_ADCR_ADMD_CONTINUOUS        (3UL<<ADC_ADCR_ADMD_Pos)     /*!< Continuous scan mode       */
+#define ADC_ADCR_ADMD_SINGLE            (0UL<<ADC_ADCR_ADMD_Pos)     /*!< Single mode        			*/
+#define ADC_ADCR_ADMD_BURST             (1UL<<ADC_ADCR_ADMD_Pos)     /*!< Burst mode              */
+#define ADC_ADCR_ADMD_SINGLE_CYCLE      (2UL<<ADC_ADCR_ADMD_Pos)     /*!< Single cycle scan mode  */
+#define ADC_ADCR_ADMD_CONTINUOUS        (3UL<<ADC_ADCR_ADMD_Pos)     /*!< Continuous scan mode    */
 
-#define ADC_ADCR_DIFFEN_SINGLE_END      (0UL<<ADC_ADCR_DIFFEN_Pos)   /*!< Single end input mode      */
-#define ADC_ADCR_DIFFEN_DIFFERENTIAL    (1UL<<ADC_ADCR_DIFFEN_Pos)   /*!< Differential input type    */
+#define ADC_ADCR_DIFFEN_SINGLE_END      (0UL<<ADC_ADCR_DIFFEN_Pos)   /*!< Single end input mode   */
+#define ADC_ADCR_DIFFEN_DIFFERENTIAL    (1UL<<ADC_ADCR_DIFFEN_Pos)   /*!< Differential input type */
 
-#define ADC_ADCR_DMOF_UNSIGNED_OUTPUT   (0UL<<ADC_ADCR_DMOF_Pos)     /*!< Select the straight binary format as the output format of the conversion result   */
-#define ADC_ADCR_DMOF_TWOS_COMPLEMENT   (1UL<<ADC_ADCR_DMOF_Pos)     /*!< Select the 2's complement format as the output format of the conversion result    */
+#define ADC_ADCR_DMOF_UNSIGNED_OUTPUT   (0UL<<ADC_ADCR_DMOF_Pos)     /*!< Select the straight binary format as the output format of the conversion result	*/
+#define ADC_ADCR_DMOF_TWOS_COMPLEMENT   (1UL<<ADC_ADCR_DMOF_Pos)     /*!< Select the 2's complement format as the output format of the conversion result	*/
 
-#define ADC_ADCR_TRGEN_DISABLE          (0UL<<ADC_ADCR_TRGEN_Pos)    /*!< Disable triggering of A/D conversion by external STADC pin or BPWM   */
-#define ADC_ADCR_TRGEN_ENABLE           (1UL<<ADC_ADCR_TRGEN_Pos)    /*!< Enable triggering of A/D conversion by external STADC pin or BPWM  */
-
-#define ADC_ADCR_TRGS_STADC             (0UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by external STADC pin */
-#define ADC_ADCR_TRGS_TIMER             (1UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer */
-#define ADC_ADCR_TRGS_BPWM              (3UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by BPWM */
+#define ADC_ADCR_TRGS_DISABLE           (0UL<<ADC_ADCR_TRGS_Pos)     /*!< Disable triggering of A/D conversion by external STADC pin, PWM trigger, BPWM trigger, Timer trigger and ACMP trigger */
+#define ADC_ADCR_TRGS_STADC             (1UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by external STADC pin */
+#define ADC_ADCR_TRGS_TIMER0            (2UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer0 overflow pulse trigger */
+#define ADC_ADCR_TRGS_TIMER1            (3UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer1 overflow pulse trigger */
+#define ADC_ADCR_TRGS_TIMER2            (4UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer2 overflow pulse trigger */
+#define ADC_ADCR_TRGS_TIMER3            (5UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer3 overflow pulse trigger */
+#define ADC_ADCR_TRGS_PWM               (6UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by PWM trigger	 */
+#define ADC_ADCR_TRGS_BPWM    				  (7UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by BPWM trigger  */
+#define ADC_ADCR_TRGS_ACMP0    					(8UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by ACMP0 trigger */
+#define ADC_ADCR_TRGS_ACMP1            	(9UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by ACMP1 trigger */
 
 #define ADC_ADCR_TRGCOND_LOW_LEVEL      (0UL<<ADC_ADCR_TRGCOND_Pos)  /*!< STADC Low level active     */
 #define ADC_ADCR_TRGCOND_HIGH_LEVEL     (1UL<<ADC_ADCR_TRGCOND_Pos)  /*!< STADC High level active    */
 #define ADC_ADCR_TRGCOND_FALLING_EDGE   (2UL<<ADC_ADCR_TRGCOND_Pos)  /*!< STADC Falling edge active  */
 #define ADC_ADCR_TRGCOND_RISING_EDGE    (3UL<<ADC_ADCR_TRGCOND_Pos)  /*!< STADC Rising edge active   */
 
-#define ADC_ADCR_SMPTSEL_4_CLOCK        (0UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 4 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_5_CLOCK        (1UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 5 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_6_CLOCK        (2UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 6 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_7_CLOCK        (3UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 7 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_8_CLOCK        (4UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 8 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_9_CLOCK        (5UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 9 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_10_CLOCK       (6UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 10 ADC peripheral clock cycles */
-#define ADC_ADCR_SMPTSEL_11_CLOCK       (7UL<<ADC_ADCR_SMPTSEL_Pos)  /*!< A/D conversion sampling time is 11 ADC peripheral clock cycles */
+#define ADC_ADCR_EXTSMPT(x)             ((x) << ADC_ADCR_EXTSMPT_Pos)  /*!< Configure the extend ADC sampling time, Extended Sampling Time = (EXTSMPT+1) x ADC_CLK period */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ADCMPR Constant Definitions                                                                             */
@@ -70,16 +67,16 @@ extern "C"
 #define ADC_ADCMPR_CMPD(x)                    ((x) << ADC_ADCMPR_CMPD_Pos)          /*!< Compare value for compare function            */
 #define ADC_ADCMPR_CMPMATCNT(x)               (((x)-1) << ADC_ADCMPR_CMPMATCNT_Pos) /*!< Match count for compare function              */
 #define ADC_ADCMPR_CMPCH(x)                   ((x) << ADC_ADCMPR_CMPCH_Pos)         /*!< Compare channel for compare function          */
-#define ADC_ADCMPR_CMPCOND_LESS_THAN          (0<<ADC_ADCMPR_CMPCOND_Pos)           /*!< The compare condition is "less than"          */
-#define ADC_ADCMPR_CMPCOND_GREATER_OR_EQUAL   (1<<ADC_ADCMPR_CMPCOND_Pos)           /*!< The compare condition is "greater than or equal to" */
+#define ADC_ADCMPR_CMPCOND_LESS_THAN          (0UL<<ADC_ADCMPR_CMPCOND_Pos)           /*!< The compare condition is "less than"          */
+#define ADC_ADCMPR_CMPCOND_GREATER_OR_EQUAL   (1UL<<ADC_ADCMPR_CMPCOND_Pos)           /*!< The compare condition is "greater than or equal to" */
 #define ADC_ADCMPR_CMPIE_INTERRUPT_ENABLE     (ADC_ADCMPR_CMPIE_Msk)                /*!< The compare function interrupt enable */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ADC Interrupt Constant Definitions                                                                      */
 /*---------------------------------------------------------------------------------------------------------*/
-#define ADC_ADF_INT         (ADC_ADSR0_ADF_Msk)          /*!< ADC convert complete interrupt */
-#define ADC_CMP0_INT        (ADC_ADSR0_CMPF0_Msk)        /*!< ADC comparator 0 interrupt */
-#define ADC_CMP1_INT        (ADC_ADSR0_CMPF1_Msk)        /*!< ADC comparator 1 interrupt */
+#define ADC_ADF_INT         		(ADC_ADSR0_ADF_Msk)		/*!< ADC convert complete interrupt	*/
+#define ADC_CMP0_INT        		(ADC_ADSR0_CMPF0_Msk)	/*!< ADC comparator 0 interrupt 		*/
+#define ADC_CMP1_INT        		(ADC_ADSR0_CMPF1_Msk)	/*!< ADC comparator 1 interrupt 		*/
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ADC Operation Mode Constant Definitions                                                                 */
@@ -87,25 +84,30 @@ extern "C"
 #define ADC_SINGLE_MODE         0   /*!< ADC single mode            */
 #define ADC_BURST_MODE          1   /*!< ADC burst mode             */
 #define ADC_SINGLE_CYCLE_MODE   2   /*!< ADC single-cycle scan mode */
-#define ADC_CONTINUOUS_MODE     3   /*!< ADC continuous scan mode   */
+#define ADC_CONTINUOUS_MODE   	3   /*!< ADC continuous scan mode   */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ADC Trigger Condition Constant Definitions                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
-#define ADC_LOW_LEVEL      0   /*!< ADC external trigger condition is low level trigger    */
-#define ADC_HIGH_LEVEL     1   /*!< ADC external trigger condition is high level trigger   */
-#define ADC_FALLING_EDGE   2   /*!< ADC external trigger condition is falling edge trigger */
-#define ADC_RISING_EDGE    3   /*!< ADC external trigger condition is rising edge trigger  */
+#define ADC_LOW_LEVEL      			0		/*!< ADC external trigger condition is low level trigger    */
+#define ADC_HIGH_LEVEL     			1   /*!< ADC external trigger condition is high level trigger   */
+#define ADC_FALLING_EDGE   			2   /*!< ADC external trigger condition is falling edge trigger */
+#define ADC_RISING_EDGE    			3   /*!< ADC external trigger condition is rising edge trigger  */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ADC Compare Condition Constant Definitions                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
-#define ADC_LESS_THAN          0   /*!< ADC compare condition is "less than the compare value"                */
-#define ADC_GREATER_OR_EQUAL   1   /*!< ADC compare condition is "greater than or equal to the compare value" */
+#define ADC_LESS_THAN       		0   /*!< ADC compare condition is "less than the compare value"                */
+#define ADC_GREATER_OR_EQUAL   	1   /*!< ADC compare condition is "greater than or equal to the compare value" */
 
-
+/*--------------------------------------------------------------------------------------------------*/
+/* Define Error Code                                                                                */
+/*--------------------------------------------------------------------------------------------------*/
+#define ADC_TIMEOUT_ERR    	 	(-1)	/*!< ADC operation abort due to timeout error */
 
 /*@}*/ /* end of group ADC_EXPORTED_CONSTANTS */
+
+extern int32_t g_ADC_i32ErrCode;
 
 /** @addtogroup ADC_EXPORTED_FUNCTIONS ADC Exported Functions
   @{
@@ -257,6 +259,24 @@ extern "C"
 #define ADC_DISABLE_CMP1(adc) ((adc)->ADCMPR[1] = 0)
 
 /**
+  * @brief Enable the compare window mode.
+  * @param[in] adc The pointer of the specified ADC module.
+  * @return None
+  * @details CMPF0 (ADSR0[1]) will be set when both ADC_CMP0 and ADC_CMP1 compared condition matched.
+  * \hideinitializer
+  */
+#define ADC_ENABLE_CMP_WINDOW_MODE(adc)		((adc)->ADCMPR[0] |= ADC_ADCMPR_CMPWEN_Msk)
+
+/**
+  * @brief Disable the compare window mode.
+  * @param[in] adc The pointer of the specified ADC module.
+  * @return None
+  * @details Disable the compare window mode for specified LPADC module.
+  * \hideinitializer
+  */
+#define ADC_DISABLE_CMP_WINDOW_MODE(adc)	((adc)->ADCMPR[0] &= ~ADC_ADCMPR_CMPWEN_Msk)
+
+/**
   * @brief Set ADC input channel.
   * @param[in] adc The pointer of the specified ADC module.
   * @param[in] u32Mask  Channel enable bit. Each bit corresponds to a input channel. Bit 0 is channel 0, bit 1 is channel 1..., bit 7 is channel 7.
@@ -336,8 +356,9 @@ void ADC_EnableHWTrigger(ADC_T *adc,
 void ADC_DisableHWTrigger(ADC_T *adc);
 void ADC_EnableInt(ADC_T *adc, uint32_t u32Mask);
 void ADC_DisableInt(ADC_T *adc, uint32_t u32Mask);
-
-
+void ADC_SetExtendSampleTime(ADC_T *adc,
+                             uint32_t u32ModuleNum,
+                             uint32_t u32ExtendSampleTime);
 
 /*@}*/ /* end of group ADC_EXPORTED_FUNCTIONS */
 
