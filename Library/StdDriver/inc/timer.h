@@ -69,11 +69,11 @@ extern "C"
 #define TIMER_CAPTURE_SOURCE_DIV_128            (7UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 128 */
 #define TIMER_CAPTURE_SOURCE_DIV_256            (8UL << TIMER_EXTCTL_CAPDIVSCL_Pos) /*!< Input capture source divide 256 */
 
-#define TIMER_TRGSRC_TIMEOUT_EVENT							(0UL << TIMER_TRGCTL_TRGSSEL_Pos) /*!< Select internal trigger source from timer time-out event */
+#define TIMER_TRGSRC_TIMEOUT_EVENT			    (0UL << TIMER_TRGCTL_TRGSSEL_Pos) /*!< Select internal trigger source from timer time-out event */
 #define TIMER_TRGSRC_CAPTURE_EVENT              (1UL << TIMER_TRGCTL_TRGSSEL_Pos) /*!< Select internal trigger source from timer capture event */
-#define TIMER_TRG_TO_PWM												(TIMER_TRGCTL_TRGPWM_Msk)        	/*!< Each timer event as PWM/BPWM counter clock source */
-#define TIMER_TRG_TO_ADC												(TIMER_TRGCTL_TRGADC_Msk)     		/*!< Each timer event to start ADC conversion */
-#define TIMER_TRG_TO_PDMA												(TIMER_TRGCTL_TRGPDMA_Msk)     		/*!< Each timer event to trigger PDMA transfer */
+#define TIMER_TRG_TO_PWM					    (TIMER_TRGCTL_TRGPWM_Msk)        	/*!< Each timer event as PWM/BPWM counter clock source */
+#define TIMER_TRG_TO_ADC					    (TIMER_TRGCTL_TRGADC_Msk)     		/*!< Each timer event to start ADC conversion */
+#define TIMER_TRG_TO_PDMA					    (TIMER_TRGCTL_TRGPDMA_Msk)     		/*!< Each timer event to trigger PDMA transfer */
 
 #define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_1   (0UL)    /*!< Capture noise filter clock is PCLK divide by 1 */
 #define TIMER_CAPTURE_NOISE_FILTER_ECLK_DIV_2   (1UL)    /*!< Capture noise filter clock is PCLK divide by 2 */

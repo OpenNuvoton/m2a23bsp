@@ -50,8 +50,8 @@ extern "C"
 #define ADC_ADCR_TRGS_TIMER2            (4UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer2 overflow pulse trigger */
 #define ADC_ADCR_TRGS_TIMER3            (5UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by Timer3 overflow pulse trigger */
 #define ADC_ADCR_TRGS_PWM               (6UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by PWM trigger	 */
-#define ADC_ADCR_TRGS_BPWM    				  (7UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by BPWM trigger  */
-#define ADC_ADCR_TRGS_ACMP0    					(8UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by ACMP0 trigger */
+#define ADC_ADCR_TRGS_BPWM    		    (7UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by BPWM trigger  */
+#define ADC_ADCR_TRGS_ACMP0    		    (8UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by ACMP0 trigger */
 #define ADC_ADCR_TRGS_ACMP1            	(9UL<<ADC_ADCR_TRGS_Pos)     /*!< A/D conversion is started by ACMP1 trigger */
 
 #define ADC_ADCR_TRGCOND_LOW_LEVEL      (0UL<<ADC_ADCR_TRGCOND_Pos)  /*!< STADC Low level active     */

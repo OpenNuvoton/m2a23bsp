@@ -7,7 +7,7 @@
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
-    .section STACK
+    .section STACK, "awx"
     .align 3
     .global __initial_sp
 #ifndef Stack_Size
@@ -18,7 +18,7 @@ Stack_Mem:
 __initial_sp:
 
 
-    .section HEAP
+    .section HEAP, "awx"
     .align  3
     .global Heap_Mem
     .global __heap_base

@@ -408,7 +408,6 @@ typedef volatile unsigned short vu16;
 #include "llsi.h"
 #include "dac.h"
 #include "acmp.h"
-#include "ts.h"
 #include "usci_uart.h"
 #include "usci_spi.h"
 #include "usci_i2c.h"
