@@ -31,7 +31,7 @@ extern "C"
 #define CANFD_OP_CAN_FD_MODE  1
 
 /* Reserved number of elements in Message RAM - used for calculation of start addresses within RAM Configuration
-   some element_numbers set to less than max, to stay altogether below 256 words of Message RAM requirement*/
+   some element_numbers set to less than max, to stay altogether below 256 words of Message RAM requirement */
 #define CANFD_MAX_11_BIT_FTR_ELEMS    128ul  /*!<  maximum is 128 11-bit Filter */
 #define CANFD_MAX_29_BIT_FTR_ELEMS    64ul   /*!<  maximum is  64 29-bit Filter */
 #define CANFD_MAX_RX_FIFO0_ELEMS      64ul   /*!<  maximum is  64 Rx FIFO 0 elements */
@@ -40,11 +40,11 @@ extern "C"
 #define CANFD_MAX_TX_BUF_ELEMS        32ul   /*!<  maximum is  32 Tx Buffers */
 #define CANFD_MAX_TX_EVNT_FIFO_ELEMS  32ul   /*!<  maximum is  32 Tx Event FIFO elements */
 
-/* CAN FD sram size  */
+/* CAN FD sram size */
 #define CANFD_SRAM_SIZE               0x400ul
 #define CANFD_SRAM_OFFSET             0x200ul
 
-/* CAN FD sram address  */
+/* CAN FD sram address */
 #define CANFD_SRAM_BASE_ADDR(psCanfd) ((uint32_t)psCanfd + CANFD_SRAM_OFFSET)
 
 /* CAN FD Mask all interrupt */

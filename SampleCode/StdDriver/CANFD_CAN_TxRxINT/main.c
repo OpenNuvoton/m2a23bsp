@@ -437,7 +437,7 @@ int32_t main(void)
     /* Init UART to 115200-8n1 for print message */
     UART0_Init();
 
-    printf("\n CANFD%d CAN mode transmission test\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
+    printf("\n CANFD%d CAN mode transmission test\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : 2));
 
     CAN_TxRxINTTest();
 

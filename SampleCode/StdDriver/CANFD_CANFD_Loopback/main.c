@@ -49,7 +49,7 @@ void CANFD20_IRQHandler(void);
 #endif
 
 /*---------------------------------------------------------------------------------------------------------*/
-/* ISR to handle CAN FD Line0 interrupt event                                                              */
+/* ISR to handle CAN FD Line 0 interrupt event                                                             */
 /*---------------------------------------------------------------------------------------------------------*/
 #if (CANFD_MODULE == 0)
 void CANFD00_IRQHandler(void)
@@ -297,12 +297,12 @@ int32_t main(void)
     /* Init UART to 115200-8n1 for print message */
     UART0_Init();
 
-    printf("\n CANFD%d FD Mode Loopback example\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
+    printf("\n CANFD%d FD Mode Loopback example\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : 2));
 
     /* CAN FD Loopback Test */
     CANFD_CANFD_Loopback();
 
-    printf("\n CANFD%d FD Mode Loopback Test Done\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : (CANFD_MODULE == 2) ? 2 : 3));
+    printf("\n CANFD%d FD Mode Loopback Test Done\r\n", ((CANFD_MODULE == 0) ? 0 : (CANFD_MODULE == 1) ? 1 : 2));
 
     while(1) {}
 }
