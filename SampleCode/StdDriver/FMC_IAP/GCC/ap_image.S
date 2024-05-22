@@ -17,9 +17,12 @@
     .text
 
 loaderImage1Base:
-    .incbin  "../../LDROM_iap.bin"
+# ifdef BIN_FILE
+    .incbin   BIN_FILE
+# else
+    .incbin  "../../LDROM_iap/Release/LDROM_iap.bin"
+# endif
 loaderImage1Limit:
     .space   4
 
     .end
-

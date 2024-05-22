@@ -5,7 +5,7 @@
             "name": "m2a23",
             "displayName": "m2a23",
             "description": "",
-            "generator": "Unix Makefiles",
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_VERBOSE_MAKEFILE": "OFF",
