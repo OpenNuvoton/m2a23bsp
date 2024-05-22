@@ -6,12 +6,17 @@
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
+/*
+//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+*/
+
 
     .section STACK, "awx"
     .align 3
 
     .global __initial_sp
 #ifndef Stack_Size
+// <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
     .equ    Stack_Size, 0x00000400
 #endif
 Stack_Mem:
@@ -25,6 +30,7 @@ __initial_sp:
     .global __heap_base
     .global __heap_limit
 #ifndef Heap_Size
+// <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
     .equ    Heap_Size, 0x00000100
 #endif
 __heap_base:
@@ -34,6 +40,8 @@ __heap_limit:
 
     .eabi_attribute Tag_ABI_align_preserved, 1
     .thumb
+
+//*** <<< end of configuration section >>>    ***
 
 
 // ; Vector Table Mapped to Address 0 at Reset
