@@ -9,6 +9,7 @@
 
     .section STACK, "awx"
     .align 3
+
     .global __initial_sp
 #ifndef Stack_Size
     .equ    Stack_Size, 0x00000400
@@ -265,32 +266,14 @@ DEFAULT_IRQHandler:
     .align 2
 
 
-// ; User Initial Stack & Heap
-
-#ifdef __MICROLIB
-    .global __initial_sp
-    .global __heap_base
-    .global __heap_limit
-#else
-    .global __user_initial_stackheap
-    .type   __user_initial_stackheap, "function"
-__user_initial_stackheap:
-                LDR     R0, = Heap_Mem
-                LDR     R1, = (Stack_Mem + Stack_Size)
-                LDR     R2, = (Heap_Mem +  Heap_Size)
-                LDR     R3, = Stack_Mem
-                BX      LR
-    .align 2
-#endif
-
 // ;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
     .global     SH_DoCommand
     .global     SH_Return
     .type       SH_DoCommand, "function"
 SH_DoCommand:
                 BKPT   0xAB                // ; Wait ICE or HardFault
-                LDR    R3, =SH_Return 
-                MOV    R4, lr          
+                LDR    R3, =SH_Return
+                MOV    R4, lr
                 BLX    R3                  // ; Call SH_Return. The return value is in R0
                 BX     R4                  // ; Return value = R0
 
