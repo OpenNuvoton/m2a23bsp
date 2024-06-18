@@ -297,19 +297,19 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
     /* Switch Frequency Optimization Mode to suitable value base on HCLK */
     if (SystemCoreClock <= FREQ_29MHZ)
     {
-        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (2);
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (2<<FMC_FTCTL_FOM_Pos);
     }
     else if (SystemCoreClock <= FREQ_43MHZ)
     {
-        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (3);
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (3<<FMC_FTCTL_FOM_Pos);
     }
     else if (SystemCoreClock <= FREQ_58MHZ)
     {
-        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (4);
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (4<<FMC_FTCTL_FOM_Pos);
     }
     else /* SystemCoreClock <= FREQ_72MHZ */
     {
-        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (5);
+        FMC->FTCTL = (FMC->FTCTL & (~FMC_FTCTL_FOM_Msk)) | (5<<FMC_FTCTL_FOM_Pos);
     }
 
     /* Disable HIRC if HIRC is disabled before switching HCLK source */
@@ -343,12 +343,12 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
   * |\ref WDT_MODULE     |\ref CLK_CLKSEL1_WDTSEL_LIRC          | x                         |
   * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_HCLK_DIV2048 | x                         |
   * |\ref WWDT_MODULE    |\ref CLK_CLKSEL1_WWDTSEL_LIRC         | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_HXT          | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_LXT          | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_HCLK         | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_LIRC         | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_PLL_DIV2     | x                         |
-  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL2_CLKOSEL_HIRC         | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HXT          | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LXT          | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HCLK         | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_LIRC         | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_PLL_DIV2     | x                         |
+  * |\ref CLKO_MODULE    |\ref CLK_CLKSEL1_CLKOSEL_HIRC         | x                         |
   * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_HXT          | x                         |
   * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_LXT          | x                         |
   * |\ref TMR0_MODULE    |\ref CLK_CLKSEL1_TMR0SEL_PCLK0        | x                         |
@@ -686,7 +686,7 @@ lexit:
     {
         if(u32PllClkSrc == CLK_PLLCTL_PLLSRC_HXT)
         {
-#if (__HXT == 12000000)
+#if ((__HXT == 12000000)||(__HXT == 24000000))
             CLK->PLLCTL = CLK_PLLCTL_144MHz_HXT;        /* 144MHz */
             u32PllClk = FREQ_144MHZ;
 #else

@@ -141,12 +141,15 @@ extern "C"
 #define CLK_CLKSEL3_ADC0SEL_PLL        (0x1UL<<CLK_CLKSEL3_ADC0SEL_Pos) /*!< Setting ADC0 clock source as PLL */
 #define CLK_CLKSEL3_ADC0SEL_HCLK       (0x2UL<<CLK_CLKSEL3_ADC0SEL_Pos) /*!< Setting ADC0 clock source as HCLK */
 #define CLK_CLKSEL3_ADC0SEL_HIRC       (0x3UL<<CLK_CLKSEL3_ADC0SEL_Pos) /*!< Setting ADC0 clock source as HIRC */
+#define CLK_CLKSEL3_ADCSEL_PLL         (0x1UL<<CLK_CLKSEL3_ADCSEL_Pos)  /*!< Setting ADC clock source as PLL */
+#define CLK_CLKSEL3_ADCSEL_HCLK        (0x2UL<<CLK_CLKSEL3_ADCSEL_Pos)  /*!< Setting ADC clock source as HCLK */
+#define CLK_CLKSEL3_ADCSEL_HIRC        (0x3UL<<CLK_CLKSEL3_ADCSEL_Pos)  /*!< Setting ADC clock source as HIRC */
 
 #define CLK_CLKSEL3_PWM0SEL_PLL        (0x0UL<<CLK_CLKSEL3_PWM0SEL_Pos) /*!< Setting PWM0 clock source as PLL */
 #define CLK_CLKSEL3_PWM0SEL_PCLK0      (0x1UL<<CLK_CLKSEL3_PWM0SEL_Pos) /*!< Setting PWM0 clock source as PCLK0 */
 
-#define CLK_CLKSEL3_BPWM0SEL_PLL       (0x0UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting PWM0 clock source as PLL */
-#define CLK_CLKSEL3_BPWM0SEL_PCLK0     (0x1UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting PWM0 clock source as PCLK0 */
+#define CLK_CLKSEL3_BPWM0SEL_PLL       (0x0UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting BPWM0 clock source as PLL */
+#define CLK_CLKSEL3_BPWM0SEL_PCLK0     (0x1UL<<CLK_CLKSEL3_BPWM0SEL_Pos) /*!< Setting BPWM0 clock source as PCLK0 */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKDIV0 constant definitions.                                                                          */
@@ -191,9 +194,12 @@ extern "C"
 
 #if (__HXT == 12000000UL)
 #define CLK_PLLCTL_144MHz_HXT         (CLK_PLLCTL_STBSEL_6144 |CLK_PLLCTL_PLLSRC_HXT       | CLK_PLLCTL_NR(2) | CLK_PLLCTL_NF(48) | CLK_PLLCTL_NO_2) /*!< Predefined PLLCTL setting for 144MHz PLL output with HXT(12MHz X'tal) */
+#elif (__HXT == 24000000UL)
+#define CLK_PLLCTL_144MHz_HXT         (CLK_PLLCTL_STBSEL_12288|CLK_PLLCTL_PLLSRC_HXT       | CLK_PLLCTL_NR(2) | CLK_PLLCTL_NF(24) | CLK_PLLCTL_NO_2) /*!< Predefined PLLCTL setting for 144MHz PLL output with HXT(24MHz X'tal) */
 #else
-# error "The PLL pre-definitions are only valid when external crystal is 12MHz"
+# error "The PLL pre-definitions are only valid when external crystal is 12MHz or 24MHz"
 #endif
+
 #define CLK_PLLCTL_144MHz_HIRC_DIV2   (CLK_PLLCTL_STBSEL_12288|CLK_PLLCTL_PLLSRC_HIRC_DIV2 | CLK_PLLCTL_NR(2) | CLK_PLLCTL_NF(24) | CLK_PLLCTL_NO_2) /*!< Predefined PLLCTL setting for 144MHz PLL output with HIRC(48MHz IRC)/2 */
 
 
