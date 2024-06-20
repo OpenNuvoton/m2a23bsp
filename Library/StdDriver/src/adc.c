@@ -45,6 +45,14 @@ void ADC_Open(ADC_T *adc,
               uint32_t u32OpMode,
               uint32_t u32ChMask)
 {
+    /* ADC macro settings for chip */
+    outpw(ADC0_BASE+0xFF4, 0x31);
+
+    /* Calibration Mode */
+    (adc)->CALCTL = ADC_CALCTL_CAL_Msk;
+    while(((adc)->CALSR & ADC_CALSR_CALIF_Msk) == 0) {}
+    (adc)->CALSR = (adc)->CALSR;
+    
     (adc)->ADCR = ((adc)->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
                 (u32InputMode) | \
                 (u32OpMode);
