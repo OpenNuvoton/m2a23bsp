@@ -529,8 +529,7 @@ typedef struct
      * |        |          |Please refer to the explanation of REQSRC0.
      * |[14:8]  |REQSRC13  |Channel 13 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 13
-     * |        |          |User can configure the peripheral setting by REQSRC13.
-     * |        |          |Note: The channel configuration is the same as REQSRC0 field
+     * |        |          |User can configure the peripheral setting by REQSRC13.     * |        |          |Note: The channel configuration is the same as REQSRC0 field
      * |        |          |Please refer to the explanation of REQSRC0.
      * |[22:16] |REQSRC14  |Channel 14 Request Source Selection
      * |        |          |This filed defines which peripheral is connected to PDMA channel 14
@@ -751,6 +750,24 @@ typedef struct
 
 #define PDMA_ALIGN_ALIGNn_Pos            (0)                                               /*!< PDMA_T::ALIGN: ALIGNn Position         */
 #define PDMA_ALIGN_ALIGNn_Msk            (0xfffful << PDMA_ALIGN_ALIGNn_Pos)               /*!< PDMA_T::ALIGN: ALIGNn Mask             */
+
+#define PDMA_ALIGN_ALIGN0_Pos            (0)                                               /*!< PDMA_T::ALIGN: ALIGN0 Position         */
+#define PDMA_ALIGN_ALIGN0_Msk            (0x1ul << PDMA_ALIGN_ALIGN0_Pos)                  /*!< PDMA_T::ALIGN: ALIGN0 Mask             */
+
+#define PDMA_ALIGN_ALIGN1_Pos            (1)                                               /*!< PDMA_T::ALIGN: ALIGN1 Position         */
+#define PDMA_ALIGN_ALIGN1_Msk            (0x1ul << PDMA_ALIGN_ALIGN1_Pos)                  /*!< PDMA_T::ALIGN: ALIGN1 Mask             */
+
+#define PDMA_ALIGN_ALIGN2_Pos            (2)                                               /*!< PDMA_T::ALIGN: ALIGN2 Position         */
+#define PDMA_ALIGN_ALIGN2_Msk            (0x1ul << PDMA_ALIGN_ALIGN2_Pos)                  /*!< PDMA_T::ALIGN: ALIGN2 Mask             */
+
+#define PDMA_ALIGN_ALIGN3_Pos            (3)                                               /*!< PDMA_T::ALIGN: ALIGN3 Position         */
+#define PDMA_ALIGN_ALIGN3_Msk            (0x1ul << PDMA_ALIGN_ALIGN3_Pos)                  /*!< PDMA_T::ALIGN: ALIGN3 Mask             */
+
+#define PDMA_ALIGN_ALIGN4_Pos            (4)                                               /*!< PDMA_T::ALIGN: ALIGN4 Position         */
+#define PDMA_ALIGN_ALIGN4_Msk            (0x1ul << PDMA_ALIGN_ALIGN4_Pos)                  /*!< PDMA_T::ALIGN: ALIGN4 Mask             */
+
+#define PDMA_ALIGN_ALIGN5_Pos            (5)                                               /*!< PDMA_T::ALIGN: ALIGN5 Position         */
+#define PDMA_ALIGN_ALIGN5_Msk            (0x1ul << PDMA_ALIGN_ALIGN5_Pos)                  /*!< PDMA_T::ALIGN: ALIGN5 Mask             */
 
 #define PDMA_TACTSTS_TXACTFn_Pos         (0)                                               /*!< PDMA_T::TACTSTS: TXACTFn Position      */
 #define PDMA_TACTSTS_TXACTFn_Msk         (0xfffful << PDMA_TACTSTS_TXACTFn_Pos)            /*!< PDMA_T::TACTSTS: TXACTFn Mask          */
