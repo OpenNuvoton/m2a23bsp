@@ -9,10 +9,14 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
+#define DMA_TCNT 4              /* PDMA Tranfer count       */
+#define PWM_OUT_FREQ    250     /* PWM output frequency     */
+#define CAP_UNIT        83      /* PWM capture sample time  */
+
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define global variables and constants                                                                   */
 /*---------------------------------------------------------------------------------------------------------*/
-static uint16_t g_au16Count[4];
+static uint16_t g_au16Count[DMA_TCNT];
 static volatile uint32_t g_u32IsTestOver = 0;
 
 
@@ -56,8 +60,8 @@ void PDMA0_IRQHandler(void)
 
 /*--------------------------------------------------------------------------------------*/
 /* Capture function to calculate the input waveform information                         */
-/* g_au16Count[4] : Keep the internal counter value when input signal rising / falling  */
-/*               happens                                                                */
+/* g_au16Count[DMA_TCNT] : Keep the internal counter value when input signal            */
+/*                         rising / falling happens                                     */
 /*                                                                                      */
 /* time    A    B     C     D                                                           */
 /*           ___   ___   ___   ___   ___   ___   ___   ___                              */
@@ -87,20 +91,27 @@ int32_t CalPeriodTime(PWM_T *PWM, uint32_t u32Ch)
         }
     }
 
-    u16RisingTime = g_au16Count[1];
+    printf("Capture data:\n");
+    for(int i = 0; i < DMA_TCNT; i += 2)
+    {
+        printf("Count[%d] rising = %d, falling = %d\n", i, g_au16Count[i], g_au16Count[i + 1]);
+    }
 
-    u16FallingTime = g_au16Count[0];
 
-    u16HighPeriod = g_au16Count[1] - g_au16Count[2];
+    u16RisingTime = g_au16Count[3];
 
-    u16LowPeriod = (uint16_t)(0x10000 - g_au16Count[1]);
+    u16FallingTime = g_au16Count[2];
 
-    u16TotalPeriod = (uint16_t)(0x10000 - g_au16Count[2]);
+    u16HighPeriod = u16RisingTime - u16FallingTime;
+
+    u16LowPeriod = (uint16_t)(0x10000 - u16RisingTime);
+
+    u16TotalPeriod = (uint16_t)(0x10000 - u16FallingTime);
 
     printf("\nPWM generate: \nHigh Period=17141 ~ 17143, Low Period=39999 ~ 40001, Total Period=57141 ~ 57143\n");
     printf("\nCapture Result: Rising Time = %d, Falling Time = %d \nHigh Period = %d, Low Period = %d, Total Period = %d.\n\n",
            u16RisingTime, u16FallingTime, u16HighPeriod, u16LowPeriod, u16TotalPeriod);
-    if((u16HighPeriod < 17141) || (u16HighPeriod > 17143) || (u16LowPeriod < 39999) || (u16LowPeriod > 40001) || (u16TotalPeriod < 57141) || (u16TotalPeriod > 57143))
+    if((u16HighPeriod < 14399) || (u16HighPeriod > 14401) || (u16LowPeriod < 33599) || (u16LowPeriod > 33601) || (u16TotalPeriod < 47999) || (u16TotalPeriod > 48001))
     {
         printf("Capture Test Fail!!\n");
         return (-1);
@@ -130,7 +141,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -151,7 +162,7 @@ void SYS_Init(void)
     /* Set multi-function pin for PWM */
     SET_PWM0_CH0_PB5();
     SET_PWM0_CH2_PB3();
-    
+
     /* Enable PDMA module clock */
     CLK_EnableModuleClock(PDMA0_MODULE);
 }
@@ -174,7 +185,7 @@ void UART0_Init(void)
 int32_t main(void)
 {
     uint32_t u32TimeOutCnt = 0;
-    
+
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
        to lock protected register. If user want to write
@@ -185,10 +196,12 @@ int32_t main(void)
     SYS_UnlockReg();
 
     /* Init System, IP clock and multi-function I/O */
-    SYS_Init();
+    SYS_Init();    /* Lock protected registers */
+    //SYS_LockReg();
 
-    /* Lock protected registers */
-    SYS_LockReg();
+#if DEBUG_ENABLE
+    PWM0->CTL0 |= 0x3 << 30;
+#endif
 
     /* Init UART to 115200-8n1 for print message */
     UART0_Init();
@@ -216,18 +229,18 @@ int32_t main(void)
            duty ratio = (CMR)/(CNR+1)
            cycle time = CNR+1
            High level = CMR
-           PWM clock source frequency = PLL/2 = 100000000
+           PWM clock source frequency = PLL/2 = 72000000
            (CNR+1) = PWM clock source frequency/prescaler/PWM output frequency
-                   = 100000000/7/250 = 57142
+                   = 72000000/5/250 = 57600
            (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
-           CNR = 57141
+           CNR = 57600-1 (0xe0ff)
            duty ratio = 30% ==> (CMR)/(CNR+1) = 30%
-           CMR = 17142
-           Prescale value is 6 : prescaler= 7
+           CMR = 17280 (0x4380)
+           Prescale value is 4 : prescaler= 5
         */
 
         /* Set PWM0 channel 0 output configuration */
-        PWM_ConfigOutputChannel(PWM0, 0, 250, 30);
+        PWM_ConfigOutputChannel(PWM0, 0, PWM_OUT_FREQ, 30);
 
         /* Enable PWM Output path for PWM0 channel 0 */
         PWM_EnableOutput(PWM0, PWM_CH_0_MASK);
@@ -241,11 +254,11 @@ int32_t main(void)
         /* Open Channel 0 */
         PDMA_Open(PDMA0, 0x1);
 
-        /* Transfer width is half word(16 bit) and transfer count is 4 */
-        PDMA_SetTransferCnt(PDMA0, 0, PDMA_WIDTH_16, 4);
+        /* Transfer width is half word(16 bit) and transfer count is DMA_TCNT */
+        PDMA_SetTransferCnt(PDMA0, 0, PDMA_WIDTH_16, DMA_TCNT);
 
         /* Set source address as PWM capture channel PDMA register(no increment) and destination address as g_au16Count array(increment) */
-        PDMA_SetTransferAddr(PDMA0, 0, (uint32_t)&PWM0->PDMACAP0_1, PDMA_SAR_FIX, (uint32_t)&g_au16Count[0], PDMA_DAR_INC);
+        PDMA_SetTransferAddr(PDMA0, 0, (uint32_t)&PWM0->PDMACAP2_3, PDMA_SAR_FIX, (uint32_t)&g_au16Count[0], PDMA_DAR_INC);
 
         /* Select PDMA request source as PWM RX(PWM0 channel 2 should be PWM0 pair 2) */
         PDMA_SetTransferMode(PDMA0, 0, PDMA_PWM0_P2_RX, FALSE, 0);
@@ -265,22 +278,34 @@ int32_t main(void)
         /*--------------------------------------------------------------------------------------*/
 
         /* If input minimum frequency is 250Hz, user can calculate capture settings by follows.
-           Capture clock source frequency = PLL = 100000000 in the sample code.
+           Capture clock source frequency = PLL = 72000000 in the sample code.
            (CNR+1) = Capture clock source frequency/prescaler/minimum input frequency
-                   = 100000000/7/250 = 57142
+                   = 72000000/5/250 = 57600
            (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
            CNR = 0xFFFF
            (Note: In capture mode, user should set CNR to 0xFFFF to increase capture frequency range.)
 
            Capture unit time = 1/Capture clock source frequency/prescaler
-           70 ns = 1/100000000/7
+           83 ns = 1/72000000/6
         */
 
         /* Set PWM0 channel 2 capture configuration */
-        PWM_ConfigCaptureChannel(PWM0, 2, 70, 0);
+        PWM_ConfigCaptureChannel(PWM0, 2, CAP_UNIT, 0);
 
         /* Enable Timer for PWM0 channel 2 */
         PWM_Start(PWM0, PWM_CH_2_MASK);
+
+        /* Waiting for PWM output low */
+        u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
+        while(PWM0->CNT[0] <= 8)
+        {
+            if(--u32TimeOutCnt == 0)
+            {
+                printf("Wait for PWM0 channel 0 wait cnt time-out!\n");
+                goto lexit;
+            }
+        }
+
 
         /* Enable Capture Function for PWM0 channel 2 */
         PWM_EnableCapture(PWM0, PWM_CH_2_MASK);
@@ -300,7 +325,7 @@ int32_t main(void)
         }
 
         /* Capture the Input Waveform Data */
-        if( CalPeriodTime(PWM0, 2) < 0 )
+        if(CalPeriodTime(PWM0, 2) < 0)
             goto lexit;
         /*------------------------------------------------------------------------------------------------------------*/
         /* Stop PWM0 channel 0 (Recommended procedure method 1)                                                       */
@@ -363,6 +388,6 @@ int32_t main(void)
     }
 
 lexit:
-		
+
     while(1) {}
 }
