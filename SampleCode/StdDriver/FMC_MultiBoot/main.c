@@ -86,14 +86,14 @@ int32_t main(void)
                FMC_Boot0, RO=0x2000
                FMC_Boot1, RO=0x4000
                FMC_Boot2, RO=0x6000
-               FMC_Boot3, RO=0x80000
+               FMC_Boot3, RO=0x8000
                FMC_BootLD, RO=0x100000
            For IAR project, the targets are:
                FMC_MultiBoot, RO=0x0
                FMC_Boot0, RO=0x2000
                FMC_Boot1, RO=0x4000
                FMC_Boot2, RO=0x6000
-               FMC_Boot3, RO=0x80000
+               FMC_Boot3, RO=0x8000
            For GCC project, the targets are:
                FMC_MultiBoot, RO=0x0
                FMC_Boot1, RO=0x4000
@@ -199,10 +199,10 @@ int32_t main(void)
             break;
 #else
         case '1':
-            FMC_SetVectorPageAddr(0x8000);
+            FMC_SetVectorPageAddr(0x4000);
             break;
         case '3':
-            FMC_SetVectorPageAddr(0x10000);
+            FMC_SetVectorPageAddr(0x8000);
             break;
 #endif
         default:

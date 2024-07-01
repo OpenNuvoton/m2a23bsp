@@ -34,8 +34,10 @@ extern "C"
 #define FREQ_25MHZ         25000000
 #define FREQ_29MHZ         29000000
 #define FREQ_43MHZ         43000000
+#define FREQ_48MHZ         48000000
 #define FREQ_50MHZ         50000000
 #define FREQ_58MHZ         58000000
+#define FREQ_64MHZ         64000000
 #define FREQ_72MHZ         72000000
 #define FREQ_100MHZ        100000000
 #define FREQ_144MHZ        144000000

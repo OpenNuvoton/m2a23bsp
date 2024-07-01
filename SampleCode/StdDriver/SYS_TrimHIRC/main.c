@@ -44,9 +44,19 @@ void IRC_IRQHandler(void)
 
 void SYS_Init(void)
 {
+    /* Set PF multi-function pins for X32_OUT(PF.4) and X32_IN(PF.5) */
+    SET_X32_OUT_PF4();
+    SET_X32_IN_PF5();
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
+
+    /* Enable LXT clock */
+    CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+
+    /* Wait for LXT clock ready */
+    CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
 
     /* Set core clock to 72MHz */
     CLK_SetCoreClock(72000000);

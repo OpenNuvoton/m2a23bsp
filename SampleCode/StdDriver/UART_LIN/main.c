@@ -305,12 +305,19 @@ void LIN_Rx_FunctionTest(void)
         The response field with 8 data bytes and checksum without including ID.
     */
 
+    uint32_t u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
+
     printf("+--------------------------------------------------------------------------------+\n");
     printf("|  UART LIN Rx Function Test                                                     |\n");
     printf("+--------------------------------------------------------------------------------+\n");
     printf("|  Description :                                                                 |\n");
     printf("|    The sample code will receive a LIN response field data                      |\n");
     printf("+--------------------------------------------------------------------------------+\n");
+
+    /* Reset Rx FIFO */
+    UART0->FIFO |= UART_FIFO_RXRST_Msk;
+    while(UART0->FIFO & UART_FIFO_RXRST_Msk)
+        if(--u32TimeOutCnt == 0) break;
 
     g_i32RxCounter = 0;
 
