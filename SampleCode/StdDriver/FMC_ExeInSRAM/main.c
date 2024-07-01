@@ -15,7 +15,7 @@ extern int32_t FlashAccess_OnSRAM(void);
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
 
 #define TOTAL_VECTORS   (58)                                /* Total vector numbers */
-__ALIGNED(256) uint32_t g_au32Vector[TOTAL_VECTORS] = {0};  /* Vector space in SRAM */
+__ALIGNED(512) uint32_t g_au32Vector[TOTAL_VECTORS] = {0};  /* Vector space in SRAM */
 volatile uint32_t g_u32Ticks = 0;
 void SysTick_Handler()
 {

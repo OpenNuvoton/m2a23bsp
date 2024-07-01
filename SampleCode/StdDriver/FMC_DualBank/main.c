@@ -13,7 +13,7 @@
 #define APROM_BANK1_BASE            0x20000      /* APROM bank1 base address for 128KB size. */
 /* APROM bank1 address is 1/2 APROM size.   */
 #define DB_PROG_LEN                 (4 * FMC_FLASH_PAGE_SIZE)  /* background program length  */
-#define CRC32_LOOP_CNT              500          /* Loop count                               */
+#define CRC32_LOOP_CNT              100          /* Loop count                               */
 
 
 /*

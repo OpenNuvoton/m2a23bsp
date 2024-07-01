@@ -11,9 +11,7 @@
 
 
 
-/*
-//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
-*/
+// *** <<< Use Configuration Wizard in Context Menu >>> ***
 
 /*
 // <o0> LVR
@@ -43,6 +41,7 @@
 */
 #define SET_LXT       0
 
+// *** <<< end of configuration section >>> ***
 
 #define GPIO_P0_TO_P15      0xFFFF
 
