@@ -385,8 +385,9 @@ typedef struct
      * |        |          |1 = Modem interrupt flag is generated.
      * |        |          |Note: This bit is read only and reset to 0 when bit CTSDETF is cleared by a write 1 on CTSDETF(UART_MODEMSTS[0]).
      * |[4]     |RXTOIF    |RX Time-out Interrupt Flag (Read Only)
-     * |        |          |This bit is set when the RX FIFO is not empty and no activities occurred in the RX FIFO and the time-out counter equal to TOIC (UART_TOUT[7:0]).
-     * |        |          |If RXTOIEN (UART_INTEN [4]) is enabled, the RX time-out interrupt will be generated.
+     * |        |          |If BITOMEN (UART_TOUT[31]) is reset to 0, this bit is set when the RX FIFO is not empty and no activities occurred in the RX FIFO and the time-out counter equal to TOIC (UART_TOUT[7:0]).
+     * |        |          |If BITOMEN (UART_TOUT[31]) is set to 1, this bit is set when no activities occurred in the RX FIFO and the time-out counter equal to TOIC (UART_TOUT[7:0]).
+     * |        |          |If RXTOIEN (UART_INTEN[4]) is enabled, the RX time-out interrupt will be generated.
      * |        |          |0 = No RX time-out interrupt flag is generated.
      * |        |          |1 = RX time-out interrupt flag is generated.
      * |        |          |Note 1: This bit can be cleared by writing ??to it.

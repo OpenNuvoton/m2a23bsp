@@ -20,12 +20,12 @@ volatile uint32_t g_u32Ticks = 0;
 void SysTick_Handler()
 {
     g_u32Ticks++;
-    
+
     if((g_u32Ticks % 1000) == 0)
     {
         printf("Time elapse: %d\n", g_u32Ticks / 1000);
     }
-    
+
 }
 
 #endif

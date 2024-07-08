@@ -92,16 +92,16 @@ void SYS_Init(void)
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PB multi-function pins for UART0 RXD(PB.12) and TXD(PB.13) */
-    SET_UART0_RXD_PB12();
-    SET_UART0_TXD_PB13();
+    /* Set PA multi-function pins for UART0 RXD(PA.6) and TXD(PA.7) */
+    SET_UART0_RXD_PA6();
+    SET_UART0_TXD_PA7();
 
     /*
-       Set PA multi-function pins for UART1_RXD(PA.2)(debug port UART_RXD)
-                                      UART1_TXD(PA.3)(debug port UART_TXD)
+       Set PA multi-function pins for UART1_RXD(PA.8)(debug port UART_RXD)
+                                      UART1_TXD(PA.9)(debug port UART_TXD)
     */
-    SET_UART1_RXD_PA2();
-    SET_UART1_TXD_PA3();
+    SET_UART1_RXD_PA8();
+    SET_UART1_TXD_PA9();
 
 }
 
