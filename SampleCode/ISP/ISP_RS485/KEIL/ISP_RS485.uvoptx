@@ -151,7 +151,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\uart_transfer.c</Filename>
+          <Filename>D:\MCU\FA8286_M2A23\M2A23\m2a23bsp\SampleCode\Hard_Fault_Sample\uart_transfer.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\NUC1262_ISP_RS485_PA2_PA3_A0\../uart_transfer.c\27</Expression>
         </Bp>
