@@ -1,0 +1,24 @@
+project:
+  linker:
+    - script: ../GCC/FMC_Base.ld
+  setups:
+    - output:
+        type: "bin"
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/system_m2a23.c
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/startup_m2a23.S
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/_syscalls.c
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/semihosting.h
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld
+    - group: User
+      files:
+        - file: ../main.c
+    - group: Library
+      files:
+        - file: ../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../Library/StdDriver/src/sys.c

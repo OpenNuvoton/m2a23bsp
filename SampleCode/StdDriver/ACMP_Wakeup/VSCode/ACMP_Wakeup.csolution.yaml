@@ -7,7 +7,7 @@ solution:
     - type: GCC
       device: M2A23SG5AC
       processor:
-        trustzone: non-secure
+        trustzone: "off"
       add-path:
         - ../../../../Library/CMSIS/Include
         - ../../../../Library/Device/Nuvoton/m2a23/Include
