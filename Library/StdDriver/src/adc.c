@@ -45,14 +45,25 @@ void ADC_Open(ADC_T *adc,
               uint32_t u32OpMode,
               uint32_t u32ChMask)
 {
-    /* ADC macro settings for chip */
-    outpw(ADC0_BASE+0xFF4, 0x31);
-
-    /* Calibration Mode */
-    (adc)->CALCTL = ADC_CALCTL_CAL_Msk;
-    while(((adc)->CALSR & ADC_CALSR_CALIF_Msk) == 0) {}
-    (adc)->CALSR = (adc)->CALSR;
+    volatile uint32_t u32OrgADC0Div = ((CLK->CLKDIV0 & 0x00FF0000) >> CLK_CLKDIV0_ADC0DIV_Pos);
     
+	/* ADC macro settings for chip-A */
+    if((inpw(ADC0_BASE+0xFF4)&BIT16) == BIT16)
+        outpw(ADC0_BASE+0xFF4, 0x31);
+
+	/* Calibration Mode, set (ADC divider * 8) for calibration */
+	if ((u32OrgADC0Div << 3) >= 0xFF)
+		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | (0xFF << CLK_CLKDIV0_ADC0DIV_Pos));
+	else if ((u32OrgADC0Div << 3) > 0)
+		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | ((u32OrgADC0Div << 3) << CLK_CLKDIV0_ADC0DIV_Pos));
+	else
+		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | ((8-1) << CLK_CLKDIV0_ADC0DIV_Pos));
+	(adc)->CALCTL = ADC_CALCTL_CAL_Msk;
+	while(((adc)->CALSR & ADC_CALSR_CALIF_Msk) == 0) {}
+	(adc)->CALSR = (adc)->CALSR;
+	CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | (u32OrgADC0Div << CLK_CLKDIV0_ADC0DIV_Pos));
+            
+            
     (adc)->ADCR = ((adc)->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
                 (u32InputMode) | \
                 (u32OpMode);
