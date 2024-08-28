@@ -2,7 +2,7 @@
  * @file     fmc_user.h
  * @brief    FMC driver header file
  * @version  2.0.0
- *              
+ *
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/

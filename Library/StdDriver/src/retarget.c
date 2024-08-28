@@ -189,7 +189,7 @@ int ferror(FILE *stream);
 #endif
 
 char GetChar(void);
-void SendChar_ToUART(int ch);
+__WEAK void SendChar_ToUART(int ch);
 void SendChar(int ch);
 
 #if defined(DEBUG_ENABLE_SEMIHOST)
@@ -306,7 +306,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 #endif
 #else // defined(DEBUG_ENABLE_SEMIHOST)
 
-int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
+__WEAK int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
 #if defined( __ICCARM__ )
 __WEAK
@@ -362,13 +362,13 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     */
 
     /* Or *sp to remove compiler warning */
-    while(1U|*sp){}
+    while(*sp){}
 
     return lr;
 }
 
 
-int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
+__WEAK int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
     return 0;
 }
@@ -386,7 +386,7 @@ int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
  * @details  Send a target char to UART debug port .
  */
 #ifndef NONBLOCK_PRINTF
-void SendChar_ToUART(int ch)
+__WEAK void SendChar_ToUART(int ch)
 {
     if((char)ch == '\n')
     {
@@ -401,7 +401,7 @@ void SendChar_ToUART(int ch)
 #else
 /* Non-block implement of send char */
 # define BUF_SIZE    512
-void SendChar_ToUART(int ch)
+__WEAK void SendChar_ToUART(int ch)
 {
     static uint8_t u8Buf[BUF_SIZE] = {0};
     static int32_t i32Head = 0;
@@ -662,6 +662,55 @@ int _read (int fd, char *ptr, int len)
 }
 #endif
 
+
+int _open(const char *path, int flags, ...)
+{
+    (void)path;
+    (void)flags;
+    return (-1);
+}
+
+int _close(int fd)
+{
+    (void)fd;
+    return (-1);
+}
+
+int _lseek(int fd, int ptr, int dir)
+{
+    (void)fd;
+    (void)ptr;
+    (void)dir;
+    return (0);
+}
+
+
+int __attribute__((weak)) _fstat(int fd, uint32_t *st)
+{
+    (void)fd;
+    (void)st;
+    return (0);
+}
+
+
+int _isatty(int fd)
+{
+    (void)fd;
+    return (1);
+}
+
+int _getpid(void)
+{
+  return 1;
+}
+
+int _kill(int pid, int sig)
+{
+  (void)pid;
+  (void)sig;
+  return -1;
+}
+
 #else
 /**
  * @brief      Get character from UART debug port or semihosting input
@@ -731,4 +780,3 @@ label:
 }
 # endif
 #endif
-

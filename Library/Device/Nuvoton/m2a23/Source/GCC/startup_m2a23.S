@@ -11,7 +11,7 @@
 
     .syntax unified
     .arch   armv8 - m.base
-    
+
     .section .stack
     .align  3
 #ifndef Stack_Size
@@ -24,13 +24,13 @@ __StackLimit:
     .size   __StackLimit, . - __StackLimit
 __StackTop:
     .size   __StackTop, . - __StackTop
-    
+
     .section .heap
     .align  3
 #ifndef Heap_Size
     .equ    Heap_Size, 0x00000100
 #endif
-    
+
     .global __HeapBase
     .global __HeapLimit
 __HeapBase:
@@ -40,7 +40,7 @@ __HeapBase:
     .size   __HeapBase, . - __HeapBase
 __HeapLimit:
     .size   __HeapLimit, . - __HeapLimit
-    
+
     .section .vectors
     .align  2
     .global __Vectors
@@ -133,15 +133,15 @@ __Vectors:
     .align  2
     .global Reset_Handler
     .type   Reset_Handler, % function
-    
-    
+
+
 Reset_Handler:
     /*  Firstly it copies data from read only memory to RAM. There are two schemes
      *  to copy. One can copy more than one sections. Another can only copy
      *  one section.  The former scheme needs more instructions and read-only
      *  data to implement than the latter.
      *  Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.  */
-    
+
 #ifdef __STARTUP_COPY_MULTIPLE
     /*  Multiple sections scheme.
      *
@@ -155,25 +155,25 @@ Reset_Handler:
      */
     ldr r4, = __copy_table_start__
     ldr r5, = __copy_table_end__
-    
+
 .L_loop0:
     cmp r4, r5
     bge .L_loop0_done
     ldr r1, [r4]
     ldr r2, [r4, #4]
     ldr r3, [r4, #8]
-    
+
 .L_loop0_0:
     subs    r3, #4
     blt .L_loop0_0_done
     ldr r0, [r1, r3]
     str r0, [r2, r3]
     b   .L_loop0_0
-    
+
 .L_loop0_0_done:
     adds    r4, #12
     b   .L_loop0
-    
+
 .L_loop0_done:
 #else
     /*  Single section scheme.
@@ -188,19 +188,19 @@ Reset_Handler:
     ldr r1, = __etext
     ldr r2, = __data_start__
     ldr r3, = __data_end__
-    
+
     subs    r3, r2
     ble .L_loop1_done
-    
+
 .L_loop1:
     subs    r3, #4
     ldr r0, [r1, r3]
     str r0, [r2, r3]
     bgt .L_loop1
-    
+
 .L_loop1_done:
 #endif /*__STARTUP_COPY_MULTIPLE */
-    
+
     /*  This part of work usually is done in C library startup code. Otherwise,
      *  define this macro to enable it in this startup.
      *
@@ -221,21 +221,21 @@ Reset_Handler:
      */
     ldr r3, = __zero_table_start__
     ldr r4, = __zero_table_end__
-    
+
 .L_loop2:
     cmp r3, r4
     bge .L_loop2_done
     ldr r1, [r3]
     ldr r2, [r3, #4]
     movs    r0, 0
-    
+
 .L_loop2_0:
     subs    r2, #4
     blt .L_loop2_0_done
     str r0, [r1, r2]
     b   .L_loop2_0
 .L_loop2_0_done:
-    
+
     adds    r3, #8
     b   .L_loop2
 .L_loop2_done:
@@ -263,22 +263,22 @@ Reset_Handler:
     bgt .L_loop3
 .L_loop3_done:
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
-    
-    
-    
+
+
+
 #ifndef __NO_SYSTEM_INIT
     bl  SystemInit
 #endif
-    
-    
+
+
 #ifndef __START
 #define __START _start
 #endif
     bl  __START
-    
+
     .pool
     .size   Reset_Handler, . - Reset_Handler
-    
+
     .align  1
     .thumb_func
     .weak   HardFault_Handler
@@ -310,15 +310,15 @@ Reset_Handler:
     .thumb_func
     .weak   Default_Handler
     .type   Default_Handler, % function
-    
+
 Default_Handler:
     b   .
     .size   Default_Handler, . - Default_Handler
-    
+
     /*    Macro to define default handlers. Default handler
      *    will be weak symbol and just dead loops. They can be
      *    overwritten by other handlers */
-     
+
     .macro  def_irq_handler handler_name
     .weak   \handler_name
     .set    \handler_name, Default_Handler
@@ -397,10 +397,10 @@ SH_DoCommand:
     .global __PC
     .type   __PC, % function
 __PC:
-    
+
     MOV     r0, lr
     BLX     lr
     .size   __PC, . - __PC
-    
-    
+
+
     .end

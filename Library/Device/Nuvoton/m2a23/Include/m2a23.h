@@ -4,7 +4,7 @@
  * @brief    M2A23 Series Peripheral Access Layer Header File
  *
  * @copyright SPDX-License-Identifier: Apache-2.0
- * @copyright Copyright (C) 2022 Nuvoton Technology Corp. All rights reserved.
+ * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /**
@@ -23,7 +23,7 @@
   *
   * <b>Copyright Notice</b>
   *
-  * Copyright (C) 2022~2023 Nuvoton Technology Corp. All rights reserved.
+  * Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
   */
 
 #ifndef __M2A23_H__
@@ -412,4 +412,4 @@ typedef volatile unsigned short vu16;
 #include "usci_spi.h"
 #include "usci_i2c.h"
 #include "canfd.h"
-#endif
+#endif // __M2A23_H__

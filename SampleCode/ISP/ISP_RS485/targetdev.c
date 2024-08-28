@@ -2,7 +2,7 @@
  * @file     targetdev.c
  * @brief    ISP support function source file
  * @version  0x31
- *              
+ *
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -12,7 +12,7 @@
 // Supports 64K/128K/256K (APROM)
 uint32_t GetApromSize()
 {
-    uint32_t size = 0x10000, data;
+    unsigned int size = 0x10000, data;
     int result;
 
     do {
@@ -29,7 +29,7 @@ uint32_t GetApromSize()
 #define CONFIG0_DFEN                0x01
 void GetDataFlashInfo(uint32_t *addr, uint32_t *size)
 {
-    uint32_t uData;
+    unsigned int uData;
     *size = 0;
     FMC_Read_User(Config0, &uData);
 

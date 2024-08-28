@@ -2,14 +2,27 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "m2a23",
-            "displayName": "m2a23",
+            "name": "ARMCLANG",
+            "displayName": "ARMCLANG",
             "description": "",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build",
+            "binaryDir": "${sourceDir}/build/armclang",
             "cacheVariables": {
                 "CMAKE_VERBOSE_MAKEFILE": "OFF",
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "C_COMPILER_ID": "ARMCLANG"
+            }
+        },
+        {
+            "name": "GCC",
+            "displayName": "GCC",
+            "description": "",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/gcc",
+            "cacheVariables": {
+                "CMAKE_VERBOSE_MAKEFILE": "OFF",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "C_COMPILER_ID": "GCC"
             }
         }
     ]

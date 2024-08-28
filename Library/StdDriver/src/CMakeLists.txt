@@ -9,7 +9,6 @@ set(DRV_SRC
     fmc.c
     gpio.c
     i2c.c
-#    i3cs.c
     llsi.c
     pdma.c
     pwm.c

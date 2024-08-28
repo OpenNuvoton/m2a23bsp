@@ -385,9 +385,9 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>startup_m2a23.S</FileName>
+              <FileName>startup_m2a23.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\m2a23\Source\ARM\startup_m2a23.S</FilePath>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\m2a23\Source\ARM\startup_m2a23.s</FilePath>
             </File>
             <File>
               <FileName>system_m2a23.c</FileName>
