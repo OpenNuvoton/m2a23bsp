@@ -128,7 +128,7 @@ SECTIONS
 	{
 		__data_start__ = .;
 
-		./Library/Library/fmc.o (.text*)
+		*(.text.FMC_*)
 
 		*(vtable)
 		*(.data*)
