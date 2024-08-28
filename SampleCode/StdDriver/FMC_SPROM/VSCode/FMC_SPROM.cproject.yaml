@@ -11,11 +11,11 @@ project:
         - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/startup_m2a23.S
         - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/_syscalls.c
         - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/semihosting.h
-        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld
     - group: User
       files:
         - file: ../main.c
-        - file: ../sprom.c        
+        - file: ../sprom.c
+        - file: ../GCC/FMC_SPROM.ld
     - group: Library
       files:
         - file: ../../../../Library/StdDriver/src/retarget.c

@@ -123,13 +123,14 @@ SECTIONS
 	} > FLASH
 	*/
 
-	/*. = 0x200000;*/
-	
-	/*.sprom : AT (__exidx_end)*/
-	/*.sprom : 
+	. = 0x200000;
+
+
+	.sprom :
 	{
-		./User/sprom.o(.text*)
-	} > FLASH2 */
+		KEEP(*(.text.sprom*))
+
+	} > FLASH2
 
 
 	__etext = .;
@@ -203,12 +204,4 @@ SECTIONS
 
 	/* Check if data + heap + stack exceeds RAM limit */
 	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
-}
-SECTIONS{
-
-	.sprom :
-	{
-		./User/sprom.o(.text*)
-	} > FLASH2
-
 }

@@ -13,6 +13,9 @@
 /*
  *  Put a character to UART0 transmitter
  */
+#ifdef __GNUC__
+__attribute__((section(".text.sprom_api")))
+#endif
 void sprom_putc(int ch)
 {
     while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) ;
@@ -27,6 +30,9 @@ void sprom_putc(int ch)
 /*
  *  Poll until received a character from UART0 receiver
  */
+#ifdef __GNUC__
+__attribute__((section(".text.sprom_api")))
+#endif
 char sprom_getc(void)
 {
     while(1)
@@ -41,6 +47,9 @@ char sprom_getc(void)
 /*
  *  print out a string
  */
+#ifdef __GNUC__
+__attribute__((section(".text.sprom_api")))
+#endif
 void sprom_put_string(char *str)
 {
     while (*str)
@@ -49,6 +58,9 @@ void sprom_put_string(char *str)
     }
 }
 
+#ifdef __GNUC__
+__attribute__((section(".text.sprom_api")))
+#endif
 void sprom_routine(void)
 {
     sprom_put_string("\n\n\n");
