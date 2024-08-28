@@ -17,16 +17,7 @@
     .text
 
 loaderImage1Base:
-#ifndef BIN_FILE
-# ifndef _ARM_VSCODE_
-    .incbin  "../../LDROM_iap.bin"
-# else
-    .incbin   "./LDROM_iap.bin"
-# endif
-#else
-    .incbin   BIN_FILE
-#endif // #ifndef BIN_FILE
-
+    .incbin   "LDROM_iap.bin"
 loaderImage1Limit:
     .space   4
 

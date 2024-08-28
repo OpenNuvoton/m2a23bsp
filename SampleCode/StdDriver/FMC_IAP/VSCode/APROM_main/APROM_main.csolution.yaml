@@ -37,6 +37,7 @@ solution:
           - -fdata-sections
           - -g
           - -x assembler-with-cpp
+          - -I../LDROM_iap/out/LDROM_iap/GCC/Debug
         - Link:
           - -mthumb
           - -fmessage-length=0
