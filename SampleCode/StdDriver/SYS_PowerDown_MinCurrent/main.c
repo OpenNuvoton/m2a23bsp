@@ -267,6 +267,12 @@ int32_t main(void)
     printf("|  6. Wait for PB.3 falling-edge interrupt event to wake-up the MCU |\n");
     printf("+-------------------------------------------------------------------+\n\n");
 
+    /*
+        To measure Power-down current:
+        On NuMaker-M2A23SG V0.1 board, remove component, e.g. Nu-Link2-Me.
+        Remove R16 and then user can measure target chip power consumption by AMMETER connector.
+    */
+
     /* Set function pin to GPIO mode except UART pin to print message, and ICE pin to download code. */
     SYS->GPA_MFPL = 0;
     SYS->GPA_MFPH = 0;
