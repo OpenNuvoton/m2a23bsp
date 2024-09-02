@@ -12,11 +12,6 @@
 
 
 
-#ifdef __ARMCC_VERSION
-extern uint32_t Image$$RO$$Base;
-#endif
-
-
 void SYS_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/
@@ -112,11 +107,7 @@ int32_t main(void)
     /* Enable FMC ISP function */
     FMC_ENABLE_ISP();
 
-#ifdef __ARMCC_VERSION
-    printf("Current RO Base = 0x%x, VECMAP = 0x%x\n", (uint32_t)&Image$$RO$$Base, FMC_GetVECMAP());
-#else
     printf("VECMAP = 0x%x\n", FMC_GetVECMAP());
-#endif
 
     /* Check IAP mode */
     u32Cfg = FMC_Read(FMC_CONFIG_BASE);

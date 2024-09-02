@@ -222,7 +222,7 @@ void SPI_EnableAutoSS(SPI_T *spi, uint32_t u32SSPinMask, uint32_t u32ActiveLevel
   */
 uint32_t SPI_SetBusClock(SPI_T *spi, uint32_t u32BusClock)
 {
-    uint32_t u32ClkSrc, u32HCLKFreq;
+    uint32_t u32ClkSrc = 0, u32HCLKFreq;
     uint32_t u32Div;
 
     /* Get system clock frequency */
