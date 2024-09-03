@@ -14,7 +14,7 @@
  *  Put a character to UART0 transmitter
  */
 #ifdef __GNUC__
-__attribute__((section(".text.sprom_api")))
+__attribute__((section(".sprom_api")))
 #endif
 void sprom_putc(int ch)
 {
@@ -31,7 +31,7 @@ void sprom_putc(int ch)
  *  Poll until received a character from UART0 receiver
  */
 #ifdef __GNUC__
-__attribute__((section(".text.sprom_api")))
+__attribute__((section(".sprom_api")))
 #endif
 char sprom_getc(void)
 {
@@ -48,7 +48,7 @@ char sprom_getc(void)
  *  print out a string
  */
 #ifdef __GNUC__
-__attribute__((section(".text.sprom_api")))
+__attribute__((section(".sprom_api")))
 #endif
 void sprom_put_string(char *str)
 {
@@ -59,7 +59,7 @@ void sprom_put_string(char *str)
 }
 
 #ifdef __GNUC__
-__attribute__((section(".text.sprom_api")))
+__attribute__((section(".sprom_api")))
 #endif
 void sprom_routine(void)
 {
