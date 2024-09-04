@@ -1,0 +1,20 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: Template.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: Template.cproject.yml
+  cbuilds:
+    - cbuild: Template.debug+ARMCLANG.cbuild.yml
+      project: Template
+      configuration: .debug+ARMCLANG
+    - cbuild: Template.debug+GNUC.cbuild.yml
+      project: Template
+      configuration: .debug+GNUC
+    - cbuild: Template.release+ARMCLANG.cbuild.yml
+      project: Template
+      configuration: .release+ARMCLANG
+    - cbuild: Template.release+GNUC.cbuild.yml
+      project: Template
+      configuration: .release+GNUC
+  rebuild: true

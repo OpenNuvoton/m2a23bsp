@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: PWM_AccStop.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: PWM_AccStop.cproject.yml
+  cbuilds:
+    - cbuild: PWM_AccStop.debug+ARMCLANG.cbuild.yml
+      project: PWM_AccStop
+      configuration: .debug+ARMCLANG
+    - cbuild: PWM_AccStop.debug+GNUC.cbuild.yml
+      project: PWM_AccStop
+      configuration: .debug+GNUC
+    - cbuild: PWM_AccStop.release+ARMCLANG.cbuild.yml
+      project: PWM_AccStop
+      configuration: .release+ARMCLANG
+    - cbuild: PWM_AccStop.release+GNUC.cbuild.yml
+      project: PWM_AccStop
+      configuration: .release+GNUC

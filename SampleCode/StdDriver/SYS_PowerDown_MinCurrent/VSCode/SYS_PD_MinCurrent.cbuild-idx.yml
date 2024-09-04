@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: SYS_PD_MinCurrent.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: SYS_PD_MinCurrent.cproject.yml
+  cbuilds:
+    - cbuild: SYS_PD_MinCurrent.debug+ARMCLANG.cbuild.yml
+      project: SYS_PD_MinCurrent
+      configuration: .debug+ARMCLANG
+    - cbuild: SYS_PD_MinCurrent.debug+GNUC.cbuild.yml
+      project: SYS_PD_MinCurrent
+      configuration: .debug+GNUC
+    - cbuild: SYS_PD_MinCurrent.release+ARMCLANG.cbuild.yml
+      project: SYS_PD_MinCurrent
+      configuration: .release+ARMCLANG
+    - cbuild: SYS_PD_MinCurrent.release+GNUC.cbuild.yml
+      project: SYS_PD_MinCurrent
+      configuration: .release+GNUC

@@ -1,0 +1,5 @@
+cbuild-set:
+  generated-by: csolution version 2.5.0
+  contexts:
+    - context: fmc_ld_code.debug+GNUC
+    - context: FMC_IAP.debug+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_LIN.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_LIN.cproject.yml
+  cbuilds:
+    - cbuild: UART_LIN.debug+ARMCLANG.cbuild.yml
+      project: UART_LIN
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_LIN.debug+GNUC.cbuild.yml
+      project: UART_LIN
+      configuration: .debug+GNUC
+    - cbuild: UART_LIN.release+ARMCLANG.cbuild.yml
+      project: UART_LIN
+      configuration: .release+ARMCLANG
+    - cbuild: UART_LIN.release+GNUC.cbuild.yml
+      project: UART_LIN
+      configuration: .release+GNUC

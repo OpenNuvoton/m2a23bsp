@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ADC_PDMA_SingleCycleScan.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ADC_PDMA_SingleCycleScan.cproject.yml
+  cbuilds:
+    - cbuild: ADC_PDMA_SingleCycleScan.debug+ARMCLANG.cbuild.yml
+      project: ADC_PDMA_SingleCycleScan
+      configuration: .debug+ARMCLANG
+    - cbuild: ADC_PDMA_SingleCycleScan.debug+GNUC.cbuild.yml
+      project: ADC_PDMA_SingleCycleScan
+      configuration: .debug+GNUC
+    - cbuild: ADC_PDMA_SingleCycleScan.release+ARMCLANG.cbuild.yml
+      project: ADC_PDMA_SingleCycleScan
+      configuration: .release+ARMCLANG
+    - cbuild: ADC_PDMA_SingleCycleScan.release+GNUC.cbuild.yml
+      project: ADC_PDMA_SingleCycleScan
+      configuration: .release+GNUC

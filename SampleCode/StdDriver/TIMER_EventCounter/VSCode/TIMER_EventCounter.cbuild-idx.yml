@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: TIMER_EventCounter.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: TIMER_EventCounter.cproject.yml
+  cbuilds:
+    - cbuild: TIMER_EventCounter.debug+ARMCLANG.cbuild.yml
+      project: TIMER_EventCounter
+      configuration: .debug+ARMCLANG
+    - cbuild: TIMER_EventCounter.debug+GNUC.cbuild.yml
+      project: TIMER_EventCounter
+      configuration: .debug+GNUC
+    - cbuild: TIMER_EventCounter.release+ARMCLANG.cbuild.yml
+      project: TIMER_EventCounter
+      configuration: .release+ARMCLANG
+    - cbuild: TIMER_EventCounter.release+GNUC.cbuild.yml
+      project: TIMER_EventCounter
+      configuration: .release+GNUC

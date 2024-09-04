@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_Autoflow.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_Autoflow.cproject.yml
+  cbuilds:
+    - cbuild: UART_Autoflow.debug+ARMCLANG.cbuild.yml
+      project: UART_Autoflow
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_Autoflow.debug+GNUC.cbuild.yml
+      project: UART_Autoflow
+      configuration: .debug+GNUC
+    - cbuild: UART_Autoflow.release+ARMCLANG.cbuild.yml
+      project: UART_Autoflow
+      configuration: .release+ARMCLANG
+    - cbuild: UART_Autoflow.release+GNUC.cbuild.yml
+      project: UART_Autoflow
+      configuration: .release+GNUC

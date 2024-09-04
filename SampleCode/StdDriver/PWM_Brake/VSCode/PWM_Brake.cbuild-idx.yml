@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: PWM_Brake.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: PWM_Brake.cproject.yml
+  cbuilds:
+    - cbuild: PWM_Brake.debug+ARMCLANG.cbuild.yml
+      project: PWM_Brake
+      configuration: .debug+ARMCLANG
+    - cbuild: PWM_Brake.debug+GNUC.cbuild.yml
+      project: PWM_Brake
+      configuration: .debug+GNUC
+    - cbuild: PWM_Brake.release+ARMCLANG.cbuild.yml
+      project: PWM_Brake
+      configuration: .release+ARMCLANG
+    - cbuild: PWM_Brake.release+GNUC.cbuild.yml
+      project: PWM_Brake
+      configuration: .release+GNUC

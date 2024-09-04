@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: TIMER_Periodic.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: TIMER_Periodic.cproject.yml
+  cbuilds:
+    - cbuild: TIMER_Periodic.debug+ARMCLANG.cbuild.yml
+      project: TIMER_Periodic
+      configuration: .debug+ARMCLANG
+    - cbuild: TIMER_Periodic.debug+GNUC.cbuild.yml
+      project: TIMER_Periodic
+      configuration: .debug+GNUC
+    - cbuild: TIMER_Periodic.release+ARMCLANG.cbuild.yml
+      project: TIMER_Periodic
+      configuration: .release+ARMCLANG
+    - cbuild: TIMER_Periodic.release+GNUC.cbuild.yml
+      project: TIMER_Periodic
+      configuration: .release+GNUC

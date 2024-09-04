@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: FMC_CRC32.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: FMC_CRC32.cproject.yml
+  cbuilds:
+    - cbuild: FMC_CRC32.debug+ARMCLANG.cbuild.yml
+      project: FMC_CRC32
+      configuration: .debug+ARMCLANG
+    - cbuild: FMC_CRC32.debug+GNUC.cbuild.yml
+      project: FMC_CRC32
+      configuration: .debug+GNUC
+    - cbuild: FMC_CRC32.release+ARMCLANG.cbuild.yml
+      project: FMC_CRC32
+      configuration: .release+ARMCLANG
+    - cbuild: FMC_CRC32.release+GNUC.cbuild.yml
+      project: FMC_CRC32
+      configuration: .release+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: FMC_DualBank.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: FMC_DualBank.cproject.yml
+  cbuilds:
+    - cbuild: FMC_DualBank.debug+ARMCLANG.cbuild.yml
+      project: FMC_DualBank
+      configuration: .debug+ARMCLANG
+    - cbuild: FMC_DualBank.debug+GNUC.cbuild.yml
+      project: FMC_DualBank
+      configuration: .debug+GNUC
+    - cbuild: FMC_DualBank.release+ARMCLANG.cbuild.yml
+      project: FMC_DualBank
+      configuration: .release+ARMCLANG
+    - cbuild: FMC_DualBank.release+GNUC.cbuild.yml
+      project: FMC_DualBank
+      configuration: .release+GNUC

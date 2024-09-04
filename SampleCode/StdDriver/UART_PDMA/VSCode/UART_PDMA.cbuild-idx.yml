@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_PDMA.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_PDMA.cproject.yml
+  cbuilds:
+    - cbuild: UART_PDMA.debug+ARMCLANG.cbuild.yml
+      project: UART_PDMA
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_PDMA.debug+GNUC.cbuild.yml
+      project: UART_PDMA
+      configuration: .debug+GNUC
+    - cbuild: UART_PDMA.release+ARMCLANG.cbuild.yml
+      project: UART_PDMA
+      configuration: .release+ARMCLANG
+    - cbuild: UART_PDMA.release+GNUC.cbuild.yml
+      project: UART_PDMA
+      configuration: .release+GNUC

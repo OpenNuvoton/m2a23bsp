@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: BackupApp.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: BackupApp.cproject.yml
+  cbuilds:
+    - cbuild: BackupApp.debug+ARMCLANG.cbuild.yml
+      project: BackupApp
+      configuration: .debug+ARMCLANG
+    - cbuild: BackupApp.debug+GNUC.cbuild.yml
+      project: BackupApp
+      configuration: .debug+GNUC
+    - cbuild: BackupApp.release+ARMCLANG.cbuild.yml
+      project: BackupApp
+      configuration: .release+ARMCLANG
+    - cbuild: BackupApp.release+GNUC.cbuild.yml
+      project: BackupApp
+      configuration: .release+GNUC

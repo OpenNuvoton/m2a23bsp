@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ACMP_CompareVBG.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ACMP_CompareVBG.cproject.yml
+  cbuilds:
+    - cbuild: ACMP_CompareVBG.debug+ARMCLANG.cbuild.yml
+      project: ACMP_CompareVBG
+      configuration: .debug+ARMCLANG
+    - cbuild: ACMP_CompareVBG.debug+GNUC.cbuild.yml
+      project: ACMP_CompareVBG
+      configuration: .debug+GNUC
+    - cbuild: ACMP_CompareVBG.release+ARMCLANG.cbuild.yml
+      project: ACMP_CompareVBG
+      configuration: .release+ARMCLANG
+    - cbuild: ACMP_CompareVBG.release+GNUC.cbuild.yml
+      project: ACMP_CompareVBG
+      configuration: .release+GNUC

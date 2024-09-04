@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: App.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: App.cproject.yml
+  cbuilds:
+    - cbuild: App.debug+ARMCLANG.cbuild.yml
+      project: App
+      configuration: .debug+ARMCLANG
+    - cbuild: App.debug+GNUC.cbuild.yml
+      project: App
+      configuration: .debug+GNUC
+    - cbuild: App.release+ARMCLANG.cbuild.yml
+      project: App
+      configuration: .release+ARMCLANG
+    - cbuild: App.release+GNUC.cbuild.yml
+      project: App
+      configuration: .release+GNUC

@@ -11,7 +11,7 @@ Listings/
 RTE/
 tmp/
 .clangd
-*.yml
+*.yaml
 *.cprj
 
 #For others

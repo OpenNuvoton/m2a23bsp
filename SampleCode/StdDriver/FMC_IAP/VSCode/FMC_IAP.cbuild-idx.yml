@@ -1,0 +1,20 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: FMC_IAP.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: fmc_ld_code.cproject.yml
+    - cproject: FMC_IAP.cproject.yml
+  cbuilds:
+    - cbuild: fmc_ld_code.debug+ARMCLANG.cbuild.yml
+      project: fmc_ld_code
+      configuration: .debug+ARMCLANG
+    - cbuild: fmc_ld_code.debug+GNUC.cbuild.yml
+      project: fmc_ld_code
+      configuration: .debug+GNUC
+    - cbuild: FMC_IAP.debug+ARMCLANG.cbuild.yml
+      project: FMC_IAP
+      configuration: .debug+ARMCLANG
+    - cbuild: FMC_IAP.debug+GNUC.cbuild.yml
+      project: FMC_IAP
+      configuration: .debug+GNUC

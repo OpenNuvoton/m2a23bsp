@@ -1,0 +1,35 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  misc:
+    - for-compiler: AC6
+      C: [-std=c99, -flto, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -gdwarf-3]
+      ASM: [-D__MICROLIB]
+      Link: [--lto, --library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
+    - for-compiler: GCC
+      C: [-std=gnu11, -mfloat-abi=soft, --specs=nano.specs, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
+          -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-3, -g]
+      Link: [-T "$LIB_DIR$/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld", -Xlinker, --gc-sections, -gdwarf-3, --symbolic]
+  setups:
+    - output:
+        type: ["elf", "bin"]
+  add-path:
+    - $LIB_DIR$/Device/Nuvoton/m2a23/Include
+    - $LIB_DIR$/StdDriver/inc
+    - $LIB_DIR$/CMSIS/Include
+  groups:
+    - group: CMSIS
+      files:
+        - file: $CMSIS_DIR$/ARM/startup_m2a23.S
+          for-compiler: AC6
+        - file: $CMSIS_DIR$/GCC/startup_m2a23.S
+          for-compiler: GCC
+        - file: $CMSIS_DIR$/system_m2a23.c
+    - group: Library
+      files:
+        - file: $LIB_SRC_DIR$/sys.c
+        - file: $LIB_SRC_DIR$/canfd.c
+        - file: $LIB_SRC_DIR$/fmc.c
+    - group: User
+      files:
+        - file: ../main.c

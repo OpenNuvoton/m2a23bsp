@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: SYS_TrimHIRC.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: SYS_TrimHIRC.cproject.yml
+  cbuilds:
+    - cbuild: SYS_TrimHIRC.debug+ARMCLANG.cbuild.yml
+      project: SYS_TrimHIRC
+      configuration: .debug+ARMCLANG
+    - cbuild: SYS_TrimHIRC.debug+GNUC.cbuild.yml
+      project: SYS_TrimHIRC
+      configuration: .debug+GNUC
+    - cbuild: SYS_TrimHIRC.release+ARMCLANG.cbuild.yml
+      project: SYS_TrimHIRC
+      configuration: .release+ARMCLANG
+    - cbuild: SYS_TrimHIRC.release+GNUC.cbuild.yml
+      project: SYS_TrimHIRC
+      configuration: .release+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: FMC_MultiBoot.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: FMC_MultiBoot.cproject.yml
+  cbuilds:
+    - cbuild: FMC_MultiBoot.debug+ARMCLANG.cbuild.yml
+      project: FMC_MultiBoot
+      configuration: .debug+ARMCLANG
+    - cbuild: FMC_MultiBoot.debug+GNUC.cbuild.yml
+      project: FMC_MultiBoot
+      configuration: .debug+GNUC
+    - cbuild: FMC_MultiBoot.release+ARMCLANG.cbuild.yml
+      project: FMC_MultiBoot
+      configuration: .release+ARMCLANG
+    - cbuild: FMC_MultiBoot.release+GNUC.cbuild.yml
+      project: FMC_MultiBoot
+      configuration: .release+GNUC

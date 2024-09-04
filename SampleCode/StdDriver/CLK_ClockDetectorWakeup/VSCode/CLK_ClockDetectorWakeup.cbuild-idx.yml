@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: CLK_ClockDetectorWakeup.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: CLK_ClockDetectorWakeup.cproject.yml
+  cbuilds:
+    - cbuild: CLK_ClockDetectorWakeup.debug+ARMCLANG.cbuild.yml
+      project: CLK_ClockDetectorWakeup
+      configuration: .debug+ARMCLANG
+    - cbuild: CLK_ClockDetectorWakeup.debug+GNUC.cbuild.yml
+      project: CLK_ClockDetectorWakeup
+      configuration: .debug+GNUC
+    - cbuild: CLK_ClockDetectorWakeup.release+ARMCLANG.cbuild.yml
+      project: CLK_ClockDetectorWakeup
+      configuration: .release+ARMCLANG
+    - cbuild: CLK_ClockDetectorWakeup.release+GNUC.cbuild.yml
+      project: CLK_ClockDetectorWakeup
+      configuration: .release+GNUC

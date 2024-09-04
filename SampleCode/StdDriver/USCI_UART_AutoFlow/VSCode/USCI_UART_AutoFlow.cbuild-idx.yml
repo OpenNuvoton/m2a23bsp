@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: USCI_UART_AutoFlow.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: USCI_UART_AutoFlow.cproject.yml
+  cbuilds:
+    - cbuild: USCI_UART_AutoFlow.debug+ARMCLANG.cbuild.yml
+      project: USCI_UART_AutoFlow
+      configuration: .debug+ARMCLANG
+    - cbuild: USCI_UART_AutoFlow.debug+GNUC.cbuild.yml
+      project: USCI_UART_AutoFlow
+      configuration: .debug+GNUC
+    - cbuild: USCI_UART_AutoFlow.release+ARMCLANG.cbuild.yml
+      project: USCI_UART_AutoFlow
+      configuration: .release+ARMCLANG
+    - cbuild: USCI_UART_AutoFlow.release+GNUC.cbuild.yml
+      project: USCI_UART_AutoFlow
+      configuration: .release+GNUC

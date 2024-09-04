@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: USCI_SPI_Loopback.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: USCI_SPI_Loopback.cproject.yml
+  cbuilds:
+    - cbuild: USCI_SPI_Loopback.debug+ARMCLANG.cbuild.yml
+      project: USCI_SPI_Loopback
+      configuration: .debug+ARMCLANG
+    - cbuild: USCI_SPI_Loopback.debug+GNUC.cbuild.yml
+      project: USCI_SPI_Loopback
+      configuration: .debug+GNUC
+    - cbuild: USCI_SPI_Loopback.release+ARMCLANG.cbuild.yml
+      project: USCI_SPI_Loopback
+      configuration: .release+ARMCLANG
+    - cbuild: USCI_SPI_Loopback.release+GNUC.cbuild.yml
+      project: USCI_SPI_Loopback
+      configuration: .release+GNUC

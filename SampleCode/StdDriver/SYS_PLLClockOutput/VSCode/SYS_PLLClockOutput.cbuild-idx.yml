@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: SYS_PLLClockOutput.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: SYS_PLLClockOutput.cproject.yml
+  cbuilds:
+    - cbuild: SYS_PLLClockOutput.debug+ARMCLANG.cbuild.yml
+      project: SYS_PLLClockOutput
+      configuration: .debug+ARMCLANG
+    - cbuild: SYS_PLLClockOutput.debug+GNUC.cbuild.yml
+      project: SYS_PLLClockOutput
+      configuration: .debug+GNUC
+    - cbuild: SYS_PLLClockOutput.release+ARMCLANG.cbuild.yml
+      project: SYS_PLLClockOutput
+      configuration: .release+ARMCLANG
+    - cbuild: SYS_PLLClockOutput.release+GNUC.cbuild.yml
+      project: SYS_PLLClockOutput
+      configuration: .release+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_Wakeup.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_Wakeup.cproject.yml
+  cbuilds:
+    - cbuild: UART_Wakeup.debug+ARMCLANG.cbuild.yml
+      project: UART_Wakeup
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_Wakeup.debug+GNUC.cbuild.yml
+      project: UART_Wakeup
+      configuration: .debug+GNUC
+    - cbuild: UART_Wakeup.release+ARMCLANG.cbuild.yml
+      project: UART_Wakeup
+      configuration: .release+ARMCLANG
+    - cbuild: UART_Wakeup.release+GNUC.cbuild.yml
+      project: UART_Wakeup
+      configuration: .release+GNUC

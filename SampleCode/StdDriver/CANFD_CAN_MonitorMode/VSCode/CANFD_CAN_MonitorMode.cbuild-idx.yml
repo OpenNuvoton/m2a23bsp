@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: CANFD_CAN_MonitorMode.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: CANFD_CAN_MonitorMode.cproject.yml
+  cbuilds:
+    - cbuild: CANFD_CAN_MonitorMode.debug+ARMCLANG.cbuild.yml
+      project: CANFD_CAN_MonitorMode
+      configuration: .debug+ARMCLANG
+    - cbuild: CANFD_CAN_MonitorMode.debug+GNUC.cbuild.yml
+      project: CANFD_CAN_MonitorMode
+      configuration: .debug+GNUC
+    - cbuild: CANFD_CAN_MonitorMode.release+ARMCLANG.cbuild.yml
+      project: CANFD_CAN_MonitorMode
+      configuration: .release+ARMCLANG
+    - cbuild: CANFD_CAN_MonitorMode.release+GNUC.cbuild.yml
+      project: CANFD_CAN_MonitorMode
+      configuration: .release+GNUC

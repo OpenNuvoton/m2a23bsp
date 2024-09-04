@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: PWM_PDMA_Capture.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: PWM_PDMA_Capture.cproject.yml
+  cbuilds:
+    - cbuild: PWM_PDMA_Capture.debug+ARMCLANG.cbuild.yml
+      project: PWM_PDMA_Capture
+      configuration: .debug+ARMCLANG
+    - cbuild: PWM_PDMA_Capture.debug+GNUC.cbuild.yml
+      project: PWM_PDMA_Capture
+      configuration: .debug+GNUC
+    - cbuild: PWM_PDMA_Capture.release+ARMCLANG.cbuild.yml
+      project: PWM_PDMA_Capture
+      configuration: .release+ARMCLANG
+    - cbuild: PWM_PDMA_Capture.release+GNUC.cbuild.yml
+      project: PWM_PDMA_Capture
+      configuration: .release+GNUC

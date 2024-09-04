@@ -1,0 +1,83 @@
+build:
+  generated-by: csolution version 2.5.0
+  solution: PDMA_ScatterGather.csolution.yml
+  project: PDMA_ScatterGather.cproject.yml
+  context: PDMA_ScatterGather.release+GNUC
+  compiler: GCC
+  device: Nuvoton::M2A23SG5AC
+  device-pack: Nuvoton::NuMicro_DFP@1.3.24
+  processor:
+    core: Cortex-M23
+  packs:
+    - pack: Nuvoton::NuMicro_DFP@1.3.24
+      path: ${CMSIS_PACK_ROOT}/Nuvoton/NuMicro_DFP/1.3.24
+  optimize: size
+  misc:
+    C:
+      - -std=gnu11
+      - -mfloat-abi=soft
+      - --specs=nano.specs
+      - -Wall -Wno-format
+      - -Wno-return-type
+      - -Wno-unused-but-set-variable
+      - -fdata-sections
+      - -ffunction-sections
+      - -fno-builtin
+      - -fshort-enums
+      - -funsigned-char
+      - -mthumb
+      - -Wno-main
+      - -gdwarf-3
+      - -g
+    Link:
+      - -T "../../../../Library/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld"
+      - -Xlinker
+      - --gc-sections
+      - -gdwarf-3
+      - --symbolic
+  add-path:
+    - ../../../../Library/Device/Nuvoton/m2a23/Include
+    - ../../../../Library/StdDriver/inc
+    - ../../../../Library/CMSIS/Include
+    - ${CMSIS_PACK_ROOT}/Nuvoton/NuMicro_DFP/1.3.24/Device/M2A23/Include
+  add-path-asm:
+    - ${CMSIS_PACK_ROOT}/Nuvoton/NuMicro_DFP/1.3.24/Device/M2A23/Include
+  output-dirs:
+    intdir: tmp
+    outdir: out/PDMA_ScatterGather/GNUC/release
+    rtedir: RTE
+  output:
+    - type: bin
+      file: PDMA_ScatterGather.bin
+    - type: elf
+      file: PDMA_ScatterGather.elf
+  linker:
+    script: RTE/Device/M2A23SG5AC/gcc_linker_script.ld.src
+    regions: RTE/Device/M2A23SG5AC/regions_M2A23SG5AC.h
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/GCC/startup_m2a23.S
+          category: sourceAsm
+        - file: ../../../../Library/Device/Nuvoton/m2a23/Source/system_m2a23.c
+          category: sourceC
+    - group: Library
+      files:
+        - file: ../../../../Library/StdDriver/src/clk.c
+          category: sourceC
+        - file: ../../../../Library/StdDriver/src/sys.c
+          category: sourceC
+        - file: ../../../../Library/StdDriver/src/uart.c
+          category: sourceC
+        - file: ../../../../Library/StdDriver/src/retarget.c
+          category: sourceC
+        - file: ../../../../Library/StdDriver/src/pdma.c
+          category: sourceC
+    - group: User
+      files:
+        - file: ../main.c
+          category: sourceC
+  licenses:
+    - license: <unknown>
+      packs:
+        - pack: Nuvoton::NuMicro_DFP@1.3.24

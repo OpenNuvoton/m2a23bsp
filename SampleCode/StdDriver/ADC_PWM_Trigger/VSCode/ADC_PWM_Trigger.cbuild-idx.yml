@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ADC_PWM_Trigger.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ADC_PWM_Trigger.cproject.yml
+  cbuilds:
+    - cbuild: ADC_PWM_Trigger.debug+ARMCLANG.cbuild.yml
+      project: ADC_PWM_Trigger
+      configuration: .debug+ARMCLANG
+    - cbuild: ADC_PWM_Trigger.debug+GNUC.cbuild.yml
+      project: ADC_PWM_Trigger
+      configuration: .debug+GNUC
+    - cbuild: ADC_PWM_Trigger.release+ARMCLANG.cbuild.yml
+      project: ADC_PWM_Trigger
+      configuration: .release+ARMCLANG
+    - cbuild: ADC_PWM_Trigger.release+GNUC.cbuild.yml
+      project: ADC_PWM_Trigger
+      configuration: .release+GNUC

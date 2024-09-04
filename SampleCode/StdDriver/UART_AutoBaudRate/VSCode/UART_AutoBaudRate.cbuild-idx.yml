@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_AutoBaudRate.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_AutoBaudRate.cproject.yml
+  cbuilds:
+    - cbuild: UART_AutoBaudRate.debug+ARMCLANG.cbuild.yml
+      project: UART_AutoBaudRate
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_AutoBaudRate.debug+GNUC.cbuild.yml
+      project: UART_AutoBaudRate
+      configuration: .debug+GNUC
+    - cbuild: UART_AutoBaudRate.release+ARMCLANG.cbuild.yml
+      project: UART_AutoBaudRate
+      configuration: .release+ARMCLANG
+    - cbuild: UART_AutoBaudRate.release+GNUC.cbuild.yml
+      project: UART_AutoBaudRate
+      configuration: .release+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: TIMER_ACMPTrigger.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: TIMER_ACMPTrigger.cproject.yml
+  cbuilds:
+    - cbuild: TIMER_ACMPTrigger.debug+ARMCLANG.cbuild.yml
+      project: TIMER_ACMPTrigger
+      configuration: .debug+ARMCLANG
+    - cbuild: TIMER_ACMPTrigger.debug+GNUC.cbuild.yml
+      project: TIMER_ACMPTrigger
+      configuration: .debug+GNUC
+    - cbuild: TIMER_ACMPTrigger.release+ARMCLANG.cbuild.yml
+      project: TIMER_ACMPTrigger
+      configuration: .release+ARMCLANG
+    - cbuild: TIMER_ACMPTrigger.release+GNUC.cbuild.yml
+      project: TIMER_ACMPTrigger
+      configuration: .release+GNUC

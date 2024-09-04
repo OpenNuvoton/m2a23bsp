@@ -1,0 +1,24 @@
+solution:
+  created-by: uv2csolution@1.5.0
+  created-for: CMSIS-Toolbox@2.4.0
+  select-compiler:
+    - compiler: AC6@>=5.19.0
+    - compiler: GCC@>=10.3.1
+  build-types:
+    - type: debug
+      optimize: debug
+    - type: release
+      optimize: size
+  target-types:
+    - type: ARMCLANG
+      compiler: AC6
+      device: Nuvoton::M2A23SG5AC
+    - type: GNUC
+      compiler: GCC
+      device: Nuvoton::M2A23SG5AC
+  variables:
+    - LIB_DIR: ../../../../Library
+    - CMSIS_DIR: ../../../../Library/Device/Nuvoton/m2a23/Source
+    - LIB_SRC_DIR: ../../../../Library/StdDriver/src
+  projects:
+    - project: USCI_SPI_SlaveMode.cproject.yml

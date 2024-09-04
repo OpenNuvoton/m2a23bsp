@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: TIMER_TimeoutWakeup.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: TIMER_TimeoutWakeup.cproject.yml
+  cbuilds:
+    - cbuild: TIMER_TimeoutWakeup.debug+ARMCLANG.cbuild.yml
+      project: TIMER_TimeoutWakeup
+      configuration: .debug+ARMCLANG
+    - cbuild: TIMER_TimeoutWakeup.debug+GNUC.cbuild.yml
+      project: TIMER_TimeoutWakeup
+      configuration: .debug+GNUC
+    - cbuild: TIMER_TimeoutWakeup.release+ARMCLANG.cbuild.yml
+      project: TIMER_TimeoutWakeup
+      configuration: .release+ARMCLANG
+    - cbuild: TIMER_TimeoutWakeup.release+GNUC.cbuild.yml
+      project: TIMER_TimeoutWakeup
+      configuration: .release+GNUC

@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ACMP_Wakeup.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ACMP_Wakeup.cproject.yml
+  cbuilds:
+    - cbuild: ACMP_Wakeup.debug+ARMCLANG.cbuild.yml
+      project: ACMP_Wakeup
+      configuration: .debug+ARMCLANG
+    - cbuild: ACMP_Wakeup.debug+GNUC.cbuild.yml
+      project: ACMP_Wakeup
+      configuration: .debug+GNUC
+    - cbuild: ACMP_Wakeup.release+ARMCLANG.cbuild.yml
+      project: ACMP_Wakeup
+      configuration: .release+ARMCLANG
+    - cbuild: ACMP_Wakeup.release+GNUC.cbuild.yml
+      project: ACMP_Wakeup
+      configuration: .release+GNUC

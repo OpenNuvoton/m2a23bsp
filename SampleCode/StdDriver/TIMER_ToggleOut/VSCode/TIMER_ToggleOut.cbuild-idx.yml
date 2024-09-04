@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: TIMER_ToggleOut.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: TIMER_ToggleOut.cproject.yml
+  cbuilds:
+    - cbuild: TIMER_ToggleOut.debug+ARMCLANG.cbuild.yml
+      project: TIMER_ToggleOut
+      configuration: .debug+ARMCLANG
+    - cbuild: TIMER_ToggleOut.debug+GNUC.cbuild.yml
+      project: TIMER_ToggleOut
+      configuration: .debug+GNUC
+    - cbuild: TIMER_ToggleOut.release+ARMCLANG.cbuild.yml
+      project: TIMER_ToggleOut
+      configuration: .release+ARMCLANG
+    - cbuild: TIMER_ToggleOut.release+GNUC.cbuild.yml
+      project: TIMER_ToggleOut
+      configuration: .release+GNUC

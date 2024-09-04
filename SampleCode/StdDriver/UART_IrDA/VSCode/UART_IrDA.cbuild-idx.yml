@@ -1,0 +1,10 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_IrDA.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_IrDA.cproject.yml
+  cbuilds:
+    - cbuild: UART_IrDA.debug+ARMCLANG.cbuild.yml
+      project: UART_IrDA
+      configuration: .debug+ARMCLANG

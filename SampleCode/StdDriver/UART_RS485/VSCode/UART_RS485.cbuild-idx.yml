@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: UART_RS485.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: UART_RS485.cproject.yml
+  cbuilds:
+    - cbuild: UART_RS485.debug+ARMCLANG.cbuild.yml
+      project: UART_RS485
+      configuration: .debug+ARMCLANG
+    - cbuild: UART_RS485.debug+GNUC.cbuild.yml
+      project: UART_RS485
+      configuration: .debug+GNUC
+    - cbuild: UART_RS485.release+ARMCLANG.cbuild.yml
+      project: UART_RS485
+      configuration: .release+ARMCLANG
+    - cbuild: UART_RS485.release+GNUC.cbuild.yml
+      project: UART_RS485
+      configuration: .release+GNUC

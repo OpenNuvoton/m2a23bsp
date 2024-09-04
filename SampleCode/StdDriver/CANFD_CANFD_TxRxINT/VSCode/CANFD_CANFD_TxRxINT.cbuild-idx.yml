@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: CANFD_CANFD_TxRxINT.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: CANFD_CANFD_TxRxINT.cproject.yml
+  cbuilds:
+    - cbuild: CANFD_CANFD_TxRxINT.debug+ARMCLANG.cbuild.yml
+      project: CANFD_CANFD_TxRxINT
+      configuration: .debug+ARMCLANG
+    - cbuild: CANFD_CANFD_TxRxINT.debug+GNUC.cbuild.yml
+      project: CANFD_CANFD_TxRxINT
+      configuration: .debug+GNUC
+    - cbuild: CANFD_CANFD_TxRxINT.release+ARMCLANG.cbuild.yml
+      project: CANFD_CANFD_TxRxINT
+      configuration: .release+ARMCLANG
+    - cbuild: CANFD_CANFD_TxRxINT.release+GNUC.cbuild.yml
+      project: CANFD_CANFD_TxRxINT
+      configuration: .release+GNUC

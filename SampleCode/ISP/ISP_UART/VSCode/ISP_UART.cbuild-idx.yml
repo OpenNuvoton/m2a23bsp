@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ISP_UART.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ISP_UART.cproject.yml
+  cbuilds:
+    - cbuild: ISP_UART.debug+ARMCLANG.cbuild.yml
+      project: ISP_UART
+      configuration: .debug+ARMCLANG
+    - cbuild: ISP_UART.debug+GNUC.cbuild.yml
+      project: ISP_UART
+      configuration: .debug+GNUC
+    - cbuild: ISP_UART.release+ARMCLANG.cbuild.yml
+      project: ISP_UART
+      configuration: .release+ARMCLANG
+    - cbuild: ISP_UART.release+GNUC.cbuild.yml
+      project: ISP_UART
+      configuration: .release+GNUC

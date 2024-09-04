@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: SPI_MasterFIFOMode.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: SPI_MasterFIFOMode.cproject.yml
+  cbuilds:
+    - cbuild: SPI_MasterFIFOMode.debug+ARMCLANG.cbuild.yml
+      project: SPI_MasterFIFOMode
+      configuration: .debug+ARMCLANG
+    - cbuild: SPI_MasterFIFOMode.debug+GNUC.cbuild.yml
+      project: SPI_MasterFIFOMode
+      configuration: .debug+GNUC
+    - cbuild: SPI_MasterFIFOMode.release+ARMCLANG.cbuild.yml
+      project: SPI_MasterFIFOMode
+      configuration: .release+ARMCLANG
+    - cbuild: SPI_MasterFIFOMode.release+GNUC.cbuild.yml
+      project: SPI_MasterFIFOMode
+      configuration: .release+GNUC

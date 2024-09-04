@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: ADC_BurstMode.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: ADC_BurstMode.cproject.yml
+  cbuilds:
+    - cbuild: ADC_BurstMode.debug+ARMCLANG.cbuild.yml
+      project: ADC_BurstMode
+      configuration: .debug+ARMCLANG
+    - cbuild: ADC_BurstMode.debug+GNUC.cbuild.yml
+      project: ADC_BurstMode
+      configuration: .debug+GNUC
+    - cbuild: ADC_BurstMode.release+ARMCLANG.cbuild.yml
+      project: ADC_BurstMode
+      configuration: .release+ARMCLANG
+    - cbuild: ADC_BurstMode.release+GNUC.cbuild.yml
+      project: ADC_BurstMode
+      configuration: .release+GNUC

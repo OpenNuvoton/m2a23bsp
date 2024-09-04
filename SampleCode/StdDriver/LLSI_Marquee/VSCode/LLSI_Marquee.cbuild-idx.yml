@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: LLSI_Marquee.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: LLSI_Marquee.cproject.yml
+  cbuilds:
+    - cbuild: LLSI_Marquee.debug+ARMCLANG.cbuild.yml
+      project: LLSI_Marquee
+      configuration: .debug+ARMCLANG
+    - cbuild: LLSI_Marquee.debug+GNUC.cbuild.yml
+      project: LLSI_Marquee
+      configuration: .debug+GNUC
+    - cbuild: LLSI_Marquee.release+ARMCLANG.cbuild.yml
+      project: LLSI_Marquee
+      configuration: .release+ARMCLANG
+    - cbuild: LLSI_Marquee.release+GNUC.cbuild.yml
+      project: LLSI_Marquee
+      configuration: .release+GNUC

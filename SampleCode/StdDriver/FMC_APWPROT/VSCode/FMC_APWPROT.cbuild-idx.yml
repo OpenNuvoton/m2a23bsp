@@ -1,0 +1,19 @@
+build-idx:
+  generated-by: csolution version 2.5.0
+  csolution: FMC_APWPROT.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: FMC_APWPROT.cproject.yml
+  cbuilds:
+    - cbuild: FMC_APWPROT.debug+ARMCLANG.cbuild.yml
+      project: FMC_APWPROT
+      configuration: .debug+ARMCLANG
+    - cbuild: FMC_APWPROT.debug+GNUC.cbuild.yml
+      project: FMC_APWPROT
+      configuration: .debug+GNUC
+    - cbuild: FMC_APWPROT.release+ARMCLANG.cbuild.yml
+      project: FMC_APWPROT
+      configuration: .release+ARMCLANG
+    - cbuild: FMC_APWPROT.release+GNUC.cbuild.yml
+      project: FMC_APWPROT
+      configuration: .release+GNUC
