@@ -10,9 +10,6 @@ Objects/
 Listings/
 RTE/
 tmp/
-.clangd
-*.yaml
-*.cprj
 
 #For others
 out/
@@ -34,5 +31,11 @@ build/
 *.uvguix.*
 *.xml
 *.txt
+.clangd
+*.yaml
+*.cprj
+*.cbuild-*
+*.cbuild-*
+*.cbuild.yml
 all.eww
 all.uvmpw
