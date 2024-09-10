@@ -3,38 +3,41 @@ project:
     - pack: Nuvoton::NuMicro_DFP
   misc:
     - for-compiler: AC6
-      C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -o0, -gdwarf-3, -g]
+      C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -o0, -gdwarf-4]
       ASM: [-D__MICROLIB]
       Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
     - for-compiler: GCC
       C: [-std=gnu11, -mfloat-abi=soft, --specs=nano.specs, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
-          -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-3, -g]
-      Link: [-T "$LIB_DIR$/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld", -Xlinker, --gc-sections, -gdwarf-3, --symbolic]
+          -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
+      Link: [-Xlinker, --gc-sections]
   setups:
     - output:
         type: ["elf", "bin"]
+  linker:
+    - for-compiler: GCC
+      script: ../../../../../Library/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld
   add-path:
-    - $LIB_DIR$/Device/Nuvoton/m2a23/Include
-    - $LIB_DIR$/StdDriver/inc
-    - $LIB_DIR$/CMSIS/Include
+    - ../../../../../Library/Device/Nuvoton/m2a23/Include
+    - ../../../../../Library/StdDriver/inc
+    - ../../../../../Library/CMSIS/Include
     - ../../common/inc
-    - $LIB_DIR$/NuMaker/xmodem
+    - ../../../../../Library/NuMaker/xmodem
   groups:
     - group: CMSIS
       files:
-        - file: $CMSIS_DIR$/ARM/startup_m2a23.S
+        - file: ../../../../../Library/Device/Nuvoton/m2a23/Source/ARM/startup_m2a23.S
           for-compiler: AC6
-        - file: $CMSIS_DIR$/GCC/startup_m2a23.S
+        - file: ../../../../../Library/Device/Nuvoton/m2a23/Source/GCC/startup_m2a23.S
           for-compiler: GCC
-        - file: $CMSIS_DIR$/system_m2a23.c
+        - file: ../../../../../Library/Device/Nuvoton/m2a23/Source/system_m2a23.c
     - group: Library
       files:
-        - file: $LIB_SRC_DIR$/clk.c
-        - file: $LIB_SRC_DIR$/sys.c
-        - file: $LIB_SRC_DIR$/uart.c
-        - file: $LIB_SRC_DIR$/retarget.c
-        - file: $LIB_SRC_DIR$/fmc.c
-        - file: $LIB_DIR$/NuMaker/xmodem/xmodem.c
+        - file: ../../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../../Library/NuMaker/xmodem/xmodem.c
     - group: User
       files:
         - file: ../main.c

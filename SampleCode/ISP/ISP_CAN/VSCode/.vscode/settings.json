@@ -1,0 +1,12 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "ISP_CAN.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "debug": "Embedded Debug",
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        }
+    ]
+}

@@ -16,9 +16,5 @@ solution:
     - type: GNUC
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
-  variables:
-    - LIB_DIR: ../../../../Library
-    - CMSIS_DIR: ../../../../Library/Device/Nuvoton/m2a23/Source
-    - LIB_SRC_DIR: ../../../../Library/StdDriver/src
   projects:
     - project: UART_SingleWire.cproject.yml
