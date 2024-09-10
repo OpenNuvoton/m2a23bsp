@@ -99,8 +99,8 @@ void ADC_FunctionTest(void)
     ADC_Open(ADC0, ADC_ADCR_DIFFEN_SINGLE_END, ADC_ADCR_ADMD_SINGLE, BIT29);
 
     /* Set ADC extend sample time t0 (2 x ADC_CLK )*/
-    ADC_SetExtendSampleTime(ADC0, 0, (2-1));
-		
+    ADC_SetExtendSampleTime(ADC0, 0, (2 - 1));
+
     /* To sample band-gap precisely, the ADC capacitor must be charged at least 3 us for charging the ADC capacitor ( Cin )*/
 
     /* Clear the A/D interrupt flag for safe */

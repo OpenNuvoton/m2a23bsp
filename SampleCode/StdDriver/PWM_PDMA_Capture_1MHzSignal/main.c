@@ -85,9 +85,9 @@ void CalPeriodTime(PWM_T *PWM, uint32_t u32Ch)
     u16TotalPeriod = 0xFFFF - g_au16Count[2] + 1;
 
     printf("\nHigh Period = %d ns, Low Period = %d ns , Total Period = %d ns.\n",
-           u16HighPeriod*1000/48, u16LowPeriod*1000/48, u16TotalPeriod*1000/48);
+           u16HighPeriod * 1000 / 48, u16LowPeriod * 1000 / 48, u16TotalPeriod * 1000 / 48);
     printf("Frequency = %d Hz, Duty = %d %%.\n\n",
-           48000000/u16TotalPeriod, u16HighPeriod*100/u16TotalPeriod );
+           48000000 / u16TotalPeriod, u16HighPeriod * 100 / u16TotalPeriod);
 }
 
 void SYS_Init(void)
@@ -101,7 +101,7 @@ void SYS_Init(void)
 
     /* Set PCLK0/PCLK1 to HCLK/2 */
     CLK->PCLKDIV = (CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2);
-    
+
     /* Enable all GPIO clock */
     CLK->AHBCLK |= CLK_AHBCLK_GPIOACKEN_Msk | CLK_AHBCLK_GPIOBCKEN_Msk | CLK_AHBCLK_GPIOCCKEN_Msk |
                    CLK_AHBCLK_GPIODCKEN_Msk | CLK_AHBCLK_GPIOFCKEN_Msk;
@@ -111,7 +111,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -128,11 +128,11 @@ void SYS_Init(void)
 
     /* Select PWM module clock source */
     CLK_SetModuleClock(PWM0_MODULE, CLK_CLKSEL3_PWM0SEL_PCLK0, 0);
-    
+
     /* Set multi-function pin for PWM */
     SET_PWM0_CH0_PB5();
     SET_PWM0_CH2_PB3();
-    
+
     /* Enable PDMA module clock */
     CLK_EnableModuleClock(PDMA0_MODULE);
 }
@@ -155,7 +155,7 @@ void UART0_Init(void)
 int32_t main(void)
 {
     uint8_t u8Option;
-    
+
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
        to lock protected register. If user want to write
@@ -206,7 +206,7 @@ int32_t main(void)
     */
 
     /* PWM0 channel 0 frequency prescaler to 1 */
-    PWM_SET_PRESCALER(PWM0, 0, 1-1);
+    PWM_SET_PRESCALER(PWM0, 0, 1 - 1);
 
     /* PWM0 channel 0 frequency period to 35 */
     PWM_SET_CNR(PWM0, 0, 35);

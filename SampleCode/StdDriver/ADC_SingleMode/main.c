@@ -61,11 +61,11 @@ void SYS_Init(void)
     CLK_EnableModuleClock(ADC0_MODULE);
 
     /* Set multi-function pins for ADC channels */
-    SET_ADC0_CH0_PB0(); 
+    SET_ADC0_CH0_PB0();
     SET_ADC0_CH1_PB1();
     SET_ADC0_CH2_PB2();
     /* Disable digital input path of ADC analog pin to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0|BIT1|BIT2));
+    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0 | BIT1 | BIT2));
 }
 
 /*---------------------------------------------------------------------------------------------------------*/

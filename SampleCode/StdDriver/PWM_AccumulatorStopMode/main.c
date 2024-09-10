@@ -51,7 +51,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -143,6 +143,6 @@ int32_t main(void)
 
     /* Enable Timer for PWM0 channel 0 */
     PWM_Start(PWM0, PWM_CH_0_MASK);
-		
+
     while(1) {}
 }

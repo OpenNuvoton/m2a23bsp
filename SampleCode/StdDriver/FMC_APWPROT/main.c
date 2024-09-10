@@ -84,8 +84,8 @@ int32_t main(void)
     FMC_ENABLE_AP_UPDATE();
 
     /* Set APROM testing range */
-    u32Start = FMC_APROM_BASE + FMC_APPROT_BLOCK_SIZE*4;
-    u32End   = FMC_APROM_BASE + FMC_APPROT_BLOCK_SIZE*8;
+    u32Start = FMC_APROM_BASE + FMC_APPROT_BLOCK_SIZE * 4;
+    u32End   = FMC_APROM_BASE + FMC_APPROT_BLOCK_SIZE * 8;
 
     /* Clear all APROM protect settings */
     for(i = 0; i < 8; i++)
@@ -96,7 +96,7 @@ int32_t main(void)
     /* Erase testing APROM range */
     printf("\nErase APROM....\n");
 
-    for(i = u32Start; i < u32End; i+= FMC_FLASH_PAGE_SIZE)
+    for(i = u32Start; i < u32End; i += FMC_FLASH_PAGE_SIZE)
     {
         printf("Erase page: 0x%08x \r", i);
         i32ISPSTS = FMC_Erase(i);
@@ -110,7 +110,7 @@ int32_t main(void)
 
 
     /* Verify testing APROM range after erase done */
-    for(i = u32Start; i < u32End; i+=4)
+    for(i = u32Start; i < u32End; i += 4)
     {
         u32ISPReadData = FMC_Read(i);
 
@@ -124,14 +124,14 @@ int32_t main(void)
         u32CPUReadData = M32(i);
 
         /* Verify testing APROM range, ISP read should be 0xFFFFFFFF */
-        if (u32ISPReadData != 0xFFFFFFFF)
+        if(u32ISPReadData != 0xFFFFFFFF)
         {
             printf("line[%d][ISP verify 0xFFFFFFFF FAIL]addr[0x%x] data[0x%x]\n", __LINE__, i, u32ISPReadData);
             goto lexit;
         }
 
         /* Verify testing APROM range, CPU read should be 0xFFFFFFFF */
-        if (u32CPUReadData != 0xFFFFFFFF)
+        if(u32CPUReadData != 0xFFFFFFFF)
         {
             printf("line[%d][CPU verify 0xFFFFFFFF FAIL]addr[0x%x] data[0x%x]\n",  __LINE__, i, u32CPUReadData);
             goto lexit;
@@ -141,7 +141,7 @@ int32_t main(void)
     /* Sequential program on testing APROM block */
     printf("\nProgram APROM....\n");
 
-    for(i = u32Start; i < u32End; i+= 4)
+    for(i = u32Start; i < u32End; i += 4)
     {
         if(i % FMC_FLASH_PAGE_SIZE == 0)
             printf("Program page: 0x%08x \r", i);
@@ -161,16 +161,16 @@ int32_t main(void)
         u32CPUReadData = M32(i);
 
         /* Verify testing APROM range, ISP read should be its address */
-        if (u32ISPReadData != i)
+        if(u32ISPReadData != i)
         {
             printf("line[%d][ISP verify FAIL]addr[0x%x] data[0x%x]\n", __LINE__, i, u32ISPReadData);
             goto lexit;
         }
 
         /* Verify testing APROM range, CPU read should be its address */
-        if (u32CPUReadData != i)
+        if(u32CPUReadData != i)
         {
-            printf("line[%d][CPU verify FAIL]addr[0x%x] data[0x%x]\n",__LINE__,  i, u32CPUReadData);
+            printf("line[%d][CPU verify FAIL]addr[0x%x] data[0x%x]\n", __LINE__,  i, u32CPUReadData);
             goto lexit;
         }
 
@@ -188,7 +188,7 @@ int32_t main(void)
     printf("+----------------------------------------+\n");
     for(i = 0; i < 8; i++)
     {
-        printf("APPROEN%02d  [%s]  address is 0x%08x ~ 0x%08x\n", i, (FMC->APWPROT0 & (1<<i))? "ENABLE ":"DISABLE", (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i+1)*FMC_APPROT_BLOCK_SIZE-1) );
+        printf("APPROEN%02d  [%s]  address is 0x%08x ~ 0x%08x\n", i, (FMC->APWPROT0 & (1 << i)) ? "ENABLE " : "DISABLE", (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i + 1)*FMC_APPROT_BLOCK_SIZE - 1));
     }
 
     printf("+----------------------------------------+\n");
@@ -206,7 +206,7 @@ int32_t main(void)
 
         /* Set the protect address by the selected block */
         u32Start = i32GetInt*FMC_APPROT_BLOCK_SIZE;
-        u32End   = (i32GetInt+1)*FMC_APPROT_BLOCK_SIZE;
+        u32End   = (i32GetInt + 1) * FMC_APPROT_BLOCK_SIZE;
 
         if(i32GetInt < 4)
         {
@@ -240,21 +240,21 @@ int32_t main(void)
     printf("+----------------------------------------+\n");
     for(i = 4; i < 8; i++)
     {
-        printf("APPROEN%02d  [%s]  address is 0x%08x ~ 0x%08x\n", i, (FMC->APWPROT0 & (1<<i))? " ENABLE":"DISABLE", (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i+1)*FMC_APPROT_BLOCK_SIZE-1));
+        printf("APPROEN%02d  [%s]  address is 0x%08x ~ 0x%08x\n", i, (FMC->APWPROT0 & (1 << i)) ? " ENABLE" : "DISABLE", (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i + 1)*FMC_APPROT_BLOCK_SIZE - 1));
     }
 
     for(i = 4; i < 8; i++)
     {
-        if(FMC->APWPROT0 & (1<<i))
+        if(FMC->APWPROT0 & (1 << i))
         {
 
             /* Set APROM protected address by selected region */
             u32Start = i*FMC_APPROT_BLOCK_SIZE;
-            u32End   = (i+1)*FMC_APPROT_BLOCK_SIZE;
+            u32End   = (i + 1) * FMC_APPROT_BLOCK_SIZE;
 
-            printf("\n\nAPPROEN%02d Testing, address is 0x%08x ~ 0x%08x \n", i,  (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i+1)*FMC_APPROT_BLOCK_SIZE-1));
+            printf("\n\nAPPROEN%02d Testing, address is 0x%08x ~ 0x%08x \n", i, (uint32_t)(i*FMC_APPROT_BLOCK_SIZE), (uint32_t)((i + 1)*FMC_APPROT_BLOCK_SIZE - 1));
 
-            for(j = u32Start; j < u32End; j+=4)
+            for(j = u32Start; j < u32End; j += 4)
             {
                 u32ISPReadData = FMC_Read(j);
                 u32ISPFF = FMC_GET_FAIL_FLAG();
@@ -267,14 +267,14 @@ int32_t main(void)
                 u32CPUReadData = M32(j);
 
                 /* Verify testing APROM range, ISP read should be its address */
-                if (u32ISPReadData != j)
+                if(u32ISPReadData != j)
                 {
                     printf("line[%d][ISP verify protect data FAIL]addr[0x%x] data[0x%x]\n", __LINE__, j, u32ISPReadData);
                     goto lexit;
                 }
 
                 /* Verify testing APROM range, CPU read should be its address */
-                if (u32CPUReadData != j)
+                if(u32CPUReadData != j)
                 {
                     printf("line[%d][CPU verify protect data FAIL]addr[0x%x] data[0x%x]\n",  __LINE__, j, u32CPUReadData);
                     goto lexit;
@@ -283,7 +283,7 @@ int32_t main(void)
 
             /* After APROM protect enable, do erase testing */
             printf("\n\t   ENABLE APROM Protect, erase testing start(should be erase FAIL!).....\n");
-            for(j = u32Start; j < u32End; j+= FMC_FLASH_PAGE_SIZE)
+            for(j = u32Start; j < u32End; j += FMC_FLASH_PAGE_SIZE)
             {
                 i32ISPSTS = FMC_Erase(j);
 
@@ -296,7 +296,7 @@ int32_t main(void)
 
             /* After APROM protect enable, verify APROM after erase testing */
             printf("\n\t   Verify after erase APROM when ENABLE APROM Protect(it should not be erased!).....\n");
-            for(j = u32Start; j < u32End; j+=4)
+            for(j = u32Start; j < u32End; j += 4)
             {
                 u32ISPReadData = FMC_Read(j);
                 u32ISPFF = FMC_GET_FAIL_FLAG();
@@ -309,14 +309,14 @@ int32_t main(void)
                 u32CPUReadData = M32(j);
 
                 /* Verify testing APROM range, ISP read should be its address */
-                if (u32ISPReadData != j)
+                if(u32ISPReadData != j)
                 {
                     printf("line[%d][ISP verify protect data FAIL]addr[0x%x] data[0x%x]\n", __LINE__, j, u32ISPReadData);
                     goto lexit;
                 }
 
                 /* Verify testing APROM range, CPU read should be its address */
-                if (u32CPUReadData != j)
+                if(u32CPUReadData != j)
                 {
                     printf("line[%d][CPU verify protect data FAIL]addr[0x%x] data[0x%x]\n",  __LINE__, j, u32CPUReadData);
                     goto lexit;
@@ -326,7 +326,7 @@ int32_t main(void)
 
             printf("\n\t   When ENABLE APROM Protect, program APROM test(it should not be programed!).....\n");
 
-            for(j = u32Start; j < u32End; j+= 4)
+            for(j = u32Start; j < u32End; j += 4)
             {
                 /* Program 0 to protected region */
                 FMC_Write(j, 0);
@@ -353,16 +353,16 @@ int32_t main(void)
                 u32CPUReadData = M32(j);
 
                 /* Verify testing APROM range, ISP read should be its address, not 0 */
-                if (u32ISPReadData != j)
+                if(u32ISPReadData != j)
                 {
                     printf("line[%d][ISP verify fail]addr[0x%x] data[0x%x]\n", __LINE__, j, u32ISPReadData);
                     goto lexit;
                 }
 
                 /* Verify testing APROM range, CPU read should be its address,  not 0 */
-                if (u32CPUReadData != j)
+                if(u32CPUReadData != j)
                 {
-                    printf("line[%d][CPU verify fail]addr[0x%x] data[0x%x]\n",__LINE__,  j, u32CPUReadData);
+                    printf("line[%d][CPU verify fail]addr[0x%x] data[0x%x]\n", __LINE__,  j, u32CPUReadData);
                     goto lexit;
                 }
 

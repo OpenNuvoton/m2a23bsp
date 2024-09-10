@@ -42,9 +42,9 @@ void PWM0P0_IRQHandler(void)
         PWM_SET_CNR(PWM0, 0, 399);
         PWM_SET_CMR(PWM0, 0, 200);
     }
-    
+
     i32Toggle ^= 1;
-    
+
     /* Clear channel 0 period interrupt flag */
     PWM_ClearPeriodIntFlag(PWM0, 0);
 }
@@ -67,7 +67,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -161,6 +161,6 @@ int32_t main(void)
 
     /* Start */
     PWM_Start(PWM0, PWM_CH_0_MASK);
-		
+
     while(1) {}
 }

@@ -109,7 +109,7 @@ void TrimHIRC(void)
 
     /* Get HIRC Frequency Lock */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-    while( (SYS->HIRCTRIMSTS & SYS_HIRCTRIMSTS_FREQLOCK_Msk) == 0 )
+    while((SYS->HIRCTRIMSTS & SYS_HIRCTRIMSTS_FREQLOCK_Msk) == 0)
     {
         if(--u32TimeOutCnt == 0)
         {

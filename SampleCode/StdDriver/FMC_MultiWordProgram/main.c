@@ -67,11 +67,11 @@ int32_t main(void)
 
     FMC_ENABLE_AP_UPDATE();            /* Enable APROM erase/program */
 
-    for (u32Addr = 0x20000; u32Addr < 0x22000; u32Addr += FMC_FLASH_PAGE_SIZE)
+    for(u32Addr = 0x20000; u32Addr < 0x22000; u32Addr += FMC_FLASH_PAGE_SIZE)
     {
         printf("Multiword program APROM page 0x%x =>\n", u32Addr);
 
-        if (FMC_Erase(u32Addr) < 0)
+        if(FMC_Erase(u32Addr) < 0)
         {
             printf("    Erase failed!!\n");
             goto err_out;
@@ -79,14 +79,14 @@ int32_t main(void)
 
         printf("    Program...\n");
 
-        for (u32Maddr = u32Addr; u32Maddr < u32Addr + FMC_FLASH_PAGE_SIZE; u32Maddr += FMC_MULTI_WORD_PROG_LEN)
+        for(u32Maddr = u32Addr; u32Maddr < u32Addr + FMC_FLASH_PAGE_SIZE; u32Maddr += FMC_MULTI_WORD_PROG_LEN)
         {
             /* Prepare test pattern */
-            for (i = 0; i < FMC_MULTI_WORD_PROG_LEN; i+=4)
+            for(i = 0; i < FMC_MULTI_WORD_PROG_LEN; i += 4)
                 g_auPageBuff[i / 4] = u32Maddr + i;
 
             i = (uint32_t)FMC_WriteMultiple(u32Maddr, g_auPageBuff, FMC_MULTI_WORD_PROG_LEN);
-            if (i <= 0)
+            if(i <= 0)
             {
                 printf("FMC_WriteMultiple failed: %d\n", i);
                 goto err_out;
@@ -97,19 +97,19 @@ int32_t main(void)
 
         printf("    Verify...");
 
-        for (i = 0; i < FMC_FLASH_PAGE_SIZE; i+=4)
+        for(i = 0; i < FMC_FLASH_PAGE_SIZE; i += 4)
             g_auPageBuff[i / 4] = u32Addr + i;
 
-        for (i = 0; i < FMC_FLASH_PAGE_SIZE; i+=4)
+        for(i = 0; i < FMC_FLASH_PAGE_SIZE; i += 4)
         {
             if(FMC_Read(u32Addr + i) != g_auPageBuff[i / 4])
             {
                 printf("\n[FAILED] Data mismatch at address 0x%x, expect: 0x%x, read: 0x%x!\n", u32Addr + i, g_auPageBuff[i / 4], FMC_Read(u32Addr + i));
                 goto err_out;
             }
-            if (g_FMC_i32ErrCode != 0)
+            if(g_FMC_i32ErrCode != 0)
             {
-                printf("FMC_Read address 0x%x failed!\n", u32Addr+i);
+                printf("FMC_Read address 0x%x failed!\n", u32Addr + i);
                 goto err_out;
             }
         }
@@ -128,6 +128,6 @@ err_out:
     {
         printf("\n\nERROR!\n");
     }
-    while (1);
+    while(1);
 
 }

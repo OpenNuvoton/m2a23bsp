@@ -70,7 +70,7 @@ int32_t main(void)
 
     FMC_Open();                        /* Enable FMC ISP function                         */
 
-    while (1)
+    while(1)
     {
         printf("\n\n\n");
         printf("+--------------------------------------+\n");
@@ -81,67 +81,67 @@ int32_t main(void)
         printf("| [3] Branch to SPROM                  |\n");
         printf("+--------------------------------------+\n");
 
-        if (FMC->ISPSTS & FMC_ISPSTS_SCODE_Msk)
+        if(FMC->ISPSTS & FMC_ISPSTS_SCODE_Msk)
             printf("ISPSTS=0x%x, SPROM is secured.\n", FMC->ISPSTS);
         else
             printf("ISPSTS=0x%x, SPROM is not secured.\n", FMC->ISPSTS);
 
         chr = getchar();
 
-        switch (chr)
+        switch(chr)
         {
-        case '1':
-            printf("Once SPROM is locked, it will become unreadable and can only "
-                   "be unlocked by erase SPROM page.\n"
-                   "Are you sure to lock SPROM? (y/n)");
-            fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
-            chr = getchar();
-            if ((chr == 'y') || (chr == 'Y'))
-            {
-                FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
-
-                /*
-                 * Program a non-0xFF to the last byte of SPROM can make SPROM
-                 * enter secure mode. Note that SPROM secure does not become
-                 * effective until next chip boot. Because FMC check SPROM secure
-                 * byte only when chip booting.
-                 */
-                if (FMC_Write(FMC_SPROM_END-4, 0x33333333) != 0)
+            case '1':
+                printf("Once SPROM is locked, it will become unreadable and can only "
+                       "be unlocked by erase SPROM page.\n"
+                       "Are you sure to lock SPROM? (y/n)");
+                fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
+                chr = getchar();
+                if((chr == 'y') || (chr == 'Y'))
                 {
-                    printf("FMC_Write address FMC_SPROM_END-4 failed!\n");
-                    while (1);
+                    FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
+
+                    /*
+                     * Program a non-0xFF to the last byte of SPROM can make SPROM
+                     * enter secure mode. Note that SPROM secure does not become
+                     * effective until next chip boot. Because FMC check SPROM secure
+                     * byte only when chip booting.
+                     */
+                    if(FMC_Write(FMC_SPROM_END - 4, 0x33333333) != 0)
+                    {
+                        printf("FMC_Write address FMC_SPROM_END-4 failed!\n");
+                        while(1);
+                    }
+
+                    /*
+                     * Issued a chip reset to make SPROM secure mode take effects.
+                     */
+                    SYS->IPRST0 = SYS_IPRST0_CHIPRST_Msk;
                 }
+                break;
 
-                /*
-                 * Issued a chip reset to make SPROM secure mode take effects.
-                 */
-                SYS->IPRST0 = SYS_IPRST0_CHIPRST_Msk;
-            }
-            break;
-
-        case '2':
-            printf("Please note that this sample have a sub-routine running on SPROM.\n");
-            printf("If SPROM was erased, branch to SPROM will cause a program fault.\n");
-            printf("Are you sure to erase SPROM? (y/n)");
-            fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
-            chr = getchar();
-            if ((chr == 'y') || (chr == 'Y'))
-            {
-                FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
-                ret = FMC_Erase_SPROM();     /* erase SPROM                           */
-                FMC_DISABLE_SP_UPDATE();     /* disable SPROM update                  */
-                if (ret != 0)
+            case '2':
+                printf("Please note that this sample have a sub-routine running on SPROM.\n");
+                printf("If SPROM was erased, branch to SPROM will cause a program fault.\n");
+                printf("Are you sure to erase SPROM? (y/n)");
+                fflush(stdout); /* Forces a write of all user-space buffered data for the given output */
+                chr = getchar();
+                if((chr == 'y') || (chr == 'Y'))
                 {
-                    printf("FMC_Erase_SPROM failed!\n");
-                    while (1);
+                    FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
+                    ret = FMC_Erase_SPROM();     /* erase SPROM                           */
+                    FMC_DISABLE_SP_UPDATE();     /* disable SPROM update                  */
+                    if(ret != 0)
+                    {
+                        printf("FMC_Erase_SPROM failed!\n");
+                        while(1);
+                    }
+                    printf("\n\nSPROM is erased.\n");
                 }
-                printf("\n\nSPROM is erased.\n");
-            }
-            break;
+                break;
 
-        case '3':
-            sprom_routine();
-            break;
+            case '3':
+                sprom_routine();
+                break;
         }
     }
 

@@ -67,7 +67,7 @@ void SYS_Init(void)
     SET_ADC0_CH2_PB2();
     /* Disable digital input path of ADC analog pin to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT2);
-    
+
     /* Enable Timer 0 module clock */
     CLK_EnableModuleClock(TMR0_MODULE);
     /* Select Timer 0 module clock source as HIRC */
@@ -206,7 +206,7 @@ int main(void)
 
     /* Init TIMER0 for ADC */
     TIMER0_Init();
-    
+
     /* ADC function test */
     ADC_FunctionTest();
 

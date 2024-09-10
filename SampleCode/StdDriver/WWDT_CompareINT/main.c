@@ -64,7 +64,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -124,10 +124,10 @@ int main(void)
         while(1) {}
     }
 
-    dPeriodTime = (((double)(1000000 * 2048) / (double)(SystemCoreClock/2)) * 1024) * 32;
+    dPeriodTime = (((double)(1000000 * 2048) / (double)(SystemCoreClock / 2)) * 1024) * 32;
 
     printf("# WWDT Settings: \n");
-    printf("    - Clock source is PCLK0/2048 (%d Hz)    \n", (SystemCoreClock/2) / 2048);
+    printf("    - Clock source is PCLK0/2048 (%d Hz)    \n", (SystemCoreClock / 2) / 2048);
     printf("    - WWDT counter prescale period is 1024, \n");
     printf("        and max WWDT time-out period is 1024 * (64 * WWDT_CLK)\n");
     printf("    - Interrupt enable                      \n");

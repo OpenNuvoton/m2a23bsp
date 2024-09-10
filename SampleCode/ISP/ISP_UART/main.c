@@ -27,7 +27,7 @@ void ProcessHardFault(void)
 {
     while(1); /* Halt here if hard fault occurs. */
 }
-void SH_Return(void){}
+void SH_Return(void) {}
 
 
 int32_t SYS_Init(void)
@@ -43,7 +43,7 @@ int32_t SYS_Init(void)
 
     /* Wait for HIRC clock ready */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-    while (!(CLK->STATUS & CLK_STATUS_HIRCSTB_Msk))
+    while(!(CLK->STATUS & CLK_STATUS_HIRCSTB_Msk))
         if(--u32TimeOutCnt == 0) return -1;
 
     /* Select HCLK clock source as HIRC first */
@@ -57,7 +57,7 @@ int32_t SYS_Init(void)
 
     /* Wait for PLL clock ready */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-    while (!(CLK->STATUS & CLK_STATUS_PLLSTB_Msk))
+    while(!(CLK->STATUS & CLK_STATUS_PLLSTB_Msk))
         if(--u32TimeOutCnt == 0) return -1;
 
     /* Select HCLK clock source as PLL/2 and HCLK source divider as 1 */
@@ -96,7 +96,7 @@ int32_t main(void)
     SYS_UnlockReg();
 
     /* Init System, peripheral clock and multi-function I/O */
-    if( SYS_Init() < 0 ) goto _APROM;
+    if(SYS_Init() < 0) goto _APROM;
 
     /* Configure WDT */
     WDT->CTL &= ~(WDT_CTL_WDTEN_Msk | WDT_CTL_ICEDEBUG_Msk);
@@ -118,30 +118,38 @@ int32_t main(void)
     SysTick->CTRL = SysTick->CTRL | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;   /* Use CPU clock */
 
     /* Wait for CMD_CONNECT command until Systick time-out */
-    while (1) {
+    while(1)
+    {
 
         /* Wait for CMD_CONNECT command */
-        if ((bufhead >= 4) || (bUartDataReady == TRUE)) {
+        if((bufhead >= 4) || (bUartDataReady == TRUE))
+        {
             uint32_t lcmd;
             lcmd = inpw(uart_rcvbuf);
 
-            if (lcmd == CMD_CONNECT) {
+            if(lcmd == CMD_CONNECT)
+            {
                 break;
-            } else {
+            }
+            else
+            {
                 bUartDataReady = FALSE;
                 bufhead = 0;
             }
         }
 
         /* Systick time-out, then go to APROM */
-        if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) {
+        if(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)
+        {
             goto _APROM;
         }
     }
 
     /* Prase command from master and send response back */
-    while (1) {
-        if (bUartDataReady == TRUE) {
+    while(1)
+    {
+        if(bUartDataReady == TRUE)
+        {
             WDT->CTL &= ~(WDT_CTL_WDTEN_Msk | WDT_CTL_ICEDEBUG_Msk);
             WDT->CTL |= (WDT_TIMEOUT_2POW18 | WDT_CTL_RSTEN_Msk);
             bUartDataReady = FALSE;
@@ -158,5 +166,5 @@ _APROM:
     SCB->AIRCR = (V6M_AIRCR_VECTKEY_DATA | V6M_AIRCR_SYSRESETREQ);
 
     /* Trap the CPU */
-    while (1);
+    while(1);
 }

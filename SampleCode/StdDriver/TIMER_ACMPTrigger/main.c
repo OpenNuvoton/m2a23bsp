@@ -30,7 +30,7 @@ void TMR0_IRQHandler(void);
 void TMR0_IRQHandler(void)
 {
     printf("ACMP triggered timer reset while counter is at %d\n", TIMER_GetCaptureData(TIMER0));
-    
+
     // Clear timer capture interrupt flag.
     TIMER_ClearCaptureIntFlag(TIMER0);
 }
@@ -53,7 +53,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -69,10 +69,10 @@ void SYS_Init(void)
 
     /* Select TIMER clock source */
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_PCLK0, 0);
-    
+
     /* Enable ACMP module clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
-    
+
     /* Set PB4 multi-function pin for ACMP1 positive input pin */
     SET_ACMP1_P1_PB4();
     /* Disable digital input path of analog pin ACMP1_P1 to prevent leakage */
@@ -109,7 +109,7 @@ int main(void)
     PB->DOUT |= 1 << GPIO_DOUT_DOUT5_Pos;
     // Set PB.5 to output mode
     PB->MODE = (PB->MODE & ~GPIO_MODE_MODE5_Msk) | (GPIO_MODE_OUTPUT << GPIO_MODE_MODE5_Pos);
-    
+
     printf("\nThis sample code demonstrate ACMP trigger timer counter reset mode.\n");
     printf("Please connect PB.5 with ACMP1 positive input pin PB.4, press any key to continue\n");
     getchar();
@@ -141,7 +141,7 @@ int main(void)
     ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP1 positive input channel */
     ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
-    
+
     while(1)
     {
         PB5 = 0; // low

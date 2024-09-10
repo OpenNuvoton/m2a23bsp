@@ -158,9 +158,9 @@ int32_t main(void)
     /* Open Channel 2 */
     PDMA_Open(PDMA0, BIT2);
     /* Transfer count is PDMA_TEST_LENGTH, transfer width is 32 bits(one word) */
-    PDMA_SetTransferCnt(PDMA0,2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
+    PDMA_SetTransferCnt(PDMA0, 2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
     /* Set source address is au8SrcArray, destination address is au8DestArray, Source/Destination increment size is 32 bits(one word) */
-    PDMA_SetTransferAddr(PDMA0,2, (uint32_t)au8SrcArray, PDMA_SAR_INC, (uint32_t)au8DestArray, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA0, 2, (uint32_t)au8SrcArray, PDMA_SAR_INC, (uint32_t)au8DestArray, PDMA_DAR_INC);
     /* Request source is memory to memory */
     PDMA_SetTransferMode(PDMA0, 2, PDMA_EINT1, FALSE, 0);
     /* Transfer type is burst transfer and burst size is 4 */
@@ -179,7 +179,7 @@ int32_t main(void)
 
     /* Configure PA.7 as EINT1 pin and enable interrupt by falling edge trigger */
     GPIO_SetMode(PA, BIT7, GPIO_MODE_INPUT);
-    GPIO->INT_EDETCTL = (GPIO->INT_EDETCTL & (~GPIO_INT_EDETCTL_EDETCTL1_Msk)) | (0x2<<GPIO_INT_EDETCTL_EDETCTL1_Pos);
+    GPIO->INT_EDETCTL = (GPIO->INT_EDETCTL & (~GPIO_INT_EDETCTL_EDETCTL1_Msk)) | (0x2 << GPIO_INT_EDETCTL_EDETCTL1_Pos);
     GPIO->INT_EDINTEN |= GPIO_INT_EDINTEN_EDIEN1_Msk;
     NVIC_EnableIRQ(EINT1_IRQn);
 

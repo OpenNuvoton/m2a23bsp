@@ -1,0 +1,876 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "SampleCode/Hard_Fault_Sample/VSCode/Hard_Fault_Sample.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/ISP/ISP_CAN/VSCode/ISP_CAN.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/ISP/ISP_RS485/VSCode/ISP_RS485.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/ISP/ISP_SPI/VSCode/ISP_SPI.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/ISP/ISP_UART/VSCode/ISP_UART.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ACMP_CompareDAC/VSCode/ACMP_CompareDAC.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ACMP_CompareVBG/VSCode/ACMP_CompareVBG.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ACMP_Wakeup/VSCode/ACMP_Wakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ACMP_WindowCompare/VSCode/ACMP_WindowCompare.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_BandGap/VSCode/ADC_BandGap.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_BurstMode/VSCode/ADC_BurstMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_ContinuousScanMode/VSCode/ADC_ContinuousScanMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_PDMA_SingleCycleScanMode/VSCode/ADC_PDMA_SingleCycleScan.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_PWM_Trigger/VSCode/ADC_PWM_Trigger.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_ResultMonitor/VSCode/ADC_ResultMonitor.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_SingleCycleScanMode/VSCode/ADC_SingleCycleScanMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_SingleMode/VSCode/ADC_SingleMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_STADC_Trigger/VSCode/ADC_STADC_Trigger.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/ADC_TIMER_Trigger/VSCode/ADC_TIMER_Trigger.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CANFD_Loopback/VSCode/CANFD_CANFD_Loopback.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CANFD_MonitorMode/VSCode/CANFD_CANFD_MonitorMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CANFD_TxRx/VSCode/CANFD_CANFD_TxRx.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CANFD_TxRxINT/VSCode/CANFD_CANFD_TxRxINT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CAN_Loopback/VSCode/CANFD_CAN_Loopback.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CAN_MonitorMode/VSCode/CANFD_CAN_MonitorMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CAN_TxRx/VSCode/CANFD_CAN_TxRx.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CANFD_CAN_TxRxINT/VSCode/CANFD_CAN_TxRxINT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CLK_ClockDetector/VSCode/CLK_ClockDetector.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CLK_ClockDetectorWakeup/VSCode/CLK_ClockDetectorWakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CRC_CCITT/VSCode/CRC_CCITT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CRC_CRC32/VSCode/CRC_CRC32.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/CRC_CRC8/VSCode/CRC_CRC8.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_APWPROT/VSCode/FMC_APWPROT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_CRC32/VSCode/FMC_CRC32.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_DualBank/VSCode/FMC_DualBank.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_DualBankFwUpdate/App/VSCode/App.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_DualBankFwUpdate/Loader/VSCode/Loader.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_ExeInSRAM/VSCode/FMC_ExeInSRAM.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_FwUpdateApplication/App/VSCode/App.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_FwUpdateApplication/BackupApp/VSCode/BackupApp.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_FwUpdateApplication/Loader/VSCode/Loader.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_IAP/VSCode/FMC_IAP.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_MultiBoot/VSCode/FMC_MultiBoot.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/FMC_MultiWordProgram.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_ReadAllOne/VSCode/FMC_ReadAllOne.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_RW/VSCode/FMC_RW.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/FMC_SPROM/VSCode/FMC_SPROM.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_EINTAndDebounce/VSCode/GPIO_EINTAndDebounce.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_EINTTriggerPDMA/VSCode/GPIO_EINTTriggerPDMA.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_EINTTriggerPWM/VSCode/GPIO_EINTTriggerPWM.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_INT/VSCode/GPIO_INT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_OutputInput/VSCode/GPIO_OutputInput.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/GPIO_PowerDown/VSCode/GPIO_PowerDown.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/LLSI_Marquee/VSCode/LLSI_Marquee.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/LLSI_PDMA_Marquee/VSCode/LLSI_PDMA_Marquee.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PDMA_BasicMode/VSCode/PDMA_BasicMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PDMA_ScatterGather/VSCode/PDMA_ScatterGather.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PDMA_ScatterGather_PingPongBuffer/VSCode/PDMA_SG_PingPong.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_AccumulatorINT_TriggerPDMA/VSCode/PWM_AccINT_Trg.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_AccumulatorStopMode/VSCode/PWM_AccStop.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_Brake/VSCode/PWM_Brake.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_Capture/VSCode/PWM_Capture.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_DeadTime/VSCode/PWM_DeadTime.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_DoubleBuffer/VSCode/PWM_DoubleBuffer.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_OutputWaveform/VSCode/PWM_OutputWaveform.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_PDMA_Capture/VSCode/PWM_PDMA_Capture.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_PDMA_Capture_1MHzSignal/VSCode/PWM_PDMA_Cap1MHz.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_SwitchDuty/VSCode/PWM_SwitchDuty.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/PWM_SyncStart/VSCode/PWM_SyncStart.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SPI_Loopback/VSCode/SPI_Loopback.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SPI_MasterFIFOMode/VSCode/SPI_MasterFIFOMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SPI_SlaveFIFOMode/VSCode/SPI_SlaveFIFOMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SYS_BODWakeup/VSCode/SYS_BODWakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SYS_PLLClockOutput/VSCode/SYS_PLLClockOutput.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SYS_PowerDown_MinCurrent/VSCode/SYS_PD_MinCurrent.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/SYS_TrimHIRC/VSCode/SYS_TrimHIRC.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_ACMPTrigger/VSCode/TIMER_ACMPTrigger.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_CaptureCounter/VSCode/TIMER_CaptureCounter.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_Delay/VSCode/TIMER_Delay.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_EventCounter/VSCode/TIMER_EventCounter.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_FreeCountingMode/VSCode/TIMER_FreeCnt.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_InterTimerTriggerMode/VSCode/TIMER_InterTrg.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_Periodic/VSCode/TIMER_Periodic.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_PeriodicINT/VSCode/TIMER_PeriodicINT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_TimeoutWakeup/VSCode/TIMER_TimeoutWakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/TIMER_ToggleOut/VSCode/TIMER_ToggleOut.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_AutoBaudRate/VSCode/UART_AutoBaudRate.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_Autoflow/VSCode/UART_Autoflow.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_IrDA/VSCode/UART_IrDA.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_LIN/VSCode/UART_LIN.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_LIN_Wakeup/VSCode/UART_LIN_Wakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_PDMA/VSCode/UART_PDMA.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_RS485/VSCode/UART_RS485.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_SingleWire/VSCode/UART_SingleWire.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_TxRxFunction/VSCode/UART_TxRxFunction.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/UART_Wakeup/VSCode/UART_Wakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_SPI_Loopback/VSCode/USCI_SPI_Loopback.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_SPI_MasterMode/VSCode/USCI_SPI_MasterMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_SPI_PDMA_LoopTest/VSCode/USCI_SPI_PDMA_LoopTest.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_SPI_SlaveMode/VSCode/USCI_SPI_SlaveMode.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_AutoBaudRate/VSCode/USCI_UART_AutoBaudRate.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_AutoFlow/VSCode/USCI_UART_AutoFlow.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_PDMA/VSCode/USCI_UART_PDMA.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_RS485/VSCode/USCI_UART_RS485.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_TxRxFunction/VSCode/USCI_UART_TxRxFunction.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/USCI_UART_Wakeup/VSCode/USCI_UART_Wakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/WDT_TimeoutWakeupAndReset/VSCode/WDT_WakeReset.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/StdDriver/WWDT_CompareINT/VSCode/WWDT_CompareINT.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        },
+        {
+            "path": "SampleCode/Template/VSCode/Template.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ]
+}

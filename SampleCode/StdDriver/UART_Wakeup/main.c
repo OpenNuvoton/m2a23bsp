@@ -37,7 +37,7 @@ void PowerDownFunction(void)
     /* Check if all the debug messages are finished */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
     UART_WAIT_TX_EMPTY(DEBUG_PORT)
-        if(--u32TimeOutCnt == 0) break;
+    if(--u32TimeOutCnt == 0) break;
 
     /* Enter to Power-down mode */
     CLK_PowerDown();
@@ -55,10 +55,10 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     /* Enable HIRC and LXT clock */
-    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk|CLK_PWRCTL_LXTEN_Msk);
+    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk | CLK_PWRCTL_LXTEN_Msk);
 
     /* Wait for HIRC and LXT clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk|CLK_STATUS_LXTSTB_Msk);
+    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk | CLK_STATUS_LXTSTB_Msk);
 
     /* Set core clock to 72MHz */
     CLK_SetCoreClock(72000000);
@@ -166,7 +166,7 @@ void UART1_IRQHandler(void)
         printf("UART wake-up.\n");
         u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
         UART_WAIT_TX_EMPTY(DEBUG_PORT)
-            if(--u32TimeOutCnt == 0) break;
+        if(--u32TimeOutCnt == 0) break;
     }
     else if(UART_GET_INT_FLAG(UART1, UART_INTSTS_RDAINT_Msk | UART_INTSTS_RXTOINT_Msk))  /* UART receive data available flag */
     {

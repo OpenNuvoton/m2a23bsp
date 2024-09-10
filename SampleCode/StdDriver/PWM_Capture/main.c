@@ -137,7 +137,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -178,7 +178,7 @@ void UART0_Init(void)
 int32_t main(void)
 {
     uint32_t u32TimeOutCnt = 0;
-    
+
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
        to lock protected register. If user want to write
@@ -278,9 +278,9 @@ int32_t main(void)
         }
 
         /* Capture the Input Waveform Data */
-        if( CalPeriodTime(PWM0, 2) < 0 )
+        if(CalPeriodTime(PWM0, 2) < 0)
             goto lexit;
-        
+
         /*------------------------------------------------------------------------------------------------------------*/
         /* Stop PWM0 channel 0 (Recommended procedure method 1)                                                       */
         /* Set PWM Timer loaded value(Period) as 0. When PWM internal counter(CNT) reaches to 0, disable PWM Timer    */
@@ -336,6 +336,6 @@ int32_t main(void)
     }
 
 lexit:
-		
+
     while(1) {}
 }

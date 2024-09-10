@@ -31,7 +31,7 @@ void TMR1_IRQHandler(void)
     // Timer clock is 100MHz, counter value records the duration for 100 event counts.
     printf("Event frequency is %d Hz\n", 100000000 / TIMER_GetCounter(TIMER1) * 100);
     TIMER_ClearCaptureIntFlag(TIMER1);
-    
+
     complete = 1;
 }
 
@@ -53,7 +53,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -71,7 +71,7 @@ void SYS_Init(void)
     /* Select TIMER clock source */
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_PCLK0, 0);
     CLK_SetModuleClock(TMR1_MODULE, CLK_CLKSEL1_TMR1SEL_PCLK0, 0);
-    
+
     SET_TM0_PB5();
 }
 

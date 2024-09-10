@@ -66,7 +66,7 @@ void SYS_Init(void)
     SET_ADC0_CH0_PB0();
     /* Disable digital input path of ADC analog pin to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT0);
-    
+
     /* Configure the PC.1 ADC trigger pin */
     SET_ADC0_ST_PC1();
 }
@@ -233,7 +233,7 @@ int main(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     printf("\nSystem clock rate: %d Hz", SystemCoreClock);
-    
+
     /* ADC function test */
     ADC_FunctionTest();
 

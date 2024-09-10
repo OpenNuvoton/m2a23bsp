@@ -55,7 +55,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -78,7 +78,7 @@ void SYS_Init(void)
     SET_PWM0_CH1_PB4();
     SET_PWM0_CH2_PB3();
     SET_PWM0_CH3_PB2();
-    
+
     /* Set multi-function pin for PWM brake pin */
     SET_PWM0_BRAKE0_PB1();
 }
@@ -160,6 +160,6 @@ int32_t main(void)
     printf("\nPress any key to generate a brake event\n");
     getchar();
     PD3 = 1;
-		
+
     while(1) {}
 }

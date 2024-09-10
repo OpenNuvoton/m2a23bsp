@@ -18,9 +18,9 @@ __attribute__((section(".sprom_api")))
 #endif
 void sprom_putc(int ch)
 {
-    while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) ;
+    while(UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) ;
     UART0->DAT = ch;
-    if (ch == '\n')
+    if(ch == '\n')
     {
         while(UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
@@ -37,7 +37,7 @@ char sprom_getc(void)
 {
     while(1)
     {
-        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
         {
             return (UART0->DAT);
         }
@@ -52,7 +52,7 @@ __attribute__((section(".sprom_api")))
 #endif
 void sprom_put_string(char *str)
 {
-    while (*str)
+    while(*str)
     {
         sprom_putc(*str++);
     }

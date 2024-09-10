@@ -48,13 +48,13 @@ DMA_DESC_T DMA_DESC[2];
 void PDMA0_IRQHandler(void)
 {
     /* Check channel transfer done status */
-    if (PDMA_GET_TD_STS(PDMA0) == PDMA_TDSTS_TDIF4_Msk)
+    if(PDMA_GET_TD_STS(PDMA0) == PDMA_TDSTS_TDIF4_Msk)
     {
         /* When finished a descriptor table then g_u32TransferredCount increases 1 */
         g_u32TransferredCount++;
 
         /* Check if PDMA has finished PDMA_TEST_COUNT tasks */
-        if (g_u32TransferredCount >= PDMA_TEST_COUNT)
+        if(g_u32TransferredCount >= PDMA_TEST_COUNT)
         {
             /* Set PDMA into idle state by Descriptor table */
             DMA_DESC[0].u32Ctl &= ~PDMA_DSCT_CTL_OPMODE_Msk;
@@ -62,7 +62,7 @@ void PDMA0_IRQHandler(void)
             g_u32IsTestOver = 1;
         }
         /* Clear transfer done flag of channel 4 */
-        PDMA_CLR_TD_FLAG(PDMA0,PDMA_TDSTS_TDIF4_Msk);
+        PDMA_CLR_TD_FLAG(PDMA0, PDMA_TDSTS_TDIF4_Msk);
     }
 }
 
@@ -147,11 +147,11 @@ int main(void)
     --------------------------------------------------------------------------------------------------*/
 
     /* Open Channel 4 */
-    PDMA_Open(PDMA0,1 << 4);
+    PDMA_Open(PDMA0, 1 << 4);
 
     /* Enable Scatter Gather mode, assign the first scatter-gather descriptor table is table 1,
        and set transfer mode as memory to memory */
-    PDMA_SetTransferMode(PDMA0,4, PDMA_MEM, TRUE, (uint32_t)&DMA_DESC[0]);
+    PDMA_SetTransferMode(PDMA0, 4, PDMA_MEM, TRUE, (uint32_t)&DMA_DESC[0]);
 
 
     /* Scatter-Gather descriptor table configuration in SRAM */
@@ -236,12 +236,12 @@ int main(void)
 
 
     /* Enable transfer done interrupt */
-    PDMA_EnableInt(PDMA0,4, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA0, 4, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA0_IRQn);
     g_u32IsTestOver = 0;
 
     /* Start PDMA operation */
-    PDMA_Trigger(PDMA0,4);
+    PDMA_Trigger(PDMA0, 4);
 
     while(1)
     {

@@ -36,7 +36,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -99,7 +99,7 @@ int32_t main(void)
 {
     uint8_t  u8Option;
     uint32_t u32NewDutyCycle = 0, u32NewCMR = 0;
-    
+
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
        to lock protected register. If user want to write
@@ -177,6 +177,6 @@ int32_t main(void)
     PWM_Stop(PWM0, PWM_CH_0_MASK);
     /* Disable output of PWM0 channel 0 */
     PWM_DisableOutput(PWM0, PWM_CH_0_MASK);
-		
+
     while(1) {}
 }

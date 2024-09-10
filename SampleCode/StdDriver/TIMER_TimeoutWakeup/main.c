@@ -31,7 +31,7 @@ void TMR0_IRQHandler(void)
 {
     // Clear wake up flag
     TIMER_ClearWakeupFlag(TIMER0);
-    
+
     // Clear interrupt flag
     TIMER_ClearIntFlag(TIMER0);
 }
@@ -54,7 +54,7 @@ void SYS_Init(void)
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
-   
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -68,7 +68,7 @@ void SYS_Init(void)
     /* Enable LXT*/
     CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
     CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
-    
+
     /* Enable TIMER module clock */
     CLK_EnableModuleClock(TMR0_MODULE);
 
@@ -124,13 +124,13 @@ int main(void)
     /* Enable Timer0 interrupt */
     TIMER_EnableInt(TIMER0);
     CLK_SysTickDelay(50);
-    
+
     NVIC_EnableIRQ(TMR0_IRQn);
-    
+
     /* Start Timer0 counting */
     TIMER_Start(TIMER0);
     CLK_SysTickDelay(50);
-    
+
     /* Unlock protected registers */
     SYS_UnlockReg();
     while(1)

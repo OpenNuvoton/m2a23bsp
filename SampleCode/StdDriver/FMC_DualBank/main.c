@@ -40,12 +40,12 @@ void SysTick_Handler(void)
 {
     g_tick_cnt++;                                /* increase timer tick                      */
 
-    if (db_state == DB_STATE_DONE)               /* Background program is in idle state      */
+    if(db_state == DB_STATE_DONE)                /* Background program is in idle state      */
     {
         return;
     }
 
-    if (db_length == 0)                          /* Background program done?                 */
+    if(db_length == 0)                           /* Background program done?                 */
     {
         db_state = DB_STATE_DONE;                /* enter idle state                         */
         return;
@@ -57,55 +57,55 @@ void SysTick_Handler(void)
     /*
      *  Dual-bank background program...
      */
-    switch (db_state)
+    switch(db_state)
     {
-    case DB_STATE_START:
-        if (db_addr & ~FMC_PAGE_ADDR_MASK)
-        {
-            printf("Warning - dual bank start address is not page aligned!\n");
-            db_state = DB_STATE_FAIL;
+        case DB_STATE_START:
+            if(db_addr & ~FMC_PAGE_ADDR_MASK)
+            {
+                printf("Warning - dual bank start address is not page aligned!\n");
+                db_state = DB_STATE_FAIL;
+                break;
+            }
+            if(db_length & ~FMC_PAGE_ADDR_MASK)
+            {
+                printf("Warning - dual bank length is not page aligned!\n");
+                db_state = DB_STATE_FAIL;
+                break;
+            }
+            db_state = DB_STATE_ERASE;           /* Next state is to erase flash            */
             break;
-        }
-        if (db_length & ~FMC_PAGE_ADDR_MASK)
-        {
-            printf("Warning - dual bank length is not page aligned!\n");
-            db_state = DB_STATE_FAIL;
+
+        case DB_STATE_ERASE:
+            printf("Erase 0x%x [%d]\n", db_addr, g_tick_cnt);
+            FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE; /* ISP page erase command                   */
+            FMC->ISPADDR = db_addr;              /* page address                             */
+            FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;  /* trigger ISP page erase and no wait       */
+
+            db_state = DB_STATE_PROGRAM;         /* Next state is to program flash           */
             break;
-        }
-        db_state = DB_STATE_ERASE;           /* Next state is to erase flash            */
-        break;
 
-    case DB_STATE_ERASE:
-        printf("Erase 0x%x [%d]\n", db_addr, g_tick_cnt);
-        FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE; /* ISP page erase command                   */
-        FMC->ISPADDR = db_addr;              /* page address                             */
-        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;  /* trigger ISP page erase and no wait       */
+        case DB_STATE_PROGRAM:
 
-        db_state = DB_STATE_PROGRAM;         /* Next state is to program flash           */
-        break;
+            if((db_addr & ~FMC_PAGE_ADDR_MASK) == 0)
+                printf("Erase done [%d]\n", g_tick_cnt);
 
-    case DB_STATE_PROGRAM:
+            FMC->ISPCMD = FMC_ISPCMD_PROGRAM;    /* ISP word program command                 */
+            FMC->ISPADDR = db_addr;              /* word program address                     */
+            FMC->ISPDAT = db_addr;               /* 32-bits data to be programmed            */
+            FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;  /* trigger ISP program and no wait          */
 
-        if ((db_addr & ~FMC_PAGE_ADDR_MASK) == 0)
-            printf("Erase done [%d]\n", g_tick_cnt);
+            db_addr += 4;                        /* advance to next word                     */
+            db_length -= 4;
+            if((db_addr & ~FMC_PAGE_ADDR_MASK) == 0)
+            {
+                /* have reached start of next page          */
+                db_state = DB_STATE_ERASE;       /* next state, erase page                   */
+            }
+            break;
 
-        FMC->ISPCMD = FMC_ISPCMD_PROGRAM;    /* ISP word program command                 */
-        FMC->ISPADDR = db_addr;              /* word program address                     */
-        FMC->ISPDAT = db_addr;               /* 32-bits data to be programmed            */
-        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;  /* trigger ISP program and no wait          */
-
-        db_addr += 4;                        /* advance to next word                     */
-        db_length -= 4;
-        if ((db_addr & ~FMC_PAGE_ADDR_MASK) == 0)
-        {
-            /* have reached start of next page          */
-            db_state = DB_STATE_ERASE;       /* next state, erase page                   */
-        }
-        break;
-
-    default:
-        printf("Unknown db_state state!\n");
-        break;
+        default:
+            printf("Unknown db_state state!\n");
+            break;
     }
 }
 
@@ -113,7 +113,7 @@ void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
 
-    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    if(SysTick_Config(SystemCoreClock / ticks_per_second))
     {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
@@ -214,12 +214,12 @@ uint32_t  func_crc32(uint32_t start, uint32_t len)
     int       i;
 
     /* WDTAT_RVS, CHECKSUM_RVS, CHECKSUM_COM */
-    for (idx = 0; idx < len; idx += 4)
+    for(idx = 0; idx < len; idx += 4)
     {
         data32 = *(uint32_t *)(start + idx);
-        for (i = 0; i < 4; i++)
+        for(i = 0; i < 4; i++)
         {
-            data8 = (data32 >> (i*8)) & 0xff;
+            data8 = (data32 >> (i * 8)) & 0xff;
             crc = crc32_tab[(crc ^ data8) & 0xFF] ^ (crc >> 8);
         }
     }
@@ -273,7 +273,7 @@ int32_t main(void)
     enable_sys_tick(1000);
     start_timer0();
 
-    for (loop = 0; loop < CRC32_LOOP_CNT; loop++)
+    for(loop = 0; loop < CRC32_LOOP_CNT; loop++)
     {
         func_crc32(0x0, 0x10000);      /* Calculate 64KB CRC32 value, just to consume CPU time  */
     }
@@ -281,7 +281,7 @@ int32_t main(void)
     t = get_timer0_counter();
 
     /* TIMER0->CNT is the elapsed us */
-    printf("\nTime elapsed without program bank1: %d.%d seconds. Ticks: %d\n\n", t/1000000, t/1000, g_tick_cnt);
+    printf("\nTime elapsed without program bank1: %d.%d seconds. Ticks: %d\n\n", t / 1000000, t / 1000, g_tick_cnt);
 
     db_addr = APROM_BANK1_BASE;        /* Dual bank background program address           */
     db_length = DB_PROG_LEN;           /* Dual bank background length                    */
@@ -290,7 +290,7 @@ int32_t main(void)
     enable_sys_tick(1000);
     start_timer0();
 
-    for (loop = 0; loop < CRC32_LOOP_CNT; loop++)
+    for(loop = 0; loop < CRC32_LOOP_CNT; loop++)
     {
         func_crc32(0x0, 0x10000);      /* Calculate 64KB CRC32 value, just to consume CPU time  */
     }
@@ -298,16 +298,16 @@ int32_t main(void)
     t = get_timer0_counter();
 
     /* TIMER0->CNT is the elapsed us */
-    printf("\nTime elapsed with program bank1: %d.%d seconds. Ticks: %d\n\n", t/1000000, t/1000, g_tick_cnt);
+    printf("\nTime elapsed with program bank1: %d.%d seconds. Ticks: %d\n\n", t / 1000000, t / 1000, g_tick_cnt);
 
-    while (db_state != DB_STATE_DONE) ;
+    while(db_state != DB_STATE_DONE) ;
 
     /*
      *  Verify ...
      */
-    for (addr = APROM_BANK1_BASE; addr < APROM_BANK1_BASE + DB_PROG_LEN; addr += 4)
+    for(addr = APROM_BANK1_BASE; addr < APROM_BANK1_BASE + DB_PROG_LEN; addr += 4)
     {
-        if (inpw(addr) != addr)
+        if(inpw(addr) != addr)
         {
             printf("Flash address 0x%x verify failed! expect: 0x%x, read: 0x%x.\n", addr, addr, inpw(addr));
             goto lexit;
@@ -322,5 +322,5 @@ lexit:
 
     SYS_LockReg();                     /* Lock protected registers                       */
 
-    while (1);
+    while(1);
 }

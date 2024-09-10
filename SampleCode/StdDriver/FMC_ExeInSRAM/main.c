@@ -84,14 +84,14 @@ int32_t main(void)
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
 
     /* Init Vector Table to SRAM */
-    for(i=0;i<TOTAL_VECTORS;i++)
+    for(i = 0; i < TOTAL_VECTORS; i++)
     {
         g_au32Vector[i] = au32Vectors[i];
     }
     SCB->VTOR = (uint32_t)&g_au32Vector[0];
 
     /* SysTick used for test interrupts in SRAM */
-    SysTick_Config(SystemCoreClock/1000);
+    SysTick_Config(SystemCoreClock / 1000);
 
 #endif
     /*
@@ -111,5 +111,5 @@ int32_t main(void)
 
     printf("\nFMC Sample Code Completed.\n");
 
-    while (1);
+    while(1);
 }

@@ -53,14 +53,14 @@ void SYS_Init(void)
 
     /* Enable LPADC module clock */
     CLK_EnableModuleClock(ADC0_MODULE);
-    
+
     /* Set multi-function pins for ADC channels */
-    SET_ADC0_CH0_PB0(); 
+    SET_ADC0_CH0_PB0();
     SET_ADC0_CH1_PB1();
     SET_ADC0_CH2_PB2();
     SET_ADC0_CH3_PB3();
     /* Disable digital input path of ADC analog pin to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0|BIT1|BIT2|BIT3));
+    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0 | BIT1 | BIT2 | BIT3));
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -99,13 +99,13 @@ static __INLINE uint32_t ADC_GetConversionRate()
 
     /* Set the PLL clock frequency */
     u32ClkTbl[1] = PllClock;
-    
+
     /* Set the system core clock frequency */
     u32ClkTbl[2] = SystemCoreClock;
-    
+
     /* Get the clock source setting */
     u32AdcClkSrcSel = (((CLK->CLKSEL3 & CLK_CLKSEL3_ADCSEL_Msk) >> CLK_CLKSEL3_ADCSEL_Pos));
-    
+
     /* Return the ADC conversion rate */
     return ((u32ClkTbl[u32AdcClkSrcSel]) / (((CLK->CLKDIV0 & CLK_CLKDIV0_ADCDIV_Msk) >> CLK_CLKDIV0_ADCDIV_Pos) + 1) / u32ADCCLKCnt);
 }
@@ -149,7 +149,7 @@ void AdcContScanModeTest(void)
             /* Power on ADC module */
             ADC_POWER_ON(ADC0);
 
-			/* Set the ADC operation mode as continuous scan, input mode as single-end and
+            /* Set the ADC operation mode as continuous scan, input mode as single-end and
                  enable the analog input channel 0, 1, 2 and 3 */
             ADC_Open(ADC0, ADC_ADCR_DIFFEN_SINGLE_END, ADC_ADCR_ADMD_CONTINUOUS, 0xF);
 
@@ -208,7 +208,7 @@ void AdcContScanModeTest(void)
             /* Power on ADC module */
             ADC_POWER_ON(ADC0);
 
-			/* Set the ADC operation mode as continuous scan, input mode as differential and
+            /* Set the ADC operation mode as continuous scan, input mode as differential and
                enable analog input channel 0 */
             ADC_Open(ADC0, ADC_ADCR_DIFFEN_DIFFERENTIAL, ADC_ADCR_ADMD_CONTINUOUS, BIT0);
 

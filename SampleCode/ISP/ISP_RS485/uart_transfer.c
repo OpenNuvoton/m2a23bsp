@@ -2,7 +2,7 @@
  * @file     uart_transfer.c
  * @version  V1.00
  * @brief    General UART ISP slave Sample file
- *              
+ *
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -29,19 +29,24 @@ void UART_T_IRQHandler(void)
     uint32_t u32IntSrc = UART_T->INTSTS;
 
     /* RDA FIFO interrupt and RDA timeout interrupt */
-    if (u32IntSrc & (UART_INTSTS_RXTOIF_Msk|UART_INTSTS_RDAIF_Msk)) {
+    if(u32IntSrc & (UART_INTSTS_RXTOIF_Msk | UART_INTSTS_RDAIF_Msk))
+    {
 
         /* Read data until RX FIFO is empty or data is over maximum packet size */
-        while (((UART_T->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) && (bufhead < MAX_PKT_SIZE)) {
+        while(((UART_T->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) && (bufhead < MAX_PKT_SIZE))
+        {
             uart_rcvbuf[bufhead++] = UART_T->DAT;
         }
     }
 
     /* Reset data buffer index */
-    if (bufhead == MAX_PKT_SIZE) {
+    if(bufhead == MAX_PKT_SIZE)
+    {
         bUartDataReady = TRUE;
         bufhead = 0;
-    } else if (u32IntSrc & UART_INTSTS_RXTOIF_Msk) {
+    }
+    else if(u32IntSrc & UART_INTSTS_RXTOIF_Msk)
+    {
         bufhead = 0;
     }
 }
@@ -52,10 +57,11 @@ void PutString(void)
     uint32_t i;
 
     /* UART send response to master */
-    for (i = 0; i < MAX_PKT_SIZE; i++) {
+    for(i = 0; i < MAX_PKT_SIZE; i++)
+    {
 
         /* Wait for TX not full */
-        while ((UART_T->FIFOSTS & UART_FIFOSTS_TXFULL_Msk));
+        while((UART_T->FIFOSTS & UART_FIFOSTS_TXFULL_Msk));
 
         /* UART send data */
         UART_T->DAT = response_buff[i];

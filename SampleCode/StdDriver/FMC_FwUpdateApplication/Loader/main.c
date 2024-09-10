@@ -153,7 +153,7 @@ void Download(void)
     /* Dual bank background program length */
     s_u32DbLength = APP_SIZE;
 
-    
+
     EnableSysTick(1000);
 
     /* Use Xmodem to download firmware from PC */

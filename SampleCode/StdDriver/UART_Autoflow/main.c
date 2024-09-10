@@ -228,7 +228,7 @@ void AutoFlow_FunctionRxTest(void)
         }
     }
 
-    if( u32Err )
+    if(u32Err)
         printf("Compare Data Failed\n");
     else
         printf("\n Receive OK & Check OK\n");

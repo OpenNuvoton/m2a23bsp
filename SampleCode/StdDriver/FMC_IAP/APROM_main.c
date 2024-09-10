@@ -68,7 +68,7 @@ static int SetIAPBoot(void)
     {
         /* Modify User Configuration when it is not in IAP mode */
 
-        if (FMC_ReadConfig(au32Config, 2) < 0)      /* Read User Configuration CONFIG0 and CONFIG1. */
+        if(FMC_ReadConfig(au32Config, 2) < 0)       /* Read User Configuration CONFIG0 and CONFIG1. */
         {
             printf("\nRead User Config failed!\n");
             return -1;                              /* Failed on reading User Configuration */
@@ -79,7 +79,7 @@ static int SetIAPBoot(void)
             FMC_ENABLE_CFG_UPDATE();                /* Enable User Configuration update. */
             au32Config[0] &= ~0x40;                 /* Select IAP boot mode. */
             FMC_Erase(FMC_CONFIG_BASE);
-            if (FMC_WriteConfig(au32Config, 2) != 0) /* Update User Configuration CONFIG0 and CONFIG1. */
+            if(FMC_WriteConfig(au32Config, 2) != 0)  /* Update User Configuration CONFIG0 and CONFIG1. */
             {
                 printf("FMC_WriteConfig failed!\n");
                 return -1;
@@ -116,7 +116,7 @@ static int  LoadImage(uint32_t u32ImageBase, uint32_t u32ImageLimit, uint32_t u3
     {
         FMC_Erase(u32FlashAddr + i);     /* erase a flash page */
 
-        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)                 /* program image to this flash page */
+        for(j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)                  /* program image to this flash page */
         {
             FMC_Write(u32FlashAddr + i + j, pu32Loader[(i + j) / 4]);
         }
@@ -124,19 +124,19 @@ static int  LoadImage(uint32_t u32ImageBase, uint32_t u32ImageLimit, uint32_t u3
     printf("OK.\nVerify ...");
 
     /* Verify loader */
-    for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)
+    for(i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)
     {
-        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)
+        for(j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)
         {
             u32Data = FMC_Read(u32FlashAddr + i + j);        /* read a word from flash memory */
 
-            if (u32Data != pu32Loader[(i+j)/4])            /* check if the word read from flash be matched with original image */
+            if(u32Data != pu32Loader[(i + j) / 4])         /* check if the word read from flash be matched with original image */
             {
-                printf("data mismatch on 0x%x, [0x%x], [0x%x]\n", u32FlashAddr + i + j, u32Data, pu32Loader[(i+j)/4]);
+                printf("data mismatch on 0x%x, [0x%x], [0x%x]\n", u32FlashAddr + i + j, u32Data, pu32Loader[(i + j) / 4]);
                 return -1;             /* image program failed */
             }
 
-            if (i + j >= u32ImageSize) /* check if it reach the end of image */
+            if(i + j >= u32ImageSize)  /* check if it reach the end of image */
                 break;
         }
     }
@@ -190,7 +190,7 @@ int32_t main(void)
     /* Read User Configuration CONFIG0 */
     printf("  User Config 0 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE));
     /* Read User Configuration CONFIG1 */
-    printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE+4));
+    printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE + 4));
 
     do
     {
@@ -206,59 +206,59 @@ int32_t main(void)
         u8Item = getchar();            /* block waiting to receive any one character from UART0 */
         printf("%c\n", u8Item);        /* print out the selected item */
 
-        switch (u8Item)
+        switch(u8Item)
         {
-        case '0':
-            FMC_ENABLE_LD_UPDATE();    /* Enable LDROM update capability */
-            /*
-             *  The binary image of LDROM code is embedded in this sample.
-             *  LoadImage() will program this LDROM code to LDROM.
-             */
-            if(LoadImage((uint32_t)&loaderImage1Base, (uint32_t)&loaderImage1Limit,
-                         FMC_LDROM_BASE, FMC_LDROM_SIZE) != 0)
-            {
-                printf("Load image to LDROM failed!\n");
-                goto lexit;            /* Load LDROM code failed. Program aborted. */
-            }
-            FMC_DISABLE_LD_UPDATE();   /* Disable LDROM update capability */
-            break;
+            case '0':
+                FMC_ENABLE_LD_UPDATE();    /* Enable LDROM update capability */
+                /*
+                 *  The binary image of LDROM code is embedded in this sample.
+                 *  LoadImage() will program this LDROM code to LDROM.
+                 */
+                if(LoadImage((uint32_t)&loaderImage1Base, (uint32_t)&loaderImage1Limit,
+                             FMC_LDROM_BASE, FMC_LDROM_SIZE) != 0)
+                {
+                    printf("Load image to LDROM failed!\n");
+                    goto lexit;            /* Load LDROM code failed. Program aborted. */
+                }
+                FMC_DISABLE_LD_UPDATE();   /* Disable LDROM update capability */
+                break;
 
-        case '1':
-            printf("\n\nChange VECMAP and branch to LDROM...\n");
-            printf("LDROM code SP = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE));
-            printf("LDROM code ResetHandler = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE+4));
-            u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-            UART_WAIT_TX_EMPTY(UART0)  /* To make sure all message has been print out */
+            case '1':
+                printf("\n\nChange VECMAP and branch to LDROM...\n");
+                printf("LDROM code SP = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE));
+                printf("LDROM code ResetHandler = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE + 4));
+                u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
+                UART_WAIT_TX_EMPTY(UART0)  /* To make sure all message has been print out */
                 if(--u32TimeOutCnt == 0) break;
-            /*  NOTE!
-             *     Before change VECMAP, user MUST disable all interrupts.
-             *     The following code CANNOT locate in address 0x0 ~ 0x200.
-             */
-            FMC_SetVectorPageAddr(FMC_LDROM_BASE);
+                /*  NOTE!
+                 *     Before change VECMAP, user MUST disable all interrupts.
+                 *     The following code CANNOT locate in address 0x0 ~ 0x200.
+                 */
+                FMC_SetVectorPageAddr(FMC_LDROM_BASE);
 
-            /*
-             *  The reset handler address of an executable image is located at offset 0x4.
-             *  Thus, this sample get reset handler address of LDROM code from FMC_LDROM_BASE + 0x4.
-             */
-            func = (FUNC_PTR *)*(uint32_t *)(FMC_LDROM_BASE + 4);
-            /*
-             *  The stack base address of an executable image is located at offset 0x0.
-             *  Thus, this sample get stack base address of LDROM code from FMC_LDROM_BASE + 0x0.
-             */
-            
-            __set_MSP(M32(FMC_LDROM_BASE));
-            
-            /*
-             *  Branch to the LDROM code's reset handler in way of function call.
-             */
-            func();
-            break;
+                /*
+                 *  The reset handler address of an executable image is located at offset 0x4.
+                 *  Thus, this sample get reset handler address of LDROM code from FMC_LDROM_BASE + 0x4.
+                 */
+                func = (FUNC_PTR *) * (uint32_t *)(FMC_LDROM_BASE + 4);
+                /*
+                 *  The stack base address of an executable image is located at offset 0x0.
+                 *  Thus, this sample get stack base address of LDROM code from FMC_LDROM_BASE + 0x0.
+                 */
 
-        default :
-            continue;                  /* invalid selection */
+                __set_MSP(M32(FMC_LDROM_BASE));
+
+                /*
+                 *  Branch to the LDROM code's reset handler in way of function call.
+                 */
+                func();
+                break;
+
+            default :
+                continue;                  /* invalid selection */
         }
     }
-    while (1);
+    while(1);
 
 
 lexit:                                 /* program exit */
@@ -269,5 +269,5 @@ lexit:                                 /* program exit */
 
     printf("\nFMC Sample Code Completed.\n");
 
-    while (1);
+    while(1);
 }

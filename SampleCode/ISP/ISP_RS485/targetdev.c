@@ -15,15 +15,20 @@ uint32_t GetApromSize()
     unsigned int size = 0x10000, data;
     int result;
 
-    do {
+    do
+    {
         result = FMC_Read_User(size, &data);
 
-        if (result < 0) {
+        if(result < 0)
+        {
             return size;
-        } else {
+        }
+        else
+        {
             size *= 2;
         }
-    } while (1);
+    }
+    while(1);
 }
 
 #define CONFIG0_DFEN                0x01
@@ -33,16 +38,20 @@ void GetDataFlashInfo(uint32_t *addr, uint32_t *size)
     *size = 0;
     FMC_Read_User(Config0, &uData);
 
-    if ((uData & CONFIG0_DFEN) == 0) { //DFEN enable
+    if((uData & CONFIG0_DFEN) == 0)    //DFEN enable
+    {
         FMC_Read_User(Config1, &uData);
 
-        if (uData > g_apromSize || (uData & 0x7FF)) { //avoid config1 value from error
+        if(uData > g_apromSize || (uData & 0x7FF))    //avoid config1 value from error
+        {
             uData = g_apromSize;
         }
 
         *addr = uData;
         *size = g_apromSize - uData;
-    } else {
+    }
+    else
+    {
         *addr = g_apromSize;
         *size = 0;
     }

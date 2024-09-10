@@ -74,12 +74,12 @@ void SYS_Init(void)
     CLK_EnableModuleClock(ADC0_MODULE);
 
     /* Set multi-function pins for ADC channels */
-    SET_ADC0_CH0_PB0(); 
+    SET_ADC0_CH0_PB0();
     SET_ADC0_CH1_PB1();
     SET_ADC0_CH2_PB2();
     SET_ADC0_CH3_PB3();
     /* Disable digital input path of ADC analog pin to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0|BIT1|BIT2|BIT3));
+    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT0 | BIT1 | BIT2 | BIT3));
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -317,7 +317,7 @@ void AdcSingleCycleScanModePDMATest()
             /* Power on ADC module */
             ADC_POWER_ON(ADC0);
 
-			/* Set the ADC operation mode as single-cycle, input mode as differential and
+            /* Set the ADC operation mode as single-cycle, input mode as differential and
                enable analog input channel 0 */
             ADC_Open(ADC0, ADC_ADCR_DIFFEN_DIFFERENTIAL, ADC_ADCR_ADMD_SINGLE_CYCLE, BIT0);
 

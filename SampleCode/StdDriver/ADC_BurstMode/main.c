@@ -62,9 +62,9 @@ void SYS_Init(void)
 
     /* Set multi-function pins for ADC channels */
     SET_ADC0_CH2_PB2();
-    SET_ADC0_CH3_PB3();    
+    SET_ADC0_CH3_PB3();
     /* Disable digital input path of ADC analog pin to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT2|BIT3));
+    GPIO_DISABLE_DIGITAL_PATH(PB, (BIT2 | BIT3));
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -123,7 +123,7 @@ void ADC_FunctionTest()
             while(1)
             {
                 /* Wait ADC conversion completed */
-                while (ADC_GET_INT_FLAG(ADC0, ADC_ADF_INT)==0);
+                while(ADC_GET_INT_FLAG(ADC0, ADC_ADF_INT) == 0);
                 ADC_CLR_INT_FLAG(ADC0, ADC_ADF_INT); /* clear ADF interrupt flag */
 
                 /* Get the conversion result until VALIDF turns to 0 */
@@ -145,11 +145,11 @@ void ADC_FunctionTest()
             /* Show the conversion result */
             for(u32ConvCount = 0; u32ConvCount < CONV_TOTAL_COUNT; u32ConvCount++)
             {
-                printf("Conversion result of channel 2 [#%d]: 0x%X (%d)\n", u32ConvCount+1, i32ConversionData[u32ConvCount], i32ConversionData[u32ConvCount]);
+                printf("Conversion result of channel 2 [#%d]: 0x%X (%d)\n", u32ConvCount + 1, i32ConversionData[u32ConvCount], i32ConversionData[u32ConvCount]);
             }
 
             /* Clear remaining data in FIFO that got before stop ADC */
-            while (ADC_IS_DATA_VALID(ADC0, 0))
+            while(ADC_IS_DATA_VALID(ADC0, 0))
             {
                 i32ConversionData[0] = ADC_GET_CONVERSION_DATA(ADC0, 0);
             }

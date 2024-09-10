@@ -66,7 +66,7 @@ void PowerDownFunction(void)
     /* Check if all the debug messages are finished */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
     UART_WAIT_TX_EMPTY(DEBUG_PORT)
-        if(--u32TimeOutCnt == 0) break;
+    if(--u32TimeOutCnt == 0) break;
 
     /* Enter to Power-down mode */
     CLK_PowerDown();
@@ -139,7 +139,7 @@ int32_t LircSetting(void)
         /* Disable LIRC and wait for LIRC stable flag is cleared */
         CLK_DisableXtalRC(CLK_PWRCTL_LIRCEN_Msk);
         u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-        while( CLK->STATUS & CLK_STATUS_LIRCSTB_Msk )
+        while(CLK->STATUS & CLK_STATUS_LIRCSTB_Msk)
         {
             if(--u32TimeOutCnt == 0)
             {
@@ -152,7 +152,7 @@ int32_t LircSetting(void)
     {
         /* Enable LIRC and wait for LIRC stable flag is set */
         CLK_EnableXtalRC(CLK_PWRCTL_LIRCEN_Msk);
-        if( CLK_WaitClockReady(CLK_STATUS_LIRCSTB_Msk) == 0)
+        if(CLK_WaitClockReady(CLK_STATUS_LIRCSTB_Msk) == 0)
         {
             printf("Wait for LIRC enable time-out!\n");
             return -1;
@@ -171,7 +171,7 @@ int32_t LxtSetting(void)
         /* Disable LXT and wait for LXT stable flag is cleared */
         CLK_DisableXtalRC(CLK_PWRCTL_LXTEN_Msk);
         u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-        while( CLK->STATUS & CLK_STATUS_LXTSTB_Msk )
+        while(CLK->STATUS & CLK_STATUS_LXTSTB_Msk)
         {
             if(--u32TimeOutCnt == 0)
             {
@@ -184,7 +184,7 @@ int32_t LxtSetting(void)
     {
         /* Enable LXT and wait for LXT stable flag is set */
         CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
-        if( CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk) == 0)
+        if(CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk) == 0)
         {
             printf("Wait for LXT enable time-out!\n");
             return -1;
@@ -282,7 +282,7 @@ int32_t main(void)
     SYS->GPC_MFPH = 0;
     SYS->GPD_MFPL = 0;
     SYS->GPD_MFPH = 0;
-    SYS->GPF_MFPL = ( ICE_DAT_PF0 | ICE_CLK_PF1 );
+    SYS->GPF_MFPL = (ICE_DAT_PF0 | ICE_CLK_PF1);
 
     /* Configure all GPIO as Quasi-bidirectional Mode. They are default output high. */
     GPIO_SetMode(PA, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
@@ -301,10 +301,10 @@ int32_t main(void)
     PorSetting();
 
     /* LIRC setting */
-    if( LircSetting() < 0 ) goto lexit;
+    if(LircSetting() < 0) goto lexit;
 
     /* LXT setting */
-    if( LxtSetting() < 0 ) goto lexit;
+    if(LxtSetting() < 0) goto lexit;
 
     /* Wake-up source configuration */
     /* Configure PB.3 as Quasi mode and enable interrupt by falling edge trigger */

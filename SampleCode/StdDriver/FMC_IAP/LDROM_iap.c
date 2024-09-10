@@ -50,12 +50,12 @@ void SYS_Init(void)
  */
 static void SendChar_ToUART(int ch)
 {
-    while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+    while(UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
     UART0->DAT = ch;
     if(ch == '\n')
     {
-        while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+        while(UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
     }
 }
@@ -70,7 +70,7 @@ static char GetChar(void)
 {
     while(1)
     {
-        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
         {
             return (UART0->DAT);
         }
@@ -79,7 +79,7 @@ static char GetChar(void)
 
 static void PutString(char *str)
 {
-    while (*str != '\0')
+    while(*str != '\0')
     {
         SendChar_ToUART(*str++);
     }
@@ -123,7 +123,7 @@ int32_t main(void)
 
     PutString("\n\nChange VECMAP and branch to APROM...\n");
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
-    while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk))        /* wait until UART0 TX FIFO is empty */
+    while(!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk))         /* wait until UART0 TX FIFO is empty */
         if(--u32TimeOutCnt == 0) break;
 
     /*  NOTE!
@@ -137,13 +137,13 @@ int32_t main(void)
      *  The reset handler address of an executable image is located at offset 0x4.
      *  Thus, this sample get reset handler address of APROM code from FMC_APROM_BASE + 0x4.
      */
-    func = (FUNC_PTR *)*(uint32_t *)(FMC_APROM_BASE + 4);
+    func = (FUNC_PTR *) * (uint32_t *)(FMC_APROM_BASE + 4);
 
     /*
      *  The stack base address of an executable image is located at offset 0x0.
      *  Thus, this sample get stack base address of APROM code from FMC_APROM_BASE + 0x0.
      */
-    
+
     __set_MSP(FMC_APROM_BASE);
 
     /*
@@ -151,5 +151,5 @@ int32_t main(void)
      */
     func();
 
-    while (1);
+    while(1);
 }

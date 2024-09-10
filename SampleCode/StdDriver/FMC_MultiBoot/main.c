@@ -201,7 +201,7 @@ int32_t main(void)
             break;
     }
 
-    if (g_FMC_i32ErrCode != 0)
+    if(g_FMC_i32ErrCode != 0)
     {
         printf("FMC_SetVectorPageAddr failed!\n");
         goto lexit;

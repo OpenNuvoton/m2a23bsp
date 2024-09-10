@@ -58,8 +58,8 @@ void SYS_Init(void)
     SET_ADC0_CH2_PB2();
     /* Disable digital input path of ADC analog pin to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT2);
-    
-	/* Set multi-function pins for PWM */
+
+    /* Set multi-function pins for PWM */
     SET_PWM0_CH0_PB5();
 }
 

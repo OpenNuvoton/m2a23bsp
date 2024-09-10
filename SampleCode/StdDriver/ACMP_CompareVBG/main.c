@@ -46,7 +46,7 @@ void SYS_Init(void)
 
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
-  
+
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
@@ -107,6 +107,3 @@ int32_t main(void)
     while(1);
 
 }
-
-
-

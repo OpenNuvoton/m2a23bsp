@@ -39,7 +39,7 @@ void UART0_IRQHandler(void)
 
     if(u32IntSts & UART_INTSTS_WKINT_Msk) /* UART wake-up interrupt flag */
     {
-        g_i32RxCounter=0;
+        g_i32RxCounter = 0;
         UART_ClearIntFlag(UART0, UART_INTSTS_WKINT_Msk);
     }
 
@@ -254,7 +254,7 @@ void UART_FunctionTest(void)
                 break;
         }
     }
-    while (u32Item != 27);
+    while(u32Item != 27);
 
     printf("\nUART Demo Program End\n");
 
@@ -287,7 +287,7 @@ int32_t LIN_Send_Wakeup_FunctionTest(void)
     UART0->FUNCSEL = UART_FUNCSEL_LIN;
 
     /* Set LIN Wake-up Signal length with 250us at HIRC clock source */
-    u32WakeupPulse = ((__HIRC/1000000)*250);
+    u32WakeupPulse = ((__HIRC / 1000000) * 250);
     UART0->LINWKCTL = (UART0->LINWKCTL & ~UART_LINWKCTL_LINWKC_Msk) | u32WakeupPulse;
 
     /* Send Wake-up Signal */
@@ -342,7 +342,7 @@ void PowerDownFunction(void)
     /* Check if all the debug messages are finished */
     u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
     UART_WAIT_TX_EMPTY(DEBUG_PORT)
-        if(--u32TimeOutCnt == 0) break;
+    if(--u32TimeOutCnt == 0) break;
 
     /* Enter to Power-down mode */
     CLK_PowerDown();
