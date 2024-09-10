@@ -2,7 +2,7 @@
  * @file     main.c
  * @version  V3.00
  * @brief    Show hard fault information when hard fault happened.
- * 
+ *
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -105,7 +105,7 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     uint32_t r0, r1, r2, r3, r12, pc, psr;
     uint32_t *stack;
 
-    if (lr & 4)
+    if(lr & 4)
         stack = (uint32_t *)psp;
     else
         stack = (uint32_t *)msp;

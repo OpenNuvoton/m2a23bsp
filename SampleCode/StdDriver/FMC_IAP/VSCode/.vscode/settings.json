@@ -1,8 +1,24 @@
 {
     "cmsis-csolution.actions": [
         {
-            "path": "FMC_IAP.csolution.yml",
+            "path": "Hard_Fault_Sample.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "Hard_Fault_Sample.csolution.yml",
             "target": "GNUC",
+            "config": {
+                "debug": "Embedded Debug",
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        },
+        {
+            "path": "ISP_SPI.csolution.yml",
+            "target": "ARMCLANG",
             "config": {
                 "run": "arm-debugger.flash: Flash Device",
                 "debug": "Embedded Debug"

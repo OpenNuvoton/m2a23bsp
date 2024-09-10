@@ -1,7 +1,7 @@
 {
     "cmsis-csolution.actions": [
         {
-            "path": "ACMP_CompareDAC.csolution.yml",
+            "path": "Hard_Fault_Sample.csolution.yml",
             "target": "ARMCLANG",
             "config": {
                 "run": "arm-debugger.flash: Flash Device",
@@ -9,11 +9,19 @@
             }
         },
         {
-            "path": "ACMP_CompareDAC.csolution.yml",
+            "path": "Hard_Fault_Sample.csolution.yml",
             "target": "GNUC",
             "config": {
                 "debug": "Embedded Debug",
                 "run": "arm-debugger.flash: Flash Device"
+            }
+        },
+        {
+            "path": "ISP_SPI.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
             }
         }
     ]
