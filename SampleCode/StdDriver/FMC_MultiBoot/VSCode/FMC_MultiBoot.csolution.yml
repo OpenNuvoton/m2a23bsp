@@ -18,3 +18,8 @@ solution:
       device: Nuvoton::M2A23SG5AC
   projects:
     - project: FMC_MultiBoot.cproject.yml
+    - project: FMC_Boot0.cproject.yml
+    - project: FMC_Boot1.cproject.yml
+    - project: FMC_Boot2.cproject.yml
+    - project: FMC_Boot3.cproject.yml
+    - project: FMC_BootLD.cproject.yml

@@ -35,7 +35,6 @@ build/
 *.yaml
 *.cprj
 *.cbuild-*
-*.cbuild-*
 *.cbuild.yml
 all.eww
 all.uvmpw
