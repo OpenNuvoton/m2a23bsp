@@ -31,7 +31,7 @@ project:
     - group: User
       files:
         - file: ../main.c
-        - file: ../FMC_USER.c
-        - file: ../ISP_USER.c
+        - file: ../fmc_user.c
+        - file: ../isp_user.c
         - file: ../targetdev.c
         - file: ../uart_transfer.c
