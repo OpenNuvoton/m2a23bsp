@@ -2,6 +2,7 @@
 Release/
 settings/
 List/
+Obj/
 
 #For KEIL
 obj/
