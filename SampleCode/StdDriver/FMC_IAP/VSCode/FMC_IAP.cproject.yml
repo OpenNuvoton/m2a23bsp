@@ -7,7 +7,7 @@ project:
       ASM: [-D__MICROLIB, -DBINFILE='"$SolutionDir()$/out/fmc_ld_code/ARMCLANG/debug/fmc_ld_code.bin"']
       Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
     - for-compiler: GCC
-      C: [-std=gnu11, -mfloat-abi=soft, --specs=nano.specs, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
+      C: [-std=gnu11, -mfloat-abi=soft, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
           -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
       ASM: [-DBINFILE='"$SolutionDir()$/out/fmc_ld_code/GNUC/debug/fmc_ld_code.bin"']
       Link:

@@ -8,7 +8,7 @@ solution:
     - type: debug
       optimize: debug
     - type: release
-      optimize: size
+      optimize: balanced
   target-types:
     - type: ARMCLANG
       compiler: AC6
