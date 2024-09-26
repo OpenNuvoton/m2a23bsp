@@ -23,6 +23,80 @@ int32_t g_ADC_i32ErrCode = 0;		/*!< ADC global error code */
 */
 
 /**
+  * @brief Execute ADC Calibration
+  * @param[in] adc The pointer of the specified ADC module
+  * @return ADC clock frequency must less or equal to 24MHz to get correct calibration code.
+  */
+void ADC_Calibration(ADC_T *adc)
+{
+    int32_t i32TimeOutCnt = (SystemCoreClock >> 1);
+    uint32_t clksrc, clkdiv, clkfreq, clkdiv_adj;
+    uint32_t pllfreq, pllsrc_freq, pllctl = CLK->PLLCTL;
+        
+    clksrc = CLK_GetModuleClockSource(ADC_MODULE);
+    clkdiv = CLK_GetModuleClockDivider(ADC_MODULE);
+    clkdiv_adj = clkdiv;
+    
+    /* Notes: ADC clock frequency MUST <= 24MHz for Calibration */
+        
+    if(clksrc == 1)
+    {
+        /* PLL: 50MHz ~ 144MHz */
+        if(pllctl & CLK_PLLCTL_PLLSRC_Msk)
+            pllsrc_freq = (__HIRC >> 1);
+        else
+            pllsrc_freq = __HXT;
+        
+        pllfreq = (pllsrc_freq * ((pllctl&0x1FF) + 2)) / (((pllctl>>CLK_PLLCTL_INDIV_Pos)&0x1F) + 2);
+        if(((pllctl>>CLK_PLLCTL_OUTDIV_Pos)&0x3) == 0)
+            clkfreq = (pllfreq / 1);
+        else if(((pllctl>>CLK_PLLCTL_OUTDIV_Pos)&0x3) == 3)
+            clkfreq = (pllfreq / 4);
+        else
+            clkfreq = (pllfreq / 2);
+
+        if(clkfreq > 72000000)
+            clkdiv_adj = (6 - 1);
+        else
+            clkdiv_adj = (3 - 1);
+    }
+    else if(clksrc == 2)
+    {
+        /* SystemCoreClock, maximum is 72MHz */
+        clkfreq = SystemCoreClock;
+        if(clkfreq > 24000000)
+        {
+            if(clkfreq <= 48000000)
+                clkdiv_adj = (2 - 1);
+            else
+                clkdiv_adj = (3 - 1);
+        }
+    }
+    else
+    {
+        /* HIRC 48MHz */
+        clkfreq = __HIRC;
+        clkdiv_adj = (2 - 1);
+    }        
+
+    /* Adjust ADC clock divider for calibration */
+    if(clkdiv_adj > clkdiv)
+        CLK->CLKDIV0 = ((CLK->CLKDIV0 & ~CLK_CLKDIV0_ADC0DIV_Msk) | (clkdiv_adj << CLK_CLKDIV0_ADC0DIV_Pos));
+    
+    (adc)->CALCTL = ADC_CALCTL_CAL_Msk;
+    while(((adc)->CALSR & ADC_CALSR_CALIF_Msk) == 0) 
+    {
+        if(i32TimeOutCnt-- <= 0)
+            break;
+    }
+    (adc)->CALSR = (adc)->CALSR;
+    
+    /* Restore user's ADC clock divider */
+    if(clkdiv_adj > clkdiv)
+        CLK->CLKDIV0 = ((CLK->CLKDIV0 & ~CLK_CLKDIV0_ADC0DIV_Msk) | (clkdiv << CLK_CLKDIV0_ADC0DIV_Pos));   
+}
+
+/**
   * @brief This API configures ADC module to be ready for convert the input from selected channel
   * @param[in] adc The pointer of the specified ADC module
   * @param[in] u32InputMode Decides the ADC analog input mode. Valid values are:
@@ -51,18 +125,8 @@ void ADC_Open(ADC_T *adc,
     if((inpw(ADC0_BASE+0xFF4)&BIT16) == BIT16)
         outpw(ADC0_BASE+0xFF4, 0x31);
 
-	/* Calibration Mode, set (ADC divider * 8) for calibration */
-	if ((u32OrgADC0Div << 3) >= 0xFF)
-		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | (0xFF << CLK_CLKDIV0_ADC0DIV_Pos));
-	else if ((u32OrgADC0Div << 3) > 0)
-		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | ((u32OrgADC0Div << 3) << CLK_CLKDIV0_ADC0DIV_Pos));
-	else
-		CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | ((8-1) << CLK_CLKDIV0_ADC0DIV_Pos));
-	(adc)->CALCTL = ADC_CALCTL_CAL_Msk;
-	while(((adc)->CALSR & ADC_CALSR_CALIF_Msk) == 0) {}
-	(adc)->CALSR = (adc)->CALSR;
-	CLK->CLKDIV0 = ((CLK->CLKDIV0 & 0xFF00FFFF) | (u32OrgADC0Div << CLK_CLKDIV0_ADC0DIV_Pos));
-            
+	/* Execute Calibration */
+    ADC_Calibration(adc);            
             
     (adc)->ADCR = ((adc)->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
                 (u32InputMode) | \

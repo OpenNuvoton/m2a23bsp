@@ -345,6 +345,7 @@ extern int32_t g_ADC_i32ErrCode;
 #define ADC_GET_PDMA_DATA(adc) ((adc)->ADPDMA & ADC_ADPDMA_CURDAT_Msk)
 
 
+void ADC_Calibration(ADC_T *adc);
 void ADC_Open(ADC_T *adc,
               uint32_t u32InputMode,
               uint32_t u32OpMode,
