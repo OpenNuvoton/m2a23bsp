@@ -119,7 +119,6 @@ void ADC_Open(ADC_T *adc,
               uint32_t u32OpMode,
               uint32_t u32ChMask)
 {
-    volatile uint32_t u32OrgADC0Div = ((CLK->CLKDIV0 & 0x00FF0000) >> CLK_CLKDIV0_ADC0DIV_Pos);
     
 	/* ADC macro settings for chip-A */
     if((inpw(ADC0_BASE+0xFF4)&BIT16) == BIT16)
