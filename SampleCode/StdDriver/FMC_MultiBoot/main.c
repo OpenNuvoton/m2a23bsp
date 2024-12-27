@@ -151,8 +151,8 @@ int32_t main(void)
     printf("[2] Boot 2, base = 0x6000\n");
     printf("[3] Boot 3, base = 0x8000\n");
 #else
-    printf("[1] Boot 1, base = 0x8000\n");
-    printf("[3] Boot 3, base = 0x10000\n");
+    printf("[1] Boot 1, base = 0x4000\n");
+    printf("[3] Boot 3, base = 0x8000\n");
 #endif
     printf("[Others] Boot, base = 0x0\n");
 
