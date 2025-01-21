@@ -23,8 +23,11 @@ This BSP folder
 - Device<br>
 	CMSIS compliant device header file.
 
-- SpdhLib<br>
-	Library of SPD5 Hub.
+- LlsiYcableLib<br>
+	Library for accessing LlsiYcable..
+
+- NuMaker<br>
+	Specific libraries for M2A23 NuMaker board.
 
 - StdDriver<br>
 	All peripheral driver header and source files.
@@ -38,9 +41,6 @@ This BSP folder
 
 - ISP<br>
 	Sample codes for In-System-Programming.
-
-- Semihost<br>
-	Show how to print and get character through IDE console window.
 
 - StdDriver<br>
 	Demonstrate the usage of M2A23 series MCU peripheral driver APIs.

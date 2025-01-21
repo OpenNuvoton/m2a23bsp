@@ -23,7 +23,7 @@
   *
   * <b>Copyright Notice</b>
   *
-  * Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
+  * Copyright (C) 2025 Nuvoton Technology Corp. All rights reserved.
   */
 
 #ifndef __M2A23_H__
