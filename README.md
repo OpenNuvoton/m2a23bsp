@@ -24,7 +24,7 @@ This BSP folder
 	CMSIS compliant device header file.
 
 - LlsiYcableLib<br>
-	Library for accessing LlsiYcable..
+	Library for accessing LlsiYcable.
 
 - NuMaker<br>
 	Specific libraries for M2A23 NuMaker board.
