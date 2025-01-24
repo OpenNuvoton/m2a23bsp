@@ -67,6 +67,27 @@ void CLK_DisableModuleClock(uint32_t u32ModuleIdx)
     *(uint32_t *)u32TmpAddr &= u32TmpVal;
 }
 
+uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
+{
+    uint32_t u32TmpVal = 0UL, u32TmpAddr = 0UL;
+    uint32_t au32SelTbl[4] = {0x0, 0x4, 0x8, 0xC}; /* CLK_CLKSEL0~3 */
+
+    if(MODULE_CLKSEL_Msk(u32ModuleIdx) != MODULE_NoMsk)
+    {
+        /* Get clock select control register address */
+        u32TmpAddr = (uint32_t)&CLK->CLKSEL0 + (au32SelTbl[MODULE_CLKSEL(u32ModuleIdx)]);
+        /* Get clock source selection setting */
+        u32TmpVal = ((inpw((uint32_t *)u32TmpAddr) & (MODULE_CLKSEL_Msk(u32ModuleIdx) << MODULE_CLKSEL_Pos(u32ModuleIdx))) >> MODULE_CLKSEL_Pos(u32ModuleIdx));
+    }
+
+    return u32TmpVal;
+}
+
+uint32_t CLK_GetHCLKFreq(void)
+{
+    SystemCoreClockUpdate();
+    return SystemCoreClock;
+}
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* ISR to handle CAN FD0 Line0 interrupt event                                                             */

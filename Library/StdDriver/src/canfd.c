@@ -180,6 +180,65 @@ void CANFD_InitTxEvntFifo(CANFD_T *canfd, CANFD_RAM_PART_T *psRamConfig, CANFD_E
 void CANFD_ConfigSIDFC(CANFD_T *canfd, CANFD_RAM_PART_T *psRamConfig, CANFD_ELEM_SIZE_T *psElemSize);
 void CANFD_ConfigXIDFC(CANFD_T *canfd, CANFD_RAM_PART_T *psRamConfig, CANFD_ELEM_SIZE_T *psElemSize);
 
+/** @cond HIDDEN_SYMBOLS */
+/**
+  * @brief      Returns module clock of specified CAN FD interface
+  *
+  * @param[in]  psCanfd      The pointer of CAN FD module.
+  *
+  * @return     Module clock of specified CAN FD interface.
+  */
+static uint32_t CANFD_GetSourceClock(CANFD_T *psCanfd)
+{
+    uint32_t u32ClkSrc = 0, u32ClkFreq = __HIRC;
+
+    /* Get CAN FD module clock source and divider */
+    if (psCanfd == (CANFD_T *)CANFD0)
+    {
+        u32ClkSrc = CLK_GetModuleClockSource(CANFD0_MODULE);
+    }
+#ifdef CANFD1
+    else if(psCanfd == (CANFD_T *)CANFD1)
+    {
+        u32ClkSrc = CLK_GetModuleClockSource(CANFD1_MODULE);
+    }
+#endif
+#ifdef CANFD2
+    else if(psCanfd == (CANFD_T *)CANFD2)
+    {
+        u32ClkSrc = CLK_GetModuleClockSource(CANFD2_MODULE);
+    }
+#endif
+    else
+    {
+        u32ClkFreq = 0UL;
+    }
+
+    if(u32ClkFreq != 0UL)
+    {
+        /* Get CAN FD module clock */
+        if(u32ClkSrc == 0UL)
+        {
+            u32ClkFreq = __HXT;
+        }
+        else if(u32ClkSrc == 1UL)
+        {
+            u32ClkFreq = CLK_GetPLLClockFreq() / 2;
+        }
+        else if(u32ClkSrc == 2UL)
+        {
+            u32ClkFreq = CLK_GetHCLKFreq();
+        }
+        else
+        {
+            u32ClkFreq = __HIRC;
+        }
+    }
+
+    return u32ClkFreq;
+}
+/** @endcond HIDDEN_SYMBOLS */
+
 /**
  * @brief       Calculates the CAN FD RAM buffer address.
  *
@@ -588,6 +647,7 @@ void CANFD_Open_TDC(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
 void CANFD_Open(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
 {
     uint32_t u32RegLockLevel = SYS_IsRegLocked();
+    uint32_t u32CanFdClock = CANFD_GetSourceClock(psCanfd);
 
     if(u32RegLockLevel)
         SYS_UnlockReg();
@@ -638,7 +698,7 @@ void CANFD_Open(CANFD_T *psCanfd, CANFD_FD_T *psCanfdStr)
 
     /* Calculate and apply timing */
     if(CANFD_CalculateTimingValues(psCanfd, psCanfdStr->sBtConfig.sNormBitRate.u32BitRate, psCanfdStr->sBtConfig.sDataBitRate.u32BitRate,
-                                   SystemCoreClock, &psCanfdStr->sBtConfig.sConfigBitTing))
+                                   u32CanFdClock, &psCanfdStr->sBtConfig.sConfigBitTing))
     {
         CANFD_SetTimingConfig(psCanfd, &psCanfdStr->sBtConfig.sConfigBitTing);
     }
