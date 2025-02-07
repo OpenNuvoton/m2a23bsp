@@ -25,6 +25,7 @@ project:
     - ../../../../Library/Device/Nuvoton/m2a23/Include
     - ../../../../Library/StdDriver/inc
     - ../../../../Library/CMSIS/Include
+    - ../../../../Library/LlsiYcableLib
   groups:
     - group: CMSIS
       files:
@@ -41,14 +42,13 @@ project:
         - file: ../../../../Library/StdDriver/src/retarget.c
         - file: ../../../../Library/StdDriver/src/llsi.c
         - file: ../../../../Library/StdDriver/src/gpio.c
-        - file: ../../../../Library/StdDriver/src/timer.c
         - file: ../../../../Library/StdDriver/src/bpwm.c
     - group: LlsiYcableLib
       files:
-        - file: ../hdiv.c
-        - file: ../led_control.c
-        - file: ../led_gen2_control.c
-        - file: ../pdma_user.c
+        - file: ../../../../Library/LlsiYcableLib/hdiv.c
+        - file: ../../../../Library/LlsiYcableLib/led_control.c
+        - file: ../../../../Library/LlsiYcableLib/led_gen2_control.c
+        - file: ../../../../Library/LlsiYcableLib/pdma_config.c
     - group: User
       files:
         - file: ../main.c
