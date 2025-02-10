@@ -106,7 +106,7 @@ int32_t main(void)
     UART_Init();
 
     /* Enable FMC ISP */
-    FMC->ISPCTL |=  FMC_ISPCTL_ISPEN_Msk;
+    FMC->ISPCTL |= (FMC_ISPCTL_ISPEN_Msk|FMC_ISPCTL_APUEN_Msk);
 
     /* Get APROM size, data flash size and address */
     g_apromSize = GetApromSize();

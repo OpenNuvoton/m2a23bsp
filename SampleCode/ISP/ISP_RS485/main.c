@@ -74,6 +74,9 @@ int32_t SYS_Init(void)
     SystemCoreClock = 144000000 / 2;
     CyclesPerUs     = SystemCoreClock / 1000000;  /* For CLK_SysTickDelay() */
 
+    /* Enable GPIO clock */
+    CLK->AHBCLK |= CLK_AHBCLK_GPIOACKEN_Msk;
+
     /* Enable UART1 module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART1CKEN_Msk;
 
@@ -113,7 +116,7 @@ int32_t main(void)
     UART_Init();
 
     /* Enable FMC ISP */
-    FMC->ISPCTL |=  FMC_ISPCTL_ISPEN_Msk;
+    FMC->ISPCTL |= (FMC_ISPCTL_ISPEN_Msk|FMC_ISPCTL_APUEN_Msk);
 
     /* Get APROM size, data flash size and address */
     g_apromSize = GetApromSize();
