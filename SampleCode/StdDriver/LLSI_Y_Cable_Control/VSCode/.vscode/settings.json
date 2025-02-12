@@ -1,7 +1,7 @@
 {
     "cmsis-csolution.actions": [
         {
-            "path": "LLSI_Marquee.csolution.yml",
+            "path": "LLSI_Y_Cable_Control.csolution.yml",
             "target": "ARMCLANG",
             "config": {
                 "run": "arm-debugger.flash: Flash Device",
