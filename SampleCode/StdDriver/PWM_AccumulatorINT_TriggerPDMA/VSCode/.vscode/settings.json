@@ -1,7 +1,7 @@
 {
     "cmsis-csolution.actions": [
         {
-            "path": "PWM_AccINT_Trg.csolution.yml",
+            "path": "PWM_AccumulatorINT_TriggerPDMA.csolution.yml",
             "target": "ARMCLANG",
             "config": {
                 "run": "arm-debugger.flash: Flash Device",

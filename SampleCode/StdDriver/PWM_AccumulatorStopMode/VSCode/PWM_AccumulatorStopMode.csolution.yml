@@ -17,4 +17,4 @@ solution:
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
   projects:
-    - project: PDMA_SG_PingPong.cproject.yml
+    - project: PWM_AccumulatorStopMode.cproject.yml

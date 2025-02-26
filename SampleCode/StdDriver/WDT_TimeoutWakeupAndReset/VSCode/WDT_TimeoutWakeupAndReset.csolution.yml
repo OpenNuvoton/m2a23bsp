@@ -17,4 +17,4 @@ solution:
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
   projects:
-    - project: PWM_AccStop.cproject.yml
+    - project: WDT_TimeoutWakeupAndReset.cproject.yml

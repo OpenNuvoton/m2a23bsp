@@ -17,4 +17,4 @@ solution:
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
   projects:
-    - project: PWM_PDMA_Cap1MHz.cproject.yml
+    - project: TIMER_InterTimerTriggerMode.cproject.yml

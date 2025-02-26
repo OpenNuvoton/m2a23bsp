@@ -17,4 +17,4 @@ solution:
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
   projects:
-    - project: SYS_PD_MinCurrent.cproject.yml
+    - project: PDMA_ScatterGather_PingPongBuffer.cproject.yml
