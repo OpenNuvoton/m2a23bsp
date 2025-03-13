@@ -15,4 +15,4 @@ solution:
       compiler: GCC
       device: Nuvoton::M2A23SG5AC
   projects:
-    - project: FMC_IAP.cproject.yml
+    - project: FMC_IAP_APROM.cproject.yml
