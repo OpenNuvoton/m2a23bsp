@@ -71,7 +71,7 @@ int32_t SYS_Init(void)
     /* Enable UART0 module clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk;
 
-    /* Enable I2C1 clock */
+    /* Enable I2C0 clock */
     CLK->APBCLK0 |= CLK_APBCLK0_I2C0CKEN_Msk;
 
     /* Select UART0 module clock source as HIRC */
@@ -85,7 +85,7 @@ int32_t SYS_Init(void)
     SET_UART0_RXD_PB12();
     SET_UART0_TXD_PB13();
 
-    /* Set I2C1 multi-function pins */
+    /* Set I2C0 multi-function pins */
     SET_I2C0_SDA_PA4();
     SET_I2C0_SCL_PA5();
 
@@ -134,9 +134,15 @@ _ISP:
     {
         if (bI2cDataReady == 1)
         {
+        	/* Disabled I2C IRQ until ParseCmd() is completed to prevent ISP from triggering an interrupt and fetching data prematurely. */
+            NVIC_DisableIRQ(I2C0_IRQn);
+            /* Get command from I2C receive buffer */
             memcpy(cmd_buff, i2c_rcvbuf, 64);
             bI2cDataReady = 0;
+            /* Parse the current command */
             ParseCmd((unsigned char *)cmd_buff, 64);
+			/* Restored I2C IRQ settings. */
+            NVIC_EnableIRQ(I2C0_IRQn);
         }
     }
 

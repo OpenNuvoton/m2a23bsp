@@ -1845,13 +1845,12 @@ void CANFD_GetBusErrCount(CANFD_T *psCanfd, uint8_t *pu8TxErrBuf, uint8_t *pu8Rx
  * @brief       CAN FD Run to the Normal Operation.
  *
  * @param[in]   psCanfd   The pointer of the specified CAN FD module.
- * @param[in]   u8Enable  TxErrBuf Buffer to store Tx Error Counter value.
+ * @param[in]   u8Enable       TRUE or FALSE.
  *
  * @return      CANFD_OK           CANFD operation OK.
- * @return      CANFD_ERR_TIMEOUT  CANFD operation abort due to timeout error.
+ *              CANFD_ERR_TIMEOUT  CANFD operation abort due to timeout error.
  *
- * @details     This function gets the CAN FD Bus Error Counter value for both Tx and Rx direction.
- *              These values may be needed in the upper layer error handling.
+ * @details     This function is used to switch between the initial mode and normal mode.
  */
 int32_t CANFD_RunToNormal(CANFD_T *psCanfd, uint8_t u8Enable)
 {
