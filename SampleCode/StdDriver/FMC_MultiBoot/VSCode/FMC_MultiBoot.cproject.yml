@@ -12,12 +12,12 @@ project:
       misc:
         - for-compiler: AC6
           C:
-            - -std=c99 -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
+            - -std=c99 -flto -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
             - -D__MICROLIB
           ASM:
             - -masm=auto
           Link:
-            - --library_type=microlib --map --load_addr_map_info --symbols
+            - --library_type=microlib --map --load_addr_map_info --symbols --lto
             - --info sizes --info totals --strict --summary_stderr --info summarysizes
         - for-compiler: GCC
           C:
@@ -106,6 +106,19 @@ project:
           for-compiler: GCC
           define:
           - FLASH_BASE: 0x8000
+    - setup: Options for FMC_MultiBoot_BootLD
+      output :
+        base-name: FMC_MultiBoot_BootLD
+      for-context: .BootLD
+      define:
+        - __BOOTLD__
+      linker:
+        - script: ../../../../Library/Device/Nuvoton/m2a23/Source/ARM/LDROM.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0x20000
   groups:
     - group: CMSIS
       files:

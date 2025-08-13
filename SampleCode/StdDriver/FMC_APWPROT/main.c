@@ -211,7 +211,7 @@ int32_t main(void)
         if(i32GetInt < 4)
         {
             /* In this sample code, skip the block 0~3 testing because it's the code execution region */
-            /* if user wants to test block 0 and 1, please let code execute in SRAM */
+            /* if user wants to test block 0~3, please let code execute in SRAM */
             printf("\tAPROM 0x%08x ~ 0x%08x is code execution region!\n\n", u32Start, u32End);
         }
         else if(i32GetInt > 7)
@@ -367,7 +367,7 @@ int32_t main(void)
                 }
 
             }
-            printf("\n\t=> Program check OK! All data is not programed\n");
+            printf("\n\t=> Program check OK! All data are not programmed\n");
         }
     }
 

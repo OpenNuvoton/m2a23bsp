@@ -129,7 +129,7 @@ int main()
 
         if(i32Ret == 0)
         {
-            /* Normal test condition*/
+            /* Normal test condition */
             for(i = 0; i < 1000; i++)
             {
                 printf(" Firmware processing....  cnt[%d]\r", i);
@@ -146,7 +146,6 @@ int main()
 
     }
     while(1);
-
 
 }
 

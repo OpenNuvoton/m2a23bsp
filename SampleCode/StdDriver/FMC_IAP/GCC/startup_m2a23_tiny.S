@@ -1,5 +1,5 @@
 /****************************************************************************//**
- * @file     startup_m2a23.S
+ * @file     startup_m2a23_tiny.S
  * @version  V3.00
  * @brief    CMSIS Device Startup File
  *

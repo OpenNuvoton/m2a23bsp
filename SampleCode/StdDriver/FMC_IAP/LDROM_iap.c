@@ -11,26 +11,62 @@
 #include "NuMicro.h"
 
 typedef void (FUNC_PTR)(void);
+void SH_Return(void) {}
 
+void ProcessHardFault(void)
+{
+    while(1); /* Halt here if hard fault occurs. */
+}
 
 void SYS_Init(void)
 {
+    uint32_t u32TimeOutCnt;
+
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set core clock to 72MHz */
-    CLK_SetCoreClock(72000000);
+    /* Enable HIRC clock */
+    CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
+
+    /* Wait for HIRC clock ready */
+    u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
+    while(!(CLK->STATUS & CLK_STATUS_HIRCSTB_Msk))
+        if(--u32TimeOutCnt == 0) break;
+
+    /* Select HCLK clock source as HIRC first */
+    CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_HIRC;
+
+    /* Disable PLL clock before setting PLL frequency */
+    CLK->PLLCTL |= CLK_PLLCTL_PD_Msk;
+
+    /* Set PLL clock as 144MHz from HIRC/2 */
+    CLK->PLLCTL = CLK_PLLCTL_144MHz_HIRC_DIV2;
+
+    /* Wait for PLL clock ready */
+    u32TimeOutCnt = SystemCoreClock; /* 1 second time-out */
+    while(!(CLK->STATUS & CLK_STATUS_PLLSTB_Msk))
+        if(--u32TimeOutCnt == 0) break;
+
+    /* Select HCLK clock source as PLL/2 and HCLK source divider as 1 */
+    CLK->CLKDIV0 = (CLK->CLKDIV0 & (~CLK_CLKDIV0_HCLKDIV_Msk)) | CLK_CLKDIV0_HCLK(1);
+    CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_PLL_DIV2;
+
+    /* Update System Core Clock */
+    PllClock        = 144000000;
+    SystemCoreClock = 144000000 / 2;
+    CyclesPerUs     = SystemCoreClock / 1000000;  /* For CLK_SysTickDelay() */
 
     /* Enable all GPIO clock */
     CLK->AHBCLK |= CLK_AHBCLK_GPIOACKEN_Msk | CLK_AHBCLK_GPIOBCKEN_Msk | CLK_AHBCLK_GPIOCCKEN_Msk |
                    CLK_AHBCLK_GPIODCKEN_Msk | CLK_AHBCLK_GPIOFCKEN_Msk ;
 
     /* Enable UART0 module clock */
-    CLK_EnableModuleClock(UART0_MODULE);
+    CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk;
 
     /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
+    CLK->CLKSEL2 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_UART0SEL_Msk)) | CLK_CLKSEL2_UART0SEL_HIRC;
+    CLK->CLKDIV0 = (CLK->CLKDIV0 & (~CLK_CLKDIV0_UART0DIV_Msk)) | CLK_CLKDIV0_UART0(1);
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
