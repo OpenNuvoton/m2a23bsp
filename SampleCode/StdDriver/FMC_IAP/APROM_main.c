@@ -118,7 +118,11 @@ static int  LoadImage(uint32_t u32ImageBase, uint32_t u32ImageLimit, uint32_t u3
 
         for(j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)                  /* program image to this flash page */
         {
-            FMC_Write(u32FlashAddr + i + j, pu32Loader[(i + j) / 4]);
+            if(FMC_Write(u32FlashAddr + i + j, pu32Loader[(i + j) / 4]) != 0)
+            {
+                printf("FMC_Write failed on 0x%x\n", u32FlashAddr + i + j); /* error message */
+                return -1;             /* image program failed */
+            }
         }
     }
     printf("OK.\nVerify ...");
