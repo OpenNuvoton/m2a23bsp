@@ -37,13 +37,17 @@ int32_t g_I2C_i32ErrCode = 0;       /*!< I2C global error code */
   */
 uint32_t I2C_Open(I2C_T *i2c, uint32_t u32BusClock)
 {
-    uint32_t u32Div;
+    uint32_t u32Div, u32NFCnt;
     uint32_t u32Pclk;
 
     u32Pclk = CLK_GetPCLK0Freq();
 
     u32Div = (uint32_t)(((u32Pclk * 10U) / (u32BusClock * 4U) + 5U) / 10U - 1U); /* Compute proper divider for I2C clock */
     i2c->CLKDIV = u32Div;
+
+    /* Set noise filter count based on divider value */
+    u32NFCnt = (u32Div > 16U) ? 15U : (u32Div - 1U);
+    i2c->CLKDIV = (i2c->CLKDIV & ~I2C_CLKDIV_NFCNT_Msk) | (u32NFCnt << I2C_CLKDIV_NFCNT_Pos);
 
     /* Enable I2C */
     i2c->CTL0 |= I2C_CTL0_I2CEN_Msk;
@@ -171,7 +175,7 @@ void I2C_EnableInt(I2C_T *i2c)
  */
 uint32_t I2C_GetBusClockFreq(I2C_T *i2c)
 {
-    uint32_t u32Divider = i2c->CLKDIV;
+    uint32_t u32Divider = ((i2c->CLKDIV & I2C_CLKDIV_DIVIDER_Msk) >> I2C_CLKDIV_DIVIDER_Pos);
     uint32_t u32Pclk;
 
     u32Pclk = CLK_GetPCLK0Freq();
@@ -197,7 +201,7 @@ uint32_t I2C_SetBusClockFreq(I2C_T *i2c, uint32_t u32BusClock)
     u32Pclk = CLK_GetPCLK0Freq();
 
     u32Div = (uint32_t)(((u32Pclk * 10U) / (u32BusClock * 4U) + 5U) / 10U - 1U); /* Compute proper divider for I2C clock */
-    i2c->CLKDIV = u32Div;
+    i2c->CLKDIV = (i2c->CLKDIV & ~I2C_CLKDIV_DIVIDER_Msk) | (u32Div << I2C_CLKDIV_DIVIDER_Pos);
 
     return (u32Pclk / ((u32Div + 1U) << 2U));
 }
