@@ -1,8 +1,8 @@
 /* Linker script to configure memory regions. */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x80000   /* 512k */
-  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x50000   /* 320k */
+  FLASH (rx) : ORIGIN = 0x00100000, LENGTH = 0x1000    /* 4K */
+  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x6000   /* 24K */
 }
 
 /* Library configurations */
@@ -51,9 +51,7 @@ SECTIONS
 		__Vectors_Size = __Vectors_End - __Vectors;
 		__end__ = .;
 
-		/* *(.text*) */
-
-        *(EXCLUDE_FILE(*exeinsram.c.obj) .text*)
+		*(.text*)
 
 		KEEP(*(.init))
 		KEEP(*(.fini))
@@ -66,15 +64,13 @@ SECTIONS
 		*(.ctors)
 
 		/* .dtors */
- 		*crtbegin.o(.dtors)
- 		*crtbegin?.o(.dtors)
- 		*(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
- 		*(SORT(.dtors.*))
- 		*(.dtors)
+		*crtbegin.o(.dtors)
+		*crtbegin?.o(.dtors)
+		*(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+		*(SORT(.dtors.*))
+		*(.dtors)
 
-		/* *(.rodata*) */
-
-        *(EXCLUDE_FILE(*exeinsram.c.obj) .rodata*)
+		*(.rodata*)
 
 		KEEP(*(.eh_frame*))
 	} > FLASH
@@ -130,11 +126,6 @@ SECTIONS
 	.data : AT (__etext)
 	{
 		__data_start__ = .;
-		
-		*exeinsram.c.obj (.text*) 
-		*(.fastcode) 
-		*exeinsram.c.obj (.rodata*)
-		
 		*(vtable)
 		*(.data*)
 

@@ -137,12 +137,13 @@ void Hard_Fault_Handler(uint32_t stack[])
 
 int32_t main(void)
 {
-    FUNC_PTR    *func;                 /* function pointer */
     uint32_t    u32TimeOutCnt;         /* time-out counter */
 
     SYS_UnlockReg();                   /* Unlock protected registers */
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
+
+    SCB->VTOR = FMC_LDROM_BASE;        /* Set Vector Table Offset Register */
 
     UART_Open(UART0, 115200);          /* Init UART to 115200-8n1 for print message */
 
@@ -166,26 +167,20 @@ int32_t main(void)
      *     Before change VECMAP, user MUST disable all interrupts.
      */
     FMC_SetVectorPageAddr(FMC_APROM_BASE);        /* Vector remap APROM page 0 to address 0. */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        PutString("FMC_SetVectorPageAddr(FMC_APROM_BASE) failed!\n");
+        goto lexit;
+    }
 
     SYS_LockReg();                                /* Lock protected registers */
 
-    /*
-     *  The reset handler address of an executable image is located at offset 0x4.
-     *  Thus, this sample get reset handler address of APROM code from FMC_APROM_BASE + 0x4.
-     */
-    func = (FUNC_PTR *) * (uint32_t *)(FMC_APROM_BASE + 4);
+    /* Software reset to boot to APROM */
+    NVIC_SystemReset();
 
-    /*
-     *  The stack base address of an executable image is located at offset 0x0.
-     *  Thus, this sample get stack base address of APROM code from FMC_APROM_BASE + 0x0.
-     */
+lexit:
 
-    __set_MSP(FMC_APROM_BASE);
-
-    /*
-     *  Branch to the LDROM code's reset handler in way of function call.
-     */
-    func();
-
-    while(1);
+    while (1);
 }
+
+/*** (C) COPYRIGHT 2021 Nuvoton Technology Corp. ***/

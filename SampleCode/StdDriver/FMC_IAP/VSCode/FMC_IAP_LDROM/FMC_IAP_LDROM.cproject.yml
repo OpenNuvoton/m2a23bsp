@@ -14,10 +14,9 @@ project:
         - --gc-sections
         - -Wl,--gc-sections,-Map="$elf()$.map"
   linker:
-    - for-compiler: AC6
-      script: ../../../../../Library/Device/Nuvoton/m2a23/Source/ARM/LDROM.sct
-    - for-compiler: GCC
-      script: ../../../../../Library/Device/Nuvoton/m2a23/Source/GCC/LDROM.ld
+      - for-compiler: GCC
+        script: gcc_arm_ldrom.ld
+      - regions: regions_ld.h
   setups:
     - output:
         type: ["elf", "bin"]
@@ -37,6 +36,7 @@ project:
       files:
         - file: ../../../../../Library/StdDriver/src/uart.c
         - file: ../../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../../Library/StdDriver/src/retarget.c
     - group: User
       files:
         - file: ../../LDROM_iap.c
