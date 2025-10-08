@@ -302,6 +302,9 @@ void SingleWireFunction_RxTest(void)
     /* Set UART single wire function */
     UART_SelectSingleWireMode(UART1);
 
+    /* Prepare comparison data */
+    Build_Src_Pattern((uint32_t)g_u8TxData, UART_WORD_LEN_8, BUFSIZE);
+
     /* Enable UART1 RDA/Single-wire Bit Error Detection interrupt */
     NVIC_EnableIRQ(UART1_IRQn);
     UART_EnableInt(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_SWBEIEN_Msk));
