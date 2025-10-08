@@ -281,6 +281,8 @@ void UsciSpiLoopTest_WithPDMA(void)
                 {
                     /* Clear the PDMA transfer done flags */
                     PDMA_CLR_TD_FLAG(PDMA0, (1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH));
+                    /* Disable USCI_SPI slave's PDMA transfer function */
+                    USPI_DISABLE_TX_RX_PDMA(UspiSlave);
                     /* Disable USCI_SPI master's PDMA transfer function */
                     USPI_DISABLE_TX_RX_PDMA(UspiMaster);
                     /* Check the transfer data */
@@ -331,6 +333,9 @@ void UsciSpiLoopTest_WithPDMA(void)
                     PDMA_SetTransferCnt(PDMA0, USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
                     PDMA_SetTransferMode(PDMA0, USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
+
+                    /* Enable slave's PDMA transfer function */
+                    USPI_TRIGGER_TX_RX_PDMA(UspiSlave);
 
                     /* Enable master's PDMA transfer function */
                     USPI_TRIGGER_TX_RX_PDMA(UspiMaster);
