@@ -83,7 +83,7 @@ void SYS_Init(void)
     SET_TM3_PB2();
 
     /* Set multi-function pin for Timer2 external capture pin */
-    SET_TM2_EXT_PB13();
+		SET_TM2_EXT_PA9();
 }
 
 void UART0_Init(void)
@@ -138,7 +138,7 @@ int main(void)
     printf("    - External capture mode enable      \n");
     printf("    - Capture trigger interrupt enable  \n");
     printf("# Connect TM0(PB.5) toggle-output pin to TM2(PB.3) event counter pin.\n");
-    printf("# Connect TM3(PB.2) toggle-output pin to TM2_EXT(PB.12) external capture pin.\n\n");
+    printf("# Connect TM3(PB.2) toggle-output pin to TM2_EXT(PA.9) external capture pin.\n\n");
 
     /* Enable Timer2 NVIC */
     NVIC_EnableIRQ(TMR2_IRQn);

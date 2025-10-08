@@ -25,7 +25,6 @@ build/
 *.dep
 *.bak
 *.old
-*.bin
 *.out
 *.scvd
 *.uvgui.*
