@@ -10,6 +10,12 @@
 #include "NuMicro.h"
 
 /*---------------------------------------------------------------------------------------------------------*/
+/* Functions declaration                                                                                   */
+/*---------------------------------------------------------------------------------------------------------*/
+void SYS_Init(void);
+void UART0_Init(void);
+
+/*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 uint32_t PDMA_TEST_LENGTH = 64;
@@ -74,31 +80,32 @@ void SYS_Init(void)
     /* Set PCLK0/PCLK1 to HCLK/2 */
     CLK->PCLKDIV = (CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2);
 
-    /* Enable UART module clock */
-    CLK_EnableModuleClock(UART1_MODULE);
+    /* Enable UART0 module clock */
+    CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Select UART clock source from HIRC */
-    CLK_SetModuleClock(UART1_MODULE, CLK_CLKSEL2_UART1SEL_HIRC, CLK_CLKDIV0_UART1(1));
+    /* Select UART0 module clock source as HIRC and UART0 module clock divider as 1 */
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL2_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
+
+    /* Set multi-function pins for UART0 RXD and TXD */
+    SET_UART0_RXD_PB12();
+    SET_UART0_TXD_PB13();
 
     /* Enable PDMA clock source */
     CLK_EnableModuleClock(PDMA0_MODULE);
 
-    /* Set GPA multi-function pins for UART1 RXD(PA.8) and TXD(PA.9) */
-    SET_UART1_RXD_PA8();
-    SET_UART1_TXD_PA9();
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
+    SystemCoreClockUpdate();
 
     /* Lock protected registers */
     SYS_LockReg();
 }
 
-void UART1_Init()
+void UART0_Init()
 {
-
-    /* Configure UART1 and set UART1 baud rate */
-    UART_Open(UART1, 115200);
+    /* Configure UART0 and set UART0 baud rate */
+    UART_Open(UART0, 115200);
 }
-
-
 
 int main(void)
 {
@@ -106,7 +113,7 @@ int main(void)
     SYS_Init();
 
     /* Init UART for printf */
-    UART1_Init();
+    UART0_Init();
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
     printf("+------------------------------------------------------+ \n");
