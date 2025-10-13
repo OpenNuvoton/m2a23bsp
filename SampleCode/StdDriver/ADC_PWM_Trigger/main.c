@@ -56,8 +56,18 @@ void SYS_Init(void)
 
     /* Set multi-function pins for ADC channels */
     SET_ADC0_CH2_PB2();
+    
     /* Disable digital input path of ADC analog pin to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT2);
+
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Initialization for sample code                                                                          */
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Enable PWM module clock */
+    CLK_EnableModuleClock(PWM0_MODULE);
+
+    /* Select PWM module clock source */
+    CLK_SetModuleClock(PWM0_MODULE, CLK_CLKSEL3_PWM0SEL_PCLK0, 0);
 
     /* Set multi-function pins for PWM */
     SET_PWM0_CH0_PB5();
