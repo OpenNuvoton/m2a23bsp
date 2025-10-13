@@ -19,8 +19,10 @@ project:
     - output:
         type: ["elf", "bin"]
   linker:
+    - for-compiler: AC6
+      script: ./Loader.sct
     - for-compiler: GCC
-      script: ../../../../../Library/Device/Nuvoton/m2a23/Source/GCC/gcc_arm.ld
+      script: ./Loader.ld
   add-path:
     - ../../../../../Library/Device/Nuvoton/m2a23/Include
     - ../../../../../Library/StdDriver/inc
