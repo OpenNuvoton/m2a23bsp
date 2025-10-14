@@ -51,6 +51,10 @@ int32_t main(void)
     ACMP_SELECT_CRV_SRC(ACMP01, ACMP_VREF_CRVSSEL_VDDA);
     /* Select CRV level: VDDA * 9 / 24 */
     ACMP_CRV_CTL(ACMP01, 5);
+    /* Enable CRV */
+    ACMP_ENABLE_CRV(ACMP01);
+    /* Configure ACMP0_P0 as the ACMP positive input. */
+    ACMP_SELECT_P(ACMP01, 0, ACMP_CTL_POSSEL_P0);
     /* Configure ACMP0. Enable ACMP0 and select CRV as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
     __NOP();
@@ -108,7 +112,10 @@ void SYS_Init(void)
 
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
-
+    
+    /* Enable GPIOA peripheral clock */
+    CLK_EnableModuleClock(GPIOA_MODULE);
+    
     /* Update System Core Clock */
     SystemCoreClockUpdate();
 
