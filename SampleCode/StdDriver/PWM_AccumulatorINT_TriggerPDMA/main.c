@@ -91,6 +91,9 @@ void SYS_Init(void)
 
     /* Set multi-function pin for PWM */
     SET_PWM0_CH0_PB5();
+    
+    /* Enable PDMA module clock */
+    CLK_EnableModuleClock(PDMA0_MODULE);
 }
 
 void UART0_Init(void)
@@ -231,5 +234,7 @@ lexit:
     /* Close PDMA */
     PDMA_Close(PDMA0);
 
+    printf("\nExit sample coide.\n");
+    
     while(1) {}
 }

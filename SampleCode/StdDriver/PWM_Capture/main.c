@@ -35,7 +35,7 @@ int32_t CalPeriodTime(PWM_T *PWM, uint32_t u32Ch)
 {
     uint16_t au16Count[4];
     uint32_t u32i;
-    uint16_t u16RisingTime, u16FallingTime, u16HighPeriod, u16LowPeriod, u16TotalPeriod;
+    uint16_t u16HighPeriod, u16LowPeriod, u16TotalPeriod;
     uint32_t u32TimeOutCnt;
 
     /* Clear Capture Falling Indicator (Time A) */
@@ -94,20 +94,16 @@ int32_t CalPeriodTime(PWM_T *PWM, uint32_t u32Ch)
         au16Count[u32i++] = (uint16_t)PWM_GET_CAPTURE_RISING_DATA(PWM, u32Ch);
     }
 
-    u16RisingTime = au16Count[1];
-
-    u16FallingTime = au16Count[0];
-
-    u16HighPeriod = au16Count[1] - au16Count[2];
+    u16TotalPeriod = (uint16_t)(0x10000 - au16Count[0]);
 
     u16LowPeriod = (uint16_t)(0x10000 - au16Count[1]);
 
-    u16TotalPeriod = (uint16_t)(0x10000 - au16Count[2]);
+    u16HighPeriod = u16TotalPeriod - u16LowPeriod;
 
-    printf("\nPWM generate: \nHigh Period=17141 ~ 17143, Low Period=39999 ~ 40001, Total Period=57141 ~ 57143\n");
-    printf("\nCapture Result: Rising Time = %d, Falling Time = %d \nHigh Period = %d, Low Period = %d, Total Period = %d.\n\n",
-           u16RisingTime, u16FallingTime, u16HighPeriod, u16LowPeriod, u16TotalPeriod);
-    if((u16HighPeriod < 17141) || (u16HighPeriod > 17143) || (u16LowPeriod < 39999) || (u16LowPeriod > 40001) || (u16TotalPeriod < 57141) || (u16TotalPeriod > 57143))
+    printf("\nPWM generate: \nHigh Period=17279 ~ 17281, Low Period=40320 ~ 40322, Total Period=57600 ~ 57602\n");
+    printf("\nCapture Result: High Period = %d, Low Period = %d, Total Period = %d.\n\n",
+                u16HighPeriod, u16LowPeriod, u16TotalPeriod);
+    if((u16HighPeriod < 17279) || (u16HighPeriod > 17281) || (u16LowPeriod < 40320) || (u16LowPeriod > 40322) || (u16TotalPeriod < 57600) || (u16TotalPeriod > 57602))
     {
         printf("Capture Test Fail!!\n");
         return (-1);
@@ -219,14 +215,14 @@ int32_t main(void)
            duty ratio = (CMR)/(CNR+1)
            cycle time = CNR+1
            High level = CMR
-           PWM clock source frequency = PLL/2 = 100000000
+           PWM clock source frequency = PCLK = 72000000
            (CNR+1) = PWM clock source frequency/prescaler/PWM output frequency
-                   = 100000000/7/250 = 57142
+                   = 72000000/5/250 = 57600
            (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
-           CNR = 57141
+           CNR = 57600
            duty ratio = 30% ==> (CMR)/(CNR+1) = 30%
-           CMR = 17142
-           Prescale value is 6 : prescaler= 7
+           CMR = 17280
+           Prescale value is 5 : prescaler= 4
         */
 
         /* Set PWM0 channel 0 output configuration */
@@ -243,19 +239,19 @@ int32_t main(void)
         /*--------------------------------------------------------------------------------------*/
 
         /* If input minimum frequency is 250Hz, user can calculate capture settings by follows.
-           Capture clock source frequency = PLL = 100000000 in the sample code.
+           Capture clock source frequency = PCLK = 72000000 in the sample code.
            (CNR+1) = Capture clock source frequency/prescaler/minimum input frequency
-                   = 100000000/7/250 = 57142
+                   = 72000000/5/250 = 57600
            (Note: CNR is 16 bits, so if calculated value is larger than 65536, user should increase prescale value.)
            CNR = 0xFFFF
            (Note: In capture mode, user should set CNR to 0xFFFF to increase capture frequency range.)
 
            Capture unit time = 1/Capture clock source frequency/prescaler
-           70 ns = 1/100000000/7
+           69 ns = 1/72000000/5
         */
 
         /* Set PWM0 channel 2 capture configuration */
-        PWM_ConfigCaptureChannel(PWM0, 2, 70, 0);
+        PWM_ConfigCaptureChannel(PWM0, 2, 69, 0);
 
         /* Enable Timer for PWM0 channel 2 */
         PWM_Start(PWM0, PWM_CH_2_MASK);
