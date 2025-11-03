@@ -20,8 +20,6 @@
 void SYS_Init(void);
 void UART0_Init(void);
 
-
-
 void SYS_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/
@@ -73,7 +71,6 @@ void UART0_Init(void)
     UART_Open(UART0, 115200);
 }
 
-
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -104,7 +101,7 @@ int32_t main(void)
     printf("+------------------------------------------------------------------------+\n");
     printf("  This sample code will output waveform with BPWM0 channel 0~5 at the same time.\n");
     printf("  I/O configuration:\n");
-    printf("  waveform output pin: BPWM0_CH0(PE.2), BPWM0_CH1(PE.3), BPWM0_CH2(PE.4), BPWM0_CH3(PE.5), BPWM0_CH4(PE.6), BPWM0_CH5(PE.7)\n");
+    printf("  waveform output pin: BPWM0_CH0(PA.0), BPWM0_CH1(PA.1), BPWM0_CH2(PA.2), BPWM0_CH3(PA.3), BPWM0_CH4(PA.4), BPWM0_CH5(PA.5)\n");
 
     printf("Press any key to start.\n");
     getchar();
