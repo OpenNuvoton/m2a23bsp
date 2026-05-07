@@ -201,6 +201,8 @@ void CAN_Init(void)
     SET_CANFD0_RXD_PC4();
     SET_CANFD0_TXD_PC5();
 
+    /* Use defined configuration */
+    sCANFD_Config.sElemSize.u32UserDef = 0;
     /* Get the CAN configuration value */
     CANFD_GetDefaultConfig(&sCANFD_Config, CANFD_OP_CAN_MODE);
     sCANFD_Config.sBtConfig.sNormBitRate.u32BitRate = CAN_BAUD_RATE;
