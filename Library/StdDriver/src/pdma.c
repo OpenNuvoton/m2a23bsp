@@ -87,7 +87,7 @@ void PDMA_SetTransferCnt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Width, uint32
 
 /**
  * @brief       Set PDMA Transfer Address
-  *
+ *
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Ch           The selected channel
  * @param[in]   u32SrcAddr      Source address
@@ -113,7 +113,7 @@ void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uin
 
 /**
  * @brief       Set PDMA Transfer Mode
-  *
+ *
  * @param[in]   pdma            The pointer of the specified PDMA module
  * @param[in]   u32Ch           The selected channel
  * @param[in]   u32Peripheral   The selected peripheral. Valid values are
@@ -219,22 +219,43 @@ void PDMA_SetTransferMode(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Peripheral, 
     volatile uint32_t *pu32;
     uint32_t idx, off;
 
+    if(u32ScatterEn)
+    {
+        pdma->DSCT[u32Ch].NEXT = u32DescAddr - (pdma->SCATBA);
+        pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_SCATTER;
+    }
+    else
+    {
+        pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_BASIC;
+    }
+
     /* Set PDMA peripheral trigger source */
     pu32 = &pdma->REQSEL0_3;
     idx = u32Ch / 4;
     off = (u32Ch & 0x3) * 8;
     pu32[idx] &= ~(0xff << off);
     pu32[idx] |= u32Peripheral << off;
+}
 
-    if(u32ScatterEn)
-    {
-        pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_SCATTER;
-        pdma->DSCT[u32Ch].NEXT = u32DescAddr - (pdma->SCATBA);
-    }
-    else
-    {
-        pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_BASIC;
-    }
+/**
+ * @brief       Clear PDMA Request Source Select
+ *
+ * @param[in]   u32Ch           The selected channel
+ *
+ * @return      None
+ *
+ * @details     This function clear the request source selection of the selected channel.
+ */
+void PDMA_SetREQSEL(PDMA_T * pdma, uint32_t u32Ch)
+{
+    volatile uint32_t *pu32;
+    uint32_t idx, off;
+
+    /* Set PDMA peripheral trigger source */
+    pu32 = &pdma->REQSEL0_3;
+    idx = u32Ch / 4;
+    off = (u32Ch & 0x3) * 8;
+    pu32[idx] &= ~(0xff << off);
 }
 
 /**

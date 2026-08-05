@@ -103,6 +103,16 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1735811179998</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-pdma.c</arguments>
+			</matcher>
+		</filter>
+
+		<filter>
 			<id>1735811180009</id>
 			<name>Library/Library</name>
 			<type>5</type>
@@ -172,15 +182,6 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-led_gen2_control.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1735810862840</id>
-			<name>LlsiYcableLib/LlsiYcableLib</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-pdma_config.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
