@@ -128,7 +128,24 @@ HardFault_Handler\
         BLX     R3
         BX      R0
 
-    PUBWEAK  SysTick_Handler
+    PUBWEAK NMI_Handler
+    PUBWEAK SVC_Handler
+    PUBWEAK PendSV_Handler
+    SECTION .text:CODE:REORDER:NOROOT(2)
+NMI_Handler
+    B NMI_Handler
+
+SVC_Handler
+    B SVC_Handler
+
+PendSV_Handler
+    B PendSV_Handler
+
+    PUBWEAK SysTick_Handler
+    SECTION .text:CODE:REORDER:NOROOT(2)
+SysTick_Handler
+    B SysTick_Handler
+
     PUBWEAK  BOD_IRQHandler
     PUBWEAK  IRC_IRQHandler
     PUBWEAK  PWRWU_IRQHandler
@@ -178,10 +195,6 @@ HardFault_Handler\
     SECTION .text:CODE:REORDER:NOROOT(2)
 
 ;HardFault_Handler
-NMI_Handler
-SVC_Handler
-PendSV_Handler
-SysTick_Handler
 BOD_IRQHandler
 IRC_IRQHandler
 PWRWU_IRQHandler
