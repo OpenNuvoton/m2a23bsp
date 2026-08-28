@@ -129,7 +129,7 @@ int main(void)
     file).  See the comments at the top of this file for more information. */
     //prvOptionallyCreateComprehensveTestApplication();
 
-    printf("Toggle LED(PB.0~PB.2)\n");
+    printf("Toggle LED(PF.14)\n");
     printf("FreeRTOS is starting ...\n");
 
     /* Start the scheduler. */
@@ -162,7 +162,7 @@ static void prvSetupHardware( void )
     /* Enable peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(TMR0_MODULE);
-    CLK_EnableModuleClock(GPIOB_MODULE);	
+    CLK_EnableModuleClock(GPIOF_MODULE);	
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
@@ -171,8 +171,8 @@ static void prvSetupHardware( void )
     SET_UART0_RXD_PB12();
     SET_UART0_TXD_PB13();
     
-    /* Configure PB.0, PB.1 and PB.2 as Output mode */
-    GPIO_SetMode(PB, BIT0|BIT1|BIT2, GPIO_MODE_OUTPUT);
+    /* Configure PF.14 as Output mode */
+    GPIO_SetMode(PF, BIT14, GPIO_MODE_OUTPUT);
 
     /* Lock protected registers */
     SYS_LockReg();

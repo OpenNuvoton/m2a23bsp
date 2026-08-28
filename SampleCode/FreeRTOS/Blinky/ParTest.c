@@ -90,8 +90,7 @@
 
 void vParTestToggleLED( unsigned long ulLED )
 {
-    static short i = 0;
-
-    PB->DOUT = (i++ & 0x7); // total 3 LEDs
+    (void)ulLED;
+    PF14 ^= 1;
 }
 /*-----------------------------------------------------------*/
