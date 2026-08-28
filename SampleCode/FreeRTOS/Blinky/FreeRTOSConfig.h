@@ -44,11 +44,11 @@
 /* Stack and heap */
 #define configMINIMAL_STACK_SIZE                        (uint16_t)128
 #define configMINIMAL_SECURE_STACK_SIZE                 1024
-#define configTOTAL_HEAP_SIZE                           (size_t)(16 * 1024)
+#define configTOTAL_HEAP_SIZE                           (size_t)(7 * 1024)
 #define configMAX_TASK_NAME_LEN                         12
 /* OS features */
 #define configUSE_MUTEXES                               1
-#define configUSE_TICKLESS_IDLE                         1
+#define configUSE_TICKLESS_IDLE                         0
 #define configUSE_APPLICATION_TASK_TAG                  0
 #define configUSE_NEWLIB_REENTRANT                      0
 #define configUSE_CO_ROUTINES                           0

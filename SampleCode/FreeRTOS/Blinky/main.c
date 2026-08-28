@@ -119,7 +119,18 @@ int main(void)
     the top of this file.  The LED flash tasks are always created.  The other
     tasks are only created if mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY is set to
     0 (at the top of this file).  See the comments at the top of this file for
-    more information. */
+    more information.
+    
+    Note on LED Toggle Frequency:
+    vStartLEDFlashTasks() spawns 3 concurrent tasks (ledNUMBER_OF_LEDS = 3).
+    Each task operates at a different flash rate based on ledFLASH_RATE_BASE (333ms):
+      - Task 0: period = 333ms (toggles every ~166ms)
+      - Task 1: period = 666ms (toggles every ~333ms)
+      - Task 2: period = 999ms (toggles every ~499ms)
+    Because vParTestToggleLED() in ParTest.c maps all indices to the same physical
+    pin (PF.14), the LED state is toggled concurrently by all 3 tasks with different
+    frequencies. This superposition causes the observed blinking rhythm and frequency
+    to vary dynamically over time. */
     vStartLEDFlashTasks( mainFLASH_TASK_PRIORITY );
 
     vStartPolledQueueTasks( mainQUEUE_POLL_PRIORITY );
@@ -170,7 +181,7 @@ static void prvSetupHardware( void )
     /* Set multi-function pins for UART0 RXD and TXD */
     SET_UART0_RXD_PB12();
     SET_UART0_TXD_PB13();
-    
+
     /* Configure PF.14 as Output mode */
     GPIO_SetMode(PF, BIT14, GPIO_MODE_OUTPUT);
 
@@ -261,6 +272,10 @@ static void vCheckTask( void *pvParameters )
         if( xArePollingQueuesStillRunning() != pdTRUE )
         {
             printf( "ERROR IN POLL Q\n" );
+        }
+        else
+        {
+            printf( "Check Task: OK (Tick: %lu)\n", (unsigned long)xTaskGetTickCount() );
         }
     }
 }
