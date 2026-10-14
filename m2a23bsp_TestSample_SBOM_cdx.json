@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:f8a5474b-ce46-4f39-950c-a5e908f18f3f",
+  "serialNumber": "urn:uuid:edf5e106-141e-474c-af49-0d1a57630652",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-31T10:41:24+08:00",
+    "timestamp": "2026-10-14T14:29:33+08:00",
     "tools": {
       "components": [
         {
@@ -20,14 +20,14 @@
       "bom-ref": "8c71ff86f2f4bad4",
       "type": "application",
       "name": "MCU Test Sample",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/mcu-test-sample@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/mcu-test-sample@v3.00.000_b2-60-gd4cf61c",
       "licenses": [
         {
           "license": {
@@ -74,6 +74,11 @@
         }
       ]
     },
+    "lifecycles": [
+      {
+        "phase": "pre-build"
+      }
+    ],
     "supplier": {
       "name": "Nuvoton Technology Corp.",
       "url": [
@@ -91,14 +96,14 @@
       "type": "application",
       "bom-ref": "m2a23bsp:test-sample-component:samplecode",
       "name": "m2a23 SampleCode",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/samplecode@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/samplecode@v3.00.000_b2-60-gd4cf61c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -210,5 +215,16 @@
         "m2a23bsp:test-sample-component:samplecode"
       ]
     }
-  ]
+  ],
+  "signature": {
+    "algorithm": "ES256",
+    "keyId": "wschang0@nuvoton.com",
+    "publicKey": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "Yjak-cZfA8dgOThPETOK7jyK7VE8E8jz8BnURXS2h24",
+      "y": "QfyRtTn7Hdbu7YoOOEVRKP_PFTXZVFQ12TW8E5rO_pU"
+    },
+    "value": "ioPO1kD5U1VYZClQIw2TKUtgaFtaIqjFGhG3UY47-vJYlYITrb0__a7jbCjXIIljEUIEMM9X4ZGvtgH69droyA"
+  }
 }

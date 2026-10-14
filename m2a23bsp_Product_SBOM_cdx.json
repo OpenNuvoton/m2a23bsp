@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:4a1e5352-fee6-491e-9875-df9a350b93cd",
+  "serialNumber": "urn:uuid:8841880c-f261-44f4-a2c3-571eeb23c73d",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-31T10:41:19+08:00",
+    "timestamp": "2026-10-14T14:29:28+08:00",
     "tools": {
       "components": [
         {
@@ -20,14 +20,14 @@
       "bom-ref": "a85d15abddf62ef5",
       "type": "library",
       "name": "MCU Driver",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/mcu-driver@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/mcu-driver@v3.00.000_b2-60-gd4cf61c",
       "licenses": [
         {
           "license": {
@@ -90,6 +90,11 @@
         }
       ]
     },
+    "lifecycles": [
+      {
+        "phase": "pre-build"
+      }
+    ],
     "supplier": {
       "name": "Nuvoton Technology Corp.",
       "url": [
@@ -107,14 +112,14 @@
       "type": "library",
       "bom-ref": "m2a23bsp:product-component:library-device",
       "name": "m2a23 Device",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-device@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/library-device@v3.00.000_b2-60-gd4cf61c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -165,14 +170,14 @@
       "type": "library",
       "bom-ref": "m2a23bsp:product-component:library-llsiycablelib",
       "name": "m2a23 LlsiYcableLib",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-llsiycablelib@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/library-llsiycablelib@v3.00.000_b2-60-gd4cf61c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -223,14 +228,14 @@
       "type": "library",
       "bom-ref": "m2a23bsp:product-component:library-numaker",
       "name": "m2a23 NuMaker",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-numaker@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/library-numaker@v3.00.000_b2-60-gd4cf61c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -281,14 +286,14 @@
       "type": "library",
       "bom-ref": "m2a23bsp:product-component:library-stddriver",
       "name": "m2a23 StdDriver",
-      "version": "v3.00.000_b2-59-gd64a800",
+      "version": "v3.00.000_b2-60-gd4cf61c",
       "supplier": {
         "name": "Nuvoton Technology Corp.",
         "url": [
           "https://www.nuvoton.com"
         ]
       },
-      "purl": "pkg:generic/nuvoton/library-stddriver@v3.00.000_b2-59-gd64a800",
+      "purl": "pkg:generic/nuvoton/library-stddriver@v3.00.000_b2-60-gd4cf61c",
       "hashes": [
         {
           "alg": "SHA-256",
@@ -413,5 +418,16 @@
         "m2a23bsp:product-component:library-stddriver"
       ]
     }
-  ]
+  ],
+  "signature": {
+    "algorithm": "ES256",
+    "keyId": "wschang0@nuvoton.com",
+    "publicKey": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "Yjak-cZfA8dgOThPETOK7jyK7VE8E8jz8BnURXS2h24",
+      "y": "QfyRtTn7Hdbu7YoOOEVRKP_PFTXZVFQ12TW8E5rO_pU"
+    },
+    "value": "UUoUsJ78cdqoL-J2WYBgmRyjUyvvfyCVMk3noHA60xvDZ8wiJQZUtXCZlRARlpXLfkLo_iC75kh3kdgIuAYyYg"
+  }
 }
